@@ -16,5 +16,5 @@
       "provider": "npm"
     }
   ],
-  "vetraUrl": "https://switchboard.staging.vetra.io/d/core-dev-builder-package"
+  "vetraUrl": "https://switchboard.staging.vetra.io/d/vetra-builder-package"
 }

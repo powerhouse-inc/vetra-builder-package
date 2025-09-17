@@ -1,0 +1,138 @@
+import type { DocumentModelState } from "document-model";
+
+export const documentModel: DocumentModelState = {
+  author: {
+    name: "Powerhouse Inc.",
+    website: "https://powerhouse.inc",
+  },
+  description:
+    "This document model contains all required data fields to describe a package in vetra.",
+  extension: "phvp",
+  id: "powerhouse/vetra/package",
+  name: "VetraPackage",
+  specifications: [
+    {
+      changeLog: [],
+      modules: [
+        {
+          description: "",
+          id: "949be2ec-48c0-4dbc-8367-91cc9d991ff0",
+          name: "meta",
+          operations: [
+            {
+              description: "",
+              errors: [],
+              examples: [],
+              id: "05268f4e-b5c5-4cce-b825-8d10d73a8911",
+              name: "SET_PACKAGE_NAME",
+              reducer: "",
+              schema:
+                'input SetPackageNameInput {\n  "Add your inputs here"\n  name: String!\n}',
+              scope: "global",
+              template: "",
+            },
+            {
+              description: "",
+              errors: [],
+              examples: [],
+              id: "ef8514fb-ccaf-4a74-a23c-2e080ee1199b",
+              name: "SET_PACKAGE_DESCRIPTION",
+              reducer: "",
+              schema:
+                'input SetPackageDescriptionInput {\n  "Add your inputs here"\n  description: String!\n}',
+              scope: "global",
+              template: "",
+            },
+            {
+              description: "",
+              errors: [],
+              examples: [],
+              id: "15529bdd-48a2-434a-922f-8d6384c2c61d",
+              name: "SET_PACKAGE_CATEGORY",
+              reducer: "",
+              schema:
+                'input SetPackageCategoryInput {\n  "Add your inputs here"\n  category: String!\n}',
+              scope: "global",
+              template: "",
+            },
+            {
+              description: "",
+              errors: [],
+              examples: [],
+              id: "0d56a511-af73-4ef9-af81-a71287d60cd7",
+              name: "SET_PACKAGE_GITHUB",
+              reducer: "",
+              schema:
+                'input SetPackageGithubInput {\n  "Add your inputs here"\n  github: URL!\n}',
+              scope: "global",
+              template: "",
+            },
+            {
+              description: "",
+              errors: [],
+              examples: [],
+              id: "4173bc3a-9994-4206-8550-1091bc67f6e5",
+              name: "SET_PACKAGE_NPM",
+              reducer: "",
+              schema:
+                'input SetPackageNpmInput {\n  "Add your inputs here"\n  npm: URL!\n}',
+              scope: "global",
+              template: "",
+            },
+            {
+              description: "",
+              errors: [],
+              examples: [],
+              id: "e42fe70b-cdb8-4382-926e-66fac39f2329",
+              name: "SET_AUTHOR",
+              reducer: "",
+              schema:
+                'input SetAuthorInput {\n  "Add your inputs here"\n  name: String!\n  website: URL\n}',
+              scope: "global",
+              template: "",
+            },
+            {
+              description: "",
+              errors: [],
+              examples: [],
+              id: "832d5f30-e9fe-4a75-94d3-80765b5dfdaa",
+              name: "ADD_KEYWORDS",
+              reducer: "",
+              schema:
+                'input AddKeywordsInput {\n  "Add your inputs here"\n  id: OID\n  label: String!\n}',
+              scope: "global",
+              template: "",
+            },
+            {
+              description: "",
+              errors: [],
+              examples: [],
+              id: "457784ee-8e78-4eb5-8f52-0265ef5303ba",
+              name: "REMOVE_KEYWORDS",
+              reducer: "",
+              schema:
+                'input RemoveKeywordsInput {\n  "Add your inputs here"\n  id: OID!\n}',
+              scope: "global",
+              template: "",
+            },
+          ],
+        },
+      ],
+      state: {
+        global: {
+          examples: [],
+          initialValue:
+            '"{\\n  \\"name\\": \\"\\",\\n  \\"description\\": null,\\n  \\"category\\": null,\\n  \\"author\\": {\\n    \\"name\\": \\"\\",\\n    \\"website\\": null\\n  },\\n  \\"keywords\\": [],\\n  \\"github\\": null,\\n  \\"npm\\": null\\n}"',
+          schema:
+            "type VetraPackageState {\n  name: String!\n  description: String\n  category: String\n  author: VetraBuilderPackageAuthor!\n  keywords: [VetraBuilderPackageKeyword!]!\n  github: URL\n  npm: URL\n}\n\ntype VetraBuilderPackageAuthor {\n  name: String!\n  website: URL\n}\n\ntype VetraBuilderPackageKeyword {\n  id: OID!\n  label: String!\n}",
+        },
+        local: {
+          examples: [],
+          initialValue: '""',
+          schema: "",
+        },
+      },
+      version: 1,
+    },
+  ],
+};

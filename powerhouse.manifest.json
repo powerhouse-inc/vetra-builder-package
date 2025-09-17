@@ -1,14 +1,29 @@
 {
-    "name": "",
+    "name": "Vetra Builder Package",
     "description": "",
-    "category": "",
+    "category": "Engineering",
     "publisher": {
-        "name": "",
-        "url": ""
+        "name": "Powerhouse Inc.",
+        "url": "https://www.powerhouse.inc"
     },
-    "documentModels": [],
+    "documentModels": [
+        {
+            "id": "powerhouse/vetra/builder-account",
+            "name": "BuilderAccount"
+        },
+        {
+            "id": "powerhouse/vetra/package",
+            "name": "VetraPackage"
+        }
+    ],
     "editors": [],
     "apps": [],
-    "subgraphs": [],
+    "subgraphs": [
+        {
+            "id": "vetra",
+            "name": "vetra",
+            "documentTypes": []
+        }
+    ],
     "importScripts": []
 }
