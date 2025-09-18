@@ -1,0 +1,147 @@
+name: Build and Publish Package
+
+on:
+  push:
+    branches:
+      - main
+      - staging
+      - dev
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version to publish (e.g., 1.0.0, patch, minor, major)'
+        required: false
+        type: string
+      tag:
+        description: 'NPM tag (dev, staging, latest)'
+        required: false
+        type: choice
+        options:
+          - dev
+          - staging
+          - latest
+        default: dev
+      dry-run:
+        description: 'Perform a dry run without publishing'
+        required: false
+        type: boolean
+        default: true
+
+env:
+  NODE_VERSION: '20'
+  PNPM_VERSION: '8'
+
+jobs:
+  build-and-publish:
+    name: Build and Publish
+    runs-on: ubuntu-latest
+    if: github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/staging' || github.ref == 'refs/heads/dev'))
+    permissions:
+      contents: write
+      id-token: write
+    timeout-minutes: 15
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: ${{ env.PNPM_VERSION }}
+
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'pnpm'
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Run linting
+        run: pnpm run lint
+
+      - name: Run tests
+        run: pnpm run test
+
+      - name: Build package
+        run: pnpm run build
+
+      - name: Configure git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Determine version and tag
+        id: version
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            VERSION="${{ inputs.version }}"
+            TAG="${{ inputs.tag }}"
+            DRY_RUN="${{ inputs.dry-run }}"
+          else
+            # Auto-increment patch version for branch pushes
+            CURRENT_VERSION=$(node -p "require('./package.json').version")
+            VERSION="patch"
+            DRY_RUN="false"
+            
+            # Determine tag based on branch name
+            BRANCH_NAME="${{ github.ref_name }}"
+            if [ "$BRANCH_NAME" = "main" ]; then
+              TAG="latest"
+            else
+              TAG="$BRANCH_NAME"
+            fi
+          fi
+          
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "tag=$TAG" >> $GITHUB_OUTPUT
+          echo "dry-run=$DRY_RUN" >> $GITHUB_OUTPUT
+          echo "current-version=$CURRENT_VERSION" >> $GITHUB_OUTPUT
+
+      - name: Update package version
+        if: steps.version.outputs.dry-run == 'false'
+        run: |
+          if [ "${{ steps.version.outputs.version }}" = "patch" ] || [ "${{ steps.version.outputs.version }}" = "minor" ] || [ "${{ steps.version.outputs.version }}" = "major" ]; then
+            npm version ${{ steps.version.outputs.version }} --no-git-tag-version
+          else
+            npm version ${{ steps.version.outputs.version }} --no-git-tag-version
+          fi
+
+      - name: Build package
+        run: pnpm run build
+
+      - name: Publish to NPM
+        if: steps.version.outputs.dry-run == 'false'
+        run: |
+          if [ "${{ steps.version.outputs.tag }}" = "latest" ]; then
+            npm publish --access public --provenance
+          else
+            npm publish --tag ${{ steps.version.outputs.tag }} --access public --provenance
+          fi
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_ACCESS_TOKEN }}
+
+      - name: Commit version changes
+        if: steps.version.outputs.dry-run == 'false'
+        run: |
+          NEW_VERSION=$(node -p "require('./package.json').version")
+          git add package.json
+          git commit -m "chore: bump version to $NEW_VERSION"
+          git push origin ${{ github.ref_name }}
+
+      - name: Create Git tag
+        if: steps.version.outputs.dry-run == 'false'
+        run: |
+          NEW_VERSION=$(node -p "require('./package.json').version")
+          git tag "v$NEW_VERSION"
+          git push origin "v$NEW_VERSION"
+
+      - name: Dry run output
+        if: steps.version.outputs.dry-run == 'true'
+        run: |
+          echo "DRY RUN: Would publish version ${{ steps.version.outputs.version }} with tag ${{ steps.version.outputs.tag }}"
+          echo "Current version: ${{ steps.version.outputs.current-version }}"
+          echo "Package contents:"
+          ls -la dist/
