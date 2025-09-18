@@ -2,15 +2,17 @@ import { BaseDocumentClass } from "document-model";
 import { BuilderAccountPHState } from "../ph-factories.js";
 import {
   type AddSpaceInput,
-  type RemoveSpaceInput,
-  type AddPackageToSpaceInput,
-  type RemovePackageFromSpaceInput,
+  type DeleteSpaceInput,
+  type SetSpaceTitleInput,
+  type SetSpaceDescriptionInput,
+  type ReorderSpacesInput,
 } from "../types.js";
 import {
   addSpace,
-  removeSpace,
-  addPackageToSpace,
-  removePackageFromSpace,
+  deleteSpace,
+  setSpaceTitle,
+  setSpaceDescription,
+  reorderSpaces,
 } from "./creators.js";
 import { type BuilderAccountAction } from "../actions.js";
 
@@ -19,15 +21,19 @@ export default class BuilderAccount_Spaces extends BaseDocumentClass<BuilderAcco
     return this.dispatch(addSpace(input));
   }
 
-  public removeSpace(input: RemoveSpaceInput) {
-    return this.dispatch(removeSpace(input));
+  public deleteSpace(input: DeleteSpaceInput) {
+    return this.dispatch(deleteSpace(input));
   }
 
-  public addPackageToSpace(input: AddPackageToSpaceInput) {
-    return this.dispatch(addPackageToSpace(input));
+  public setSpaceTitle(input: SetSpaceTitleInput) {
+    return this.dispatch(setSpaceTitle(input));
   }
 
-  public removePackageFromSpace(input: RemovePackageFromSpaceInput) {
-    return this.dispatch(removePackageFromSpace(input));
+  public setSpaceDescription(input: SetSpaceDescriptionInput) {
+    return this.dispatch(setSpaceDescription(input));
+  }
+
+  public reorderSpaces(input: ReorderSpacesInput) {
+    return this.dispatch(reorderSpaces(input));
   }
 }

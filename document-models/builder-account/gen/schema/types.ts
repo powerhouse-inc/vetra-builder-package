@@ -61,10 +61,17 @@ export type AddMemberInput = {
   ethAddress?: InputMaybe<Scalars["EthereumAddress"]["input"]>;
 };
 
-export type AddPackageToSpaceInput = {
-  package: Scalars["PHID"]["input"];
+export type AddPackageInput = {
+  author?: InputMaybe<AuthorInput>;
+  category?: InputMaybe<Scalars["String"]["input"]>;
+  description?: InputMaybe<Scalars["String"]["input"]>;
+  github?: InputMaybe<Scalars["URL"]["input"]>;
+  keywords?: InputMaybe<Array<Scalars["String"]["input"]>>;
+  name: Scalars["String"]["input"];
+  npm?: InputMaybe<Scalars["URL"]["input"]>;
   /** Add your inputs here */
-  spaceSlug: Scalars["String"]["input"];
+  spaceId: Scalars["OID"]["input"];
+  vetraDriveUrl?: InputMaybe<Scalars["URL"]["input"]>;
 };
 
 export type AddSpaceInput = {
@@ -73,10 +80,25 @@ export type AddSpaceInput = {
   title: Scalars["String"]["input"];
 };
 
+export type AuthorInput = {
+  name: Scalars["String"]["input"];
+  website?: InputMaybe<Scalars["URL"]["input"]>;
+};
+
 export type BuilderAccountState = {
   members: Array<Scalars["EthereumAddress"]["output"]>;
   profile: VetraBuilderProfile;
   spaces: Array<VetraBuilderSpace>;
+};
+
+export type DeletePackageInput = {
+  /** Add your inputs here */
+  id: Scalars["OID"]["input"];
+};
+
+export type DeleteSpaceInput = {
+  /** Add your inputs here */
+  id: Scalars["OID"]["input"];
 };
 
 export type RemoveMemberInput = {
@@ -84,20 +106,28 @@ export type RemoveMemberInput = {
   ethAddress?: InputMaybe<Scalars["EthereumAddress"]["input"]>;
 };
 
-export type RemovePackageFromSpaceInput = {
-  package: Scalars["PHID"]["input"];
+export type ReorderPackagesInput = {
+  ids: Array<Scalars["OID"]["input"]>;
+  insertAfter?: InputMaybe<Scalars["OID"]["input"]>;
   /** Add your inputs here */
-  spaceSlug: Scalars["String"]["input"];
+  spaceId: Scalars["OID"]["input"];
 };
 
-export type RemoveSpaceInput = {
+export type ReorderSpacesInput = {
   /** Add your inputs here */
-  slug?: InputMaybe<Scalars["String"]["input"]>;
+  ids: Array<Scalars["OID"]["input"]>;
+  insertAfter?: InputMaybe<Scalars["OID"]["input"]>;
 };
 
 export type SetLogoInput = {
   /** Add your inputs here */
   logoUrl: Scalars["String"]["input"];
+};
+
+export type SetPackageDriveIdInput = {
+  driveId?: InputMaybe<Scalars["String"]["input"]>;
+  /** Add your inputs here */
+  packageId: Scalars["OID"]["input"];
 };
 
 export type SetProfileDescriptionInput = {
@@ -115,11 +145,52 @@ export type SetSlugInput = {
   slug: Scalars["String"]["input"];
 };
 
-export type SetSocialsInput = {
+export type SetSpaceDescriptionInput = {
+  description: Scalars["String"]["input"];
+  /** Add your inputs here */
+  id: Scalars["OID"]["input"];
+};
+
+export type SetSpaceTitleInput = {
+  /** Add your inputs here */
+  id: Scalars["OID"]["input"];
+  newTitle: Scalars["String"]["input"];
+};
+
+export type UpdatePackageInput = {
+  description?: InputMaybe<Scalars["String"]["input"]>;
+  /** Add your inputs here */
+  id: Scalars["OID"]["input"];
+  title?: InputMaybe<Scalars["String"]["input"]>;
+};
+
+export type UpdateSocialsInput = {
   github?: InputMaybe<Scalars["URL"]["input"]>;
   website?: InputMaybe<Scalars["URL"]["input"]>;
   /** Add your inputs here */
   x?: InputMaybe<Scalars["URL"]["input"]>;
+};
+
+export type VetraBuilderPackage = {
+  author: VetraBuilderPackageAuthor;
+  category: Maybe<Scalars["String"]["output"]>;
+  description: Maybe<Scalars["String"]["output"]>;
+  github: Maybe<Scalars["URL"]["output"]>;
+  id: Scalars["OID"]["output"];
+  keywords: Array<VetraBuilderPackageKeyword>;
+  name: Scalars["String"]["output"];
+  npm: Maybe<Scalars["URL"]["output"]>;
+  vetraDriveUrl: Maybe<Scalars["URL"]["output"]>;
+};
+
+export type VetraBuilderPackageAuthor = {
+  name: Scalars["String"]["output"];
+  website: Maybe<Scalars["URL"]["output"]>;
+};
+
+export type VetraBuilderPackageKeyword = {
+  id: Scalars["OID"]["output"];
+  label: Scalars["String"]["output"];
 };
 
 export type VetraBuilderProfile = {
@@ -138,6 +209,7 @@ export type VetraBuilderSocials = {
 
 export type VetraBuilderSpace = {
   description: Maybe<Scalars["String"]["output"]>;
-  packages: Array<Scalars["PHID"]["output"]>;
+  id: Scalars["OID"]["output"];
+  packages: Array<VetraBuilderPackage>;
   title: Scalars["String"]["output"];
 };

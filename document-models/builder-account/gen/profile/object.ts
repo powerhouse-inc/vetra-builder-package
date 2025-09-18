@@ -5,14 +5,14 @@ import {
   type SetProfileNameInput,
   type SetSlugInput,
   type SetProfileDescriptionInput,
-  type SetSocialsInput,
+  type UpdateSocialsInput,
 } from "../types.js";
 import {
   setLogo,
   setProfileName,
   setSlug,
   setProfileDescription,
-  setSocials,
+  updateSocials,
 } from "./creators.js";
 import { type BuilderAccountAction } from "../actions.js";
 
@@ -33,7 +33,7 @@ export default class BuilderAccount_Profile extends BaseDocumentClass<BuilderAcc
     return this.dispatch(setProfileDescription(input));
   }
 
-  public setSocials(input: SetSocialsInput) {
-    return this.dispatch(setSocials(input));
+  public updateSocials(input: UpdateSocialsInput) {
+    return this.dispatch(updateSocials(input));
   }
 }

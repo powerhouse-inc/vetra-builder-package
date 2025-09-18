@@ -5,14 +5,14 @@ import {
   type SetProfileNameInput,
   type SetSlugInput,
   type SetProfileDescriptionInput,
-  type SetSocialsInput,
+  type UpdateSocialsInput,
 } from "../types.js";
 import {
   type SetLogoAction,
   type SetProfileNameAction,
   type SetSlugAction,
   type SetProfileDescriptionAction,
-  type SetSocialsAction,
+  type UpdateSocialsAction,
 } from "./actions.js";
 
 export const setLogo = (input: SetLogoInput) =>
@@ -51,11 +51,11 @@ export const setProfileDescription = (input: SetProfileDescriptionInput) =>
     "global",
   );
 
-export const setSocials = (input: SetSocialsInput) =>
-  createAction<SetSocialsAction>(
-    "SET_SOCIALS",
+export const updateSocials = (input: UpdateSocialsInput) =>
+  createAction<UpdateSocialsAction>(
+    "UPDATE_SOCIALS",
     { ...input },
     undefined,
-    z.SetSocialsInputSchema,
+    z.UpdateSocialsInputSchema,
     "global",
   );

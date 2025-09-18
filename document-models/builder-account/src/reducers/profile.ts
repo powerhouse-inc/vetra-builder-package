@@ -2,30 +2,27 @@ import type { BuilderAccountProfileOperations } from "../../gen/profile/operatio
 
 export const reducer: BuilderAccountProfileOperations = {
   setLogoOperation(state, action, dispatch) {
-    state.profile.logo = action.input.logoUrl;
+    const { logoUrl } = action.input;
+    state.profile.logo = logoUrl ?? state.profile.logo;
   },
   setProfileNameOperation(state, action, dispatch) {
-    state.profile.name = action.input.name;
+    const { name } = action.input;
+    state.profile.name = name ?? state.profile.name;
   },
   setSlugOperation(state, action, dispatch) {
-    state.profile.slug = action.input.slug;
+    const { slug } = action.input;
+    state.profile.slug = slug;
   },
   setProfileDescriptionOperation(state, action, dispatch) {
     const { description } = action.input;
-    if (description) {
-      state.profile.description = description;
-    }
+    state.profile.description = description ?? state.profile.description;
   },
-  setSocialsOperation(state, action, dispatch) {
-    const { x, github, website } = action.input;
-    if (x) {
-      state.profile.socials.xProfile = x;
-    }
-    if (github) {
-      state.profile.socials.github = github;
-    }
-    if (website) {
-      state.profile.socials.website = website;
-    }
+  updateSocialsOperation(state, action, dispatch) {
+    const { github, website, x } = action.input;
+    state.profile.socials = {
+      github: github ?? state.profile.socials.github,
+      website: website ?? state.profile.socials.website,
+      xProfile: x ?? state.profile.socials.xProfile,
+    };
   },
 };

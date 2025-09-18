@@ -8,104 +8,104 @@ import { generateMock } from '@powerhousedao/codegen';
 import utils from '../../gen/utils.js';
 import {
     z,
-    type AddSpaceInput,
-    type DeleteSpaceInput,
-    type SetSpaceTitleInput,
-    type SetSpaceDescriptionInput,
-    type ReorderSpacesInput,
+    type AddPackageInput,
+    type SetPackageDriveIdInput,
+    type UpdatePackageInput,
+    type ReorderPackagesInput,
+    type DeletePackageInput,
 } from '../../gen/schema/index.js';
 import { reducer } from '../../gen/reducer.js';
-import * as creators from '../../gen/spaces/creators.js';
+import * as creators from '../../gen/packages/creators.js';
 import type { BuilderAccountDocument } from '../../gen/types.js';
 
-describe('Spaces Operations', () => {
+describe('Packages Operations', () => {
     let document: BuilderAccountDocument;
 
     beforeEach(() => {
         document = utils.createDocument();
     });
 
-    it('should handle addSpace operation', () => {
-        const input: AddSpaceInput = generateMock(
-            z.AddSpaceInputSchema(),
+    it('should handle addPackage operation', () => {
+        const input: AddPackageInput = generateMock(
+            z.AddPackageInputSchema(),
         );
 
         const updatedDocument = reducer(
             document,
-            creators.addSpace(input),
+            creators.addPackage(input),
         );
 
         expect(updatedDocument.operations.global).toHaveLength(1);
         expect(updatedDocument.operations.global[0].action.type).toBe(
-            'ADD_SPACE',
+            'ADD_PACKAGE',
         );
         expect(updatedDocument.operations.global[0].action.input).toStrictEqual(input);
         expect(updatedDocument.operations.global[0].index).toEqual(0);
     });
-    it('should handle deleteSpace operation', () => {
-        const input: DeleteSpaceInput = generateMock(
-            z.DeleteSpaceInputSchema(),
+    it('should handle setPackageDriveId operation', () => {
+        const input: SetPackageDriveIdInput = generateMock(
+            z.SetPackageDriveIdInputSchema(),
         );
 
         const updatedDocument = reducer(
             document,
-            creators.deleteSpace(input),
+            creators.setPackageDriveId(input),
         );
 
         expect(updatedDocument.operations.global).toHaveLength(1);
         expect(updatedDocument.operations.global[0].action.type).toBe(
-            'DELETE_SPACE',
+            'SET_PACKAGE_DRIVE_ID',
         );
         expect(updatedDocument.operations.global[0].action.input).toStrictEqual(input);
         expect(updatedDocument.operations.global[0].index).toEqual(0);
     });
-    it('should handle setSpaceTitle operation', () => {
-        const input: SetSpaceTitleInput = generateMock(
-            z.SetSpaceTitleInputSchema(),
+    it('should handle updatePackage operation', () => {
+        const input: UpdatePackageInput = generateMock(
+            z.UpdatePackageInputSchema(),
         );
 
         const updatedDocument = reducer(
             document,
-            creators.setSpaceTitle(input),
+            creators.updatePackage(input),
         );
 
         expect(updatedDocument.operations.global).toHaveLength(1);
         expect(updatedDocument.operations.global[0].action.type).toBe(
-            'SET_SPACE_TITLE',
+            'UPDATE_PACKAGE',
         );
         expect(updatedDocument.operations.global[0].action.input).toStrictEqual(input);
         expect(updatedDocument.operations.global[0].index).toEqual(0);
     });
-    it('should handle setSpaceDescription operation', () => {
-        const input: SetSpaceDescriptionInput = generateMock(
-            z.SetSpaceDescriptionInputSchema(),
+    it('should handle reorderPackages operation', () => {
+        const input: ReorderPackagesInput = generateMock(
+            z.ReorderPackagesInputSchema(),
         );
 
         const updatedDocument = reducer(
             document,
-            creators.setSpaceDescription(input),
+            creators.reorderPackages(input),
         );
 
         expect(updatedDocument.operations.global).toHaveLength(1);
         expect(updatedDocument.operations.global[0].action.type).toBe(
-            'SET_SPACE_DESCRIPTION',
+            'REORDER_PACKAGES',
         );
         expect(updatedDocument.operations.global[0].action.input).toStrictEqual(input);
         expect(updatedDocument.operations.global[0].index).toEqual(0);
     });
-    it('should handle reorderSpaces operation', () => {
-        const input: ReorderSpacesInput = generateMock(
-            z.ReorderSpacesInputSchema(),
+    it('should handle deletePackage operation', () => {
+        const input: DeletePackageInput = generateMock(
+            z.DeletePackageInputSchema(),
         );
 
         const updatedDocument = reducer(
             document,
-            creators.reorderSpaces(input),
+            creators.deletePackage(input),
         );
 
         expect(updatedDocument.operations.global).toHaveLength(1);
         expect(updatedDocument.operations.global[0].action.type).toBe(
-            'REORDER_SPACES',
+            'DELETE_PACKAGE',
         );
         expect(updatedDocument.operations.global[0].action.input).toStrictEqual(input);
         expect(updatedDocument.operations.global[0].index).toEqual(0);

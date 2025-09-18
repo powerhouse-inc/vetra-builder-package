@@ -12,13 +12,7 @@ export class SpaceNotFound extends Error implements ReducerError {
 }
 
 export const errors = {
-  RemoveSpace: {
-    SpaceNotFound,
-  },
-  AddPackageToSpace: {
-    SpaceNotFound,
-  },
-  RemovePackageFromSpace: {
+  DeleteSpace: {
     SpaceNotFound,
   },
 };

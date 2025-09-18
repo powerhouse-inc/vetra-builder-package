@@ -4,7 +4,7 @@ import type {
   SetProfileNameInput,
   SetSlugInput,
   SetProfileDescriptionInput,
-  SetSocialsInput,
+  UpdateSocialsInput,
 } from "../types.js";
 
 export type SetLogoAction = Action & { type: "SET_LOGO"; input: SetLogoInput };
@@ -17,9 +17,9 @@ export type SetProfileDescriptionAction = Action & {
   type: "SET_PROFILE_DESCRIPTION";
   input: SetProfileDescriptionInput;
 };
-export type SetSocialsAction = Action & {
-  type: "SET_SOCIALS";
-  input: SetSocialsInput;
+export type UpdateSocialsAction = Action & {
+  type: "UPDATE_SOCIALS";
+  input: UpdateSocialsInput;
 };
 
 export type BuilderAccountProfileAction =
@@ -27,4 +27,4 @@ export type BuilderAccountProfileAction =
   | SetProfileNameAction
   | SetSlugAction
   | SetProfileDescriptionAction
-  | SetSocialsAction;
+  | UpdateSocialsAction;

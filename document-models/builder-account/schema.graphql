@@ -36,9 +36,32 @@ type VetraBuilderSocials {
 }
 
 type VetraBuilderSpace {
+  id: OID!
   title: String!
   description: String
-  packages: [PHID!]!
+  packages: [VetraBuilderPackage!]!
+}
+
+type VetraBuilderPackage {
+  id: OID!
+  name: String!
+  description: String
+  category: String
+  author: VetraBuilderPackageAuthor!
+  keywords: [VetraBuilderPackageKeyword!]!
+  github: URL
+  npm: URL
+  vetraDriveUrl: URL
+}
+
+type VetraBuilderPackageAuthor {
+  name: String!
+  website: URL
+}
+
+type VetraBuilderPackageKeyword {
+  id: OID!
+  label: String!
 }
 
 
@@ -66,7 +89,7 @@ input SetProfileDescriptionInput {
   description: String
 }
 
-input SetSocialsInput {
+input UpdateSocialsInput {
   "Add your inputs here"
   x: URL
   github: URL
@@ -93,19 +116,69 @@ input AddSpaceInput {
   description: String
 }
 
-input RemoveSpaceInput {
+input DeleteSpaceInput {
   "Add your inputs here"
-  slug: String
+  id: OID!
 }
 
-input AddPackageToSpaceInput {
+input SetSpaceTitleInput {
   "Add your inputs here"
-  spaceSlug: String!
-  package: PHID!
+  id: OID!
+  newTitle: String!
 }
 
-input RemovePackageFromSpaceInput {
+input SetSpaceDescriptionInput {
   "Add your inputs here"
-  spaceSlug: String!
-  package: PHID!
+  id: OID!
+  description: String!
+}
+
+input ReorderSpacesInput {
+  "Add your inputs here"
+  ids: [OID!]!, insertAfter: OID
+}
+
+# packages
+
+input AuthorInput {
+  name: String!
+  website: URL
+}
+
+input AddPackageInput {
+  "Add your inputs here"
+  spaceId: OID!
+  name: String!
+  description: String
+  category: String
+  author: AuthorInput
+  keywords: [String!]
+  github: URL
+  npm: URL
+  vetraDriveUrl: URL
+}
+
+input SetPackageDriveIdInput {
+  "Add your inputs here"
+  packageId: OID!
+  driveId: String
+}
+
+input UpdatePackageInput {
+  "Add your inputs here"
+  id: OID!
+  title: String
+  description: String
+}
+
+input ReorderPackagesInput {
+  "Add your inputs here"
+  spaceId: OID!
+  ids: [OID!]!
+  insertAfter: OID
+}
+
+input DeletePackageInput {
+  "Add your inputs here"
+  id: OID!
 }

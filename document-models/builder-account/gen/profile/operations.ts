@@ -4,7 +4,7 @@ import {
   type SetProfileNameAction,
   type SetSlugAction,
   type SetProfileDescriptionAction,
-  type SetSocialsAction,
+  type UpdateSocialsAction,
 } from "./actions.js";
 import { type BuilderAccountState } from "../types.js";
 
@@ -29,9 +29,9 @@ export interface BuilderAccountProfileOperations {
     action: SetProfileDescriptionAction,
     dispatch?: SignalDispatch,
   ) => void;
-  setSocialsOperation: (
+  updateSocialsOperation: (
     state: BuilderAccountState,
-    action: SetSocialsAction,
+    action: UpdateSocialsAction,
     dispatch?: SignalDispatch,
   ) => void;
 }

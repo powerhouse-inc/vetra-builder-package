@@ -1,17 +1,27 @@
 import { z } from "zod";
 import type {
   AddMemberInput,
-  AddPackageToSpaceInput,
+  AddPackageInput,
   AddSpaceInput,
+  AuthorInput,
   BuilderAccountState,
+  DeletePackageInput,
+  DeleteSpaceInput,
   RemoveMemberInput,
-  RemovePackageFromSpaceInput,
-  RemoveSpaceInput,
+  ReorderPackagesInput,
+  ReorderSpacesInput,
   SetLogoInput,
+  SetPackageDriveIdInput,
   SetProfileDescriptionInput,
   SetProfileNameInput,
   SetSlugInput,
-  SetSocialsInput,
+  SetSpaceDescriptionInput,
+  SetSpaceTitleInput,
+  UpdatePackageInput,
+  UpdateSocialsInput,
+  VetraBuilderPackage,
+  VetraBuilderPackageAuthor,
+  VetraBuilderPackageKeyword,
   VetraBuilderProfile,
   VetraBuilderSocials,
   VetraBuilderSpace,
@@ -43,12 +53,19 @@ export function AddMemberInputSchema(): z.ZodObject<
   });
 }
 
-export function AddPackageToSpaceInputSchema(): z.ZodObject<
-  Properties<AddPackageToSpaceInput>
+export function AddPackageInputSchema(): z.ZodObject<
+  Properties<AddPackageInput>
 > {
   return z.object({
-    package: z.string(),
-    spaceSlug: z.string(),
+    author: z.lazy(() => AuthorInputSchema().nullish()),
+    category: z.string().nullish(),
+    description: z.string().nullish(),
+    github: z.string().url().nullish(),
+    keywords: z.array(z.string()).nullish(),
+    name: z.string(),
+    npm: z.string().url().nullish(),
+    spaceId: z.string(),
+    vetraDriveUrl: z.string().url().nullish(),
   });
 }
 
@@ -56,6 +73,13 @@ export function AddSpaceInputSchema(): z.ZodObject<Properties<AddSpaceInput>> {
   return z.object({
     description: z.string().nullish(),
     title: z.string(),
+  });
+}
+
+export function AuthorInputSchema(): z.ZodObject<Properties<AuthorInput>> {
+  return z.object({
+    name: z.string(),
+    website: z.string().url().nullish(),
   });
 }
 
@@ -76,6 +100,22 @@ export function BuilderAccountStateSchema(): z.ZodObject<
   });
 }
 
+export function DeletePackageInputSchema(): z.ZodObject<
+  Properties<DeletePackageInput>
+> {
+  return z.object({
+    id: z.string(),
+  });
+}
+
+export function DeleteSpaceInputSchema(): z.ZodObject<
+  Properties<DeleteSpaceInput>
+> {
+  return z.object({
+    id: z.string(),
+  });
+}
+
 export function RemoveMemberInputSchema(): z.ZodObject<
   Properties<RemoveMemberInput>
 > {
@@ -89,26 +129,37 @@ export function RemoveMemberInputSchema(): z.ZodObject<
   });
 }
 
-export function RemovePackageFromSpaceInputSchema(): z.ZodObject<
-  Properties<RemovePackageFromSpaceInput>
+export function ReorderPackagesInputSchema(): z.ZodObject<
+  Properties<ReorderPackagesInput>
 > {
   return z.object({
-    package: z.string(),
-    spaceSlug: z.string(),
+    ids: z.array(z.string()),
+    insertAfter: z.string().nullish(),
+    spaceId: z.string(),
   });
 }
 
-export function RemoveSpaceInputSchema(): z.ZodObject<
-  Properties<RemoveSpaceInput>
+export function ReorderSpacesInputSchema(): z.ZodObject<
+  Properties<ReorderSpacesInput>
 > {
   return z.object({
-    slug: z.string().nullish(),
+    ids: z.array(z.string()),
+    insertAfter: z.string().nullish(),
   });
 }
 
 export function SetLogoInputSchema(): z.ZodObject<Properties<SetLogoInput>> {
   return z.object({
     logoUrl: z.string(),
+  });
+}
+
+export function SetPackageDriveIdInputSchema(): z.ZodObject<
+  Properties<SetPackageDriveIdInput>
+> {
+  return z.object({
+    driveId: z.string().nullish(),
+    packageId: z.string(),
   });
 }
 
@@ -134,13 +185,78 @@ export function SetSlugInputSchema(): z.ZodObject<Properties<SetSlugInput>> {
   });
 }
 
-export function SetSocialsInputSchema(): z.ZodObject<
-  Properties<SetSocialsInput>
+export function SetSpaceDescriptionInputSchema(): z.ZodObject<
+  Properties<SetSpaceDescriptionInput>
+> {
+  return z.object({
+    description: z.string(),
+    id: z.string(),
+  });
+}
+
+export function SetSpaceTitleInputSchema(): z.ZodObject<
+  Properties<SetSpaceTitleInput>
+> {
+  return z.object({
+    id: z.string(),
+    newTitle: z.string(),
+  });
+}
+
+export function UpdatePackageInputSchema(): z.ZodObject<
+  Properties<UpdatePackageInput>
+> {
+  return z.object({
+    description: z.string().nullish(),
+    id: z.string(),
+    title: z.string().nullish(),
+  });
+}
+
+export function UpdateSocialsInputSchema(): z.ZodObject<
+  Properties<UpdateSocialsInput>
 > {
   return z.object({
     github: z.string().url().nullish(),
     website: z.string().url().nullish(),
     x: z.string().url().nullish(),
+  });
+}
+
+export function VetraBuilderPackageSchema(): z.ZodObject<
+  Properties<VetraBuilderPackage>
+> {
+  return z.object({
+    __typename: z.literal("VetraBuilderPackage").optional(),
+    author: VetraBuilderPackageAuthorSchema(),
+    category: z.string().nullable(),
+    description: z.string().nullable(),
+    github: z.string().url().nullable(),
+    id: z.string(),
+    keywords: z.array(VetraBuilderPackageKeywordSchema()),
+    name: z.string(),
+    npm: z.string().url().nullable(),
+    vetraDriveUrl: z.string().url().nullable(),
+  });
+}
+
+export function VetraBuilderPackageAuthorSchema(): z.ZodObject<
+  Properties<VetraBuilderPackageAuthor>
+> {
+  return z.object({
+    __typename: z.literal("VetraBuilderPackageAuthor").optional(),
+    name: z.string(),
+    website: z.string().url().nullable(),
+  });
+}
+
+export function VetraBuilderPackageKeywordSchema(): z.ZodObject<
+  Properties<VetraBuilderPackageKeyword>
+> {
+  return z.object({
+    __typename: z.literal("VetraBuilderPackageKeyword").optional(),
+    id: z.string(),
+    label: z.string(),
   });
 }
 
@@ -174,7 +290,8 @@ export function VetraBuilderSpaceSchema(): z.ZodObject<
   return z.object({
     __typename: z.literal("VetraBuilderSpace").optional(),
     description: z.string().nullable(),
-    packages: z.array(z.string()),
+    id: z.string(),
+    packages: z.array(VetraBuilderPackageSchema()),
     title: z.string(),
   });
 }

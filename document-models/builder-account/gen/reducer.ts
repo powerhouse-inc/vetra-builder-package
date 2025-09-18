@@ -12,6 +12,7 @@ import { z } from "./types.js";
 import { reducer as ProfileReducer } from "../src/reducers/profile.js";
 import { reducer as MembersReducer } from "../src/reducers/members.js";
 import { reducer as SpacesReducer } from "../src/reducers/spaces.js";
+import { reducer as PackagesReducer } from "../src/reducers/packages.js";
 
 export const stateReducer: StateReducer<BuilderAccountPHState> = (
   state,
@@ -59,9 +60,9 @@ export const stateReducer: StateReducer<BuilderAccountPHState> = (
       );
       break;
 
-    case "SET_SOCIALS":
-      z.SetSocialsInputSchema().parse(action.input);
-      ProfileReducer.setSocialsOperation(
+    case "UPDATE_SOCIALS":
+      z.UpdateSocialsInputSchema().parse(action.input);
+      ProfileReducer.updateSocialsOperation(
         (state as any)[action.scope],
         action as any,
         dispatch,
@@ -95,27 +96,81 @@ export const stateReducer: StateReducer<BuilderAccountPHState> = (
       );
       break;
 
-    case "REMOVE_SPACE":
-      z.RemoveSpaceInputSchema().parse(action.input);
-      SpacesReducer.removeSpaceOperation(
+    case "DELETE_SPACE":
+      z.DeleteSpaceInputSchema().parse(action.input);
+      SpacesReducer.deleteSpaceOperation(
         (state as any)[action.scope],
         action as any,
         dispatch,
       );
       break;
 
-    case "ADD_PACKAGE_TO_SPACE":
-      z.AddPackageToSpaceInputSchema().parse(action.input);
-      SpacesReducer.addPackageToSpaceOperation(
+    case "SET_SPACE_TITLE":
+      z.SetSpaceTitleInputSchema().parse(action.input);
+      SpacesReducer.setSpaceTitleOperation(
         (state as any)[action.scope],
         action as any,
         dispatch,
       );
       break;
 
-    case "REMOVE_PACKAGE_FROM_SPACE":
-      z.RemovePackageFromSpaceInputSchema().parse(action.input);
-      SpacesReducer.removePackageFromSpaceOperation(
+    case "SET_SPACE_DESCRIPTION":
+      z.SetSpaceDescriptionInputSchema().parse(action.input);
+      SpacesReducer.setSpaceDescriptionOperation(
+        (state as any)[action.scope],
+        action as any,
+        dispatch,
+      );
+      break;
+
+    case "REORDER_SPACES":
+      z.ReorderSpacesInputSchema().parse(action.input);
+      SpacesReducer.reorderSpacesOperation(
+        (state as any)[action.scope],
+        action as any,
+        dispatch,
+      );
+      break;
+
+    case "ADD_PACKAGE":
+      z.AddPackageInputSchema().parse(action.input);
+      PackagesReducer.addPackageOperation(
+        (state as any)[action.scope],
+        action as any,
+        dispatch,
+      );
+      break;
+
+    case "SET_PACKAGE_DRIVE_ID":
+      z.SetPackageDriveIdInputSchema().parse(action.input);
+      PackagesReducer.setPackageDriveIdOperation(
+        (state as any)[action.scope],
+        action as any,
+        dispatch,
+      );
+      break;
+
+    case "UPDATE_PACKAGE":
+      z.UpdatePackageInputSchema().parse(action.input);
+      PackagesReducer.updatePackageOperation(
+        (state as any)[action.scope],
+        action as any,
+        dispatch,
+      );
+      break;
+
+    case "REORDER_PACKAGES":
+      z.ReorderPackagesInputSchema().parse(action.input);
+      PackagesReducer.reorderPackagesOperation(
+        (state as any)[action.scope],
+        action as any,
+        dispatch,
+      );
+      break;
+
+    case "DELETE_PACKAGE":
+      z.DeletePackageInputSchema().parse(action.input);
+      PackagesReducer.deletePackageOperation(
         (state as any)[action.scope],
         action as any,
         dispatch,

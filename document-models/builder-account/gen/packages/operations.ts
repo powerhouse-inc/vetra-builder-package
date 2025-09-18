@@ -1,37 +1,37 @@
 import { type SignalDispatch } from "document-model";
 import {
-  type AddSpaceAction,
-  type DeleteSpaceAction,
-  type SetSpaceTitleAction,
-  type SetSpaceDescriptionAction,
-  type ReorderSpacesAction,
+  type AddPackageAction,
+  type SetPackageDriveIdAction,
+  type UpdatePackageAction,
+  type ReorderPackagesAction,
+  type DeletePackageAction,
 } from "./actions.js";
 import { type BuilderAccountState } from "../types.js";
 
-export interface BuilderAccountSpacesOperations {
-  addSpaceOperation: (
+export interface BuilderAccountPackagesOperations {
+  addPackageOperation: (
     state: BuilderAccountState,
-    action: AddSpaceAction,
+    action: AddPackageAction,
     dispatch?: SignalDispatch,
   ) => void;
-  deleteSpaceOperation: (
+  setPackageDriveIdOperation: (
     state: BuilderAccountState,
-    action: DeleteSpaceAction,
+    action: SetPackageDriveIdAction,
     dispatch?: SignalDispatch,
   ) => void;
-  setSpaceTitleOperation: (
+  updatePackageOperation: (
     state: BuilderAccountState,
-    action: SetSpaceTitleAction,
+    action: UpdatePackageAction,
     dispatch?: SignalDispatch,
   ) => void;
-  setSpaceDescriptionOperation: (
+  reorderPackagesOperation: (
     state: BuilderAccountState,
-    action: SetSpaceDescriptionAction,
+    action: ReorderPackagesAction,
     dispatch?: SignalDispatch,
   ) => void;
-  reorderSpacesOperation: (
+  deletePackageOperation: (
     state: BuilderAccountState,
-    action: ReorderSpacesAction,
+    action: DeletePackageAction,
     dispatch?: SignalDispatch,
   ) => void;
 }

@@ -2,15 +2,17 @@ import { createAction } from "document-model";
 import {
   z,
   type AddSpaceInput,
-  type RemoveSpaceInput,
-  type AddPackageToSpaceInput,
-  type RemovePackageFromSpaceInput,
+  type DeleteSpaceInput,
+  type SetSpaceTitleInput,
+  type SetSpaceDescriptionInput,
+  type ReorderSpacesInput,
 } from "../types.js";
 import {
   type AddSpaceAction,
-  type RemoveSpaceAction,
-  type AddPackageToSpaceAction,
-  type RemovePackageFromSpaceAction,
+  type DeleteSpaceAction,
+  type SetSpaceTitleAction,
+  type SetSpaceDescriptionAction,
+  type ReorderSpacesAction,
 } from "./actions.js";
 
 export const addSpace = (input: AddSpaceInput) =>
@@ -22,29 +24,38 @@ export const addSpace = (input: AddSpaceInput) =>
     "global",
   );
 
-export const removeSpace = (input: RemoveSpaceInput) =>
-  createAction<RemoveSpaceAction>(
-    "REMOVE_SPACE",
+export const deleteSpace = (input: DeleteSpaceInput) =>
+  createAction<DeleteSpaceAction>(
+    "DELETE_SPACE",
     { ...input },
     undefined,
-    z.RemoveSpaceInputSchema,
+    z.DeleteSpaceInputSchema,
     "global",
   );
 
-export const addPackageToSpace = (input: AddPackageToSpaceInput) =>
-  createAction<AddPackageToSpaceAction>(
-    "ADD_PACKAGE_TO_SPACE",
+export const setSpaceTitle = (input: SetSpaceTitleInput) =>
+  createAction<SetSpaceTitleAction>(
+    "SET_SPACE_TITLE",
     { ...input },
     undefined,
-    z.AddPackageToSpaceInputSchema,
+    z.SetSpaceTitleInputSchema,
     "global",
   );
 
-export const removePackageFromSpace = (input: RemovePackageFromSpaceInput) =>
-  createAction<RemovePackageFromSpaceAction>(
-    "REMOVE_PACKAGE_FROM_SPACE",
+export const setSpaceDescription = (input: SetSpaceDescriptionInput) =>
+  createAction<SetSpaceDescriptionAction>(
+    "SET_SPACE_DESCRIPTION",
     { ...input },
     undefined,
-    z.RemovePackageFromSpaceInputSchema,
+    z.SetSpaceDescriptionInputSchema,
+    "global",
+  );
+
+export const reorderSpaces = (input: ReorderSpacesInput) =>
+  createAction<ReorderSpacesAction>(
+    "REORDER_SPACES",
+    { ...input },
+    undefined,
+    z.ReorderSpacesInputSchema,
     "global",
   );
