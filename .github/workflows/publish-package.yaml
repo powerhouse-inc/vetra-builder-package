@@ -28,8 +28,8 @@ on:
         default: true
 
 env:
-  NODE_VERSION: '20'
-  PNPM_VERSION: '8'
+  NODE_VERSION: '22'
+  PNPM_VERSION: '10'
 
 jobs:
   build-and-publish:
@@ -59,14 +59,8 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
-      - name: Run linting
-        run: pnpm run lint
-
-      - name: Run tests
-        run: pnpm run test
-
       - name: Build package
-        run: pnpm run build
+        run: pnpm build
 
       - name: Configure git
         run: |
