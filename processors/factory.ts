@@ -5,26 +5,26 @@
 
 import {
   type IProcessorHostModule,
-  type ProcessorFactory,
   type ProcessorRecord,
 } from "document-drive/processors/types";
-import { type PHDocumentHeader } from "document-model";
 
-// Import processor factories here as they are generated
+// Import other processor factories here as they are generated
 import { vetraReadModelProcessorFactory } from "./vetra-read-model/factory.js";
+import { type PHDocumentHeader } from "document-model";
 
 export const processorFactory = (module: IProcessorHostModule) => {
   // Initialize all processor factories once with the module
-  const factories: Array<ProcessorFactory> = [];
-
-  // Add processors here as they are generated
+  const factories: Array<
+    (driveHeader: PHDocumentHeader) => Promise<ProcessorRecord[]>
+  > = [];
+  // Add other processors here as they are generated
   factories.push(vetraReadModelProcessorFactory(module));
 
   // Return the inner function that will be called for each drive
   return async (driveHeader: PHDocumentHeader): Promise<ProcessorRecord[]> => {
     const processors: ProcessorRecord[] = [];
 
-    // Call each cached factory with the driveHeader
+    // Call each cached factory with the driveId
     for (const factory of factories) {
       const factoryProcessors = await factory(driveHeader);
       processors.push(...factoryProcessors);

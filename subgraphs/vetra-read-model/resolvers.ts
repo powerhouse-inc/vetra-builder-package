@@ -10,10 +10,9 @@ export const getResolvers = (subgraph: Subgraph): Record<string, unknown> => {
     Query: {
       fetchAllBuilderAccounts: async (
         parent: unknown,
-        args: unknown,
-        context: { driveId?: string }
+        args: { driveId?: string }
       ) => {
-        const driveId = context.driveId || "default";
+        const driveId = args.driveId || "powerhouse";
         const accounts = await VetraReadModelProcessor.query<DB>(driveId, db)
           .selectFrom("builder_accounts")
           .selectAll()
@@ -37,10 +36,9 @@ export const getResolvers = (subgraph: Subgraph): Record<string, unknown> => {
 
       fetchBuilderAccount: async (
         parent: unknown,
-        args: { id: string },
-        context: { driveId?: string }
+        args: { driveId?: string; id: string }
       ) => {
-        const driveId = context.driveId || "default";
+        const driveId = args.driveId || "powerhouse";
         const account = await VetraReadModelProcessor.query<DB>(driveId, db)
           .selectFrom("builder_accounts")
           .selectAll()

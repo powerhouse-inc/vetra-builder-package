@@ -65,7 +65,7 @@ export const schema: DocumentNode = gql`
 
   type Query {
     example(driveId: String!): String
-    fetchAllBuilderAccounts: [BuilderAccountType!]!
-    fetchBuilderAccount(id: String!): BuilderAccountType
+    fetchAllBuilderAccounts(driveId: String): [BuilderAccountType!]!
+    fetchBuilderAccount(driveId: String, id: String!): BuilderAccountType
   }
 `;
