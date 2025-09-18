@@ -1,29 +1,28 @@
-import { type IRelationalDb } from "document-drive/processors/types";
 import { RelationalDbProcessor } from "document-drive/processors/relational";
 import { type InternalTransmitterUpdate } from "document-drive/server/listener/transmitter/internal";
-import { up } from "./migrations.js";
-import { type DB } from "./schema.js";
 import { generateId } from "document-model";
 import type {
+  AddMemberAction,
+  AddPackageAction,
+  AddSpaceAction,
   BuilderAccountAction,
+  DeletePackageAction,
+  DeleteSpaceAction,
+  RemoveMemberAction,
+  ReorderPackagesAction,
+  ReorderSpacesAction,
   SetLogoAction,
+  SetPackageDriveIdAction,
+  SetProfileDescriptionAction,
   SetProfileNameAction,
   SetSlugAction,
-  SetProfileDescriptionAction,
-  UpdateSocialsAction,
-  AddMemberAction,
-  RemoveMemberAction,
-  AddSpaceAction,
-  DeleteSpaceAction,
-  SetSpaceTitleAction,
   SetSpaceDescriptionAction,
-  ReorderSpacesAction,
-  AddPackageAction,
-  SetPackageDriveIdAction,
+  SetSpaceTitleAction,
   UpdatePackageAction,
-  ReorderPackagesAction,
-  DeletePackageAction,
+  UpdateSocialsAction,
 } from "../../document-models/builder-account/gen/actions.js";
+import { up } from "./migrations.js";
+import { type DB } from "./schema.js";
 
 export class VetraReadModelProcessor extends RelationalDbProcessor<DB> {
   static override getNamespace(driveId: string): string {
