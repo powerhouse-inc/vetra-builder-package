@@ -6,13 +6,19 @@ import {
   type SetProfileNameInput,
   type SetSlugInput,
   type SetProfileDescriptionInput,
-  type SetSocialsInput,
+  type UpdateSocialsInput,
   type AddMemberInput,
   type RemoveMemberInput,
   type AddSpaceInput,
-  type RemoveSpaceInput,
-  type AddPackageToSpaceInput,
-  type RemovePackageFromSpaceInput,
+  type DeleteSpaceInput,
+  type SetSpaceTitleInput,
+  type SetSpaceDescriptionInput,
+  type ReorderSpacesInput,
+  type AddPackageInput,
+  type SetPackageDriveIdInput,
+  type UpdatePackageInput,
+  type ReorderPackagesInput,
+  type DeletePackageInput,
   type BuilderAccountDocument,
 } from "../../document-models/builder-account/index.js";
 import { setName } from "document-model";
@@ -193,9 +199,9 @@ export const getResolvers = (subgraph: Subgraph): Record<string, unknown> => {
         return true;
       },
 
-      BuilderAccount_setSocials: async (
+      BuilderAccount_updateSocials: async (
         _: unknown,
-        args: { docId: string; input: SetSocialsInput },
+        args: { docId: string; input: UpdateSocialsInput },
       ) => {
         const { docId, input } = args;
         const doc = await reactor.getDocument<BuilderAccountDocument>(docId);
@@ -205,11 +211,11 @@ export const getResolvers = (subgraph: Subgraph): Record<string, unknown> => {
 
         const result = await reactor.addAction(
           docId,
-          actions.setSocials(input),
+          actions.updateSocials(input),
         );
 
         if (result.status !== "SUCCESS") {
-          throw new Error(result.error?.message ?? "Failed to setSocials");
+          throw new Error(result.error?.message ?? "Failed to updateSocials");
         }
 
         return true;
@@ -275,9 +281,9 @@ export const getResolvers = (subgraph: Subgraph): Record<string, unknown> => {
         return true;
       },
 
-      BuilderAccount_removeSpace: async (
+      BuilderAccount_deleteSpace: async (
         _: unknown,
-        args: { docId: string; input: RemoveSpaceInput },
+        args: { docId: string; input: DeleteSpaceInput },
       ) => {
         const { docId, input } = args;
         const doc = await reactor.getDocument<BuilderAccountDocument>(docId);
@@ -287,19 +293,19 @@ export const getResolvers = (subgraph: Subgraph): Record<string, unknown> => {
 
         const result = await reactor.addAction(
           docId,
-          actions.removeSpace(input),
+          actions.deleteSpace(input),
         );
 
         if (result.status !== "SUCCESS") {
-          throw new Error(result.error?.message ?? "Failed to removeSpace");
+          throw new Error(result.error?.message ?? "Failed to deleteSpace");
         }
 
         return true;
       },
 
-      BuilderAccount_addPackageToSpace: async (
+      BuilderAccount_setSpaceTitle: async (
         _: unknown,
-        args: { docId: string; input: AddPackageToSpaceInput },
+        args: { docId: string; input: SetSpaceTitleInput },
       ) => {
         const { docId, input } = args;
         const doc = await reactor.getDocument<BuilderAccountDocument>(docId);
@@ -309,21 +315,43 @@ export const getResolvers = (subgraph: Subgraph): Record<string, unknown> => {
 
         const result = await reactor.addAction(
           docId,
-          actions.addPackageToSpace(input),
+          actions.setSpaceTitle(input),
+        );
+
+        if (result.status !== "SUCCESS") {
+          throw new Error(result.error?.message ?? "Failed to setSpaceTitle");
+        }
+
+        return true;
+      },
+
+      BuilderAccount_setSpaceDescription: async (
+        _: unknown,
+        args: { docId: string; input: SetSpaceDescriptionInput },
+      ) => {
+        const { docId, input } = args;
+        const doc = await reactor.getDocument<BuilderAccountDocument>(docId);
+        if (!doc) {
+          throw new Error("Document not found");
+        }
+
+        const result = await reactor.addAction(
+          docId,
+          actions.setSpaceDescription(input),
         );
 
         if (result.status !== "SUCCESS") {
           throw new Error(
-            result.error?.message ?? "Failed to addPackageToSpace",
+            result.error?.message ?? "Failed to setSpaceDescription",
           );
         }
 
         return true;
       },
 
-      BuilderAccount_removePackageFromSpace: async (
+      BuilderAccount_reorderSpaces: async (
         _: unknown,
-        args: { docId: string; input: RemovePackageFromSpaceInput },
+        args: { docId: string; input: ReorderSpacesInput },
       ) => {
         const { docId, input } = args;
         const doc = await reactor.getDocument<BuilderAccountDocument>(docId);
@@ -333,13 +361,123 @@ export const getResolvers = (subgraph: Subgraph): Record<string, unknown> => {
 
         const result = await reactor.addAction(
           docId,
-          actions.removePackageFromSpace(input),
+          actions.reorderSpaces(input),
+        );
+
+        if (result.status !== "SUCCESS") {
+          throw new Error(result.error?.message ?? "Failed to reorderSpaces");
+        }
+
+        return true;
+      },
+
+      BuilderAccount_addPackage: async (
+        _: unknown,
+        args: { docId: string; input: AddPackageInput },
+      ) => {
+        const { docId, input } = args;
+        const doc = await reactor.getDocument<BuilderAccountDocument>(docId);
+        if (!doc) {
+          throw new Error("Document not found");
+        }
+
+        const result = await reactor.addAction(
+          docId,
+          actions.addPackage(input),
+        );
+
+        if (result.status !== "SUCCESS") {
+          throw new Error(result.error?.message ?? "Failed to addPackage");
+        }
+
+        return true;
+      },
+
+      BuilderAccount_setPackageDriveId: async (
+        _: unknown,
+        args: { docId: string; input: SetPackageDriveIdInput },
+      ) => {
+        const { docId, input } = args;
+        const doc = await reactor.getDocument<BuilderAccountDocument>(docId);
+        if (!doc) {
+          throw new Error("Document not found");
+        }
+
+        const result = await reactor.addAction(
+          docId,
+          actions.setPackageDriveId(input),
         );
 
         if (result.status !== "SUCCESS") {
           throw new Error(
-            result.error?.message ?? "Failed to removePackageFromSpace",
+            result.error?.message ?? "Failed to setPackageDriveId",
           );
+        }
+
+        return true;
+      },
+
+      BuilderAccount_updatePackage: async (
+        _: unknown,
+        args: { docId: string; input: UpdatePackageInput },
+      ) => {
+        const { docId, input } = args;
+        const doc = await reactor.getDocument<BuilderAccountDocument>(docId);
+        if (!doc) {
+          throw new Error("Document not found");
+        }
+
+        const result = await reactor.addAction(
+          docId,
+          actions.updatePackage(input),
+        );
+
+        if (result.status !== "SUCCESS") {
+          throw new Error(result.error?.message ?? "Failed to updatePackage");
+        }
+
+        return true;
+      },
+
+      BuilderAccount_reorderPackages: async (
+        _: unknown,
+        args: { docId: string; input: ReorderPackagesInput },
+      ) => {
+        const { docId, input } = args;
+        const doc = await reactor.getDocument<BuilderAccountDocument>(docId);
+        if (!doc) {
+          throw new Error("Document not found");
+        }
+
+        const result = await reactor.addAction(
+          docId,
+          actions.reorderPackages(input),
+        );
+
+        if (result.status !== "SUCCESS") {
+          throw new Error(result.error?.message ?? "Failed to reorderPackages");
+        }
+
+        return true;
+      },
+
+      BuilderAccount_deletePackage: async (
+        _: unknown,
+        args: { docId: string; input: DeletePackageInput },
+      ) => {
+        const { docId, input } = args;
+        const doc = await reactor.getDocument<BuilderAccountDocument>(docId);
+        if (!doc) {
+          throw new Error("Document not found");
+        }
+
+        const result = await reactor.addAction(
+          docId,
+          actions.deletePackage(input),
+        );
+
+        if (result.status !== "SUCCESS") {
+          throw new Error(result.error?.message ?? "Failed to deletePackage");
         }
 
         return true;

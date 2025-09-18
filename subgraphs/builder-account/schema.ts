@@ -26,9 +26,32 @@ export const schema: DocumentNode = gql`
   }
 
   type VetraBuilderSpace {
+    id: OID!
     title: String!
     description: String
-    packages: [PHID!]!
+    packages: [VetraBuilderPackage!]!
+  }
+
+  type VetraBuilderPackage {
+    id: OID!
+    name: String!
+    description: String
+    category: String
+    author: VetraBuilderPackageAuthor!
+    keywords: [VetraBuilderPackageKeyword!]!
+    github: URL
+    npm: URL
+    vetraDriveUrl: URL
+  }
+
+  type VetraBuilderPackageAuthor {
+    name: String!
+    website: URL
+  }
+
+  type VetraBuilderPackageKeyword {
+    id: OID!
+    label: String!
   }
 
   """
@@ -69,10 +92,10 @@ export const schema: DocumentNode = gql`
       docId: PHID
       input: BuilderAccount_SetProfileDescriptionInput
     ): Int
-    BuilderAccount_setSocials(
+    BuilderAccount_updateSocials(
       driveId: String
       docId: PHID
-      input: BuilderAccount_SetSocialsInput
+      input: BuilderAccount_UpdateSocialsInput
     ): Int
     BuilderAccount_addMember(
       driveId: String
@@ -89,20 +112,50 @@ export const schema: DocumentNode = gql`
       docId: PHID
       input: BuilderAccount_AddSpaceInput
     ): Int
-    BuilderAccount_removeSpace(
+    BuilderAccount_deleteSpace(
       driveId: String
       docId: PHID
-      input: BuilderAccount_RemoveSpaceInput
+      input: BuilderAccount_DeleteSpaceInput
     ): Int
-    BuilderAccount_addPackageToSpace(
+    BuilderAccount_setSpaceTitle(
       driveId: String
       docId: PHID
-      input: BuilderAccount_AddPackageToSpaceInput
+      input: BuilderAccount_SetSpaceTitleInput
     ): Int
-    BuilderAccount_removePackageFromSpace(
+    BuilderAccount_setSpaceDescription(
       driveId: String
       docId: PHID
-      input: BuilderAccount_RemovePackageFromSpaceInput
+      input: BuilderAccount_SetSpaceDescriptionInput
+    ): Int
+    BuilderAccount_reorderSpaces(
+      driveId: String
+      docId: PHID
+      input: BuilderAccount_ReorderSpacesInput
+    ): Int
+    BuilderAccount_addPackage(
+      driveId: String
+      docId: PHID
+      input: BuilderAccount_AddPackageInput
+    ): Int
+    BuilderAccount_setPackageDriveId(
+      driveId: String
+      docId: PHID
+      input: BuilderAccount_SetPackageDriveIdInput
+    ): Int
+    BuilderAccount_updatePackage(
+      driveId: String
+      docId: PHID
+      input: BuilderAccount_UpdatePackageInput
+    ): Int
+    BuilderAccount_reorderPackages(
+      driveId: String
+      docId: PHID
+      input: BuilderAccount_ReorderPackagesInput
+    ): Int
+    BuilderAccount_deletePackage(
+      driveId: String
+      docId: PHID
+      input: BuilderAccount_DeletePackageInput
     ): Int
   }
 
@@ -125,7 +178,7 @@ export const schema: DocumentNode = gql`
     "Add your inputs here"
     description: String
   }
-  input BuilderAccount_SetSocialsInput {
+  input BuilderAccount_UpdateSocialsInput {
     "Add your inputs here"
     x: URL
     github: URL
@@ -152,18 +205,65 @@ export const schema: DocumentNode = gql`
     title: String!
     description: String
   }
-  input BuilderAccount_RemoveSpaceInput {
+  input BuilderAccount_DeleteSpaceInput {
     "Add your inputs here"
-    slug: String
+    id: OID!
   }
-  input BuilderAccount_AddPackageToSpaceInput {
+  input BuilderAccount_SetSpaceTitleInput {
     "Add your inputs here"
-    spaceSlug: String!
-    package: PHID!
+    id: OID!
+    newTitle: String!
   }
-  input BuilderAccount_RemovePackageFromSpaceInput {
+  input BuilderAccount_SetSpaceDescriptionInput {
     "Add your inputs here"
-    spaceSlug: String!
-    package: PHID!
+    id: OID!
+    description: String!
+  }
+  input BuilderAccount_ReorderSpacesInput {
+    "Add your inputs here"
+    ids: [OID!]!
+    insertAfter: OID
+  }
+
+  """
+  Module: Packages
+  """
+  input BuilderAccount_AuthorInput {
+    name: String!
+    website: URL
+  }
+
+  input AddPackageInput {
+    "Add your inputs here"
+    spaceId: OID!
+    name: String!
+    description: String
+    category: String
+    author: AuthorInput
+    keywords: [String!]
+    github: URL
+    npm: URL
+    vetraDriveUrl: URL
+  }
+  input BuilderAccount_SetPackageDriveIdInput {
+    "Add your inputs here"
+    packageId: OID!
+    driveId: String
+  }
+  input BuilderAccount_UpdatePackageInput {
+    "Add your inputs here"
+    id: OID!
+    title: String
+    description: String
+  }
+  input BuilderAccount_ReorderPackagesInput {
+    "Add your inputs here"
+    spaceId: OID!
+    ids: [OID!]!
+    insertAfter: OID
+  }
+  input BuilderAccount_DeletePackageInput {
+    "Add your inputs here"
+    id: OID!
   }
 `;
