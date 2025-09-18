@@ -233,13 +233,13 @@ export const schema: DocumentNode = gql`
     website: URL
   }
 
-  input AddPackageInput {
+  input BuilderAccount_AddPackageInput {
     "Add your inputs here"
     spaceId: OID!
     name: String!
     description: String
     category: String
-    author: AuthorInput
+    author: BuilderAccount_AuthorInput
     keywords: [String!]
     github: URL
     npm: URL

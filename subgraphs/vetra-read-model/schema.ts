@@ -5,7 +5,7 @@ export const schema: DocumentNode = gql`
   """
   Subgraph definition for Vetra Read Model
   """
-  type BuilderAccount {
+  type BuilderAccountType {
     id: String!
     profileName: String!
     profileSlug: String!
@@ -65,7 +65,7 @@ export const schema: DocumentNode = gql`
 
   type Query {
     example(driveId: String!): String
-    fetchAllBuilderAccounts: [BuilderAccount!]!
-    fetchBuilderAccount(id: String!): BuilderAccount
+    fetchAllBuilderAccounts: [BuilderAccountType!]!
+    fetchBuilderAccount(id: String!): BuilderAccountType
   }
 `;
