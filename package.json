@@ -55,6 +55,7 @@
     "@powerhousedao/builder-tools": "staging",
     "@powerhousedao/common": "staging",
     "@powerhousedao/design-system": "staging",
+    "@powerhousedao/document-engineering": "^1.36.0",
     "document-model": "staging",
     "graphql": "^16.10.0",
     "graphql-tag": "^2.12.6",
