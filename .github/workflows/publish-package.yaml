@@ -56,6 +56,9 @@ jobs:
           cache: 'pnpm'
           registry-url: 'https://registry.npmjs.org'
 
+      - name: Configure pnpm registry
+        run: pnpm config set registry https://registry.npmjs.org/
+
       - name: Install dependencies
         run: pnpm install
 
@@ -98,9 +101,9 @@ jobs:
         if: steps.version.outputs.dry-run == 'false'
         run: |
           if [ "${{ steps.version.outputs.version }}" = "patch" ] || [ "${{ steps.version.outputs.version }}" = "minor" ] || [ "${{ steps.version.outputs.version }}" = "major" ]; then
-            npm version ${{ steps.version.outputs.version }} --no-git-tag-version
+            pnpm version ${{ steps.version.outputs.version }} --no-git-tag-version
           else
-            npm version ${{ steps.version.outputs.version }} --no-git-tag-version
+            pnpm version ${{ steps.version.outputs.version }} --no-git-tag-version
           fi
 
       - name: Build package
@@ -110,9 +113,9 @@ jobs:
         if: steps.version.outputs.dry-run == 'false'
         run: |
           if [ "${{ steps.version.outputs.tag }}" = "latest" ]; then
-            npm publish --access public --provenance
+            pnpm publish --access public --provenance
           else
-            npm publish --tag ${{ steps.version.outputs.tag }} --access public --provenance
+            pnpm publish --tag ${{ steps.version.outputs.tag }} --access public --provenance
           fi
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_ACCESS_TOKEN }}
