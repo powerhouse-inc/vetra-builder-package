@@ -69,5 +69,5 @@ jobs:
             npx semantic-release
           fi
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ github.token }}
           NPM_TOKEN: ${{ secrets.NPM_ACCESS_TOKEN }}
