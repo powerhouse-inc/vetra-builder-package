@@ -41,13 +41,14 @@ export const getResolvers = (subgraph: Subgraph): Record<string, unknown> => {
               const docIds = await reactor.getDocuments(driveId);
               if (!docIds.includes(docId)) {
                 throw new Error(
-                  `Document with id ${docId} is not part of ${driveId}`,
+                  `Document with id ${docId} is not part of ${driveId}`
                 );
               }
             }
 
-            const doc =
-              await reactor.getDocument<BuilderAccountDocument>(docId);
+            const doc = await reactor.getDocument<BuilderAccountDocument>(
+              docId
+            );
             return {
               driveId: driveId,
               ...doc,
@@ -64,8 +65,9 @@ export const getResolvers = (subgraph: Subgraph): Record<string, unknown> => {
             const docsIds = await reactor.getDocuments(driveId);
             const docs = await Promise.all(
               docsIds.map(async (docId) => {
-                const doc =
-                  await reactor.getDocument<BuilderAccountDocument>(docId);
+                const doc = await reactor.getDocument<BuilderAccountDocument>(
+                  docId
+                );
                 return {
                   driveId: driveId,
                   ...doc,
@@ -76,12 +78,12 @@ export const getResolvers = (subgraph: Subgraph): Record<string, unknown> => {
                   stateJSON: doc.state.global,
                   revision: doc.header?.revision?.global ?? 0,
                 };
-              }),
+              })
             );
 
             return docs.filter(
               (doc) =>
-                doc.header.documentType === "powerhouse/vetra/builder-account",
+                doc.header.documentType === "powerhouse/vetra/builder-account"
             );
           },
         };
@@ -90,11 +92,11 @@ export const getResolvers = (subgraph: Subgraph): Record<string, unknown> => {
     Mutation: {
       BuilderAccount_createDocument: async (
         _: unknown,
-        args: { name: string; driveId?: string },
+        args: { name: string; driveId?: string }
       ) => {
         const { driveId, name } = args;
         const document = await reactor.addDocument(
-          "powerhouse/vetra/builder-account",
+          "powerhouse/vetra/builder-account"
         );
 
         if (driveId) {
@@ -104,7 +106,7 @@ export const getResolvers = (subgraph: Subgraph): Record<string, unknown> => {
               name,
               id: document.header.id,
               documentType: "powerhouse/vetra/builder-account",
-            }),
+            })
           );
         }
 
@@ -117,7 +119,7 @@ export const getResolvers = (subgraph: Subgraph): Record<string, unknown> => {
 
       BuilderAccount_setLogo: async (
         _: unknown,
-        args: { docId: string; input: SetLogoInput },
+        args: { docId: string; input: SetLogoInput }
       ) => {
         const { docId, input } = args;
         const doc = await reactor.getDocument<BuilderAccountDocument>(docId);
@@ -136,7 +138,7 @@ export const getResolvers = (subgraph: Subgraph): Record<string, unknown> => {
 
       BuilderAccount_setProfileName: async (
         _: unknown,
-        args: { docId: string; input: SetProfileNameInput },
+        args: { docId: string; input: SetProfileNameInput }
       ) => {
         const { docId, input } = args;
         const doc = await reactor.getDocument<BuilderAccountDocument>(docId);
@@ -146,7 +148,7 @@ export const getResolvers = (subgraph: Subgraph): Record<string, unknown> => {
 
         const result = await reactor.addAction(
           docId,
-          actions.setProfileName(input),
+          actions.setProfileName(input)
         );
 
         if (result.status !== "SUCCESS") {
@@ -158,7 +160,7 @@ export const getResolvers = (subgraph: Subgraph): Record<string, unknown> => {
 
       BuilderAccount_setSlug: async (
         _: unknown,
-        args: { docId: string; input: SetSlugInput },
+        args: { docId: string; input: SetSlugInput }
       ) => {
         const { docId, input } = args;
         const doc = await reactor.getDocument<BuilderAccountDocument>(docId);
@@ -177,7 +179,7 @@ export const getResolvers = (subgraph: Subgraph): Record<string, unknown> => {
 
       BuilderAccount_setProfileDescription: async (
         _: unknown,
-        args: { docId: string; input: SetProfileDescriptionInput },
+        args: { docId: string; input: SetProfileDescriptionInput }
       ) => {
         const { docId, input } = args;
         const doc = await reactor.getDocument<BuilderAccountDocument>(docId);
@@ -187,12 +189,12 @@ export const getResolvers = (subgraph: Subgraph): Record<string, unknown> => {
 
         const result = await reactor.addAction(
           docId,
-          actions.setProfileDescription(input),
+          actions.setProfileDescription(input)
         );
 
         if (result.status !== "SUCCESS") {
           throw new Error(
-            result.error?.message ?? "Failed to setProfileDescription",
+            result.error?.message ?? "Failed to setProfileDescription"
           );
         }
 
@@ -201,7 +203,7 @@ export const getResolvers = (subgraph: Subgraph): Record<string, unknown> => {
 
       BuilderAccount_updateSocials: async (
         _: unknown,
-        args: { docId: string; input: UpdateSocialsInput },
+        args: { docId: string; input: UpdateSocialsInput }
       ) => {
         const { docId, input } = args;
         const doc = await reactor.getDocument<BuilderAccountDocument>(docId);
@@ -211,7 +213,7 @@ export const getResolvers = (subgraph: Subgraph): Record<string, unknown> => {
 
         const result = await reactor.addAction(
           docId,
-          actions.updateSocials(input),
+          actions.updateSocials(input)
         );
 
         if (result.status !== "SUCCESS") {
@@ -223,7 +225,7 @@ export const getResolvers = (subgraph: Subgraph): Record<string, unknown> => {
 
       BuilderAccount_addMember: async (
         _: unknown,
-        args: { docId: string; input: AddMemberInput },
+        args: { docId: string; input: AddMemberInput }
       ) => {
         const { docId, input } = args;
         const doc = await reactor.getDocument<BuilderAccountDocument>(docId);
@@ -242,7 +244,7 @@ export const getResolvers = (subgraph: Subgraph): Record<string, unknown> => {
 
       BuilderAccount_removeMember: async (
         _: unknown,
-        args: { docId: string; input: RemoveMemberInput },
+        args: { docId: string; input: RemoveMemberInput }
       ) => {
         const { docId, input } = args;
         const doc = await reactor.getDocument<BuilderAccountDocument>(docId);
@@ -252,7 +254,7 @@ export const getResolvers = (subgraph: Subgraph): Record<string, unknown> => {
 
         const result = await reactor.addAction(
           docId,
-          actions.removeMember(input),
+          actions.removeMember(input)
         );
 
         if (result.status !== "SUCCESS") {
@@ -264,7 +266,7 @@ export const getResolvers = (subgraph: Subgraph): Record<string, unknown> => {
 
       BuilderAccount_addSpace: async (
         _: unknown,
-        args: { docId: string; input: AddSpaceInput },
+        args: { docId: string; input: AddSpaceInput }
       ) => {
         const { docId, input } = args;
         const doc = await reactor.getDocument<BuilderAccountDocument>(docId);
@@ -283,7 +285,7 @@ export const getResolvers = (subgraph: Subgraph): Record<string, unknown> => {
 
       BuilderAccount_deleteSpace: async (
         _: unknown,
-        args: { docId: string; input: DeleteSpaceInput },
+        args: { docId: string; input: DeleteSpaceInput }
       ) => {
         const { docId, input } = args;
         const doc = await reactor.getDocument<BuilderAccountDocument>(docId);
@@ -293,7 +295,7 @@ export const getResolvers = (subgraph: Subgraph): Record<string, unknown> => {
 
         const result = await reactor.addAction(
           docId,
-          actions.deleteSpace(input),
+          actions.deleteSpace(input)
         );
 
         if (result.status !== "SUCCESS") {
@@ -305,7 +307,7 @@ export const getResolvers = (subgraph: Subgraph): Record<string, unknown> => {
 
       BuilderAccount_setSpaceTitle: async (
         _: unknown,
-        args: { docId: string; input: SetSpaceTitleInput },
+        args: { docId: string; input: SetSpaceTitleInput }
       ) => {
         const { docId, input } = args;
         const doc = await reactor.getDocument<BuilderAccountDocument>(docId);
@@ -315,7 +317,7 @@ export const getResolvers = (subgraph: Subgraph): Record<string, unknown> => {
 
         const result = await reactor.addAction(
           docId,
-          actions.setSpaceTitle(input),
+          actions.setSpaceTitle(input)
         );
 
         if (result.status !== "SUCCESS") {
@@ -327,7 +329,7 @@ export const getResolvers = (subgraph: Subgraph): Record<string, unknown> => {
 
       BuilderAccount_setSpaceDescription: async (
         _: unknown,
-        args: { docId: string; input: SetSpaceDescriptionInput },
+        args: { docId: string; input: SetSpaceDescriptionInput }
       ) => {
         const { docId, input } = args;
         const doc = await reactor.getDocument<BuilderAccountDocument>(docId);
@@ -337,12 +339,12 @@ export const getResolvers = (subgraph: Subgraph): Record<string, unknown> => {
 
         const result = await reactor.addAction(
           docId,
-          actions.setSpaceDescription(input),
+          actions.setSpaceDescription(input)
         );
 
         if (result.status !== "SUCCESS") {
           throw new Error(
-            result.error?.message ?? "Failed to setSpaceDescription",
+            result.error?.message ?? "Failed to setSpaceDescription"
           );
         }
 
@@ -351,7 +353,7 @@ export const getResolvers = (subgraph: Subgraph): Record<string, unknown> => {
 
       BuilderAccount_reorderSpaces: async (
         _: unknown,
-        args: { docId: string; input: ReorderSpacesInput },
+        args: { docId: string; input: ReorderSpacesInput }
       ) => {
         const { docId, input } = args;
         const doc = await reactor.getDocument<BuilderAccountDocument>(docId);
@@ -361,7 +363,7 @@ export const getResolvers = (subgraph: Subgraph): Record<string, unknown> => {
 
         const result = await reactor.addAction(
           docId,
-          actions.reorderSpaces(input),
+          actions.reorderSpaces(input)
         );
 
         if (result.status !== "SUCCESS") {
@@ -373,7 +375,7 @@ export const getResolvers = (subgraph: Subgraph): Record<string, unknown> => {
 
       BuilderAccount_addPackage: async (
         _: unknown,
-        args: { docId: string; input: AddPackageInput },
+        args: { docId: string; input: AddPackageInput }
       ) => {
         const { docId, input } = args;
         const doc = await reactor.getDocument<BuilderAccountDocument>(docId);
@@ -383,7 +385,7 @@ export const getResolvers = (subgraph: Subgraph): Record<string, unknown> => {
 
         const result = await reactor.addAction(
           docId,
-          actions.addPackage(input),
+          actions.addPackage(input)
         );
 
         if (result.status !== "SUCCESS") {
@@ -395,7 +397,7 @@ export const getResolvers = (subgraph: Subgraph): Record<string, unknown> => {
 
       BuilderAccount_setPackageDriveId: async (
         _: unknown,
-        args: { docId: string; input: SetPackageDriveIdInput },
+        args: { docId: string; input: SetPackageDriveIdInput }
       ) => {
         const { docId, input } = args;
         const doc = await reactor.getDocument<BuilderAccountDocument>(docId);
@@ -405,12 +407,12 @@ export const getResolvers = (subgraph: Subgraph): Record<string, unknown> => {
 
         const result = await reactor.addAction(
           docId,
-          actions.setPackageDriveId(input),
+          actions.setPackageDriveId(input)
         );
 
         if (result.status !== "SUCCESS") {
           throw new Error(
-            result.error?.message ?? "Failed to setPackageDriveId",
+            result.error?.message ?? "Failed to setPackageDriveId"
           );
         }
 
@@ -419,7 +421,7 @@ export const getResolvers = (subgraph: Subgraph): Record<string, unknown> => {
 
       BuilderAccount_updatePackage: async (
         _: unknown,
-        args: { docId: string; input: UpdatePackageInput },
+        args: { docId: string; input: UpdatePackageInput }
       ) => {
         const { docId, input } = args;
         const doc = await reactor.getDocument<BuilderAccountDocument>(docId);
@@ -429,7 +431,7 @@ export const getResolvers = (subgraph: Subgraph): Record<string, unknown> => {
 
         const result = await reactor.addAction(
           docId,
-          actions.updatePackage(input),
+          actions.updatePackage(input)
         );
 
         if (result.status !== "SUCCESS") {
@@ -441,7 +443,7 @@ export const getResolvers = (subgraph: Subgraph): Record<string, unknown> => {
 
       BuilderAccount_reorderPackages: async (
         _: unknown,
-        args: { docId: string; input: ReorderPackagesInput },
+        args: { docId: string; input: ReorderPackagesInput }
       ) => {
         const { docId, input } = args;
         const doc = await reactor.getDocument<BuilderAccountDocument>(docId);
@@ -451,7 +453,7 @@ export const getResolvers = (subgraph: Subgraph): Record<string, unknown> => {
 
         const result = await reactor.addAction(
           docId,
-          actions.reorderPackages(input),
+          actions.reorderPackages(input)
         );
 
         if (result.status !== "SUCCESS") {
@@ -463,7 +465,7 @@ export const getResolvers = (subgraph: Subgraph): Record<string, unknown> => {
 
       BuilderAccount_deletePackage: async (
         _: unknown,
-        args: { docId: string; input: DeletePackageInput },
+        args: { docId: string; input: DeletePackageInput }
       ) => {
         const { docId, input } = args;
         const doc = await reactor.getDocument<BuilderAccountDocument>(docId);
@@ -473,7 +475,7 @@ export const getResolvers = (subgraph: Subgraph): Record<string, unknown> => {
 
         const result = await reactor.addAction(
           docId,
-          actions.deletePackage(input),
+          actions.deletePackage(input)
         );
 
         if (result.status !== "SUCCESS") {

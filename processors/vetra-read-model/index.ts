@@ -1,6 +1,5 @@
 import { RelationalDbProcessor } from "document-drive/processors/relational";
 import { type InternalTransmitterUpdate } from "document-drive/server/listener/transmitter/internal";
-import { generateId } from "document-model";
 import type {
   AddMemberAction,
   AddPackageAction,
@@ -23,6 +22,8 @@ import type {
 } from "../../document-models/builder-account/gen/actions.js";
 import { up } from "./migrations.js";
 import { type DB } from "./schema.js";
+import { toPascalCase } from "document-drive/utils/misc";
+import type { BuilderAccountState } from "document-models/builder-account/index.js";
 
 export class VetraReadModelProcessor extends RelationalDbProcessor<DB> {
   static override getNamespace(driveId: string): string {
@@ -49,7 +50,8 @@ export class VetraReadModelProcessor extends RelationalDbProcessor<DB> {
       for (const operation of strand.operations) {
         await this.handleOperation(
           strand.documentId,
-          operation.action as BuilderAccountAction
+          operation.action as BuilderAccountAction,
+          operation.state as unknown as BuilderAccountState
         );
       }
     }
@@ -57,66 +59,67 @@ export class VetraReadModelProcessor extends RelationalDbProcessor<DB> {
 
   private async handleOperation(
     documentId: string,
-    action: BuilderAccountAction
+    action: BuilderAccountAction,
+    state: BuilderAccountState
   ): Promise<void> {
     switch (action.type) {
       // Profile operations
       case "SET_LOGO":
-        await this.handleSetLogo(documentId, action);
+        await this.handleSetLogo(documentId, action, state);
         break;
       case "SET_PROFILE_NAME":
-        await this.handleSetProfileName(documentId, action);
+        await this.handleSetProfileName(documentId, action, state);
         break;
       case "SET_SLUG":
-        await this.handleSetSlug(documentId, action);
+        await this.handleSetSlug(documentId, action, state);
         break;
       case "SET_PROFILE_DESCRIPTION":
-        await this.handleSetProfileDescription(documentId, action);
+        await this.handleSetProfileDescription(documentId, action, state);
         break;
       case "UPDATE_SOCIALS":
-        await this.handleUpdateSocials(documentId, action);
+        await this.handleUpdateSocials(documentId, action, state);
         break;
 
       // Members operations
       case "ADD_MEMBER":
-        await this.handleAddMember(documentId, action);
+        await this.handleAddMember(documentId, action, state);
         break;
       case "REMOVE_MEMBER":
-        await this.handleRemoveMember(documentId, action);
+        await this.handleRemoveMember(documentId, action, state);
         break;
 
       // Spaces operations
       case "ADD_SPACE":
-        await this.handleAddSpace(documentId, action);
+        await this.handleAddSpace(documentId, action, state);
         break;
       case "DELETE_SPACE":
-        await this.handleDeleteSpace(documentId, action);
+        await this.handleDeleteSpace(documentId, action, state);
         break;
       case "SET_SPACE_TITLE":
-        await this.handleSetSpaceTitle(documentId, action);
+        await this.handleSetSpaceTitle(documentId, action, state);
         break;
       case "SET_SPACE_DESCRIPTION":
-        await this.handleSetSpaceDescription(documentId, action);
+        await this.handleSetSpaceDescription(documentId, action, state);
         break;
       case "REORDER_SPACES":
-        await this.handleReorderSpaces(documentId, action);
+        await this.handleReorderSpaces(documentId, action, state);
         break;
 
       // Packages operations
       case "ADD_PACKAGE":
-        await this.handleAddPackage(documentId, action);
+        await this.handleAddPackage(documentId, action, state);
         break;
       case "SET_PACKAGE_DRIVE_ID":
-        await this.handleSetPackageDriveId(documentId, action);
+        await this.handleSetPackageDriveId(documentId, action, state);
         break;
       case "UPDATE_PACKAGE":
-        await this.handleUpdatePackage(documentId, action);
+        await this.handleUpdatePackage(documentId, action, state);
         break;
       case "REORDER_PACKAGES":
-        await this.handleReorderPackages(documentId, action);
+        await this.handleReorderPackages(documentId, action, state);
         break;
       case "DELETE_PACKAGE":
-        await this.handleDeletePackage(documentId, action);
+        await this.handleDeletePackage(documentId, action, state);
         break;
     }
   }
@@ -124,7 +127,8 @@ export class VetraReadModelProcessor extends RelationalDbProcessor<DB> {
   // Profile operations
   private async handleSetLogo(
     documentId: string,
-    action: SetLogoAction
+    action: SetLogoAction,
+    state: BuilderAccountState
   ): Promise<void> {
     await this.ensureBuilderAccount(documentId);
     await this.relationalDb
@@ -139,7 +143,8 @@ export class VetraReadModelProcessor extends RelationalDbProcessor<DB> {
 
   private async handleSetProfileName(
     documentId: string,
-    action: SetProfileNameAction
+    action: SetProfileNameAction,
+    state: BuilderAccountState
   ): Promise<void> {
     await this.ensureBuilderAccount(documentId);
     await this.relationalDb
@@ -154,7 +159,8 @@ export class VetraReadModelProcessor extends RelationalDbProcessor<DB> {
 
   private async handleSetSlug(
     documentId: string,
-    action: SetSlugAction
+    action: SetSlugAction,
+    state: BuilderAccountState
   ): Promise<void> {
     await this.ensureBuilderAccount(documentId);
     await this.relationalDb
@@ -169,7 +175,8 @@ export class VetraReadModelProcessor extends RelationalDbProcessor<DB> {
 
   private async handleSetProfileDescription(
     documentId: string,
-    action: SetProfileDescriptionAction
+    action: SetProfileDescriptionAction,
+    state: BuilderAccountState
   ): Promise<void> {
     await this.ensureBuilderAccount(documentId);
     await this.relationalDb
@@ -184,7 +191,8 @@ export class VetraReadModelProcessor extends RelationalDbProcessor<DB> {
 
   private async handleUpdateSocials(
     documentId: string,
-    action: UpdateSocialsAction
+    action: UpdateSocialsAction,
+    state: BuilderAccountState
   ): Promise<void> {
     await this.ensureBuilderAccount(documentId);
     await this.relationalDb
@@ -202,7 +210,8 @@ export class VetraReadModelProcessor extends RelationalDbProcessor<DB> {
   // Members operations
   private async handleAddMember(
     documentId: string,
-    action: AddMemberAction
+    action: AddMemberAction,
+    state: BuilderAccountState
   ): Promise<void> {
     await this.ensureBuilderAccount(documentId);
 
@@ -220,7 +229,7 @@ export class VetraReadModelProcessor extends RelationalDbProcessor<DB> {
       await this.relationalDb
         .insertInto("builder_account_members")
         .values({
-          id: generateId(),
+          id: action.input.ethAddress,
           builder_account_id: documentId,
           eth_address: action.input.ethAddress,
           created_at: new Date(),
@@ -231,7 +240,8 @@ export class VetraReadModelProcessor extends RelationalDbProcessor<DB> {
 
   private async handleRemoveMember(
     documentId: string,
-    action: RemoveMemberAction
+    action: RemoveMemberAction,
+    state: BuilderAccountState
   ): Promise<void> {
     if (!action.input.ethAddress) return;
 
@@ -245,11 +255,12 @@ export class VetraReadModelProcessor extends RelationalDbProcessor<DB> {
   // Spaces operations
   private async handleAddSpace(
     documentId: string,
-    action: AddSpaceAction
+    action: AddSpaceAction,
+    state: BuilderAccountState
   ): Promise<void> {
     await this.ensureBuilderAccount(documentId);
 
-    const spaceId = generateId();
+    const spaceId = toPascalCase(action.input.title);
     await this.relationalDb
       .insertInto("builder_spaces")
       .values({
@@ -267,7 +278,8 @@ export class VetraReadModelProcessor extends RelationalDbProcessor<DB> {
 
   private async handleDeleteSpace(
     documentId: string,
-    action: DeleteSpaceAction
+    action: DeleteSpaceAction,
+    state: BuilderAccountState
   ): Promise<void> {
     await this.relationalDb
       .deleteFrom("builder_spaces")
@@ -278,7 +290,8 @@ export class VetraReadModelProcessor extends RelationalDbProcessor<DB> {
 
   private async handleSetSpaceTitle(
     documentId: string,
-    action: SetSpaceTitleAction
+    action: SetSpaceTitleAction,
+    state: BuilderAccountState
   ): Promise<void> {
     await this.relationalDb
       .updateTable("builder_spaces")
@@ -293,7 +306,8 @@ export class VetraReadModelProcessor extends RelationalDbProcessor<DB> {
 
   private async handleSetSpaceDescription(
     documentId: string,
-    action: SetSpaceDescriptionAction
+    action: SetSpaceDescriptionAction,
+    state: BuilderAccountState
   ): Promise<void> {
     await this.relationalDb
       .updateTable("builder_spaces")
@@ -308,7 +322,8 @@ export class VetraReadModelProcessor extends RelationalDbProcessor<DB> {
 
   private async handleReorderSpaces(
     documentId: string,
-    action: ReorderSpacesAction
+    action: ReorderSpacesAction,
+    state: BuilderAccountState
   ): Promise<void> {
     const { ids, insertAfter } = action.input;
 
@@ -331,14 +346,16 @@ export class VetraReadModelProcessor extends RelationalDbProcessor<DB> {
   // Packages operations
   private async handleAddPackage(
     documentId: string,
-    action: AddPackageAction
+    action: AddPackageAction,
+    state: BuilderAccountState
   ): Promise<void> {
-    const packageId = generateId();
+    const packageId =
+      action.input.spaceId + "-" + toPascalCase(action.input.name);
 
     await this.relationalDb
       .insertInto("builder_packages")
       .values({
-        id: packageId,
+        id: `${packageId}`,
         space_id: action.input.spaceId,
         name: action.input.name,
         description: action.input.description || null,
@@ -362,7 +379,7 @@ export class VetraReadModelProcessor extends RelationalDbProcessor<DB> {
         await this.relationalDb
           .insertInto("builder_package_keywords")
           .values({
-            id: generateId(),
+            id: `${packageId}-${keyword}`,
             package_id: packageId,
             label: keyword,
             created_at: new Date(),
@@ -374,7 +391,8 @@ export class VetraReadModelProcessor extends RelationalDbProcessor<DB> {
 
   private async handleSetPackageDriveId(
     documentId: string,
-    action: SetPackageDriveIdAction
+    action: SetPackageDriveIdAction,
+    state: BuilderAccountState
   ): Promise<void> {
     await this.relationalDb
       .updateTable("builder_packages")
@@ -388,7 +406,8 @@ export class VetraReadModelProcessor extends RelationalDbProcessor<DB> {
 
   private async handleUpdatePackage(
     documentId: string,
-    action: UpdatePackageAction
+    action: UpdatePackageAction,
+    state: BuilderAccountState
   ): Promise<void> {
     const updates: Record<string, any> = { updated_at: new Date() };
 
@@ -408,7 +427,8 @@ export class VetraReadModelProcessor extends RelationalDbProcessor<DB> {
 
   private async handleReorderPackages(
     documentId: string,
-    action: ReorderPackagesAction
+    action: ReorderPackagesAction,
+    state: BuilderAccountState
   ): Promise<void> {
     const { ids, insertAfter, spaceId } = action.input;
 
@@ -430,7 +450,8 @@ export class VetraReadModelProcessor extends RelationalDbProcessor<DB> {
 
   private async handleDeletePackage(
     documentId: string,
-    action: DeletePackageAction
+    action: DeletePackageAction,
+    state: BuilderAccountState
   ): Promise<void> {
     await this.relationalDb
       .deleteFrom("builder_packages")

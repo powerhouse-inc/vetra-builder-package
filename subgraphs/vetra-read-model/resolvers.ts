@@ -7,72 +7,13 @@ export const getResolvers = (subgraph: Subgraph): Record<string, unknown> => {
   const db = subgraph.relationalDb;
 
   return {
-    Query: {
-      fetchAllBuilderAccounts: async (
-        parent: unknown,
-        args: { driveId?: string }
-      ) => {
-        const driveId = args.driveId || "powerhouse";
-        const accounts = await VetraReadModelProcessor.query<DB>(driveId, db)
-          .selectFrom("builder_accounts")
-          .selectAll()
-          .execute();
-
-        return accounts.map((account) => ({
-          id: account.id,
-          profileName: account.profile_name,
-          profileSlug: account.profile_slug,
-          profileLogo: account.profile_logo,
-          profileDescription: account.profile_description,
-          profileSocialsX: account.profile_socials_x,
-          profileSocialsGithub: account.profile_socials_github,
-          profileSocialsWebsite: account.profile_socials_website,
-          createdAt: account.created_at.toISOString(),
-          updatedAt: account.updated_at.toISOString(),
-          spaces: [], // Will be resolved by field resolver
-          members: [], // Will be resolved by field resolver
-        }));
-      },
-
-      fetchBuilderAccount: async (
-        parent: unknown,
-        args: { driveId?: string; id: string }
-      ) => {
-        const driveId = args.driveId || "powerhouse";
-        const account = await VetraReadModelProcessor.query<DB>(driveId, db)
-          .selectFrom("builder_accounts")
-          .selectAll()
-          .where("id", "=", args.id)
-          .executeTakeFirst();
-
-        if (!account) {
-          return null;
-        }
-
-        return {
-          id: account.id,
-          profileName: account.profile_name,
-          profileSlug: account.profile_slug,
-          profileLogo: account.profile_logo,
-          profileDescription: account.profile_description,
-          profileSocialsX: account.profile_socials_x,
-          profileSocialsGithub: account.profile_socials_github,
-          profileSocialsWebsite: account.profile_socials_website,
-          createdAt: account.created_at.toISOString(),
-          updatedAt: account.updated_at.toISOString(),
-          spaces: [], // Will be resolved by field resolver
-          members: [], // Will be resolved by field resolver
-        };
-      },
-    },
-
-    BuilderAccount: {
+    BuilderAccountType: {
       spaces: async (
         parent: { id: string },
         args: unknown,
         context: { driveId?: string }
       ) => {
-        const driveId = context.driveId || "default";
+        const driveId = context.driveId || "powerhouse";
         const spaces = await VetraReadModelProcessor.query<DB>(driveId, db)
           .selectFrom("builder_spaces")
           .selectAll()
@@ -88,6 +29,7 @@ export const getResolvers = (subgraph: Subgraph): Record<string, unknown> => {
           sortOrder: space.sort_order,
           createdAt: space.created_at.toISOString(),
           updatedAt: space.updated_at.toISOString(),
+          driveId: driveId, // Pass driveId to field resolvers
           packages: [], // Will be resolved by field resolver
         }));
       },
@@ -97,7 +39,7 @@ export const getResolvers = (subgraph: Subgraph): Record<string, unknown> => {
         args: unknown,
         context: { driveId?: string }
       ) => {
-        const driveId = context.driveId || "default";
+        const driveId = context.driveId || "powerhouse";
         const members = await VetraReadModelProcessor.query<DB>(driveId, db)
           .selectFrom("builder_account_members")
           .selectAll()
@@ -115,11 +57,11 @@ export const getResolvers = (subgraph: Subgraph): Record<string, unknown> => {
 
     BuilderSpace: {
       packages: async (
-        parent: { id: string },
+        parent: { id: string; driveId?: string },
         args: unknown,
         context: { driveId?: string }
       ) => {
-        const driveId = context.driveId || "default";
+        const driveId = parent.driveId || context.driveId || "powerhouse";
         const packages = await VetraReadModelProcessor.query<DB>(driveId, db)
           .selectFrom("builder_packages")
           .selectAll()
@@ -153,7 +95,7 @@ export const getResolvers = (subgraph: Subgraph): Record<string, unknown> => {
         args: unknown,
         context: { driveId?: string }
       ) => {
-        const driveId = context.driveId || "default";
+        const driveId = context.driveId || "powerhouse";
         const keywords = await VetraReadModelProcessor.query<DB>(driveId, db)
           .selectFrom("builder_package_keywords")
           .selectAll()
@@ -166,6 +108,64 @@ export const getResolvers = (subgraph: Subgraph): Record<string, unknown> => {
           label: keyword.label,
           createdAt: keyword.created_at.toISOString(),
         }));
+      },
+    },
+    Query: {
+      fetchAllBuilderAccounts: async (
+        parent: unknown,
+        args: { driveId?: string }
+      ) => {
+        const driveId = args.driveId || "powerhouse";
+        const accounts = await VetraReadModelProcessor.query<DB>(driveId, db)
+          .selectFrom("builder_accounts")
+          .selectAll()
+          .execute();
+
+        return accounts.map((account) => ({
+          id: account.id,
+          profileName: account.profile_name,
+          profileSlug: account.profile_slug,
+          profileLogo: account.profile_logo,
+          profileDescription: account.profile_description,
+          profileSocialsX: account.profile_socials_x,
+          profileSocialsGithub: account.profile_socials_github,
+          profileSocialsWebsite: account.profile_socials_website,
+          createdAt: account.created_at.toISOString(),
+          updatedAt: account.updated_at.toISOString(),
+          driveId: driveId, // Pass driveId to field resolvers
+          spaces: [], // Will be resolved by field resolver
+          members: [], // Will be resolved by field resolver
+        }));
+      },
+
+      fetchBuilderAccount: async (
+        parent: unknown,
+        args: { driveId?: string; id: string }
+      ) => {
+        const driveId = args.driveId || "powerhouse";
+        const account = await VetraReadModelProcessor.query<DB>(driveId, db)
+          .selectFrom("builder_accounts")
+          .selectAll()
+          .where("id", "=", args.id)
+          .executeTakeFirst();
+
+        if (!account) {
+          return null;
+        }
+
+        return {
+          id: account.id,
+          profileName: account.profile_name,
+          profileSlug: account.profile_slug,
+          profileLogo: account.profile_logo,
+          profileDescription: account.profile_description,
+          profileSocialsX: account.profile_socials_x,
+          profileSocialsGithub: account.profile_socials_github,
+          profileSocialsWebsite: account.profile_socials_website,
+          createdAt: account.created_at.toISOString(),
+          updatedAt: account.updated_at.toISOString(),
+          driveId: driveId, // Pass driveId to field resolvers
+        };
       },
     },
   };
