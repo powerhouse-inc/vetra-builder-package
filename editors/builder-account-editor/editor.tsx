@@ -1,4 +1,3 @@
-import { Button } from "@powerhousedao/design-system";
 import { useDocumentById } from "@powerhousedao/reactor-browser";
 import type { EditorProps } from "document-model";
 import { useCallback, useState } from "react";
@@ -6,7 +5,7 @@ import {
   type BuilderAccountDocument,
   actions,
 } from "../../document-models/builder-account/index.js";
-import { Form, StringField, UrlField } from "@powerhousedao/document-engineering";
+import { Form, StringField, UrlField, Button } from "@powerhousedao/document-engineering";
 
 export type IProps = EditorProps;
 
@@ -499,14 +498,14 @@ export default function Editor(props: IProps) {
                             <div className="flex space-x-2">
                               <Button 
                                 color="light" 
-                                size="small"
+                                size="sm"
                                 onClick={() => handleStartEditingSpace(space.id)}
                               >
                                 Edit
                               </Button>
                               <Button 
                                 color="light" 
-                                size="small"
+                                size="sm"
                                 onClick={() => {
                                   setSelectedSpaceForPackage(space.id);
                                   setIsAddingPackage(true);
@@ -516,7 +515,7 @@ export default function Editor(props: IProps) {
                               </Button>
                               <Button 
                                 color="red" 
-                                size="small"
+                                size="sm"
                                 onClick={() => handleDeleteSpace(space.id)}
                               >
                                 Delete
@@ -597,14 +596,14 @@ export default function Editor(props: IProps) {
                                     <div className="flex space-x-2">
                                       <Button 
                                         color="light" 
-                                        size="small"
+                                        size="sm"
                                         onClick={() => handleStartEditingPackage(pkg.id)}
                                       >
                                         Edit
                                       </Button>
                                       <Button 
                                         color="red" 
-                                        size="small"
+                                        size="sm"
                                         onClick={() => handleDeletePackage(pkg.id)}
                                       >
                                         Remove
@@ -727,7 +726,7 @@ export default function Editor(props: IProps) {
                           </span>
                           <Button 
                             color="red" 
-                            size="small"
+                            size="sm"
                             onClick={() => handleRemoveMember(address)}
                           >
                             Remove

@@ -5,7 +5,7 @@ export const module: EditorModule = {
   Component: Editor,
   documentTypes: ["powerhouse/vetra/builder-account"],
   config: {
-    id: "editor-id",
+    id: "builder-account-editor-id",
     disableExternalControls: true,
     documentToolbarEnabled: true,
     showSwitchboardLink: true,
