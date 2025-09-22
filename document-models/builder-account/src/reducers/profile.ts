@@ -7,6 +7,19 @@ export const reducer: BuilderAccountProfileOperations = {
   },
   setProfileNameOperation(state, action, dispatch) {
     const { name } = action.input;
+    if (!state.profile) {
+      state.profile = {
+        logo: null,
+        name: "",
+        slug: "",
+        description: null,
+        socials: {
+          xProfile: null,
+          github: null,
+          website: null,
+        },
+      };
+    }
     state.profile.name = name ?? state.profile.name;
   },
   setSlugOperation(state, action, dispatch) {

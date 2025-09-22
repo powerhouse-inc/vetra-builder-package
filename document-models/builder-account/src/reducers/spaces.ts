@@ -1,11 +1,11 @@
-import { generateId } from "document-model";
+import { toPascalCase } from "document-drive/utils/misc";
 import type { BuilderAccountSpacesOperations } from "../../gen/spaces/operations.js";
 
 export const reducer: BuilderAccountSpacesOperations = {
   addSpaceOperation(state, action, dispatch) {
     const { title, description } = action.input;
     state.spaces.push({
-      id: generateId(),
+      id: toPascalCase(title),
       title: title ?? "",
       description: description ?? "",
       packages: [],
@@ -27,26 +27,35 @@ export const reducer: BuilderAccountSpacesOperations = {
   },
   reorderSpacesOperation(state, action, dispatch) {
     const { ids, insertAfter } = action.input;
-    state.spaces = state.spaces.sort((a, b) => {
-      const aIndex = ids.indexOf(a.id);
-      const bIndex = ids.indexOf(b.id);
-      if (aIndex === -1) {
-        return 1;
-      }
-      if (bIndex === -1) {
-        return -1;
-      }
-      return aIndex - bIndex;
-    });
+
+    // Remove the spaces being reordered from their current positions
+    const reorderedSpaces = state.spaces.filter((space) =>
+      ids.includes(space.id)
+    );
+    const remainingSpaces = state.spaces.filter(
+      (space) => !ids.includes(space.id)
+    );
+
     if (insertAfter) {
-      const insertAfterIndex = ids.indexOf(insertAfter);
+      // Find the insertAfter space index in remaining spaces
+      const insertAfterIndex = remainingSpaces.findIndex(
+        (space) => space.id === insertAfter
+      );
+
       if (insertAfterIndex !== -1) {
-        state.spaces.splice(
-          insertAfterIndex + 1,
-          0,
-          state.spaces.splice(insertAfterIndex, 1)[0]
-        );
+        // Insert the reordered spaces after the insertAfter space
+        state.spaces = [
+          ...remainingSpaces.slice(0, insertAfterIndex + 1),
+          ...reorderedSpaces,
+          ...remainingSpaces.slice(insertAfterIndex + 1),
+        ];
+      } else {
+        // If insertAfter space not found, just append to the end
+        state.spaces = [...reorderedSpaces, ...remainingSpaces];
       }
+    } else {
+      // No insertAfter specified, just append to the end
+      state.spaces = [...reorderedSpaces, ...remainingSpaces];
     }
   },
 };
