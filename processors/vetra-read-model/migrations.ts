@@ -1,6 +1,10 @@
 import { type IRelationalDb } from "document-drive/processors/types";
 
 export async function up(db: IRelationalDb<any>): Promise<void> {
+  if (process.env.NODE_ENV !== "production") {
+    await down(db);
+  }
+
   // Create builder_accounts table
   await db.schema
     .createTable("builder_accounts")
