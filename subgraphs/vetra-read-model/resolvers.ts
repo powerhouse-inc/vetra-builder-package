@@ -13,7 +13,7 @@ export const getResolvers = (subgraph: Subgraph): Record<string, unknown> => {
         args: unknown,
         context: { driveId?: string }
       ) => {
-        const driveId = context.driveId || "powerhouse";
+        const driveId = context.driveId || "vetra-builder-profiles";
         const spaces = await VetraReadModelProcessor.query<DB>(driveId, db)
           .selectFrom("builder_spaces")
           .selectAll()
@@ -39,7 +39,7 @@ export const getResolvers = (subgraph: Subgraph): Record<string, unknown> => {
         args: unknown,
         context: { driveId?: string }
       ) => {
-        const driveId = context.driveId || "powerhouse";
+        const driveId = context.driveId || "vetra-builder-profiles";
         const members = await VetraReadModelProcessor.query<DB>(driveId, db)
           .selectFrom("builder_account_members")
           .selectAll()
@@ -61,7 +61,8 @@ export const getResolvers = (subgraph: Subgraph): Record<string, unknown> => {
         args: unknown,
         context: { driveId?: string }
       ) => {
-        const driveId = parent.driveId || context.driveId || "powerhouse";
+        const driveId =
+          parent.driveId || context.driveId || "vetra-builder-profiles";
         const packages = await VetraReadModelProcessor.query<DB>(driveId, db)
           .selectFrom("builder_packages")
           .selectAll()
@@ -95,7 +96,7 @@ export const getResolvers = (subgraph: Subgraph): Record<string, unknown> => {
         args: unknown,
         context: { driveId?: string }
       ) => {
-        const driveId = context.driveId || "powerhouse";
+        const driveId = context.driveId || "vetra-builder-profiles";
         const keywords = await VetraReadModelProcessor.query<DB>(driveId, db)
           .selectFrom("builder_package_keywords")
           .selectAll()
@@ -115,7 +116,7 @@ export const getResolvers = (subgraph: Subgraph): Record<string, unknown> => {
         parent: unknown,
         args: { driveId?: string; search?: string }
       ) => {
-        const driveId = args.driveId || "powerhouse";
+        const driveId = args.driveId || "vetra-builder-profiles";
         const search = args.search;
 
         let accounts = VetraReadModelProcessor.query<DB>(driveId, db)
@@ -153,7 +154,7 @@ export const getResolvers = (subgraph: Subgraph): Record<string, unknown> => {
         parent: unknown,
         args: { driveId?: string; id: string }
       ) => {
-        const driveId = args.driveId || "powerhouse";
+        const driveId = args.driveId || "vetra-builder-profiles";
         const account = await VetraReadModelProcessor.query<DB>(driveId, db)
           .selectFrom("builder_accounts")
           .selectAll()
