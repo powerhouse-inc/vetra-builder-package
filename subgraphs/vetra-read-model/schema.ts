@@ -63,9 +63,18 @@ export const schema: DocumentNode = gql`
     createdAt: String!
   }
 
+  type BuilderAccountFilter {
+    profileName: String
+    profileSlug: String
+    profileLogo: String
+    profileDescription: String
+  }
+
   type Query {
-    example(driveId: String!): String
-    fetchAllBuilderAccounts(driveId: String): [BuilderAccountType!]!
+    fetchAllBuilderAccounts(
+      driveId: String
+      search: String
+    ): [BuilderAccountType!]!
     fetchBuilderAccount(driveId: String, id: String!): BuilderAccountType
   }
 `;

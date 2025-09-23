@@ -43,7 +43,7 @@ type VetraBuilderSpace {
 }
 
 type VetraBuilderPackage {
-  id: OID!
+  id: PHID
   name: String!
   description: String
   category: String

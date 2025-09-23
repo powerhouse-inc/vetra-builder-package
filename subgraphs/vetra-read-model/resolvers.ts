@@ -113,15 +113,26 @@ export const getResolvers = (subgraph: Subgraph): Record<string, unknown> => {
     Query: {
       fetchAllBuilderAccounts: async (
         parent: unknown,
-        args: { driveId?: string }
+        args: { driveId?: string; search?: string }
       ) => {
         const driveId = args.driveId || "powerhouse";
-        const accounts = await VetraReadModelProcessor.query<DB>(driveId, db)
-          .selectFrom("builder_accounts")
-          .selectAll()
-          .execute();
+        const search = args.search;
 
-        return accounts.map((account) => ({
+        let accounts = VetraReadModelProcessor.query<DB>(driveId, db)
+          .selectFrom("builder_accounts")
+          .selectAll();
+
+        if (search) {
+          accounts = accounts.where((eb) => {
+            return eb("profile_name", "ilike", `%${search}%`)
+              .or("profile_slug", "ilike", `%${search}%`)
+              .or("profile_description", "ilike", `%${search}%`);
+          });
+        }
+
+        const results = await accounts.execute();
+
+        return results.map((account) => ({
           id: account.id,
           profileName: account.profile_name,
           profileSlug: account.profile_slug,
