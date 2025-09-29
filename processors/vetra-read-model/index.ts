@@ -24,6 +24,7 @@ import { up } from "./migrations.js";
 import { type DB } from "./schema.js";
 import { toPascalCase } from "document-drive/utils/misc";
 import type { BuilderAccountState } from "document-models/builder-account/index.js";
+import type { DocumentDriveAction, DocumentDriveState } from "document-drive";
 
 export class VetraReadModelProcessor extends RelationalDbProcessor<DB> {
   static override getNamespace(driveId: string): string {
@@ -48,16 +49,47 @@ export class VetraReadModelProcessor extends RelationalDbProcessor<DB> {
       }
 
       for (const operation of strand.operations) {
-        await this.handleOperation(
-          strand.documentId,
-          operation.action as BuilderAccountAction,
-          operation.state as unknown as BuilderAccountState
-        );
+        if (strand.documentType.includes("powerhouse/document-drive")) {
+          await this.handleDocumentDriveOperation(
+            strand.documentId,
+            strand.driveId,
+            operation.action as DocumentDriveAction,
+            operation.state as unknown as DocumentDriveState
+          );
+        } else {
+          await this.handlePackageOperation(
+            strand.documentId,
+            operation.action as BuilderAccountAction,
+            operation.state as unknown as BuilderAccountState
+          );
+        }
       }
     }
   }
 
-  private async handleOperation(
+  private async handleDocumentDriveOperation(
+    documentId: string,
+    driveId: string = "",
+    action: DocumentDriveAction,
+    state: DocumentDriveState
+  ): Promise<void> {
+    switch (action.type) {
+      case "DELETE_NODE":
+        await this.relationalDb
+          .insertInto("deleted_files")
+          .values({
+            id: documentId + "-" + action.input.id,
+            document_id: action.input.id,
+            drive_id: driveId,
+            deleted_at: new Date(),
+          })
+          .onConflict((oc) => oc.column("id").doNothing())
+          .execute();
+        break;
+    }
+  }
+
+  private async handlePackageOperation(
     documentId: string,
     action: BuilderAccountAction,
     state: BuilderAccountState
