@@ -74,6 +74,7 @@ export const schema: DocumentNode = gql`
     fetchAllBuilderAccounts(
       driveId: String
       search: String
+      sortOrder: String
     ): [BuilderAccountType!]!
     fetchBuilderAccount(driveId: String, id: String!): BuilderAccountType
   }
