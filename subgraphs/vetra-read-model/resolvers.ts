@@ -114,10 +114,15 @@ export const getResolvers = (subgraph: Subgraph): Record<string, unknown> => {
     Query: {
       fetchAllBuilderAccounts: async (
         parent: unknown,
-        args: { driveId?: string; search?: string }
+        args: {
+          driveId?: string;
+          search?: string;
+          sortOrder?: "asc" | "desc";
+        }
       ) => {
         const driveId = args.driveId || DEFAULT_DRIVE_ID;
         const search = args.search;
+        const sortOrder = args.sortOrder || "asc";
 
         let accounts = VetraReadModelProcessor.query<DB>(driveId, db)
           .selectFrom("builder_accounts")
@@ -130,6 +135,9 @@ export const getResolvers = (subgraph: Subgraph): Record<string, unknown> => {
               .or("profile_description", "ilike", `%${search}%`);
           });
         }
+
+        // Add sorting by profile_name
+        accounts = accounts.orderBy("profile_name", sortOrder);
 
         const results = await accounts.execute();
 
