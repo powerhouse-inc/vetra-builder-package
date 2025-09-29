@@ -32,9 +32,38 @@ export class DatabaseHelpers {
   }
 
   /**
-   * Ensures a builder account exists in the database, creating it if it doesn't
+   * Check if a document ID is marked as deleted
    */
-  async ensureBuilderAccount(documentId: string): Promise<void> {
+  private async isDocumentDeleted(documentId: string): Promise<boolean> {
+    try {
+      const result = await this.db
+        .selectFrom("deleted_files")
+        .select("id")
+        .where("document_id", "=", documentId)
+        .executeTakeFirst();
+
+      return !!result;
+    } catch (error) {
+      console.error("Error checking if document is deleted:", error);
+      return false;
+    }
+  }
+
+  /**
+   * Ensures a builder account exists in the database, creating it if it doesn't
+   * Throws an error if the document was previously deleted
+   */
+  async ensureBuilderAccountExistsAndIsNotdeleted(
+    documentId: string
+  ): Promise<void> {
+    // Check if the document was deleted
+    const isDeleted = await this.isDocumentDeleted(documentId);
+    if (isDeleted) {
+      throw new Error(
+        `Builder account with document ID ${documentId} was previously deleted and cannot be accessed`
+      );
+    }
+
     const existing = await this.db
       .selectFrom("builder_accounts")
       .select("id")

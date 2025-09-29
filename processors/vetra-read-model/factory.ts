@@ -22,7 +22,10 @@ export const vetraReadModelProcessorFactory =
     const filter: RelationalDbProcessorFilter = {
       branch: ["main"],
       documentId: ["*"],
-      documentType: ["powerhouse/vetra/builder-account"],
+      documentType: [
+        "powerhouse/vetra/builder-account",
+        "powerhouse/document-drive",
+      ],
       scope: ["global"],
     };
 

@@ -118,6 +118,18 @@ export async function up(db: IRelationalDb<any>): Promise<void> {
     .ifNotExists()
     .execute();
 
+  // Create deleted_files table
+  await db.schema
+    .createTable("deleted_files")
+    .addColumn("id", "varchar(255)", (col) => col.primaryKey())
+    .addColumn("document_id", "varchar(255)", (col) => col.notNull())
+    .addColumn("drive_id", "varchar(255)", (col) => col.notNull())
+    .addColumn("deleted_at", "timestamp", (col) =>
+      col.defaultTo("now()").notNull()
+    )
+    .ifNotExists()
+    .execute();
+
   // Create indexes for better performance
   await db.schema
     .createIndex("idx_builder_accounts_slug")
@@ -174,10 +186,25 @@ export async function up(db: IRelationalDb<any>): Promise<void> {
     .column("package_id")
     .ifNotExists()
     .execute();
+
+  await db.schema
+    .createIndex("idx_deleted_files_document_id")
+    .on("deleted_files")
+    .column("document_id")
+    .ifNotExists()
+    .execute();
+
+  await db.schema
+    .createIndex("idx_deleted_files_drive_id")
+    .on("deleted_files")
+    .column("drive_id")
+    .ifNotExists()
+    .execute();
 }
 
 export async function down(db: IRelationalDb<any>): Promise<void> {
   // Drop tables in reverse order due to foreign key constraints
+  await db.schema.dropTable("deleted_files").ifExists().execute();
   await db.schema.dropTable("builder_package_keywords").ifExists().execute();
   await db.schema.dropTable("builder_packages").ifExists().execute();
   await db.schema.dropTable("builder_spaces").ifExists().execute();

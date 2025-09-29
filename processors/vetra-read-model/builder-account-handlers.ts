@@ -105,7 +105,7 @@ export class BuilderAccountHandlers {
     action: SetLogoAction,
     state: BuilderAccountState
   ): Promise<void> {
-    await this.dbHelpers.ensureBuilderAccount(documentId);
+    await this.dbHelpers.ensureBuilderAccountExistsAndIsNotdeleted(documentId);
     await this.dbHelpers.updateBuilderAccount(documentId, {
       profile_logo: action.input.logoUrl,
     });
@@ -116,7 +116,7 @@ export class BuilderAccountHandlers {
     action: SetProfileNameAction,
     state: BuilderAccountState
   ): Promise<void> {
-    await this.dbHelpers.ensureBuilderAccount(documentId);
+    await this.dbHelpers.ensureBuilderAccountExistsAndIsNotdeleted(documentId);
     await this.dbHelpers.updateBuilderAccount(documentId, {
       profile_name: action.input.name,
     });
@@ -127,7 +127,7 @@ export class BuilderAccountHandlers {
     action: SetSlugAction,
     state: BuilderAccountState
   ): Promise<void> {
-    await this.dbHelpers.ensureBuilderAccount(documentId);
+    await this.dbHelpers.ensureBuilderAccountExistsAndIsNotdeleted(documentId);
     await this.dbHelpers.updateBuilderAccount(documentId, {
       profile_slug: action.input.slug,
     });
@@ -138,7 +138,7 @@ export class BuilderAccountHandlers {
     action: SetProfileDescriptionAction,
     state: BuilderAccountState
   ): Promise<void> {
-    await this.dbHelpers.ensureBuilderAccount(documentId);
+    await this.dbHelpers.ensureBuilderAccountExistsAndIsNotdeleted(documentId);
     await this.dbHelpers.updateBuilderAccount(documentId, {
       profile_description: action.input.description,
     });
@@ -149,7 +149,7 @@ export class BuilderAccountHandlers {
     action: UpdateSocialsAction,
     state: BuilderAccountState
   ): Promise<void> {
-    await this.dbHelpers.ensureBuilderAccount(documentId);
+    await this.dbHelpers.ensureBuilderAccountExistsAndIsNotdeleted(documentId);
     await this.dbHelpers.updateBuilderAccount(documentId, {
       profile_socials_x: action.input.x,
       profile_socials_github: action.input.github,
@@ -163,7 +163,7 @@ export class BuilderAccountHandlers {
     action: AddMemberAction,
     state: BuilderAccountState
   ): Promise<void> {
-    await this.dbHelpers.ensureBuilderAccount(documentId);
+    await this.dbHelpers.ensureBuilderAccountExistsAndIsNotdeleted(documentId);
 
     if (!action.input.ethAddress) return;
 
@@ -204,7 +204,7 @@ export class BuilderAccountHandlers {
     action: AddSpaceAction,
     state: BuilderAccountState
   ): Promise<void> {
-    await this.dbHelpers.ensureBuilderAccount(documentId);
+    await this.dbHelpers.ensureBuilderAccountExistsAndIsNotdeleted(documentId);
 
     const spaceId = toPascalCase(action.input.title);
     await this.db

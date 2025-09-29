@@ -60,10 +60,18 @@ export interface BuilderSpaces {
   updated_at: Generated<Timestamp>;
 }
 
+export interface DeletedFiles {
+  deleted_at: Generated<Timestamp>;
+  document_id: string;
+  drive_id: string;
+  id: string;
+}
+
 export interface DB {
   builder_account_members: BuilderAccountMembers;
   builder_accounts: BuilderAccounts;
   builder_package_keywords: BuilderPackageKeywords;
   builder_packages: BuilderPackages;
   builder_spaces: BuilderSpaces;
+  deleted_files: DeletedFiles;
 }

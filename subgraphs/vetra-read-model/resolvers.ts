@@ -18,7 +18,17 @@ export const getResolvers = (subgraph: Subgraph): Record<string, unknown> => {
         const spaces = await VetraReadModelProcessor.query<DB>(driveId, db)
           .selectFrom("builder_spaces")
           .selectAll()
+          .leftJoin("deleted_files", (join) =>
+            join
+              .onRef(
+                "deleted_files.document_id",
+                "=",
+                "builder_spaces.builder_account_id"
+              )
+              .on("deleted_files.drive_id", "=", driveId)
+          )
           .where("builder_account_id", "=", parent.id)
+          .where("deleted_files.id", "is", null) // Exclude spaces from deleted accounts
           .orderBy("sort_order", "asc")
           .execute();
 
@@ -44,7 +54,17 @@ export const getResolvers = (subgraph: Subgraph): Record<string, unknown> => {
         const members = await VetraReadModelProcessor.query<DB>(driveId, db)
           .selectFrom("builder_account_members")
           .selectAll()
+          .leftJoin("deleted_files", (join) =>
+            join
+              .onRef(
+                "deleted_files.document_id",
+                "=",
+                "builder_account_members.builder_account_id"
+              )
+              .on("deleted_files.drive_id", "=", driveId)
+          )
           .where("builder_account_id", "=", parent.id)
+          .where("deleted_files.id", "is", null) // Exclude members from deleted accounts
           .execute();
 
         return members.map((member) => ({
@@ -66,7 +86,20 @@ export const getResolvers = (subgraph: Subgraph): Record<string, unknown> => {
         const packages = await VetraReadModelProcessor.query<DB>(driveId, db)
           .selectFrom("builder_packages")
           .selectAll()
-          .where("space_id", "=", parent.id)
+          .leftJoin("builder_spaces", (join) =>
+            join.onRef("builder_spaces.id", "=", "builder_packages.space_id")
+          )
+          .leftJoin("deleted_files", (join) =>
+            join
+              .onRef(
+                "deleted_files.document_id",
+                "=",
+                "builder_spaces.builder_account_id"
+              )
+              .on("deleted_files.drive_id", "=", driveId)
+          )
+          .where("builder_packages.space_id", "=", parent.id)
+          .where("deleted_files.id", "is", null) // Exclude packages from deleted accounts
           .orderBy("sort_order", "asc")
           .execute();
 
@@ -100,7 +133,27 @@ export const getResolvers = (subgraph: Subgraph): Record<string, unknown> => {
         const keywords = await VetraReadModelProcessor.query<DB>(driveId, db)
           .selectFrom("builder_package_keywords")
           .selectAll()
-          .where("package_id", "=", parent.id)
+          .leftJoin("builder_packages", (join) =>
+            join.onRef(
+              "builder_packages.id",
+              "=",
+              "builder_package_keywords.package_id"
+            )
+          )
+          .leftJoin("builder_spaces", (join) =>
+            join.onRef("builder_spaces.id", "=", "builder_packages.space_id")
+          )
+          .leftJoin("deleted_files", (join) =>
+            join
+              .onRef(
+                "deleted_files.document_id",
+                "=",
+                "builder_spaces.builder_account_id"
+              )
+              .on("deleted_files.drive_id", "=", driveId)
+          )
+          .where("builder_package_keywords.package_id", "=", parent.id)
+          .where("deleted_files.id", "is", null) // Exclude keywords from deleted accounts
           .execute();
 
         return keywords.map((keyword) => ({
@@ -126,7 +179,13 @@ export const getResolvers = (subgraph: Subgraph): Record<string, unknown> => {
 
         let accounts = VetraReadModelProcessor.query<DB>(driveId, db)
           .selectFrom("builder_accounts")
-          .selectAll();
+          .selectAll()
+          .leftJoin("deleted_files", (join) =>
+            join
+              .onRef("deleted_files.document_id", "=", "builder_accounts.id")
+              .on("deleted_files.drive_id", "=", driveId)
+          )
+          .where("deleted_files.id", "is", null); // Exclude deleted documents
 
         if (search) {
           accounts = accounts.where((eb) => {
@@ -166,7 +225,13 @@ export const getResolvers = (subgraph: Subgraph): Record<string, unknown> => {
         const account = await VetraReadModelProcessor.query<DB>(driveId, db)
           .selectFrom("builder_accounts")
           .selectAll()
-          .where("id", "=", args.id)
+          .leftJoin("deleted_files", (join) =>
+            join
+              .onRef("deleted_files.document_id", "=", "builder_accounts.id")
+              .on("deleted_files.drive_id", "=", driveId)
+          )
+          .where("builder_accounts.id", "=", args.id)
+          .where("deleted_files.id", "is", null) // Exclude deleted documents
           .executeTakeFirst();
 
         if (!account) {
