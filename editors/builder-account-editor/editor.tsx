@@ -29,6 +29,7 @@ export default function Editor(props: IProps) {
   const [newPackageCategory, setNewPackageCategory] = useState("");
   const [newPackageGithub, setNewPackageGithub] = useState("");
   const [newPackageNpm, setNewPackageNpm] = useState("");
+  const [newPackageVetraDrive, setNewPackageVetraDrive] = useState("");
   const [newMemberAddress, setNewMemberAddress] = useState("");
   const [selectedSpaceForPackage, setSelectedSpaceForPackage] = useState<string>("");
   
@@ -40,6 +41,7 @@ export default function Editor(props: IProps) {
   const [editingPackageCategory, setEditingPackageCategory] = useState("");
   const [editingPackageGithub, setEditingPackageGithub] = useState("");
   const [editingPackageNpm, setEditingPackageNpm] = useState("");
+  const [editingPackageVetraDrive, setEditingPackageVetraDrive] = useState("");
 
   const { state: { global } } = typedDocument;
   const { profile, spaces, members } = global;
@@ -138,6 +140,7 @@ export default function Editor(props: IProps) {
         category: newPackageCategory.trim() || null,
         github: newPackageGithub.trim() || null,
         npm: newPackageNpm.trim() || null,
+        vetraDriveUrl: newPackageVetraDrive.trim() || null,
         spaceId: selectedSpaceForPackage,
         author: {
           name: profile.name,
@@ -149,10 +152,11 @@ export default function Editor(props: IProps) {
       setNewPackageCategory("");
       setNewPackageGithub("");
       setNewPackageNpm("");
+      setNewPackageVetraDrive("");
       setSelectedSpaceForPackage("");
       setIsAddingPackage(false);
     }
-  }, [newPackageName, newPackageDescription, newPackageCategory, newPackageGithub, newPackageNpm, selectedSpaceForPackage, profile, dispatch]);
+  }, [newPackageName, newPackageDescription, newPackageCategory, newPackageGithub, newPackageNpm, newPackageVetraDrive, selectedSpaceForPackage, profile, dispatch]);
 
   const handleDeletePackage = useCallback((packageId: string) => {
     dispatch(actions.deletePackage({ id: packageId }));
@@ -169,6 +173,7 @@ export default function Editor(props: IProps) {
         setEditingPackageCategory(pkg.category || "");
         setEditingPackageGithub(pkg.github || "");
         setEditingPackageNpm(pkg.npm || "");
+        setEditingPackageVetraDrive(pkg.vetraDriveUrl || "");
         break;
       }
     }
@@ -176,32 +181,21 @@ export default function Editor(props: IProps) {
 
   const handleSavePackageEdit = useCallback(() => {
     if (editingPackageId && editingPackageName.trim()) {
-      // Note: We'll need to add updatePackage action to the document model
-      // For now, we'll delete and recreate the package
-      const space = spaces.find(s => s.packages.some(p => p.id === editingPackageId));
-      if (space) {
-        const originalPackage = space.packages.find(p => p.id === editingPackageId);
-        if (originalPackage) {
-          dispatch(actions.deletePackage({ id: editingPackageId }));
-          dispatch(actions.addPackage({
-            name: editingPackageName.trim(),
-            description: editingPackageDescription.trim() || null,
-            category: editingPackageCategory.trim() || null,
-            github: editingPackageGithub.trim() || null,
-            npm: editingPackageNpm.trim() || null,
-            spaceId: space.id,
-            author: originalPackage.author,
-          }));
-        }
-      }
+      // Use the proper updatePackage action
+      dispatch(actions.updatePackage({
+        id: editingPackageId,
+        title: editingPackageName.trim(),
+        description: editingPackageDescription.trim() || null,
+      }));
       setEditingPackageId(null);
       setEditingPackageName("");
       setEditingPackageDescription("");
       setEditingPackageCategory("");
       setEditingPackageGithub("");
       setEditingPackageNpm("");
+      setEditingPackageVetraDrive("");
     }
-  }, [editingPackageId, editingPackageName, editingPackageDescription, editingPackageCategory, editingPackageGithub, editingPackageNpm, spaces, dispatch]);
+  }, [editingPackageId, editingPackageName, editingPackageDescription, dispatch]);
 
   const handleCancelPackageEdit = useCallback(() => {
     setEditingPackageId(null);
@@ -210,6 +204,7 @@ export default function Editor(props: IProps) {
     setEditingPackageCategory("");
     setEditingPackageGithub("");
     setEditingPackageNpm("");
+    setEditingPackageVetraDrive("");
   }, []);
 
   // Member handlers
@@ -572,6 +567,14 @@ export default function Editor(props: IProps) {
                                         placeholder="https://www.npmjs.com/package/package-name"
                                       />
 
+                                      <UrlField
+                                        name="editingPackageVetraDrive"
+                                        label="Vetra Drive URL"
+                                        value={editingPackageVetraDrive}
+                                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEditingPackageVetraDrive(e.target.value)}
+                                        placeholder="https://vetra.to/drive/..."
+                                      />
+
                                       <div className="flex justify-end space-x-3">
                                         <Button color="light" onClick={handleCancelPackageEdit}>
                                           Cancel
@@ -591,6 +594,13 @@ export default function Editor(props: IProps) {
                                       )}
                                       {pkg.category && (
                                         <p className="text-xs text-gray-400">Category: {pkg.category}</p>
+                                      )}
+                                      {pkg.vetraDriveUrl && (
+                                        <p className="text-xs text-blue-600">
+                                          <a href={pkg.vetraDriveUrl} target="_blank" rel="noopener noreferrer" className="hover:underline">
+                                            Vetra Drive
+                                          </a>
+                                        </p>
                                       )}
                                     </div>
                                     <div className="flex space-x-2">
@@ -673,6 +683,14 @@ export default function Editor(props: IProps) {
                         value={newPackageNpm}
                         onChange={(e: React.ChangeEvent<HTMLInputElement>) => setNewPackageNpm(e.target.value)}
                         placeholder="https://www.npmjs.com/package/package-name"
+                      />
+
+                      <UrlField
+                        name="packageVetraDrive"
+                        label="Vetra Drive URL"
+                        value={newPackageVetraDrive}
+                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => setNewPackageVetraDrive(e.target.value)}
+                        placeholder="https://vetra.to/drive/..."
                       />
 
                       <div className="flex justify-end space-x-3">

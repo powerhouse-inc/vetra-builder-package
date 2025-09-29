@@ -68,15 +68,17 @@ export const reducer: BuilderAccountPackagesOperations = {
   updatePackageOperation(state, action, dispatch) {
     const { id, title, description } = action.input;
     for (const space of state.spaces) {
-      let packageObject = space.packages.find(
+      const packageIndex = space.packages.findIndex(
         (packageObject) => packageObject.id === id
       );
 
-      if (packageObject) {
-        packageObject = {
-          ...packageObject,
-          name: title ?? packageObject.name,
-          description: description ?? packageObject.description ?? "",
+      if (packageIndex !== -1) {
+        // Update the package in place
+        space.packages[packageIndex] = {
+          ...space.packages[packageIndex],
+          name: title ?? space.packages[packageIndex].name,
+          description:
+            description ?? space.packages[packageIndex].description ?? "",
         };
       }
     }

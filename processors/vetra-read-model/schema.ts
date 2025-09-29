@@ -1,61 +1,69 @@
-export interface BuilderAccount {
+import type { ColumnType } from "kysely";
+
+export type Generated<T> = T extends ColumnType<infer S, infer I, infer U>
+  ? ColumnType<S, I | undefined, U>
+  : ColumnType<T, T | undefined, T>;
+
+export type Timestamp = ColumnType<Date, Date | string, Date | string>;
+
+export interface BuilderAccountMembers {
+  builder_account_id: string;
+  created_at: Generated<Timestamp>;
+  eth_address: string;
   id: string;
+}
+
+export interface BuilderAccounts {
+  created_at: Generated<Timestamp>;
+  id: string;
+  profile_description: string | null;
+  profile_logo: string | null;
   profile_name: string;
   profile_slug: string;
-  profile_logo: string | null;
-  profile_description: string | null;
-  profile_socials_x: string | null;
   profile_socials_github: string | null;
   profile_socials_website: string | null;
-  created_at: Date;
-  updated_at: Date;
+  profile_socials_x: string | null;
+  updated_at: Generated<Timestamp>;
 }
 
-export interface BuilderAccountMember {
+export interface BuilderPackageKeywords {
+  created_at: Generated<Timestamp>;
   id: string;
-  builder_account_id: string;
-  eth_address: string;
-  created_at: Date;
+  label: string;
+  package_id: string;
 }
 
-export interface BuilderSpace {
-  id: string;
-  builder_account_id: string;
-  title: string;
-  description: string | null;
-  sort_order: number;
-  created_at: Date;
-  updated_at: Date;
-}
-
-export interface BuilderPackage {
-  id: string;
-  space_id: string;
-  name: string;
-  description: string | null;
-  category: string | null;
+export interface BuilderPackages {
   author_name: string;
   author_website: string | null;
-  github_url: string | null;
-  npm_url: string | null;
-  vetra_drive_url: string | null;
+  category: string | null;
+  created_at: Generated<Timestamp>;
+  description: string | null;
   drive_id: string | null;
-  sort_order: number;
-  created_at: Date;
-  updated_at: Date;
+  github_url: string | null;
+  id: string;
+  name: string;
+  npm_url: string | null;
+  sort_order: Generated<number>;
+  space_id: string;
+  updated_at: Generated<Timestamp>;
+  vetra_drive_url: string | null;
 }
 
-export interface BuilderPackageKeyword {
+export interface BuilderSpaces {
+  builder_account_id: string;
+  created_at: Generated<Timestamp>;
+  description: string | null;
   id: string;
-  package_id: string;
-  label: string;
-  created_at: Date;
+  sort_order: Generated<number>;
+  title: string;
+  updated_at: Generated<Timestamp>;
 }
 
 export interface DB {
-  builder_accounts: BuilderAccount;
-  builder_account_members: BuilderAccountMember;
-  builder_spaces: BuilderSpace;
-  builder_packages: BuilderPackage;
-  builder_package_keywords: BuilderPackageKeyword;
+  builder_account_members: BuilderAccountMembers;
+  builder_accounts: BuilderAccounts;
+  builder_package_keywords: BuilderPackageKeywords;
+  builder_packages: BuilderPackages;
+  builder_spaces: BuilderSpaces;
 }
