@@ -176,7 +176,7 @@ export type VetraBuilderPackage = {
   category: Maybe<Scalars["String"]["output"]>;
   description: Maybe<Scalars["String"]["output"]>;
   github: Maybe<Scalars["URL"]["output"]>;
-  id: Scalars["OID"]["output"];
+  id: Maybe<Scalars["PHID"]["output"]>;
   keywords: Array<VetraBuilderPackageKeyword>;
   name: Scalars["String"]["output"];
   npm: Maybe<Scalars["URL"]["output"]>;

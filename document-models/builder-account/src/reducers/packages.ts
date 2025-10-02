@@ -89,10 +89,10 @@ export const reducer: BuilderAccountPackagesOperations = {
       if (space.id === spaceId) {
         // Remove the packages being reordered from their current positions
         const reorderedPackages = space.packages.filter((pkg) =>
-          ids.includes(pkg.id)
+          ids.includes(pkg.id!)
         );
         const remainingPackages = space.packages.filter(
-          (pkg) => !ids.includes(pkg.id)
+          (pkg) => !ids.includes(pkg.id!)
         );
 
         if (insertAfter) {

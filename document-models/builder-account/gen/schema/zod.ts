@@ -232,7 +232,7 @@ export function VetraBuilderPackageSchema(): z.ZodObject<
     category: z.string().nullable(),
     description: z.string().nullable(),
     github: z.string().url().nullable(),
-    id: z.string(),
+    id: z.string().nullable(),
     keywords: z.array(VetraBuilderPackageKeywordSchema()),
     name: z.string(),
     npm: z.string().url().nullable(),

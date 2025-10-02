@@ -1,4 +1,4 @@
-import { useDocumentById } from "@powerhousedao/reactor-browser";
+import { useDocumentById, useSelectedDocument } from "@powerhousedao/reactor-browser";
 import type { EditorProps } from "document-model";
 import { useCallback, useState } from "react";
 import {
@@ -10,8 +10,7 @@ import { Form, StringField, UrlField, Button } from "@powerhousedao/document-eng
 export type IProps = EditorProps;
 
 export default function Editor(props: IProps) {
-  const { document: initialDocument } = props;
-  const [document, dispatch] = useDocumentById(initialDocument.header.id);
+  const [document, dispatch] = useSelectedDocument()
   const typedDocument = document as BuilderAccountDocument;
   
   // Local form state
@@ -607,14 +606,14 @@ export default function Editor(props: IProps) {
                                       <Button 
                                         color="light" 
                                         size="sm"
-                                        onClick={() => handleStartEditingPackage(pkg.id)}
+                                        onClick={() => handleStartEditingPackage(pkg.id!)}
                                       >
                                         Edit
                                       </Button>
                                       <Button 
                                         color="red" 
                                         size="sm"
-                                        onClick={() => handleDeletePackage(pkg.id)}
+                                        onClick={() => handleDeletePackage(pkg.id!)}
                                       >
                                         Remove
                                       </Button>
