@@ -16,5 +16,8 @@
       "provider": "npm"
     }
   ],
-  "vetraUrl": "https://switchboard.staging.vetra.io/d/vetra-builder-package"
+  "vetra": {
+    "driveId": "vetra-builder-package",
+    "driveUrl": "https://switchboard.staging.vetra.io/d/vetra-builder-package"
+  }
 }
