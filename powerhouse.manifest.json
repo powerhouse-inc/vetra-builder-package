@@ -14,14 +14,31 @@
         {
             "id": "powerhouse/vetra/package",
             "name": "VetraPackage"
+        },
+        {
+            "id": "powerhouse/renown-profile",
+            "name": "RenownProfile"
         }
     ],
-    "editors": [],
+    "editors": [
+        {
+            "id": "renown-profile-editor",
+            "name": "RenownProfileEditor",
+            "documentTypes": [
+                "powerhouse/renown-profile"
+            ]
+        }
+    ],
     "apps": [],
     "subgraphs": [
         {
             "id": "vetra",
             "name": "vetra",
+            "documentTypes": []
+        },
+        {
+            "id": "renown-read-model",
+            "name": "RenownReadModel",
             "documentTypes": []
         }
     ],

@@ -21,8 +21,8 @@ importers:
         specifier: ^1.36.0
         version: 1.36.0(@types/express@4.17.23)(@types/react-dom@19.1.9(@types/react@18.3.24))(@types/react@18.3.24)(bufferutil@4.0.9)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.9.2)(utf-8-validate@5.0.10)
       '@renown/sdk':
-        specifier: ^4.0.6
-        version: 4.0.6(bufferutil@4.0.9)(document-model@5.0.0-staging.21)(typescript@5.9.2)(utf-8-validate@5.0.10)(zod@3.25.76)
+        specifier: staging
+        version: 5.0.0-staging.21(bufferutil@4.0.9)(document-model@5.0.0-staging.21)(typescript@5.9.2)(utf-8-validate@5.0.10)(zod@3.25.76)
       document-model:
         specifier: staging
         version: 5.0.0-staging.21
@@ -3245,11 +3245,6 @@ packages:
     resolution: {integrity: sha512-c1Q99M5ljsIuc4YdaCwfUEXsofakb9c8+Zse2qxTadu8TalLXuAESzLvFAvNVbkmSlvlzIQOLpBCmWI9wTOt+g==}
     peerDependencies:
       '@redis/client': ^1.0.0
-
-  '@renown/sdk@4.0.6':
-    resolution: {integrity: sha512-eH2b62fa078+srhfxHpv+jrROmdzSjtjtcsJoKNjMSM7j2UR3dAY6gaN4ZsIiYLiavtBQsvEaFlJoBRwqdoQVA==}
-    peerDependencies:
-      document-model: 4.0.6
 
   '@renown/sdk@5.0.0-staging.21':
     resolution: {integrity: sha512-o7YULUDfxdg5Q8l2edB22JrDegQzPHGX+XbCYZLxWz3zO7yNubqCeGfpcWOCMGcMpEB73tXPwl79+UqDxmLM9w==}
@@ -16882,20 +16877,6 @@ snapshots:
     dependencies:
       '@redis/client': 1.6.1
 
-  '@renown/sdk@4.0.6(bufferutil@4.0.9)(document-model@5.0.0-staging.21)(typescript@5.9.2)(utf-8-validate@5.0.10)(zod@3.25.76)':
-    dependencies:
-      '@didtools/key-did': 1.0.0(bufferutil@4.0.9)(typescript@5.9.2)(utf-8-validate@5.0.10)(zod@3.25.76)
-      did-jwt: 8.0.18
-      did-jwt-vc: 4.0.16
-      did-resolver: 4.1.0
-      document-model: 5.0.0-staging.21
-      key-did-resolver: 4.0.0
-    transitivePeerDependencies:
-      - bufferutil
-      - typescript
-      - utf-8-validate
-      - zod
-
   '@renown/sdk@5.0.0-staging.21(bufferutil@4.0.9)(document-model@5.0.0-staging.21)(typescript@5.9.2)(utf-8-validate@5.0.10)(zod@3.25.76)':
     dependencies:
       '@didtools/key-did': 1.0.0(bufferutil@4.0.9)(typescript@5.9.2)(utf-8-validate@5.0.10)(zod@3.25.76)
@@ -18439,7 +18420,7 @@ snapshots:
       '@noble/hashes': 1.7.0
       '@walletconnect/safe-json': 1.0.2
       '@walletconnect/time': 1.0.2
-      uint8arrays: 3.1.0
+      uint8arrays: 3.1.1
 
   '@walletconnect/safe-json@1.0.2':
     dependencies:
@@ -24335,7 +24316,7 @@ snapshots:
   ox@0.6.7(typescript@5.9.2)(zod@3.25.76):
     dependencies:
       '@adraffy/ens-normalize': 1.11.0
-      '@noble/curves': 1.8.1
+      '@noble/curves': 1.9.7
       '@noble/hashes': 1.7.1
       '@scure/bip32': 1.6.2
       '@scure/bip39': 1.5.4

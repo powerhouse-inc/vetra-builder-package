@@ -17,6 +17,7 @@ scalar Amount
 scalar Upload
 type RenownProfileState {
   "Add your global state fields here"
+  documentId: String
   username: String
   ethAddress: EthereumAddress
   userImage: String
@@ -52,6 +53,11 @@ input SetEthAddressInput {
 input SetUserImageInput {
   "Add your inputs here"
   userImage: String
+}
+
+input SetDocumentIdInput {
+  "Add your inputs here"
+  documentId: String!
 }
 
 # authorization
