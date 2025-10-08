@@ -1,11 +1,12 @@
-import { useDocumentById, useSelectedDocument } from "@powerhousedao/reactor-browser";
+import { Button, Form, StringField, UrlField, PHIDField } from "@powerhousedao/document-engineering";
+import type { PHIDOption } from "@powerhousedao/document-engineering";
+import { useSelectedDocument } from "@powerhousedao/reactor-browser";
 import type { EditorProps } from "document-model";
 import { useCallback, useState } from "react";
 import {
   type BuilderAccountDocument,
   actions,
 } from "../../document-models/builder-account/index.js";
-import { Form, StringField, UrlField, Button } from "@powerhousedao/document-engineering";
 
 export type IProps = EditorProps;
 
@@ -41,9 +42,71 @@ export default function Editor(props: IProps) {
   const [editingPackageGithub, setEditingPackageGithub] = useState("");
   const [editingPackageNpm, setEditingPackageNpm] = useState("");
   const [editingPackageVetraDrive, setEditingPackageVetraDrive] = useState("");
+  const [selectedPackageId, setSelectedPackageId] = useState("");
 
   const { state: { global } } = typedDocument;
   const { profile, spaces, members } = global;
+
+  const SWITCHBOARD_URL = process.env.SWITCHBOARD_URL || 'http://switchboard.staging.vetra.io/graphql';
+  // Fetch packages from GraphQL endpoint
+  const fetchPackages = useCallback(async (searchText: string): Promise<PHIDOption[]> => {
+    try {
+      const response = await fetch('http://localhost:4001/graphql', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          query: `query($search: String) {
+            vetraPackages(search: $search) {
+              authorName
+              authorWebsite
+              category
+              description
+              documentId
+              githubUrl
+              name
+              npmUrl
+            }
+          }`,
+          variables: {
+            search: searchText || null
+          }
+        }),
+      });
+
+      const result = await response.json() as {
+        data?: {
+          vetraPackages?: Array<{
+            authorName: string | null;
+            authorWebsite: string | null;
+            category: string | null;
+            description: string | null;
+            documentId: string;
+            githubUrl: string | null;
+            name: string;
+            npmUrl: string | null;
+          }>;
+        };
+      };
+      
+      if (result.data?.vetraPackages) {
+        const packages = result.data.vetraPackages;
+        
+        return packages.map(pkg => ({
+          value: `phd://switchboard.staging.vetra.io/${pkg.documentId}`,
+          title: pkg.name,
+          description: pkg.description || `Category: ${pkg.category || 'Uncategorized'}`,
+        }));
+      }
+      
+      return [];
+    } catch (error) {
+      console.error('Error fetching packages:', error);
+      return [];
+    }
+  }, []);
+
 
   // Profile handlers
   const handleSetProfileName = useCallback((name: string) => {
@@ -132,30 +195,31 @@ export default function Editor(props: IProps) {
 
   // Package handlers
   const handleAddPackage = useCallback(() => {
-    if (newPackageName.trim() && selectedSpaceForPackage) {
-      dispatch(actions.addPackage({
-        name: newPackageName.trim(),
-        description: newPackageDescription.trim() || null,
-        category: newPackageCategory.trim() || null,
-        github: newPackageGithub.trim() || null,
-        npm: newPackageNpm.trim() || null,
-        vetraDriveUrl: newPackageVetraDrive.trim() || null,
-        spaceId: selectedSpaceForPackage,
-        author: {
-          name: profile.name,
-          website: profile.socials.website || null,
-        },
-      }));
-      setNewPackageName("");
-      setNewPackageDescription("");
-      setNewPackageCategory("");
-      setNewPackageGithub("");
-      setNewPackageNpm("");
-      setNewPackageVetraDrive("");
-      setSelectedSpaceForPackage("");
-      setIsAddingPackage(false);
-    }
-  }, [newPackageName, newPackageDescription, newPackageCategory, newPackageGithub, newPackageNpm, newPackageVetraDrive, selectedSpaceForPackage, profile, dispatch]);
+    console.log("handleAddPackage", selectedPackageId);
+    // if (newPackageName.trim() && selectedSpaceForPackage) {
+    //   // dispatch(actions.addPackage({
+    //   //   name: newPackageName.trim(),
+    //   //   description: newPackageDescription.trim() || null,
+    //   //   category: newPackageCategory.trim() || null,
+    //   //   github: newPackageGithub.trim() || null,
+    //   //   npm: newPackageNpm.trim() || null,
+    //   //   vetraDriveUrl: newPackageVetraDrive.trim() || null,
+    //   //   spaceId: selectedSpaceForPackage,
+    //   //   author: {
+    //   //     name: profile.name,
+    //   //     website: profile.socials.website || null,
+    //   //   },
+    //   // }));
+    //   // setNewPackageName("");
+    //   // setNewPackageDescription("");
+    //   // setNewPackageCategory("");
+    //   // setNewPackageGithub("");
+    //   // setNewPackageNpm("");
+    //   // setNewPackageVetraDrive("");
+    //   // setSelectedSpaceForPackage("");
+    //   // setIsAddingPackage(false);
+    // }
+  }, [selectedPackageId, dispatch]);
 
   const handleDeletePackage = useCallback((packageId: string) => {
     dispatch(actions.deletePackage({ id: packageId }));
@@ -644,59 +708,23 @@ export default function Editor(props: IProps) {
                 <div className="p-6">
                   <Form onSubmit={(e: React.FormEvent) => e.preventDefault()}>
                     <div className="space-y-4">
-                      <StringField
-                        name="packageName"
-                        label="Package Name"
-                        value={newPackageName}
-                        onChange={(e) => setNewPackageName(e.target.value)}
-                        placeholder="Enter package name"
-                      />
-
-                      <StringField
-                        name="packageDescription"
-                        label="Description"
-                        value={newPackageDescription}
-                        onChange={(e) => setNewPackageDescription(e.target.value)}
-                        placeholder="Enter package description"
-                      />
-
-                      <StringField
-                        name="packageCategory"
-                        label="Category"
-                        value={newPackageCategory}
-                        onChange={(e) => setNewPackageCategory(e.target.value)}
-                        placeholder="Enter package category"
-                      />
-
-                      <UrlField
-                        name="packageGithub"
-                        label="GitHub URL"
-                        value={newPackageGithub}
-                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => setNewPackageGithub(e.target.value)}
-                        placeholder="https://github.com/username/repo"
-                      />
-
-                      <UrlField
-                        name="packageNpm"
-                        label="NPM URL"
-                        value={newPackageNpm}
-                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => setNewPackageNpm(e.target.value)}
-                        placeholder="https://www.npmjs.com/package/package-name"
-                      />
-
-                      <UrlField
-                        name="packageVetraDrive"
-                        label="Vetra Drive URL"
-                        value={newPackageVetraDrive}
-                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => setNewPackageVetraDrive(e.target.value)}
-                        placeholder="https://vetra.to/drive/..."
+                      <PHIDField
+                        name="packageId"
+                        label="Select Package"
+                        value={selectedPackageId}
+                        onChange={(value) => setSelectedPackageId(value)}
+                        autoComplete={true}
+                        fetchOptionsCallback={fetchPackages}
+                        
+                        placeholder="Search for a package..."
+                        description="Select a package from available Vetra packages"
                       />
 
                       <div className="flex justify-end space-x-3">
                         <Button color="light" onClick={() => setIsAddingPackage(false)}>
                           Cancel
                         </Button>
-                        <Button onClick={handleAddPackage} disabled={!newPackageName.trim() || !selectedSpaceForPackage}>
+                        <Button onClick={handleAddPackage} disabled={!selectedSpaceForPackage}>
                           Add Package
                         </Button>
                       </div>

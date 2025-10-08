@@ -10,14 +10,6 @@
         {
             "id": "powerhouse/vetra/builder-account",
             "name": "BuilderAccount"
-        },
-        {
-            "id": "powerhouse/vetra/package",
-            "name": "VetraPackage"
-        },
-        {
-            "id": "powerhouse/renown-profile",
-            "name": "RenownProfile"
         }
     ],
     "editors": [
@@ -32,13 +24,8 @@
     "apps": [],
     "subgraphs": [
         {
-            "id": "vetra",
-            "name": "vetra",
-            "documentTypes": []
-        },
-        {
-            "id": "renown-read-model",
-            "name": "RenownReadModel",
+            "id": "vetra-builder-read-model",
+            "name": "vetra-builder-read-model",
             "documentTypes": []
         }
     ],
