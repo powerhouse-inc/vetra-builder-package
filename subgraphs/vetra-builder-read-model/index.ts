@@ -4,7 +4,7 @@ import { schema } from "./schema.js";
 import { getResolvers } from "./resolvers.js";
 
 export class VetraReadModelSubgraph extends Subgraph {
-  name = "vetra-read-model";
+  name = "vetra-builder-read-model";
   typeDefs: DocumentNode = schema;
   resolvers = getResolvers(this);
   additionalContextFields = {};
