@@ -22,6 +22,18 @@ const SEARCH_PACKAGES_QUERY = `
   }
 `;
 
+const SEARCH_PACKAGES_BY_DOCUMENT_ID_QUERY = `
+  query SearchPackagesByDocumentId($documentIds: [PHID!]) {
+    vetraPackages(documentId_in: $documentIds) {
+      authorName
+      name
+      githubUrl
+      documentId
+      description
+    }
+  }
+`;
+
 export function PackageForm({ spaceId, onSave, onCancel }: PackageFormProps) {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
@@ -70,15 +82,24 @@ export function PackageForm({ spaceId, onSave, onCancel }: PackageFormProps) {
                 return options;
               }}
               fetchSelectedOptionCallback={async (value) => {
-                console.log(value);
-                return { 
-                  id: value, 
-                  title: value, 
-                  value: value, 
-                  description: value, 
-                  type: "powerhouse/vetra/package", 
-                  path: { text: value, url: `/vetra-packages/${value}` } 
-                };
+                const data = await graphqlClient.request<{
+                  vetraPackages: { documentId: string; name: string; description: string; }[];
+                }>(SEARCH_PACKAGES_BY_DOCUMENT_ID_QUERY, { documentIds: [value] });
+                
+                const options = data.vetraPackages.map((pkg) => ({
+                  id: pkg.documentId,
+                  title: pkg.name,
+                  value: pkg.documentId,
+                  description: pkg.description,
+                  path: {
+                      text: pkg.name,
+                      url: `/vetra-packages/${pkg.documentId}`,
+                  },
+                }));
+
+                const entry = options[0];
+
+                return entry;
               }}
               variant="withValueTitleAndDescription"
               required={true}

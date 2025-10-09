@@ -1,8 +1,33 @@
-import { Button, Form, StringField } from "@powerhousedao/document-engineering";
+import { Button, Form, PHIDField, StringField } from "@powerhousedao/document-engineering";
 import { type VetraPackageInfo } from "document-models/builder-team";
+import { GraphQLClient } from "graphql-request";
 import { useState } from "react";
 
+const graphqlClient = new GraphQLClient("http://localhost:4001/graphql");
 
+const SEARCH_PACKAGES_QUERY = `
+  query SearchPackages($search: String!) {
+    vetraPackages(search: $search) {
+      authorName
+      name
+      githubUrl
+      documentId
+      description
+    }
+  }
+`;
+
+const SEARCH_PACKAGES_BY_DOCUMENT_ID_QUERY = `
+  query SearchPackagesByDocumentId($documentIds: [PHID!]) {
+    vetraPackages(documentId_in: $documentIds) {
+      authorName
+      name
+      githubUrl
+      documentId
+      description
+    }
+  }
+`;
 interface PackageItemProps {
   pkg: VetraPackageInfo;
   isEditing: boolean;
@@ -32,20 +57,57 @@ export function PackageItem({
       <div className="p-3 bg-gray-50 rounded border">
         <Form onSubmit={(e: React.FormEvent) => e.preventDefault()}>
           <div className="space-y-3">
-            <StringField
+            <PHIDField
               name="packageName"
               label="Package Name"
               value={editingName}
-              onChange={(e) => setEditingName(e.target.value)}
+              onChange={(e) => setEditingName(e)}
+              allowUris={true}
+              autoComplete={true}
+              fetchOptionsCallback={async (userInput) => {
+                const data = await graphqlClient.request<{
+                  vetraPackages: { documentId: string; name: string; description: string; }[];
+                }>(SEARCH_PACKAGES_QUERY, { search: userInput });
+                
+                const options = data.vetraPackages.map((pkg) => ({
+                  id: pkg.documentId,
+                  title: pkg.name,
+                  value: pkg.documentId,
+                  description: pkg.description,
+                  path: {
+                      text: pkg.name,
+                      url: `/vetra-packages/${pkg.documentId}`,
+                  },
+                }));
+
+                console.log(options);
+                return options;
+              }}
+              fetchSelectedOptionCallback={async (value) => {
+                
+                  const data = await graphqlClient.request<{
+                    vetraPackages: { documentId: string; name: string; description: string; }[];
+                  }>(SEARCH_PACKAGES_BY_DOCUMENT_ID_QUERY, { documentIds: [value] });
+                  
+                  const options = data.vetraPackages.map((pkg) => ({
+                    id: pkg.documentId,
+                    title: pkg.name,
+                    value: pkg.documentId,
+                    description: pkg.description,
+                    path: {
+                        text: pkg.name,
+                        url: `/vetra-packages/${pkg.documentId}`,
+                    },
+                  }));
+
+                  const entry = options[0];
+
+                return entry;
+              }}
+              variant="withValueTitleAndDescription"
+              required={true}
+              viewMode="edition"
               placeholder="Enter package name"
-            />
-            
-            <StringField
-              name="packageDescription"
-              label="Description"
-              value={editingDescription}
-              onChange={(e) => setEditingDescription(e.target.value)}
-              placeholder="Enter package description"
             />
 
             <div className="flex justify-end space-x-3">
