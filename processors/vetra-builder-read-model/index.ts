@@ -26,7 +26,7 @@ import { toPascalCase } from "document-drive/utils/misc";
 import type { BuilderAccountState } from "document-models/builder-account/index.js";
 import type { DocumentDriveAction, DocumentDriveState } from "document-drive";
 
-export class VetraReadModelProcessor extends RelationalDbProcessor<DB> {
+export class VetraBuilderReadModelProcessor extends RelationalDbProcessor<DB> {
   static override getNamespace(driveId: string): string {
     // Default namespace: `${this.name}_${driveId.replaceAll("-", "_")}`
     return super.getNamespace(driveId);

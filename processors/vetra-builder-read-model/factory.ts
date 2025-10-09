@@ -4,17 +4,19 @@ import {
   type ProcessorRecord,
 } from "document-drive/processors/types";
 import { type PHDocumentHeader } from "document-model";
-import { VetraReadModelProcessor } from "./index.js";
+import { VetraBuilderReadModelProcessor } from "./index.js";
 
-export const vetraReadModelProcessorFactory =
+export const vetraBuilderReadModelProcessorFactory =
   (module: IProcessorHostModule) =>
   async (driveHeader: PHDocumentHeader): Promise<ProcessorRecord[]> => {
     // Create a namespace for the processor and the provided drive id
-    const namespace = VetraReadModelProcessor.getNamespace(driveHeader.id);
+    const namespace = VetraBuilderReadModelProcessor.getNamespace(
+      driveHeader.id
+    );
 
     // Create a namespaced db for the processor
     const store =
-      await module.relationalDb.createNamespace<VetraReadModelProcessor>(
+      await module.relationalDb.createNamespace<VetraBuilderReadModelProcessor>(
         namespace
       );
 
@@ -30,7 +32,11 @@ export const vetraReadModelProcessorFactory =
     };
 
     // Create the processor
-    const processor = new VetraReadModelProcessor(namespace, filter, store);
+    const processor = new VetraBuilderReadModelProcessor(
+      namespace,
+      filter,
+      store
+    );
     return [
       {
         processor,

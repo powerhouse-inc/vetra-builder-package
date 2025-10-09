@@ -3,7 +3,7 @@ import type { DocumentNode } from "graphql";
 import { schema } from "./schema.js";
 import { getResolvers } from "./resolvers.js";
 
-export class VetraReadModelSubgraph extends Subgraph {
+export class VetraBuilderReadModelSubgraph extends Subgraph {
   name = "vetra-builder-read-model";
   typeDefs: DocumentNode = schema;
   resolvers = getResolvers(this);

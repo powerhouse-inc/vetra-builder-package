@@ -1,6 +1,6 @@
 import { type Subgraph } from "@powerhousedao/reactor-api";
-import { VetraReadModelProcessor } from "../../processors/vetra-read-model/index.js";
-import { type DB } from "../../processors/vetra-read-model/schema.js";
+import { VetraBuilderReadModelProcessor } from "../../processors/vetra-builder-read-model/index.js";
+import { type DB } from "../../processors/vetra-builder-read-model/schema.js";
 
 export const getResolvers = (subgraph: Subgraph): Record<string, unknown> => {
   const reactor = subgraph.reactor;
@@ -15,7 +15,10 @@ export const getResolvers = (subgraph: Subgraph): Record<string, unknown> => {
         context: { driveId?: string }
       ) => {
         const driveId = context.driveId || DEFAULT_DRIVE_ID;
-        const spaces = await VetraReadModelProcessor.query<DB>(driveId, db)
+        const spaces = await VetraBuilderReadModelProcessor.query<DB>(
+          driveId,
+          db
+        )
           .selectFrom("builder_spaces")
           .selectAll()
           .leftJoin("deleted_files", (join) =>
@@ -51,7 +54,10 @@ export const getResolvers = (subgraph: Subgraph): Record<string, unknown> => {
         context: { driveId?: string }
       ) => {
         const driveId = context.driveId || DEFAULT_DRIVE_ID;
-        const members = await VetraReadModelProcessor.query<DB>(driveId, db)
+        const members = await VetraBuilderReadModelProcessor.query<DB>(
+          driveId,
+          db
+        )
           .selectFrom("builder_account_members")
           .selectAll()
           .leftJoin("deleted_files", (join) =>
@@ -83,7 +89,10 @@ export const getResolvers = (subgraph: Subgraph): Record<string, unknown> => {
         context: { driveId?: string }
       ) => {
         const driveId = parent.driveId || context.driveId || DEFAULT_DRIVE_ID;
-        const packages = await VetraReadModelProcessor.query<DB>(driveId, db)
+        const packages = await VetraBuilderReadModelProcessor.query<DB>(
+          driveId,
+          db
+        )
           .selectFrom("builder_packages")
           .selectAll()
           .leftJoin("builder_spaces", (join) =>
@@ -130,7 +139,10 @@ export const getResolvers = (subgraph: Subgraph): Record<string, unknown> => {
         context: { driveId?: string }
       ) => {
         const driveId = context.driveId || DEFAULT_DRIVE_ID;
-        const keywords = await VetraReadModelProcessor.query<DB>(driveId, db)
+        const keywords = await VetraBuilderReadModelProcessor.query<DB>(
+          driveId,
+          db
+        )
           .selectFrom("builder_package_keywords")
           .selectAll()
           .leftJoin("builder_packages", (join) =>
@@ -177,7 +189,7 @@ export const getResolvers = (subgraph: Subgraph): Record<string, unknown> => {
         const search = args.search;
         const sortOrder = args.sortOrder || "asc";
 
-        let accounts = VetraReadModelProcessor.query<DB>(driveId, db)
+        let accounts = VetraBuilderReadModelProcessor.query<DB>(driveId, db)
           .selectFrom("builder_accounts")
           .selectAll()
           .leftJoin("deleted_files", (join) =>
@@ -222,7 +234,10 @@ export const getResolvers = (subgraph: Subgraph): Record<string, unknown> => {
         args: { driveId?: string; id: string }
       ) => {
         const driveId = args.driveId || DEFAULT_DRIVE_ID;
-        const account = await VetraReadModelProcessor.query<DB>(driveId, db)
+        const account = await VetraBuilderReadModelProcessor.query<DB>(
+          driveId,
+          db
+        )
           .selectFrom("builder_accounts")
           .selectAll()
           .leftJoin("deleted_files", (join) =>
