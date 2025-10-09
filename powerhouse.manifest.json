@@ -1,7 +1,7 @@
 {
-    "name": "Vetra Builder Package",
+    "name": "powerhouse/vetra-builder-package",
     "description": "",
-    "category": "Engineering",
+    "category": "People & Culture",
     "publisher": {
         "name": "Powerhouse Inc.",
         "url": "https://www.powerhouse.inc"
@@ -10,6 +10,22 @@
         {
             "id": "powerhouse/vetra/builder-account",
             "name": "BuilderAccount"
+        },
+        {
+            "id": "powerhouse/vetra/package",
+            "name": "VetraPackage"
+        },
+        {
+            "id": "powerhouse/renown-profile",
+            "name": "RenownProfile"
+        },
+        {
+            "id": "powerhouse/builder-team",
+            "name": "BuilderTeam"
+        },
+        {
+            "id": "powerhouse/vetra/builder-team",
+            "name": "BuilderTeam"
         }
     ],
     "editors": [
@@ -19,6 +35,13 @@
             "documentTypes": [
                 "powerhouse/renown-profile"
             ]
+        },
+        {
+            "id": "builder-team-editor",
+            "name": "Builder Team Editor",
+            "documentTypes": [
+                "powerhouse/builder-team"
+            ]
         }
     ],
     "apps": [],
@@ -26,6 +49,11 @@
         {
             "id": "vetra-builder-read-model",
             "name": "vetra-builder-read-model",
+            "documentTypes": []
+        },
+        {
+            "id": "vetra-builders",
+            "name": "VetraBuilders",
             "documentTypes": []
         }
     ],

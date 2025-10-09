@@ -1,2 +1,2 @@
 export {};
-export { module as BuilderAccountEditor } from "./builder-account-editor/index.js";
+export { module as BuilderTeamEditor } from "./builder-team-editor/index.js";

@@ -1,0 +1,152 @@
+scalar Amount_Tokens
+scalar EthereumAddress
+scalar Amount_Percentage
+scalar EmailAddress
+scalar Date
+scalar DateTime
+scalar URL
+scalar Amount_Money
+scalar OLabel
+scalar Currency
+scalar PHID
+scalar OID
+scalar Amount_Fiat
+scalar Amount_Currency
+scalar Amount_Crypto
+scalar Amount
+scalar Upload
+type BuilderTeamState {
+  profile: VetraBuilderProfile!
+  members: [RenownProfileInfo!]!
+  spaces: [VetraBuilderSpace!]!
+}
+
+type RenownProfileInfo { 
+  id: OID!
+  phid: PHID
+  ethAddress: String
+  name: String
+  profileImage: String
+}
+
+type VetraBuilderProfile {
+  logo: URL
+  name: String!
+  slug: String!
+  description: String
+  socials: VetraBuilderSocials!
+}
+
+type VetraBuilderSocials {
+  xProfile: URL
+  github: URL 
+  website: URL
+}
+
+type VetraBuilderSpace {
+  id: OID!
+  title: String!
+  description: String
+  packages: [VetraPackageInfo!]!
+}
+
+type VetraPackageInfo { 
+  id: OID!
+  phid: PHID
+  title: String
+  description: String
+}
+
+
+
+# profile
+
+input SetLogoInput {
+  "Add your inputs here"
+  logo: String
+}
+
+input SetTeamNameInput {
+  "Add your inputs here"
+  name: String!
+}
+
+input SetSlugInput {
+  "Add your inputs here"
+  slug: String!
+}
+
+input SetDescriptionInput {
+  "Add your inputs here"
+  description: String
+}
+
+input SetSocialsInput {
+  "Add your inputs here"
+  xProfile: String
+  github: String
+  website: String
+  
+}
+
+# member
+
+input AddMemberInput {
+  "Add your inputs here"
+  id: OID!
+}
+
+input UpdateMemberInfoInput {
+  "Add your inputs here"
+  id: OID!
+  phid: PHID
+  ethAddress: String
+  name: String
+  profileImage: String
+}
+
+input RemoveMemberInput {
+  "Add your inputs here"
+  id: OID!
+}
+
+# spaces
+
+input AddSpaceInput {
+  "Add your inputs here"
+  id: OID!
+}
+
+input UpdateSpaceInfoInput {
+  "Add your inputs here"
+  id: OID!
+  title: String
+  description: String
+}
+
+input RemoveSpaceInput {
+  "Add your inputs here"
+  id: OID!
+}
+
+# packages
+
+input AddPackageInput {
+  "Add your inputs here"
+  id: OID!
+  spaceId: OID!
+}
+
+input UpdatePackageInfoInput {
+  "Add your inputs here"
+  id: OID!
+  spaceId: OID
+  phid: PHID
+  title: String
+  description: String
+}
+
+input RemovePackageInput {
+  "Add your inputs here"
+  id: OID!
+}

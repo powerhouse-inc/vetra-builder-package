@@ -29,6 +29,9 @@ importers:
       graphql:
         specifier: ^16.10.0
         version: 16.11.0
+      graphql-request:
+        specifier: ^7.2.0
+        version: 7.2.0(graphql@16.11.0)
       graphql-tag:
         specifier: ^2.12.6
         version: 2.12.6(graphql@16.11.0)
@@ -170,20 +173,20 @@ packages:
   '@adraffy/ens-normalize@1.11.0':
     resolution: {integrity: sha512-/3DDPKHqqIqxUULp8yP4zODUY1i+2xvVWsv8A79xGWdCAG+8sb0hRh0Rk2QyOJUnnbyPUAZYcpBuRe3nS2OIUg==}
 
-  '@ai-sdk/gateway@1.0.33':
-    resolution: {integrity: sha512-v9i3GPEo4t3fGcSkQkc07xM6KJN75VUv7C1Mqmmsu2xD8lQwnQfsrgAXyNuWe20yGY0eHuheSPDZhiqsGKtH1g==}
+  '@ai-sdk/gateway@1.0.35':
+    resolution: {integrity: sha512-cdsXbeRRMi6QxbZscin69Asx2fi0d2TmmPngcPFUMpZbchGEBiJYVNvIfiALKFKXEq0l/w0xGNV3E13vroaleA==}
     engines: {node: '>=18'}
     peerDependencies:
       zod: ^3.25.76 || ^4.1.8
 
-  '@ai-sdk/openai@2.0.44':
-    resolution: {integrity: sha512-caK9v5YbBd38mjPmjBP5LSWiWhmHgK9mPwc7dE/3ED3c+SypH6/QWimGDA1oSsxDEdXgVCO9ORUVV+Uphzjf8Q==}
+  '@ai-sdk/openai@2.0.46':
+    resolution: {integrity: sha512-3FHZdiTLbjnHw0rbu1yOPW8FruHrzN6SlJYsaLSQgbxYfE5y+60Nj4Xp8/k7rtD3FmrjkKcp/XTMSbAJWfoJig==}
     engines: {node: '>=18'}
     peerDependencies:
       zod: ^3.25.76 || ^4.1.8
 
-  '@ai-sdk/provider-utils@3.0.10':
-    resolution: {integrity: sha512-T1gZ76gEIwffep6MWI0QNy9jgoybUHE7TRaHB5k54K8mF91ciGFlbtCGxDYhMH3nCRergKwYFIDeFF0hJSIQHQ==}
+  '@ai-sdk/provider-utils@3.0.11':
+    resolution: {integrity: sha512-4hgHj89VqyOHzGaV85TkcgvO8WjecVF35TOUVg+C56vnzpWSgdIZu/ZWZNdZ6BTrv8y0N1toBWW7XcWiRRicLg==}
     engines: {node: '>=18'}
     peerDependencies:
       zod: ^3.25.76 || ^4.1.8
@@ -4082,8 +4085,8 @@ packages:
     resolution: {integrity: sha512-zaz9u8EJ4GBmnehlrpoKvj/E3dNbuQ7q0ucyZImm3cLqJ8INTc970B1qEqDX/Rzq65r3TvVTN7kHWPBoyW7DWw==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
 
-  '@vercel/oidc@3.0.1':
-    resolution: {integrity: sha512-V/YRVrJDqM6VaMBjRUrd6qRMrTKvZjHdVdEmdXsOZMulTa3iK98ijKTc3wldBmst6W5rHpqMoKllKcBAHgN7GQ==}
+  '@vercel/oidc@3.0.2':
+    resolution: {integrity: sha512-JekxQ0RApo4gS4un/iMGsIL1/k4KUBe3HmnGcDvzHuFBdQdudEJgTqcsJC7y6Ul4Yw5CeykgvQbX2XeEJd0+DA==}
     engines: {node: '>= 20'}
 
   '@vitejs/plugin-basic-ssl@2.1.0':
@@ -4373,8 +4376,8 @@ packages:
     resolution: {integrity: sha512-gOsf2YwSlleG6IjRYG2A7k0HmBMEo6qVNk9Bp/EaLgAJT5ngH6PXbqa4ItvnEwCm/velL5jAnQgsHsWnjhGmvw==}
     engines: {node: '>=18'}
 
-  ai@5.0.60:
-    resolution: {integrity: sha512-80U/3kmdBW6g+JkLXpz/P2EwkyEaWlPlYtuLUpx/JYK9F7WZh9NnkYoh1KvUi1Sbpo0NyurBTvX0a2AG9mmbDA==}
+  ai@5.0.63:
+    resolution: {integrity: sha512-rQB8xSCDCZLvAue51hvufhSP82NtzZh8CMH7/Oj5rnn/5vNI2y+Rn0lmODJ/kC4bPvFX8XgDfys8i4r86YfkmQ==}
     engines: {node: '>=18'}
     peerDependencies:
       zod: ^3.25.76 || ^4.1.8
@@ -6709,6 +6712,11 @@ packages:
 
   graphql-request@6.1.0:
     resolution: {integrity: sha512-p+XPfS4q7aIpKVcgmnZKhMNqhltk20hfXtkaIkTfjjmiKMJ5xrt5c743cL03y/K7y1rg3WrIC49xGiEQ4mxdNw==}
+    peerDependencies:
+      graphql: 14 - 16
+
+  graphql-request@7.2.0:
+    resolution: {integrity: sha512-0GR7eQHBFYz372u9lxS16cOtEekFlZYB2qOyq8wDvzRmdRSJ0mgUVX1tzNcIzk3G+4NY+mGtSz411wZdeDF/+A==}
     peerDependencies:
       graphql: 14 - 16
 
@@ -11466,20 +11474,20 @@ snapshots:
 
   '@adraffy/ens-normalize@1.11.0': {}
 
-  '@ai-sdk/gateway@1.0.33(zod@3.25.76)':
+  '@ai-sdk/gateway@1.0.35(zod@3.25.76)':
     dependencies:
       '@ai-sdk/provider': 2.0.0
-      '@ai-sdk/provider-utils': 3.0.10(zod@3.25.76)
-      '@vercel/oidc': 3.0.1
+      '@ai-sdk/provider-utils': 3.0.11(zod@3.25.76)
+      '@vercel/oidc': 3.0.2
       zod: 3.25.76
 
-  '@ai-sdk/openai@2.0.44(zod@3.25.76)':
+  '@ai-sdk/openai@2.0.46(zod@3.25.76)':
     dependencies:
       '@ai-sdk/provider': 2.0.0
-      '@ai-sdk/provider-utils': 3.0.10(zod@3.25.76)
+      '@ai-sdk/provider-utils': 3.0.11(zod@3.25.76)
       zod: 3.25.76
 
-  '@ai-sdk/provider-utils@3.0.10(zod@3.25.76)':
+  '@ai-sdk/provider-utils@3.0.11(zod@3.25.76)':
     dependencies:
       '@ai-sdk/provider': 2.0.0
       '@standard-schema/spec': 1.0.0
@@ -15961,11 +15969,11 @@ snapshots:
 
   '@powerhousedao/reactor-mcp@5.0.0-staging.22(1994a869bcb394bcf1b5837139a39725)':
     dependencies:
-      '@ai-sdk/openai': 2.0.44(zod@3.25.76)
+      '@ai-sdk/openai': 2.0.46(zod@3.25.76)
       '@modelcontextprotocol/sdk': 1.19.1
       '@powerhousedao/codegen': 5.0.0-staging.22(908755da5f1cadf86dfac15b8c9c9a69)
       '@powerhousedao/config': 5.0.0-staging.22(@types/node@22.18.6)
-      ai: 5.0.60(zod@3.25.76)
+      ai: 5.0.63(zod@3.25.76)
       change-case: 5.4.4
       document-drive: 5.0.0-staging.22(@types/node@22.18.6)(bufferutil@4.0.9)(encoding@0.1.13)(pg@8.16.3)(react-native@0.81.4(@babel/core@7.28.4)(@types/react@18.3.24)(bufferutil@4.0.9)(react@18.3.1)(utf-8-validate@5.0.10))(utf-8-validate@5.0.10)
       document-model: 5.0.0-staging.22
@@ -18092,7 +18100,7 @@ snapshots:
       '@typescript-eslint/types': 8.44.0
       eslint-visitor-keys: 4.2.1
 
-  '@vercel/oidc@3.0.1': {}
+  '@vercel/oidc@3.0.2': {}
 
   '@vitejs/plugin-basic-ssl@2.1.0(vite@6.3.6(@types/node@22.18.6)(jiti@2.5.1)(lightningcss@1.30.1)(terser@5.44.0)(tsx@4.20.5)(yaml@2.8.1))':
     dependencies:
@@ -18894,11 +18902,11 @@ snapshots:
       clean-stack: 5.3.0
       indent-string: 5.0.0
 
-  ai@5.0.60(zod@3.25.76):
+  ai@5.0.63(zod@3.25.76):
     dependencies:
-      '@ai-sdk/gateway': 1.0.33(zod@3.25.76)
+      '@ai-sdk/gateway': 1.0.35(zod@3.25.76)
       '@ai-sdk/provider': 2.0.0
-      '@ai-sdk/provider-utils': 3.0.10(zod@3.25.76)
+      '@ai-sdk/provider-utils': 3.0.11(zod@3.25.76)
       '@opentelemetry/api': 1.9.0
       zod: 3.25.76
 
@@ -21784,6 +21792,11 @@ snapshots:
       graphql: 16.11.0
     transitivePeerDependencies:
       - encoding
+
+  graphql-request@7.2.0(graphql@16.11.0):
+    dependencies:
+      '@graphql-typed-document-node/core': 3.2.0(graphql@16.11.0)
+      graphql: 16.11.0
 
   graphql-tag@2.12.6(graphql@16.11.0):
     dependencies:

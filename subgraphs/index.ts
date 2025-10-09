@@ -1,3 +1,4 @@
 export {};
-export * as BuilderAccountSubgraph from "./builder-account/index.js";
-export * as VetraBuilderReadModelSubgraph from "./vetra-builder-read-model/index.js";
+export * as VetraBuildersSubgraph from "./vetra-builders/index.js";
+// export * as VetraBuildersSubgraph from "./vetra-builders-bkp/index.js";
+export * as BuilderTeamSubgraph from "./builder-team/index.js";
