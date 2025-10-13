@@ -18,6 +18,18 @@ const SEARCH_PROFILES_QUERY = `
   }
 `;
 
+const GET_PROFILE_QUERY = `
+  query ($input: GetProfileInput!) {
+    getProfile(input: $input) {
+      documentId
+      ethAddress
+      updatedAt
+      userImage
+      username
+    }
+  }
+`;
+
 interface MemberProfileData {
   phid: string;
   ethAddress: string;
@@ -43,19 +55,6 @@ export function MembersSection({
     userImage?: string;
   } | null>(null);
 
-  // Cache of profiles from the last search to avoid refetching on select
-  const [profilesCache, setProfilesCache] = useState<
-    Map<
-      string,
-      {
-        documentId: string;
-        ethAddress: string;
-        username: string;
-        userImage?: string;
-      }
-    >
-  >(new Map());
-
   const handleAddMember = () => {
     if (selectedProfile) {
       const success = onAddMember({
@@ -70,14 +69,33 @@ export function MembersSection({
     }
   };
 
+  // Check if the selected profile is already a member
+  const existingMember = selectedProfile
+    ? members.find((m) => m.phid === selectedProfile.documentId)
+    : null;
+
+  const handleUpdateMember = () => {
+    if (selectedProfile && existingMember) {
+      // Remove the old member and add the updated one
+      onRemoveMember(existingMember.id);
+      onAddMember({
+        phid: selectedProfile.documentId,
+        ethAddress: selectedProfile.ethAddress,
+        name: selectedProfile.username,
+        profileImage: selectedProfile.userImage,
+      });
+      setSelectedProfile(null);
+    }
+  };
+
   return (
-    <div className="bg-white rounded-lg shadow-sm border">
-      <div className="px-6 py-4 border-b border-gray-200">
-        <h3 className="text-lg font-semibold text-gray-900">Team Members</h3>
-        <p className="text-sm text-gray-500">Manage team access</p>
+    <div className="bg-white rounded-xl shadow-md border border-gray-200 overflow-hidden">
+      <div className="px-6 py-5 border-b border-gray-200 bg-gray-50">
+        <h3 className="text-xl font-bold text-gray-900">Team Members</h3>
+        <p className="text-sm text-gray-600 mt-1">Manage team access and permissions</p>
       </div>
       <div className="p-6">
-        <div className="space-y-4">
+        <div className="space-y-5">
           <Form onSubmit={(e: React.FormEvent) => e.preventDefault()}>
             <div className="space-y-3">
               <PHIDField
@@ -117,18 +135,6 @@ export function MembersSection({
                     },
                   });
 
-                  // Update the cache with the search results
-                  const newCache = new Map(profilesCache);
-                  data.getProfiles.forEach((profile) => {
-                    newCache.set(profile.documentId, {
-                      documentId: profile.documentId,
-                      ethAddress: profile.ethAddress,
-                      username: profile.username,
-                      userImage: profile.userImage,
-                    });
-                  });
-                  setProfilesCache(newCache);
-
                   return data.getProfiles.map((profile) => ({
                     id: profile.documentId,
                     title: profile.username,
@@ -141,81 +147,58 @@ export function MembersSection({
                   }));
                 }}
                 fetchSelectedOptionCallback={async (value) => {
-                  // First check cache
-                  const cachedProfile = profilesCache.get(value);
-                  if (cachedProfile) {
-                    setSelectedProfile(cachedProfile);
+                  try {
+                    const data = await graphqlClient.request<{
+                      getProfile: {
+                        documentId: string;
+                        ethAddress: string;
+                        username: string;
+                        userImage?: string;
+                        updatedAt: string;
+                      };
+                    }>(GET_PROFILE_QUERY, {
+                      input: {
+                        id: value,
+                        driveId: "renown-profiles",
+                      },
+                    });
+
+                    const profile = data.getProfile;
+                    if (!profile) {
+                      return;
+                    }
+
+                    const profileData = {
+                      documentId: profile.documentId,
+                      ethAddress: profile.ethAddress,
+                      username: profile.username,
+                      userImage: profile.userImage,
+                    };
+
+                    // Update the selected profile state with fresh data
+                    setSelectedProfile(profileData);
+
                     return {
-                      title: cachedProfile.username,
-                      value: cachedProfile.documentId,
-                      description: cachedProfile.ethAddress,
+                      title: profile.username,
+                      value: profile.documentId,
+                      description: profile.ethAddress,
                       path: {
-                        text: `${config.renownProfileBasePath}/${cachedProfile.username}`,
-                        url: `${config.renownProfileBasePath}/${cachedProfile.username}`,
+                        text: `${config.renownProfileBasePath}/${profile.username}`,
+                        url: `${config.renownProfileBasePath}/${profile.username}`,
                       },
                     };
+                  } catch (error) {
+                    console.error("Failed to fetch selected profile:", error);
+                    return undefined;
                   }
-
-                  // If not in cache, fetch by searching for the documentId
-                  // Note: This is a fallback that may not work perfectly
-                  // Ideally the API would support querying by documentId directly
-                  const data = await graphqlClient.request<{
-                    getProfiles: {
-                      documentId: string;
-                      ethAddress: string;
-                      username: string;
-                      userImage?: string;
-                      updatedAt: string;
-                    }[];
-                  }>(SEARCH_PROFILES_QUERY, {
-                    input: {
-                      driveId: "renown-profiles",
-                      searchString: value,
-                    },
-                  });
-
-                  const profile =
-                    data.getProfiles.find((p) => p.documentId === value) ||
-                    data.getProfiles[0];
-                  if (!profile) {
-                    return;
-                  }
-
-                  const profileData = {
-                    documentId: profile.documentId,
-                    ethAddress: profile.ethAddress,
-                    username: profile.username,
-                    userImage: profile.userImage,
-                  };
-
-                  setSelectedProfile(profileData);
-
-                  // Update cache
-                  const newCache = new Map(profilesCache);
-                  newCache.set(profile.documentId, profileData);
-                  setProfilesCache(newCache);
-
-                  return {
-                    title: profile.username,
-                    value: profile.documentId,
-                    description: profile.ethAddress,
-                    path: {
-                      text: `${config.renownProfileBasePath}/${profile.username}`,
-                      url: `${config.renownProfileBasePath}/${profile.username}`,
-                    },
-                  };
                 }}
                 onChange={(value) => {
                   if (!value) {
                     setSelectedProfile(null);
                     return;
                   }
-
-                  // Use cached profile data if available
-                  const profile = profilesCache.get(value);
-                  if (profile) {
-                    setSelectedProfile(profile);
-                  }
+                  // Note: The profile data is already set by fetchSelectedOptionCallback
+                  // or fetchOptionsCallback, so we don't need to fetch again here
                 }}
                 variant="withValueTitleAndDescription"
                 required={false}
@@ -223,64 +206,67 @@ export function MembersSection({
                 placeholder="Enter username or ENS name"
               />
               <div className="flex justify-end">
-                <Button onClick={handleAddMember} disabled={!selectedProfile}>
-                  Add Member
-                </Button>
+                {existingMember ? (
+                  <Button onClick={handleUpdateMember} disabled={!selectedProfile}>
+                    Update Member
+                  </Button>
+                ) : (
+                  <Button onClick={handleAddMember} disabled={!selectedProfile}>
+                    Add Member
+                  </Button>
+                )}
               </div>
             </div>
           </Form>
 
-          <div className="space-y-2">
+          <div className="space-y-3">
             {members.length > 0 ? (
               members.map((member) => (
                 <div
                   key={member.id}
-                  className="flex items-center justify-between p-2 bg-gray-50 rounded border hover:bg-gray-100 transition-colors cursor-pointer"
+                  className="flex items-center justify-between p-4 bg-white rounded-lg border border-gray-200 hover:border-gray-300 hover:shadow-sm transition-all cursor-pointer group"
                   onClick={() => {
                     if (member.phid) {
-                      const profile = {
+                      setSelectedProfile({
                         documentId: member.phid,
                         ethAddress: member.ethAddress || "",
                         username: member.name || member.ethAddress || "",
                         userImage: member.profileImage ?? undefined,
-                      };
-                      setSelectedProfile(profile);
-
-                      // Update cache
-                      const newCache = new Map(profilesCache);
-                      newCache.set(member.phid, profile);
-                      setProfilesCache(newCache);
+                      });
                     }
                   }}
                 >
-                  <div className="flex items-center gap-3 flex-1 min-w-0">
+                  <div className="flex items-center gap-4 flex-1 min-w-0">
                     {member.profileImage ? (
                       <img
                         src={member.profileImage}
                         alt={member.name || "Profile"}
-                        className="w-10 h-10 rounded-full object-cover flex-shrink-0"
+                        className="w-12 h-12 rounded-full object-cover flex-shrink-0 ring-2 ring-gray-200 group-hover:ring-gray-300 transition-all"
                       />
                     ) : (
-                      <div className="w-10 h-10 rounded-full bg-gray-300 flex items-center justify-center flex-shrink-0">
-                        <span className="text-gray-600 text-sm font-medium">
+                      <div className="w-12 h-12 rounded-full bg-gray-300 flex items-center justify-center flex-shrink-0 ring-2 ring-gray-200 group-hover:ring-gray-300 transition-all">
+                        <span className="text-gray-700 text-base font-bold">
                           {(member.name || member.ethAddress || "?")[0].toUpperCase()}
                         </span>
                       </div>
                     )}
                     <div className="flex-1 min-w-0">
-                      <div className="text-sm font-medium text-gray-900">
+                      <div className="text-base font-semibold text-gray-900 mb-0.5">
                         {member.name || "Unknown"}
                       </div>
-                      <div className="text-xs font-mono text-gray-500 truncate">
+                      <div className="text-xs font-mono text-gray-600 truncate mb-1">
                         {member.ethAddress}
                       </div>
                       {member.phid && member.name && (
                         <a
                           href={`${config.renownProfileBasePath}/${member.name}`}
-                          className="text-xs text-blue-600 hover:text-blue-800 hover:underline"
+                          className="text-xs text-gray-600 hover:text-gray-900 hover:underline inline-flex items-center gap-1"
                           onClick={(e) => e.stopPropagation()}
                         >
-                          {config.renownProfileBasePath}/{member.name}
+                          <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                          </svg>
+                          View Profile
                         </a>
                       )}
                     </div>
