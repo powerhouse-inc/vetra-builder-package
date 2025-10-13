@@ -139,11 +139,14 @@ export type UpdateMemberInfoInput = {
 
 export type UpdatePackageInfoInput = {
   description?: InputMaybe<Scalars["String"]["input"]>;
+  github?: InputMaybe<Scalars["String"]["input"]>;
   /** Add your inputs here */
   id: Scalars["OID"]["input"];
+  npm?: InputMaybe<Scalars["String"]["input"]>;
   phid?: InputMaybe<Scalars["PHID"]["input"]>;
   spaceId?: InputMaybe<Scalars["OID"]["input"]>;
   title?: InputMaybe<Scalars["String"]["input"]>;
+  vetraDriveUrl?: InputMaybe<Scalars["URL"]["input"]>;
 };
 
 export type UpdateSpaceInfoInput = {
@@ -176,7 +179,10 @@ export type VetraBuilderSpace = {
 
 export type VetraPackageInfo = {
   description: Maybe<Scalars["String"]["output"]>;
+  github: Maybe<Scalars["String"]["output"]>;
   id: Scalars["OID"]["output"];
+  npm: Maybe<Scalars["String"]["output"]>;
   phid: Maybe<Scalars["PHID"]["output"]>;
   title: Maybe<Scalars["String"]["output"]>;
+  vetraDriveUrl: Maybe<Scalars["URL"]["output"]>;
 };

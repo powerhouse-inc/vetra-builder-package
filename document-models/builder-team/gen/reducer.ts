@@ -6,7 +6,7 @@ import {
   isDocumentAction,
   createReducer,
 } from "document-model";
-import { BuilderTeamPHState } from "./ph-factories.js";
+import { type BuilderTeamPHState } from "./ph-factories.js";
 import { z } from "./types.js";
 
 import { reducer as ProfileReducer } from "../src/reducers/profile.js";

@@ -1,7 +1,11 @@
 import { useSelectedDocument } from "@powerhousedao/reactor-browser";
 import type { EditorProps } from "document-model";
 import { useState } from "react";
-import type { BuilderTeamDocument } from "../../document-models/builder-team/index.js";
+import type {
+  BuilderTeamDocument,
+  VetraPackageInfo,
+} from "../../document-models/builder-team/index.js";
+import { actions } from "../../document-models/builder-team/index.js";
 import { Header } from "./components/Header.js";
 import { ProfileSection } from "./components/ProfileSection.js";
 import { SpacesSection } from "./components/SpacesSection.js";
@@ -12,19 +16,23 @@ import { useProfileHandlers } from "./hooks/useProfileHandlers.js";
 import { useSpaceHandlers } from "./hooks/useSpaceHandlers.js";
 import { usePackageHandlers } from "./hooks/usePackageHandlers.js";
 import { useMemberHandlers } from "./hooks/useMemberHandlers.js";
+import { generateNanoId } from "../../utils/nano-id.js";
 
 export type IProps = EditorProps;
 
 export function Editor(props: IProps) {
   const [document, dispatch] = useSelectedDocument();
   const typedDocument = document as BuilderTeamDocument;
-  
+
   // Local UI state
   const [isEditingProfile, setIsEditingProfile] = useState(false);
   const [isAddingPackage, setIsAddingPackage] = useState(false);
-  const [selectedSpaceForPackage, setSelectedSpaceForPackage] = useState<string>("");
+  const [selectedSpaceForPackage, setSelectedSpaceForPackage] =
+    useState<string>("");
 
-  const { state: { global } } = typedDocument;
+  const {
+    state: { global },
+  } = typedDocument;
   const { profile, spaces, members } = global;
 
   // Custom hooks for handlers
@@ -39,13 +47,34 @@ export function Editor(props: IProps) {
     setIsAddingPackage(true);
   };
 
-  const handleSavePackage = (spaceId: string, name: string, description: string) => {
-    const success = packageHandlers.handleAddPackage(spaceId, name, description);
-    if (success) {
-      setIsAddingPackage(false);
-      setSelectedSpaceForPackage("");
+  const handleSavePackage = (
+    spaceId: string,
+    packageInfo: VetraPackageInfo | null
+  ) => {
+    if (!packageInfo) {
+      return false;
     }
-    return success;
+
+    // Create the package first with a generated ID
+    const id = generateNanoId();
+    dispatch(actions.addPackage({ id, spaceId }));
+
+    // Update the package with full info from the PHID selection
+    dispatch(
+      actions.updatePackageInfo({
+        id,
+        phid: packageInfo.phid,
+        title: packageInfo.title,
+        description: packageInfo.description,
+        github: packageInfo.github,
+        npm: packageInfo.npm,
+        vetraDriveUrl: packageInfo.vetraDriveUrl,
+      })
+    );
+
+    setIsAddingPackage(false);
+    setSelectedSpaceForPackage("");
+    return true;
   };
 
   const handleCancelAddPackage = () => {
@@ -65,10 +94,8 @@ export function Editor(props: IProps) {
       {/* Main Content */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          
           {/* Main Content Area */}
           <div className="lg:col-span-2 space-y-8">
-            
             {/* Profile Section */}
             <ProfileSection
               profile={profile}
@@ -94,12 +121,26 @@ export function Editor(props: IProps) {
               onSaveSpaceEdit={spaceHandlers.handleSaveSpaceEdit}
               onCancelSpaceEdit={spaceHandlers.handleCancelSpaceEdit}
               onSetEditingSpaceTitle={spaceHandlers.setEditingSpaceTitle}
-              onSetEditingSpaceDescription={spaceHandlers.setEditingSpaceDescription}
+              onSetEditingSpaceDescription={
+                spaceHandlers.setEditingSpaceDescription
+              }
               onAddPackageToSpace={handleAddPackageToSpace}
               onEditPackage={packageHandlers.handleStartEditingPackage}
               onDeletePackage={packageHandlers.handleDeletePackage}
-              onSavePackage={(packageId, name, description) => {
-                packageHandlers.handleSavePackageEdit(packageId, name, description);
+              onSavePackage={(packageInfo: VetraPackageInfo) => {
+                // Update the package with info
+                dispatch(
+                  actions.updatePackageInfo({
+                    id: packageInfo.id,
+                    phid: packageInfo.phid,
+                    title: packageInfo.title,
+                    description: packageInfo.description,
+                    github: packageInfo.github,
+                    npm: packageInfo.npm,
+                    vetraDriveUrl: packageInfo.vetraDriveUrl,
+                  })
+                );
+                packageHandlers.handleCancelPackageEdit();
               }}
               onCancelPackageEdit={packageHandlers.handleCancelPackageEdit}
             />
@@ -116,7 +157,6 @@ export function Editor(props: IProps) {
 
           {/* Sidebar */}
           <div className="space-y-6">
-            
             {/* Members Section */}
             <MembersSection
               members={members}
@@ -125,10 +165,7 @@ export function Editor(props: IProps) {
             />
 
             {/* Quick Stats */}
-            <QuickStats
-              spaces={spaces}
-              members={members}
-            />
+            <QuickStats spaces={spaces} members={members} />
           </div>
         </div>
       </div>

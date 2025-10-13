@@ -1,14 +1,21 @@
-import { Button, Form, PHIDField, StringField } from "@powerhousedao/document-engineering";
+import {
+  Button,
+  Form,
+  PHIDField,
+  StringField,
+} from "@powerhousedao/document-engineering";
 import { GraphQLClient } from "graphql-request";
 import { useState } from "react";
+import type { VetraPackageInfo } from "../../../document-models/builder-team/index.js";
+import { config } from "../config.js";
 
 interface PackageFormProps {
   spaceId: string;
-  onSave: (spaceId: string, name: string, description: string) => boolean;
+  onSave: (spaceId: string, packageInfo: VetraPackageInfo | null) => boolean;
   onCancel: () => void;
 }
 
-const graphqlClient = new GraphQLClient("http://localhost:4001/graphql");
+const graphqlClient = new GraphQLClient(config.vetraGraphqlEndpoint);
 
 const SEARCH_PACKAGES_QUERY = `
   query SearchPackages($search: String!) {
@@ -35,13 +42,13 @@ const SEARCH_PACKAGES_BY_DOCUMENT_ID_QUERY = `
 `;
 
 export function PackageForm({ spaceId, onSave, onCancel }: PackageFormProps) {
-  const [name, setName] = useState("");
-  const [description, setDescription] = useState("");
+  const [selectedPhid, setSelectedPhid] = useState("");
+  const [packageInfo, setPackageInfo] = useState<VetraPackageInfo | null>(null);
 
   const handleSave = () => {
-    if (onSave(spaceId, name, description)) {
-      setName("");
-      setDescription("");
+    if (onSave(spaceId, packageInfo)) {
+      setSelectedPhid("");
+      setPackageInfo(null);
     }
   };
 
@@ -54,27 +61,61 @@ export function PackageForm({ spaceId, onSave, onCancel }: PackageFormProps) {
         <Form onSubmit={(e: React.FormEvent) => e.preventDefault()}>
           <div className="space-y-4">
             <PHIDField
-              
               name="packageId"
               label="Package Name"
-              value={name}
-              onChange={(e) => setName(e)}
+              value={selectedPhid}
+              onChange={(phid) => {
+                setSelectedPhid(phid);
+                // Fetch the full package info when a selection is made
+                if (phid) {
+                  graphqlClient
+                    .request<{
+                      vetraPackages: {
+                        documentId: string;
+                        name: string;
+                        description: string;
+                        authorName: string;
+                        githubUrl: string;
+                      }[];
+                    }>(SEARCH_PACKAGES_BY_DOCUMENT_ID_QUERY, {
+                      documentIds: [phid],
+                    })
+                    .then((data) => {
+                      if (data.vetraPackages.length > 0) {
+                        const pkg = data.vetraPackages[0];
+                        setPackageInfo({
+                          id: "", // Will be set by handleAddPackage
+                          phid: pkg.documentId,
+                          title: pkg.name,
+                          description: pkg.description,
+                          github: pkg.githubUrl || null,
+                          npm: null,
+                          vetraDriveUrl: null,
+                        });
+                      }
+                    });
+                }
+              }}
               allowUris={true}
               autoComplete={true}
-              
+              initialOptions={[]}
               fetchOptionsCallback={async (userInput) => {
                 const data = await graphqlClient.request<{
-                  vetraPackages: { documentId: string; name: string; description: string; }[];
+                  vetraPackages: {
+                    documentId: string;
+                    name: string;
+                    description: string;
+                  }[];
                 }>(SEARCH_PACKAGES_QUERY, { search: userInput });
-                
+
                 const options = data.vetraPackages.map((pkg) => ({
                   id: pkg.documentId,
                   title: pkg.name,
                   value: pkg.documentId,
                   description: pkg.description,
                   path: {
-                      text: pkg.name,
-                      url: `/vetra-packages/${pkg.documentId}`,
+                    text: `${config.vetraPackageBasePath}/${pkg.name}`,
+                    url: `${config.vetraPackageBasePath}/${pkg.name}`,
                   },
                 }));
 
@@ -83,17 +124,23 @@ export function PackageForm({ spaceId, onSave, onCancel }: PackageFormProps) {
               }}
               fetchSelectedOptionCallback={async (value) => {
                 const data = await graphqlClient.request<{
-                  vetraPackages: { documentId: string; name: string; description: string; }[];
-                }>(SEARCH_PACKAGES_BY_DOCUMENT_ID_QUERY, { documentIds: [value] });
-                
+                  vetraPackages: {
+                    documentId: string;
+                    name: string;
+                    description: string;
+                  }[];
+                }>(SEARCH_PACKAGES_BY_DOCUMENT_ID_QUERY, {
+                  documentIds: [value],
+                });
+
                 const options = data.vetraPackages.map((pkg) => ({
                   id: pkg.documentId,
                   title: pkg.name,
                   value: pkg.documentId,
                   description: pkg.description,
                   path: {
-                      text: pkg.name,
-                      url: `/vetra-packages/${pkg.documentId}`,
+                    text: `${config.vetraPackageBasePath}/${pkg.name}`,
+                    url: `${config.vetraPackageBasePath}/${pkg.name}`,
                   },
                 }));
 
@@ -104,16 +151,14 @@ export function PackageForm({ spaceId, onSave, onCancel }: PackageFormProps) {
               variant="withValueTitleAndDescription"
               required={true}
               viewMode="edition"
-
               placeholder="Enter package name"
             />
 
-           
             <div className="flex justify-end space-x-3">
               <Button color="light" onClick={onCancel}>
                 Cancel
               </Button>
-              <Button onClick={handleSave} disabled={!name.trim() || !spaceId}>
+              <Button onClick={handleSave} disabled={!selectedPhid || !spaceId}>
                 Add Package
               </Button>
             </div>
@@ -123,4 +168,3 @@ export function PackageForm({ spaceId, onSave, onCancel }: PackageFormProps) {
     </div>
   );
 }
-

@@ -226,10 +226,24 @@ export class BuilderTeamHandlers {
     action: UpdateSpaceInfoAction,
     state: BuilderTeamState
   ): Promise<void> {
-    await this.dbHelpers.updateBuilderSpace(action.input.id, documentId, {
-      title: action.input.title,
-      description: action.input.description,
-    });
+    const updates: Record<string, any> = {};
+
+    // Only include fields that are provided
+    if (action.input.title !== undefined) {
+      updates.title = action.input.title;
+    }
+    if (action.input.description !== undefined) {
+      updates.description = action.input.description;
+    }
+
+    // Only update if there are actual changes
+    if (Object.keys(updates).length > 0) {
+      await this.dbHelpers.updateBuilderSpace(
+        action.input.id,
+        documentId,
+        updates
+      );
+    }
   }
 
   // private async handleReorderSpaces(
@@ -297,12 +311,33 @@ export class BuilderTeamHandlers {
     action: UpdatePackageInfoAction,
     state: BuilderTeamState
   ): Promise<void> {
-    const updates: Record<string, any> = {
-      ...action.input,
-      updated_at: new Date(),
-    };
+    const updates: Record<string, any> = {};
 
-    await this.dbHelpers.updateBuilderPackage(action.input.id, updates);
+    // Map input fields to database columns, only include provided fields
+    if (action.input.title !== undefined) {
+      updates.title = action.input.title;
+    }
+    if (action.input.description !== undefined) {
+      updates.description = action.input.description;
+    }
+    if (action.input.github !== undefined) {
+      updates.github_url = action.input.github;
+    }
+    if (action.input.npm !== undefined) {
+      updates.npm_url = action.input.npm;
+    }
+    if (action.input.vetraDriveUrl !== undefined) {
+      updates.vetra_drive_url = action.input.vetraDriveUrl;
+    }
+    if (action.input.spaceId !== undefined) {
+      updates.space_id = action.input.spaceId;
+    }
+    // Note: phid is not stored in the packages table, and id is the WHERE condition
+
+    // Only update if there are actual changes
+    if (Object.keys(updates).length > 0) {
+      await this.dbHelpers.updateBuilderPackage(action.input.id, updates);
+    }
   }
 
   // private async handleReorderPackages(

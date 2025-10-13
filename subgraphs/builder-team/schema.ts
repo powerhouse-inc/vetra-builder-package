@@ -45,6 +45,9 @@ export const schema: DocumentNode = gql`
     phid: PHID
     title: String
     description: String
+    github: String
+    npm: String
+    vetraDriveUrl: URL
   }
 
   """
@@ -216,6 +219,9 @@ export const schema: DocumentNode = gql`
     phid: PHID
     title: String
     description: String
+    github: String
+    npm: String
+    vetraDriveUrl: URL
   }
   input BuilderTeam_RemovePackageInput {
     "Add your inputs here"

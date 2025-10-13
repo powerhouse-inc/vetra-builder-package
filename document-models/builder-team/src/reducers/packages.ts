@@ -1,3 +1,4 @@
+import type { VetraPackageInfo } from "document-models/builder-team/gen/types.js";
 import type { BuilderTeamPackagesOperations } from "../../gen/packages/operations.js";
 
 export const reducer: BuilderTeamPackagesOperations = {
@@ -9,12 +10,15 @@ export const reducer: BuilderTeamPackagesOperations = {
       return;
     }
 
-    const newPackage = {
+    const newPackage: VetraPackageInfo = {
       ...action.input,
       id: action.input.id,
       phid: null,
       title: null,
       description: null,
+      github: null,
+      npm: null,
+      vetraDriveUrl: null,
     };
 
     space.packages.push(newPackage);

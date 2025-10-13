@@ -5,6 +5,7 @@ import {
 } from "../../../document-models/builder-team/index.js";
 import { type DocumentDispatch } from "@powerhousedao/reactor-browser";
 import { type Action } from "document-model";
+import { generateNanoId } from "../../../utils/nano-id.js";
 
 export function useSpaceHandlers(
   spaces: BuilderTeamDocument["state"]["global"]["spaces"],
@@ -17,11 +18,25 @@ export function useSpaceHandlers(
   const handleAddSpace = useCallback(
     (title: string, description: string) => {
       if (title.trim()) {
+        // Generate a nano id for the space
+        const id = generateNanoId();
+
+        // Create the space with the generated ID
         dispatch(
           actions.addSpace({
-            id: title.trim(),
+            id,
           })
         );
+
+        // Update the space with title and description
+        dispatch(
+          actions.updateSpaceInfo({
+            id,
+            title: title.trim(),
+            description: description.trim() || undefined,
+          })
+        );
+
         return true;
       }
       return false;

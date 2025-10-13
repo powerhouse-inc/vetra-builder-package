@@ -1,5 +1,5 @@
 import { BaseDocumentClass } from "document-model";
-import { BuilderTeamPHState } from "../ph-factories.js";
+import { type BuilderTeamPHState } from "../ph-factories.js";
 import {
   type SetLogoInput,
   type SetTeamNameInput,

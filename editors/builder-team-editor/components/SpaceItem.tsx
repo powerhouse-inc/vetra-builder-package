@@ -1,6 +1,9 @@
 import { Button, Form, StringField } from "@powerhousedao/document-engineering";
 import { PackageItem } from "./PackageItem.js";
-import { type VetraBuilderSpace } from "document-models/builder-team/index.js";
+import {
+  type VetraBuilderSpace,
+  type VetraPackageInfo,
+} from "document-models/builder-team/index.js";
 
 interface EditSpaceFormProps {
   title: string;
@@ -29,7 +32,7 @@ function EditSpaceForm({
           onChange={(e) => onTitleChange(e.target.value)}
           placeholder="Enter space title"
         />
-        
+
         <StringField
           name="editingSpaceDescription"
           label="Description (optional)"
@@ -51,7 +54,6 @@ function EditSpaceForm({
   );
 }
 
-
 interface SpaceItemProps {
   space: VetraBuilderSpace;
   isEditing: boolean;
@@ -67,7 +69,7 @@ interface SpaceItemProps {
   onAddPackage: (spaceId: string) => void;
   onEditPackage: (packageId: string) => void;
   onDeletePackage: (packageId: string) => void;
-  onSavePackage: (packageId: string, name: string, description: string) => void;
+  onSavePackage: (packageInfo: VetraPackageInfo) => void;
   onCancelPackageEdit: () => void;
 }
 
@@ -113,34 +115,27 @@ export function SpaceItem({
             <p className="text-sm text-gray-500 mt-1">{space.description}</p>
           )}
           <p className="text-xs text-gray-400 mt-1">
-            {space.packages.length} package{space.packages.length !== 1 ? 's' : ''}
+            {space.packages.length} package
+            {space.packages.length !== 1 ? "s" : ""}
           </p>
         </div>
         <div className="flex space-x-2">
-          <Button 
-            color="light" 
-            size="sm"
-            onClick={onEdit}
-          >
+          <Button color="light" size="sm" onClick={onEdit}>
             Edit
           </Button>
-          <Button 
-            color="light" 
+          <Button
+            color="light"
             size="sm"
             onClick={() => onAddPackage(space.id)}
           >
             Add Package
           </Button>
-          <Button 
-            color="red" 
-            size="sm"
-            onClick={onDelete}
-          >
+          <Button color="red" size="sm" onClick={onDelete}>
             Delete
           </Button>
         </div>
       </div>
-      
+
       {/* Packages in this space */}
       {space.packages.length > 0 && (
         <div className="mt-4 space-y-2">
@@ -151,7 +146,7 @@ export function SpaceItem({
               isEditing={editingPackageId === pkg.id}
               onEdit={() => onEditPackage(pkg.id)}
               onDelete={() => onDeletePackage(pkg.id)}
-              onSave={(name, description) => onSavePackage(pkg.id, name, description)}
+              onSave={(selectedPackage) => onSavePackage(selectedPackage)}
               onCancel={onCancelPackageEdit}
             />
           ))}
@@ -160,4 +155,3 @@ export function SpaceItem({
     </div>
   );
 }
-

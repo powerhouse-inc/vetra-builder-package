@@ -176,7 +176,7 @@
                             "id": "327caf73-0e96-47da-aa58-7d90b89c38b6",
                             "name": "UPDATE_PACKAGE_INFO",
                             "reducer": "",
-                            "schema": "input UpdatePackageInfoInput {\n  \"Add your inputs here\"\n  id: OID!\n  spaceId: OID\n  phid: PHID\n  title: String\n  description: String\n}",
+                            "schema": "input UpdatePackageInfoInput {\n  \"Add your inputs here\"\n  id: OID!\n  spaceId: OID\n  phid: PHID\n  title: String\n  description: String\n  github: String\n  npm: String\n  vetraDriveUrl: URL\n}",
                             "scope": "global",
                             "template": ""
                         },
@@ -198,7 +198,7 @@
                 "global": {
                     "examples": [],
                     "initialValue": "{\n  \"profile\": {\n    \"logo\": null,\n    \"name\": \"\",\n    \"slug\": \"\",\n    \"description\": null,\n    \"socials\": {\n      \"xProfile\": null,\n      \"github\": null,\n      \"website\": null\n    }\n  },\n  \"members\": [],\n  \"spaces\": []\n}",
-                    "schema": "type BuilderTeamState {\n  profile: VetraBuilderProfile!\n  members: [RenownProfileInfo!]!\n  spaces: [VetraBuilderSpace!]!\n}\n\ntype RenownProfileInfo { \n  id: OID!\n  phid: PHID\n  ethAddress: String\n  name: String\n  profileImage: String\n}\n\ntype VetraBuilderProfile {\n  logo: URL\n  name: String!\n  slug: String!\n  description: String\n  socials: VetraBuilderSocials!\n}\n\ntype VetraBuilderSocials {\n  xProfile: URL\n  github: URL \n  website: URL\n}\n\ntype VetraBuilderSpace {\n  id: OID!\n  title: String!\n  description: String\n  packages: [VetraPackageInfo!]!\n}\n\ntype VetraPackageInfo { \n  id: OID!\n  phid: PHID\n  title: String\n  description: String\n}"
+                    "schema": "type BuilderTeamState {\n  profile: VetraBuilderProfile!\n  members: [RenownProfileInfo!]!\n  spaces: [VetraBuilderSpace!]!\n}\n\ntype RenownProfileInfo { \n  id: OID!\n  phid: PHID\n  ethAddress: String\n  name: String\n  profileImage: String\n}\n\ntype VetraBuilderProfile {\n  logo: URL\n  name: String!\n  slug: String!\n  description: String\n  socials: VetraBuilderSocials!\n}\n\ntype VetraBuilderSocials {\n  xProfile: URL\n  github: URL \n  website: URL\n}\n\ntype VetraBuilderSpace {\n  id: OID!\n  title: String!\n  description: String\n  packages: [VetraPackageInfo!]!\n}\n\ntype VetraPackageInfo { \n  id: OID!\n  phid: PHID\n  title: String\n  description: String\n  github: String\n  npm: String\n  vetraDriveUrl: URL\n}"
                 },
                 "local": {
                     "examples": [],

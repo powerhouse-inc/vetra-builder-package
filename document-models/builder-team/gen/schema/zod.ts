@@ -161,10 +161,13 @@ export function UpdatePackageInfoInputSchema(): z.ZodObject<
 > {
   return z.object({
     description: z.string().nullish(),
+    github: z.string().nullish(),
     id: z.string(),
+    npm: z.string().nullish(),
     phid: z.string().nullish(),
     spaceId: z.string().nullish(),
     title: z.string().nullish(),
+    vetraDriveUrl: z.string().url().nullish(),
   });
 }
 
@@ -220,8 +223,11 @@ export function VetraPackageInfoSchema(): z.ZodObject<
   return z.object({
     __typename: z.literal("VetraPackageInfo").optional(),
     description: z.string().nullable(),
+    github: z.string().nullable(),
     id: z.string(),
+    npm: z.string().nullable(),
     phid: z.string().nullable(),
     title: z.string().nullable(),
+    vetraDriveUrl: z.string().url().nullable(),
   });
 }

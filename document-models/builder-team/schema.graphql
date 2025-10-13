@@ -55,6 +55,9 @@ type VetraPackageInfo {
   phid: PHID
   title: String
   description: String
+  github: String
+  npm: String
+  vetraDriveUrl: URL
 }
 
 
@@ -144,6 +147,9 @@ input UpdatePackageInfoInput {
   phid: PHID
   title: String
   description: String
+  github: String
+  npm: String
+  vetraDriveUrl: URL
 }
 
 input RemovePackageInput {

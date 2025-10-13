@@ -1,9 +1,15 @@
-import { Button, Form, PHIDField, StringField } from "@powerhousedao/document-engineering";
+import {
+  Button,
+  Form,
+  PHIDField,
+  StringField,
+} from "@powerhousedao/document-engineering";
 import { type VetraPackageInfo } from "document-models/builder-team";
 import { GraphQLClient } from "graphql-request";
 import { useState } from "react";
+import { config } from "../config.js";
 
-const graphqlClient = new GraphQLClient("http://localhost:4001/graphql");
+const graphqlClient = new GraphQLClient(config.vetraGraphqlEndpoint);
 
 const SEARCH_PACKAGES_QUERY = `
   query SearchPackages($search: String!) {
@@ -11,6 +17,8 @@ const SEARCH_PACKAGES_QUERY = `
       authorName
       name
       githubUrl
+      documentId
+      npmUrl
       documentId
       description
     }
@@ -24,6 +32,8 @@ const SEARCH_PACKAGES_BY_DOCUMENT_ID_QUERY = `
       name
       githubUrl
       documentId
+      npmUrl
+      documentId
       description
     }
   }
@@ -33,7 +43,7 @@ interface PackageItemProps {
   isEditing: boolean;
   onEdit: () => void;
   onDelete: () => void;
-  onSave: (name: string, description: string) => void;
+  onSave: (selectedPackage: VetraPackageInfo) => void;
   onCancel: () => void;
 }
 
@@ -45,11 +55,12 @@ export function PackageItem({
   onSave,
   onCancel,
 }: PackageItemProps) {
-  const [editingName, setEditingName] = useState(pkg.title || "");
-  const [editingDescription, setEditingDescription] = useState(pkg.description || "");
+  const [packages, setPackages] = useState([]);
+  const [displayedPkg, setDisplayedPkg] = useState(pkg);
+  const [selectedPackage, setSelectedPackage] = useState(pkg);
 
   const handleSave = () => {
-    onSave(editingName, editingDescription);
+    onSave(selectedPackage);
   };
 
   if (isEditing) {
@@ -60,23 +71,38 @@ export function PackageItem({
             <PHIDField
               name="packageName"
               label="Package Name"
-              value={editingName}
-              onChange={(e) => setEditingName(e)}
+              initialOptions={[displayedPkg].map((p) => ({
+                value: displayedPkg.phid ?? "",
+                description: displayedPkg.description ?? "",
+                path: {
+                  text: `${config.vetraPackageBasePath}/${displayedPkg.title}`,
+                  url: `${config.vetraPackageBasePath}/${displayedPkg.title}`,
+                },
+                title: displayedPkg.title ?? "",
+              }))}
+              value={displayedPkg.phid ?? undefined}
               allowUris={true}
               autoComplete={true}
               fetchOptionsCallback={async (userInput) => {
                 const data = await graphqlClient.request<{
-                  vetraPackages: { documentId: string; name: string; description: string; }[];
+                  vetraPackages: {
+                    documentId: string;
+                    name: string;
+                    description: string;
+                    vetraDriveUrl: string;
+                    npmUrl: string;
+                    githubUrl: string;
+                  }[];
                 }>(SEARCH_PACKAGES_QUERY, { search: userInput });
-                
+
                 const options = data.vetraPackages.map((pkg) => ({
                   id: pkg.documentId,
                   title: pkg.name,
                   value: pkg.documentId,
                   description: pkg.description,
                   path: {
-                      text: pkg.name,
-                      url: `/vetra-packages/${pkg.documentId}`,
+                    text: `${config.vetraPackageBasePath}/${pkg.name}`,
+                    url: `${config.vetraPackageBasePath}/${pkg.name}`,
                   },
                 }));
 
@@ -84,25 +110,53 @@ export function PackageItem({
                 return options;
               }}
               fetchSelectedOptionCallback={async (value) => {
-                
-                  const data = await graphqlClient.request<{
-                    vetraPackages: { documentId: string; name: string; description: string; }[];
-                  }>(SEARCH_PACKAGES_BY_DOCUMENT_ID_QUERY, { documentIds: [value] });
-                  
-                  const options = data.vetraPackages.map((pkg) => ({
-                    id: pkg.documentId,
-                    title: pkg.name,
-                    value: pkg.documentId,
-                    description: pkg.description,
-                    path: {
-                        text: pkg.name,
-                        url: `/vetra-packages/${pkg.documentId}`,
-                    },
-                  }));
+                const data = await graphqlClient.request<{
+                  vetraPackages: {
+                    documentId: string;
+                    name: string;
+                    description: string;
+                    vetraDriveUrl: string;
+                    npmUrl: string;
+                    githubUrl: string;
+                  }[];
+                }>(SEARCH_PACKAGES_BY_DOCUMENT_ID_QUERY, {
+                  documentIds: [value],
+                });
 
-                  const entry = options[0];
+                const pkg = data.vetraPackages[0];
+                if (!pkg) {
+                  return;
+                }
 
-                return entry;
+                const newSelectedPackage = {
+                  ...pkg,
+                  github: pkg.githubUrl,
+                  npm: pkg.npmUrl,
+                  phid: pkg.documentId,
+                  vetraDriveUrl: pkg.vetraDriveUrl,
+                  title: pkg.name,
+                  id: selectedPackage.id,
+                  description: pkg.description,
+                };
+
+                setSelectedPackage(newSelectedPackage);
+                setDisplayedPkg(newSelectedPackage);
+
+                // Update the entry immediately when refresh is clicked
+                // onSave(newSelectedPackage);
+
+                return {
+                  title: pkg.name,
+                  value: pkg.documentId,
+                  description: pkg.description,
+                  path: {
+                    text: `${config.vetraPackageBasePath}/${pkg.name}`,
+                    url: `${config.vetraPackageBasePath}/${pkg.name}`,
+                  },
+                };
+              }}
+              onSelect={(e) => {
+                console.log(e.target);
               }}
               variant="withValueTitleAndDescription"
               required={true}
@@ -114,7 +168,7 @@ export function PackageItem({
               <Button color="light" onClick={onCancel}>
                 Cancel
               </Button>
-              <Button onClick={handleSave} disabled={!editingName.trim()}>
+              <Button onClick={handleSave} disabled={!selectedPackage}>
                 Save Changes
               </Button>
             </div>
@@ -127,25 +181,27 @@ export function PackageItem({
   return (
     <div className="p-3 bg-gray-50 rounded border">
       <div className="flex items-center justify-between">
-        <div>
-          <span className="font-medium text-gray-900">{pkg.title}</span>
-          {pkg.description && (
-            <p className="text-sm text-gray-500">{pkg.description}</p>
+        <div className="flex-1 min-w-0">
+          <span className="font-medium text-gray-900">
+            {displayedPkg.title}
+          </span>
+          {displayedPkg.description && (
+            <p className="text-sm text-gray-500">{displayedPkg.description}</p>
+          )}
+          {displayedPkg.phid && displayedPkg.title && (
+            <a
+              href={`${config.vetraPackageBasePath}/${displayedPkg.title}`}
+              className="text-xs text-blue-600 hover:text-blue-800 hover:underline block mt-1"
+            >
+              {config.vetraPackageBasePath}/{displayedPkg.title}
+            </a>
           )}
         </div>
         <div className="flex space-x-2">
-          <Button 
-            color="light" 
-            size="sm"
-            onClick={onEdit}
-          >
+          <Button color="light" size="sm" onClick={onEdit}>
             Edit
           </Button>
-          <Button 
-            color="red" 
-            size="sm"
-            onClick={onDelete}
-          >
+          <Button color="red" size="sm" onClick={onDelete}>
             Remove
           </Button>
         </div>
@@ -153,4 +209,3 @@ export function PackageItem({
     </div>
   );
 }
-

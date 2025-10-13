@@ -1,11 +1,14 @@
 import { Button } from "@powerhousedao/document-engineering";
 import { useState } from "react";
-import type { BuilderTeamDocument } from "../../../document-models/builder-team/index.js";
+import type {
+  BuilderTeamDocument,
+  VetraPackageInfo,
+} from "../../../document-models/builder-team/index.js";
 import { SpaceForm } from "./SpaceForm.js";
 import { SpaceItem } from "./SpaceItem.js";
 
 interface SpacesSectionProps {
-  spaces: BuilderTeamDocument['state']['global']['spaces'];
+  spaces: BuilderTeamDocument["state"]["global"]["spaces"];
   editingSpaceId: string | null;
   editingSpaceTitle: string;
   editingSpaceDescription: string;
@@ -20,7 +23,7 @@ interface SpacesSectionProps {
   onAddPackageToSpace: (spaceId: string) => void;
   onEditPackage: (packageId: string) => void;
   onDeletePackage: (packageId: string) => void;
-  onSavePackage: (packageId: string, name: string, description: string) => void;
+  onSavePackage: (packageInfo: VetraPackageInfo) => void;
   onCancelPackageEdit: () => void;
 }
 
@@ -57,11 +60,11 @@ export function SpacesSection({
         <div className="flex items-center justify-between">
           <div>
             <h2 className="text-lg font-semibold text-gray-900">Spaces</h2>
-            <p className="text-sm text-gray-500">Organize your packages into spaces</p>
+            <p className="text-sm text-gray-500">
+              Organize your packages into spaces
+            </p>
           </div>
-          <Button onClick={() => setIsAddingSpace(true)}>
-            Add Space
-          </Button>
+          <Button onClick={() => setIsAddingSpace(true)}>Add Space</Button>
         </div>
       </div>
       <div className="p-6">
@@ -97,7 +100,9 @@ export function SpacesSection({
             ))
           ) : (
             <div className="text-center py-8 text-gray-500">
-              <p>No spaces created yet. Create a space to organize your packages.</p>
+              <p>
+                No spaces created yet. Create a space to organize your packages.
+              </p>
             </div>
           )}
         </div>
@@ -105,4 +110,3 @@ export function SpacesSection({
     </div>
   );
 }
-
