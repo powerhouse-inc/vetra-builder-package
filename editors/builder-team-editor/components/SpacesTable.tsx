@@ -27,10 +27,11 @@ export function SpacesTable({
         title: "Space Title",
         type: "string",
         width: "300px",
+        renderHeader: () => <div className="px-4">Space Title</div>,
         renderCell: (value, context) => {
           return (
             <div
-              className="cursor-pointer hover:text-blue-600 font-medium"
+              className="cursor-pointer hover:text-blue-600 font-medium px-4"
               onClick={() => onViewPackages(context.row.id)}
             >
               {value as string}
@@ -43,6 +44,10 @@ export function SpacesTable({
         title: "Description",
         type: "string",
         width: "400px",
+        renderHeader: () => <div className="px-4">Description</div>,
+        renderCell: (value) => {
+          return <div className="px-4">{value as string}</div>;
+        },
       },
       {
         field: "packages",
@@ -50,13 +55,16 @@ export function SpacesTable({
         type: "number",
         width: "120px",
         align: "center",
+        renderHeader: () => <div className="px-4">Packages</div>,
         valueGetter: (row) => row.packages.length,
         renderCell: (value) => {
           const count = value as number;
           return (
-            <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
-              {count} {count === 1 ? "package" : "packages"}
-            </span>
+            <div className="px-4">
+              <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                {count}
+              </span>
+            </div>
           );
         },
       },

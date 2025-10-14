@@ -5,8 +5,7 @@ import {
 } from "@powerhousedao/document-engineering";
 import { useState } from "react";
 import type { VetraPackageInfo } from "../../../document-models/builder-team/index.js";
-import { getPackage, searchPackageOptions, getPackageOption } from "../services/vetra-api.js";
-import { config } from "../config.js";
+import { getPackage, searchPackageOptions, getPackageOption, packageDataToPackageInfo } from "../services/vetra-api.js";
 
 interface PackageFormProps {
   spaceId: string;
@@ -48,15 +47,7 @@ export function PackageForm({ spaceId, onSave, onCancel }: PackageFormProps) {
                 if (phid) {
                   const pkg = await getPackage(phid);
                   if (pkg) {
-                    setPackageInfo({
-                      id: "", // Will be set by handleAddPackage
-                      phid: pkg.documentId,
-                      title: pkg.name,
-                      description: pkg.description,
-                      github: pkg.githubUrl || null,
-                      npm: pkg.npmUrl || null,
-                      vetraDriveUrl: `${config.vetraDriveBaseUrl}/${pkg.driveId}`,
-                    });
+                    setPackageInfo(packageDataToPackageInfo(pkg));
                   }
                 }
               }}

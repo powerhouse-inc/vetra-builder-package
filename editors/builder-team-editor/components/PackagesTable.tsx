@@ -24,10 +24,11 @@ export function PackagesTable({
         title: "Package Name",
         type: "string",
         width: "250px",
+        renderHeader: () => <div className="px-4">Package Name</div>,
         renderCell: (value, context) => {
           const pkg = context.row;
           return (
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 px-4">
               <Icon name="PackageManager" size="16px" color="rgb(75 85 99)" />
               <span className="font-medium text-gray-900">
                 {(value as string) || "Untitled Package"}
@@ -41,11 +42,14 @@ export function PackagesTable({
         title: "Description",
         type: "string",
         width: "300px",
+        renderHeader: () => <div className="px-4">Description</div>,
         renderCell: (value) => {
           return (
-            <span className="text-sm text-gray-600 line-clamp-2">
-              {(value as string) || "—"}
-            </span>
+            <div className="px-4">
+              <span className="text-sm text-gray-600 line-clamp-2">
+                {(value as string) || "—"}
+              </span>
+            </div>
           );
         },
       },
@@ -54,12 +58,15 @@ export function PackagesTable({
         title: "PHID",
         type: "phid",
         width: "200px",
+        renderHeader: () => <div className="px-4">PHID</div>,
         renderCell: (value) => {
-          if (!value) return <span className="text-gray-400">—</span>;
+          if (!value) return <div className="px-4"><span className="text-gray-400">—</span></div>;
           return (
-            <code className="text-xs bg-gray-100 px-2 py-1 rounded font-mono text-gray-700">
-              {(value as string).slice(0, 16)}...
-            </code>
+            <div className="px-4">
+              <code className="text-xs bg-gray-100 px-2 py-1 rounded font-mono text-gray-700">
+                {(value as string).slice(0, 16)}...
+              </code>
+            </div>
           );
         },
       },
@@ -69,16 +76,17 @@ export function PackagesTable({
         type: "string",
         width: "120px",
         align: "center",
+        renderHeader: () => <div className="px-4">Links</div>,
         renderCell: (value, context) => {
           const pkg = context.row;
           const hasLinks = pkg.phid || pkg.github || pkg.vetraDriveUrl;
 
           if (!hasLinks) {
-            return <span className="text-gray-400">—</span>;
+            return <div className="px-4"><span className="text-gray-400">—</span></div>;
           }
 
           return (
-            <div className="flex items-center gap-2 justify-center">
+            <div className="flex items-center gap-2 justify-center px-4">
               {pkg.phid && (
                 <a
                   href={`${config.vetraPackageBasePath}/${pkg.phid}`}

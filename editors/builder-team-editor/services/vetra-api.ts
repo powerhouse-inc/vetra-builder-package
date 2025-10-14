@@ -1,6 +1,7 @@
 import { vetraClient, SEARCH_PACKAGES_QUERY, SEARCH_PACKAGES_BY_DOCUMENT_ID_QUERY } from "../utils/graphql.js";
 import { config } from "../config.js";
 import type { VetraPackageData, PHIDOption } from "../types/index.js";
+import type { VetraPackageInfo } from "../../../document-models/builder-team/index.js";
 
 interface SearchPackagesResponse {
   vetraPackages: VetraPackageData[];
@@ -66,4 +67,23 @@ export async function searchPackageOptions(search: string): Promise<PHIDOption[]
 export async function getPackageOption(documentId: string): Promise<PHIDOption | undefined> {
   const pkg = await getPackage(documentId);
   return pkg ? packageToOption(pkg) : undefined;
+}
+
+/**
+ * Convert VetraPackageData to VetraPackageInfo
+ * Used when selecting packages in forms
+ */
+export function packageDataToPackageInfo(
+  pkg: VetraPackageData,
+  id: string = ""
+): VetraPackageInfo {
+  return {
+    id,
+    phid: pkg.documentId,
+    title: pkg.name,
+    description: pkg.description,
+    github: pkg.githubUrl || null,
+    npm: pkg.npmUrl || null,
+    vetraDriveUrl: `${config.vetraDriveBaseUrl}/${pkg.driveId}`,
+  };
 }

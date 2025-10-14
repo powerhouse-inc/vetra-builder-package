@@ -7,7 +7,7 @@ import {
 import { type VetraPackageInfo } from "document-models/builder-team";
 import { useState } from "react";
 import { config } from "../config.js";
-import { getPackage, searchPackageOptions, getPackageOption } from "../services/vetra-api.js";
+import { getPackage, searchPackageOptions, getPackageOption, packageDataToPackageInfo } from "../services/vetra-api.js";
 interface PackageItemProps {
   pkg: VetraPackageInfo;
   isEditing: boolean;
@@ -62,15 +62,7 @@ export function PackageItem({
                 }
                 const pkg = await getPackage(phid);
                 if (pkg) {
-                  setSelectedPackage({
-                    id: selectedPackage.id,
-                    phid: pkg.documentId,
-                    title: pkg.name,
-                    description: pkg.description,
-                    github: pkg.githubUrl || null,
-                    npm: pkg.npmUrl || null,
-                    vetraDriveUrl: `${config.vetraDriveBaseUrl}/${pkg.driveId}`,
-                  });
+                  setSelectedPackage(packageDataToPackageInfo(pkg, selectedPackage.id));
                 }
               }}
               allowUris={true}
@@ -79,15 +71,7 @@ export function PackageItem({
               fetchSelectedOptionCallback={async (value) => {
                 const pkg = await getPackage(value);
                 if (pkg) {
-                  setSelectedPackage({
-                    id: selectedPackage.id,
-                    phid: pkg.documentId,
-                    title: pkg.name,
-                    description: pkg.description,
-                    github: pkg.githubUrl || null,
-                    npm: pkg.npmUrl || null,
-                    vetraDriveUrl: `${config.vetraDriveBaseUrl}/${pkg.driveId}`,
-                  });
+                  setSelectedPackage(packageDataToPackageInfo(pkg, selectedPackage.id));
                 }
                 return getPackageOption(value);
               }}
