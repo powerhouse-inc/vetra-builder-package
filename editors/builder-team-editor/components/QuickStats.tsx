@@ -1,4 +1,5 @@
 import type { BuilderTeamDocument } from "../../../document-models/builder-team/index.js";
+import { Icon } from "@powerhousedao/document-engineering";
 
 interface QuickStatsProps {
   spaces: BuilderTeamDocument['state']['global']['spaces'];
@@ -31,9 +32,7 @@ export function QuickStats({ spaces, members }: QuickStatsProps) {
           </div>
           <div className="flex justify-between items-center p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
             <div className="flex items-center gap-2">
-              <svg className="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
-              </svg>
+              <Icon name="PackageManager" size="20px" color="rgb(75 85 99)" />
               <span className="text-sm font-medium text-gray-700">Total Packages</span>
             </div>
             <span className="text-2xl font-bold text-gray-900">{totalPackages}</span>

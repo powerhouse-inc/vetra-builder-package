@@ -1,4 +1,4 @@
-import { Button, Form, StringField, UrlField } from "@powerhousedao/document-engineering";
+import { Button, Form, StringField, UrlField, Icon } from "@powerhousedao/document-engineering";
 import type { BuilderTeamDocument } from "../../../document-models/builder-team/index.js";
 
 interface ProfileSectionProps {
@@ -26,9 +26,7 @@ export function ProfileSection({
     <div className="bg-white rounded-xl shadow-md border border-gray-200 overflow-hidden">
       <div className="px-6 py-5 border-b border-gray-200 bg-gray-50">
         <div className="flex items-center gap-2">
-          <svg className="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-          </svg>
+          <Icon name="People" size="24px" color="rgb(75 85 99)" />
           <div>
             <h2 className="text-2xl font-bold text-gray-900">Profile Information</h2>
             <p className="text-sm text-gray-600 mt-0.5">Manage your builder profile details</p>

@@ -2,44 +2,16 @@ import {
   Button,
   Form,
   PHIDField,
-  StringField,
 } from "@powerhousedao/document-engineering";
-import { GraphQLClient } from "graphql-request";
 import { useState } from "react";
 import type { VetraPackageInfo } from "../../../document-models/builder-team/index.js";
-import { config } from "../config.js";
+import { getPackage, searchPackageOptions, getPackageOption } from "../services/vetra-api.js";
 
 interface PackageFormProps {
   spaceId: string;
   onSave: (spaceId: string, packageInfo: VetraPackageInfo | null) => boolean;
   onCancel: () => void;
 }
-
-const graphqlClient = new GraphQLClient(config.vetraGraphqlEndpoint);
-
-const SEARCH_PACKAGES_QUERY = `
-  query SearchPackages($search: String!) {
-    vetraPackages(search: $search) {
-      authorName
-      name
-      githubUrl
-      documentId
-      description
-    }
-  }
-`;
-
-const SEARCH_PACKAGES_BY_DOCUMENT_ID_QUERY = `
-  query SearchPackagesByDocumentId($documentIds: [PHID!]) {
-    vetraPackages(documentId_in: $documentIds) {
-      authorName
-      name
-      githubUrl
-      documentId
-      description
-    }
-  }
-`;
 
 export function PackageForm({ spaceId, onSave, onCancel }: PackageFormProps) {
   const [selectedPhid, setSelectedPhid] = useState("");
@@ -69,90 +41,29 @@ export function PackageForm({ spaceId, onSave, onCancel }: PackageFormProps) {
               name="packageId"
               label="Package Name"
               value={selectedPhid}
-              onChange={(phid) => {
+              onChange={async (phid) => {
                 setSelectedPhid(phid);
                 // Fetch the full package info when a selection is made
                 if (phid) {
-                  graphqlClient
-                    .request<{
-                      vetraPackages: {
-                        documentId: string;
-                        name: string;
-                        description: string;
-                        authorName: string;
-                        githubUrl: string;
-                      }[];
-                    }>(SEARCH_PACKAGES_BY_DOCUMENT_ID_QUERY, {
-                      documentIds: [phid],
-                    })
-                    .then((data) => {
-                      if (data.vetraPackages.length > 0) {
-                        const pkg = data.vetraPackages[0];
-                        setPackageInfo({
-                          id: "", // Will be set by handleAddPackage
-                          phid: pkg.documentId,
-                          title: pkg.name,
-                          description: pkg.description,
-                          github: pkg.githubUrl || null,
-                          npm: null,
-                          vetraDriveUrl: null,
-                        });
-                      }
+                  const pkg = await getPackage(phid);
+                  if (pkg) {
+                    setPackageInfo({
+                      id: "", // Will be set by handleAddPackage
+                      phid: pkg.documentId,
+                      title: pkg.name,
+                      description: pkg.description,
+                      github: pkg.githubUrl || null,
+                      npm: null,
+                      vetraDriveUrl: null,
                     });
+                  }
                 }
               }}
               allowUris={true}
               autoComplete={true}
               initialOptions={[]}
-              fetchOptionsCallback={async (userInput) => {
-                const data = await graphqlClient.request<{
-                  vetraPackages: {
-                    documentId: string;
-                    name: string;
-                    description: string;
-                  }[];
-                }>(SEARCH_PACKAGES_QUERY, { search: userInput });
-
-                const options = data.vetraPackages.map((pkg) => ({
-                  id: pkg.documentId,
-                  title: pkg.name,
-                  value: pkg.documentId,
-                  description: pkg.description,
-                  path: {
-                    text: `${config.vetraPackageBasePath}/${pkg.name}`,
-                    url: `${config.vetraPackageBasePath}/${pkg.name}`,
-                  },
-                }));
-
-                console.log(options);
-                return options;
-              }}
-              fetchSelectedOptionCallback={async (value) => {
-                const data = await graphqlClient.request<{
-                  vetraPackages: {
-                    documentId: string;
-                    name: string;
-                    description: string;
-                  }[];
-                }>(SEARCH_PACKAGES_BY_DOCUMENT_ID_QUERY, {
-                  documentIds: [value],
-                });
-
-                const options = data.vetraPackages.map((pkg) => ({
-                  id: pkg.documentId,
-                  title: pkg.name,
-                  value: pkg.documentId,
-                  description: pkg.description,
-                  path: {
-                    text: `${config.vetraPackageBasePath}/${pkg.name}`,
-                    url: `${config.vetraPackageBasePath}/${pkg.name}`,
-                  },
-                }));
-
-                const entry = options[0];
-
-                return entry;
-              }}
+              fetchOptionsCallback={searchPackageOptions}
+              fetchSelectedOptionCallback={getPackageOption}
               variant="withValueTitleAndDescription"
               required={true}
               viewMode="edition"

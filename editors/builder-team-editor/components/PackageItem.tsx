@@ -2,42 +2,12 @@ import {
   Button,
   Form,
   PHIDField,
-  StringField,
+  Icon,
 } from "@powerhousedao/document-engineering";
 import { type VetraPackageInfo } from "document-models/builder-team";
-import { GraphQLClient } from "graphql-request";
 import { useState } from "react";
 import { config } from "../config.js";
-
-const graphqlClient = new GraphQLClient(config.vetraGraphqlEndpoint);
-
-const SEARCH_PACKAGES_QUERY = `
-  query SearchPackages($search: String!) {
-    vetraPackages(search: $search) {
-      authorName
-      name
-      githubUrl
-      documentId
-      npmUrl
-      documentId
-      description
-    }
-  }
-`;
-
-const SEARCH_PACKAGES_BY_DOCUMENT_ID_QUERY = `
-  query SearchPackagesByDocumentId($documentIds: [PHID!]) {
-    vetraPackages(documentId_in: $documentIds) {
-      authorName
-      name
-      githubUrl
-      documentId
-      npmUrl
-      documentId
-      description
-    }
-  }
-`;
+import { getPackage, searchPackageOptions, getPackageOption } from "../services/vetra-api.js";
 interface PackageItemProps {
   pkg: VetraPackageInfo;
   isEditing: boolean;
@@ -55,8 +25,6 @@ export function PackageItem({
   onSave,
   onCancel,
 }: PackageItemProps) {
-  const [packages, setPackages] = useState([]);
-  const [displayedPkg, setDisplayedPkg] = useState(pkg);
   const [selectedPackage, setSelectedPackage] = useState(pkg);
 
   const handleSave = () => {
@@ -72,97 +40,56 @@ export function PackageItem({
               name="packageName"
               label="Package Name"
               initialOptions={
-                displayedPkg.phid
+                selectedPackage.phid
                   ? [
                       {
-                        value: displayedPkg.phid,
-                        description: displayedPkg.description ?? "",
+                        value: selectedPackage.phid,
+                        description: selectedPackage.description ?? "",
                         path: {
-                          text: `${config.vetraPackageBasePath}/${displayedPkg.title || ""}`,
-                          url: `${config.vetraPackageBasePath}/${displayedPkg.title || ""}`,
+                          text: `${config.vetraPackageBasePath}/${selectedPackage.phid}`,
+                          url: `${config.vetraPackageBasePath}/${selectedPackage.phid}`,
                         },
-                        title: displayedPkg.title ?? "",
+                        title: selectedPackage.title ?? "",
+                        icon: "PackageManager",
                       },
                     ]
                   : []
               }
-              value={displayedPkg.phid ?? undefined}
-              allowUris={true}
-              autoComplete={true}
-              fetchOptionsCallback={async (userInput) => {
-                const data = await graphqlClient.request<{
-                  vetraPackages: {
-                    documentId: string;
-                    name: string;
-                    description: string;
-                    vetraDriveUrl: string;
-                    npmUrl: string;
-                    githubUrl: string;
-                  }[];
-                }>(SEARCH_PACKAGES_QUERY, { search: userInput });
-
-                const options = data.vetraPackages.map((pkg) => ({
-                  id: pkg.documentId,
-                  title: pkg.name,
-                  value: pkg.documentId,
-                  description: pkg.description,
-                  path: {
-                    text: `${config.vetraPackageBasePath}/${pkg.name}`,
-                    url: `${config.vetraPackageBasePath}/${pkg.name}`,
-                  },
-                }));
-
-                console.log(options);
-                return options;
-              }}
-              fetchSelectedOptionCallback={async (value) => {
-                const data = await graphqlClient.request<{
-                  vetraPackages: {
-                    documentId: string;
-                    name: string;
-                    description: string;
-                    vetraDriveUrl: string;
-                    npmUrl: string;
-                    githubUrl: string;
-                  }[];
-                }>(SEARCH_PACKAGES_BY_DOCUMENT_ID_QUERY, {
-                  documentIds: [value],
-                });
-
-                const pkg = data.vetraPackages[0];
-                if (!pkg) {
+              value={selectedPackage.phid ?? undefined}
+              onChange={async (phid) => {
+                if (!phid) {
                   return;
                 }
-
-                const newSelectedPackage = {
-                  ...pkg,
-                  github: pkg.githubUrl,
-                  npm: pkg.npmUrl,
-                  phid: pkg.documentId,
-                  vetraDriveUrl: pkg.vetraDriveUrl,
-                  title: pkg.name,
-                  id: selectedPackage.id,
-                  description: pkg.description,
-                };
-
-                setSelectedPackage(newSelectedPackage);
-                setDisplayedPkg(newSelectedPackage);
-
-                // Update the entry immediately when refresh is clicked
-                // onSave(newSelectedPackage);
-
-                return {
-                  title: pkg.name,
-                  value: pkg.documentId,
-                  description: pkg.description,
-                  path: {
-                    text: `${config.vetraPackageBasePath}/${pkg.name}`,
-                    url: `${config.vetraPackageBasePath}/${pkg.name}`,
-                  },
-                };
+                const pkg = await getPackage(phid);
+                if (pkg) {
+                  setSelectedPackage({
+                    id: selectedPackage.id,
+                    phid: pkg.documentId,
+                    title: pkg.name,
+                    description: pkg.description,
+                    github: pkg.githubUrl || null,
+                    npm: null,
+                    vetraDriveUrl: null,
+                  });
+                }
               }}
-              onSelect={(e) => {
-                console.log(e.target);
+              allowUris={true}
+              autoComplete={true}
+              fetchOptionsCallback={searchPackageOptions}
+              fetchSelectedOptionCallback={async (value) => {
+                const pkg = await getPackage(value);
+                if (pkg) {
+                  setSelectedPackage({
+                    id: selectedPackage.id,
+                    phid: pkg.documentId,
+                    title: pkg.name,
+                    description: pkg.description,
+                    github: pkg.githubUrl || null,
+                    npm: null,
+                    vetraDriveUrl: null,
+                  });
+                }
+                return getPackageOption(value);
               }}
               variant="withValueTitleAndDescription"
               required={true}
@@ -199,19 +126,17 @@ export function PackageItem({
       <div className="flex items-center justify-between">
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 mb-1">
-            <svg className="w-4 h-4 text-gray-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
-            </svg>
+            <Icon name="PackageManager" size="16px" color="rgb(75 85 99)" />
             <span className="font-semibold text-gray-900 truncate">
-              {displayedPkg.title || "Untitled Package"}
+              {pkg.title || "Untitled Package"}
             </span>
           </div>
-          {displayedPkg.description && (
-            <p className="text-sm text-gray-600 ml-6 leading-relaxed">{displayedPkg.description}</p>
+          {pkg.description && (
+            <p className="text-sm text-gray-600 ml-6 leading-relaxed">{pkg.description}</p>
           )}
-          {displayedPkg.phid && displayedPkg.title && (
+          {pkg.phid && (
             <a
-              href={`${config.vetraPackageBasePath}/${displayedPkg.title}`}
+              href={`${config.vetraPackageBasePath}/${pkg.phid}`}
               className="text-xs text-gray-600 hover:text-gray-900 hover:underline ml-6 mt-1.5 inline-flex items-center gap-1 group/link"
               target="_blank"
               rel="noopener noreferrer"
@@ -219,7 +144,7 @@ export function PackageItem({
               <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
               </svg>
-              {config.vetraPackageBasePath}/{displayedPkg.title}
+              View Package
             </a>
           )}
         </div>
