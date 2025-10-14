@@ -313,6 +313,16 @@ export class BuilderTeamHandlers {
   ): Promise<void> {
     const updates: Record<string, any> = {};
 
+    // Find the package in the state to get additional information
+    let packageFromState: { phid?: string | null } | null = null;
+    for (const space of state.spaces) {
+      const pkg = space.packages.find(p => p.id === action.input.id);
+      if (pkg) {
+        packageFromState = pkg as { phid?: string | null };
+        break;
+      }
+    }
+
     // Map input fields to database columns, only include provided fields
     if (action.input.title !== undefined) {
       updates.title = action.input.title;
@@ -332,7 +342,16 @@ export class BuilderTeamHandlers {
     if (action.input.spaceId !== undefined) {
       updates.space_id = action.input.spaceId;
     }
-    // Note: phid is not stored in the packages table, and id is the WHERE condition
+
+    // If we found the package in state and phid is available, store it
+    if (packageFromState?.phid) {
+      updates.drive_id = packageFromState.phid;
+    } else if (action.input.phid) {
+      updates.drive_id = action.input.phid;
+    }
+
+    // Always update the updated_at timestamp
+    updates.updated_at = new Date();
 
     // Only update if there are actual changes
     if (Object.keys(updates).length > 0) {

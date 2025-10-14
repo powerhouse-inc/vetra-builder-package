@@ -41,6 +41,6 @@ export const config = {
   ),
   vetraDriveBaseUrl: getEnvVar(
     "VETRA_DRIVE_BASE_URL",
-    "https://staging.vetra.io/d"
+    "https://switchboard.staging.vetra.io/d"
   ),
 };

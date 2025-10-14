@@ -25,7 +25,6 @@ export const schema: DocumentNode = gql`
     builderAccountId: String!
     title: String!
     description: String
-    sortOrder: Int!
     createdAt: String!
     updatedAt: String!
     packages: [BuilderTeamPackage!]!
@@ -36,24 +35,13 @@ export const schema: DocumentNode = gql`
     spaceId: String!
     name: String!
     description: String
-    category: String
-    authorName: String!
-    authorWebsite: String
-    githubUrl: String
-    npmUrl: String
+    github: String
+    npm: String
     vetraDriveUrl: String
     driveId: String
     sortOrder: Int!
     createdAt: String!
     updatedAt: String!
-    keywords: [BuilderTeamPackageKeyword!]!
-  }
-
-  type BuilderTeamPackageKeyword {
-    id: String!
-    packageId: String!
-    label: String!
-    createdAt: String!
   }
 
   type BuilderTeamMember {

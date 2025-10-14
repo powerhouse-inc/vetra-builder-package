@@ -20,7 +20,15 @@ export const getResolvers = (subgraph: Subgraph): Record<string, unknown> => {
           db
         )
           .selectFrom("builder_team_spaces")
-          .selectAll()
+          .select([
+            "builder_team_spaces.id",
+            "builder_team_spaces.builder_team_id",
+            "builder_team_spaces.title",
+            "builder_team_spaces.description",
+            "builder_team_spaces.sort_order",
+            "builder_team_spaces.created_at",
+            "builder_team_spaces.updated_at",
+          ])
           .leftJoin("deleted_files", (join) =>
             join
               .onRef(
@@ -40,7 +48,6 @@ export const getResolvers = (subgraph: Subgraph): Record<string, unknown> => {
           builderAccountId: space.builder_team_id,
           title: space.title,
           description: space.description,
-          sortOrder: space.sort_order,
           createdAt: space.created_at.toISOString(),
           updatedAt: space.updated_at.toISOString(),
           driveId: driveId, // Pass driveId to field resolvers
@@ -59,7 +66,12 @@ export const getResolvers = (subgraph: Subgraph): Record<string, unknown> => {
           db
         )
           .selectFrom("builder_team_members")
-          .selectAll()
+          .select([
+            "builder_team_members.id",
+            "builder_team_members.builder_team_id",
+            "builder_team_members.eth_address",
+            "builder_team_members.created_at",
+          ])
           .leftJoin("deleted_files", (join) =>
             join
               .onRef(
@@ -94,7 +106,22 @@ export const getResolvers = (subgraph: Subgraph): Record<string, unknown> => {
           db
         )
           .selectFrom("builder_team_packages")
-          .selectAll()
+          .select([
+            "builder_team_packages.id",
+            "builder_team_packages.space_id",
+            "builder_team_packages.title",
+            "builder_team_packages.description",
+            "builder_team_packages.category",
+            "builder_team_packages.author_name",
+            "builder_team_packages.author_website",
+            "builder_team_packages.github_url",
+            "builder_team_packages.npm_url",
+            "builder_team_packages.vetra_drive_url",
+            "builder_team_packages.drive_id",
+            "builder_team_packages.sort_order",
+            "builder_team_packages.created_at",
+            "builder_team_packages.updated_at",
+          ])
           .leftJoin("builder_team_spaces", (join) =>
             join.onRef(
               "builder_team_spaces.id",
@@ -109,19 +136,15 @@ export const getResolvers = (subgraph: Subgraph): Record<string, unknown> => {
         return packages.map((pkg) => ({
           id: pkg.id,
           spaceId: pkg.space_id,
-          title: pkg.title,
+          name: pkg.title,
           description: pkg.description,
-          category: pkg.category,
-          authorName: pkg.author_name,
-          authorWebsite: pkg.author_website,
-          githubUrl: pkg.github_url,
-          npmUrl: pkg.npm_url,
+          github: pkg.github_url,
+          npm: pkg.npm_url,
           vetraDriveUrl: pkg.vetra_drive_url,
           driveId: pkg.drive_id,
           sortOrder: pkg.sort_order,
           createdAt: pkg.created_at.toISOString(),
           updatedAt: pkg.updated_at.toISOString(),
-          keywords: [], // Will be resolved by field resolver
         }));
       },
     },
