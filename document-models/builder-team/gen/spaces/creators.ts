@@ -4,11 +4,13 @@ import {
   type AddSpaceInput,
   type UpdateSpaceInfoInput,
   type RemoveSpaceInput,
+  type ReorderSpacesInput,
 } from "../types.js";
 import {
   type AddSpaceAction,
   type UpdateSpaceInfoAction,
   type RemoveSpaceAction,
+  type ReorderSpacesAction,
 } from "./actions.js";
 
 export const addSpace = (input: AddSpaceInput) =>
@@ -35,5 +37,14 @@ export const removeSpace = (input: RemoveSpaceInput) =>
     { ...input },
     undefined,
     z.RemoveSpaceInputSchema,
+    "global",
+  );
+
+export const reorderSpaces = (input: ReorderSpacesInput) =>
+  createAction<ReorderSpacesAction>(
+    "REORDER_SPACES",
+    { ...input },
+    undefined,
+    z.ReorderSpacesInputSchema,
     "global",
   );

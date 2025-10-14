@@ -39,7 +39,7 @@ export function PackageForm({ spaceId, onSave, onCancel }: PackageFormProps) {
         <Form onSubmit={(e: React.FormEvent) => e.preventDefault()}>
           <div className="space-y-4">
             <PHIDField
-              name="packageId"
+              name={`packageId-${spaceId}`}
               label="Package Name"
               value={selectedPhid}
               onChange={async (phid) => {
@@ -55,7 +55,7 @@ export function PackageForm({ spaceId, onSave, onCancel }: PackageFormProps) {
                       description: pkg.description,
                       github: pkg.githubUrl || null,
                       npm: pkg.npmUrl || null,
-                      vetraDriveUrl: `${config.vetraDriveBaseUrl}/${pkg.documentId}`,
+                      vetraDriveUrl: `${config.vetraDriveBaseUrl}/${pkg.driveId}`,
                     });
                   }
                 }

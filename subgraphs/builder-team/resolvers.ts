@@ -13,9 +13,11 @@ import {
   type AddSpaceInput,
   type UpdateSpaceInfoInput,
   type RemoveSpaceInput,
+  type ReorderSpacesInput,
   type AddPackageInput,
   type UpdatePackageInfoInput,
   type RemovePackageInput,
+  type ReorderPackagesInput,
   type BuilderTeamDocument,
 } from "../../document-models/builder-team/index.js";
 import { setName } from "document-model";
@@ -44,14 +46,24 @@ export const getResolvers = (subgraph: Subgraph): Record<string, unknown> => {
             }
 
             const doc = await reactor.getDocument<BuilderTeamDocument>(docId);
+            // Sort spaces and packages by sortOrder
+            const sortedState = {
+              ...doc.state.global,
+              spaces: [...doc.state.global.spaces]
+                .sort((a, b) => (a as any).sortOrder - (b as any).sortOrder)
+                .map(space => ({
+                  ...space,
+                  packages: [...space.packages].sort((a, b) => (a as any).sortOrder - (b as any).sortOrder)
+                }))
+            };
             return {
               driveId: driveId,
               ...doc,
               ...doc.header,
               created: doc.header.createdAtUtcIso,
               lastModified: doc.header.lastModifiedAtUtcIso,
-              state: doc.state.global,
-              stateJSON: doc.state.global,
+              state: sortedState,
+              stateJSON: sortedState,
               revision: doc.header?.revision?.global ?? 0,
             };
           },
@@ -62,14 +74,24 @@ export const getResolvers = (subgraph: Subgraph): Record<string, unknown> => {
               docsIds.map(async (docId) => {
                 const doc =
                   await reactor.getDocument<BuilderTeamDocument>(docId);
+                // Sort spaces and packages by sortOrder
+                const sortedState = {
+                  ...doc.state.global,
+                  spaces: [...doc.state.global.spaces]
+                    .sort((a, b) => (a as any).sortOrder - (b as any).sortOrder)
+                    .map(space => ({
+                      ...space,
+                      packages: [...space.packages].sort((a, b) => (a as any).sortOrder - (b as any).sortOrder)
+                    }))
+                };
                 return {
                   driveId: driveId,
                   ...doc,
                   ...doc.header,
                   created: doc.header.createdAtUtcIso,
                   lastModified: doc.header.lastModifiedAtUtcIso,
-                  state: doc.state.global,
-                  stateJSON: doc.state.global,
+                  state: sortedState,
+                  stateJSON: sortedState,
                   revision: doc.header?.revision?.global ?? 0,
                 };
               }),
@@ -340,6 +362,28 @@ export const getResolvers = (subgraph: Subgraph): Record<string, unknown> => {
         return true;
       },
 
+      BuilderTeam_reorderSpaces: async (
+        _: unknown,
+        args: { docId: string; input: ReorderSpacesInput },
+      ) => {
+        const { docId, input } = args;
+        const doc = await reactor.getDocument<BuilderTeamDocument>(docId);
+        if (!doc) {
+          throw new Error("Document not found");
+        }
+
+        const result = await reactor.addAction(
+          docId,
+          actions.reorderSpaces(input),
+        );
+
+        if (result.status !== "SUCCESS") {
+          throw new Error(result.error?.message ?? "Failed to reorderSpaces");
+        }
+
+        return true;
+      },
+
       BuilderTeam_addPackage: async (
         _: unknown,
         args: { docId: string; input: AddPackageInput },
@@ -403,6 +447,28 @@ export const getResolvers = (subgraph: Subgraph): Record<string, unknown> => {
 
         if (result.status !== "SUCCESS") {
           throw new Error(result.error?.message ?? "Failed to removePackage");
+        }
+
+        return true;
+      },
+
+      BuilderTeam_reorderPackages: async (
+        _: unknown,
+        args: { docId: string; input: ReorderPackagesInput },
+      ) => {
+        const { docId, input } = args;
+        const doc = await reactor.getDocument<BuilderTeamDocument>(docId);
+        if (!doc) {
+          throw new Error("Document not found");
+        }
+
+        const result = await reactor.addAction(
+          docId,
+          actions.reorderPackages(input),
+        );
+
+        if (result.status !== "SUCCESS") {
+          throw new Error(result.error?.message ?? "Failed to reorderPackages");
         }
 
         return true;

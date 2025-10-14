@@ -4,11 +4,13 @@ import {
   type AddPackageInput,
   type UpdatePackageInfoInput,
   type RemovePackageInput,
+  type ReorderPackagesInput,
 } from "../types.js";
 import {
   type AddPackageAction,
   type UpdatePackageInfoAction,
   type RemovePackageAction,
+  type ReorderPackagesAction,
 } from "./actions.js";
 
 export const addPackage = (input: AddPackageInput) =>
@@ -35,5 +37,14 @@ export const removePackage = (input: RemovePackageInput) =>
     { ...input },
     undefined,
     z.RemovePackageInputSchema,
+    "global",
+  );
+
+export const reorderPackages = (input: ReorderPackagesInput) =>
+  createAction<ReorderPackagesAction>(
+    "REORDER_PACKAGES",
+    { ...input },
+    undefined,
+    z.ReorderPackagesInputSchema,
     "global",
   );

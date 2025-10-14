@@ -65,42 +65,34 @@ type VetraPackageInfo {
 # profile
 
 input SetLogoInput {
-  "Add your inputs here"
   logo: String
 }
 
 input SetTeamNameInput {
-  "Add your inputs here"
   name: String!
 }
 
 input SetSlugInput {
-  "Add your inputs here"
   slug: String!
 }
 
 input SetDescriptionInput {
-  "Add your inputs here"
   description: String
 }
 
 input SetSocialsInput {
-  "Add your inputs here"
   xProfile: String
   github: String
   website: String
-  
 }
 
 # member
 
 input AddMemberInput {
-  "Add your inputs here"
   id: OID!
 }
 
 input UpdateMemberInfoInput {
-  "Add your inputs here"
   id: OID!
   phid: PHID
   ethAddress: String
@@ -109,39 +101,38 @@ input UpdateMemberInfoInput {
 }
 
 input RemoveMemberInput {
-  "Add your inputs here"
   id: OID!
 }
 
 # spaces
 
 input AddSpaceInput {
-  "Add your inputs here"
   id: OID!
 }
 
 input UpdateSpaceInfoInput {
-  "Add your inputs here"
   id: OID!
   title: String
   description: String
 }
 
 input RemoveSpaceInput {
-  "Add your inputs here"
   id: OID!
+}
+
+input ReorderSpacesInput {
+  spaceIds: [OID!]!
+  targetIndex: Int!
 }
 
 # packages
 
 input AddPackageInput {
-  "Add your inputs here"
   id: OID!
   spaceId: OID!
 }
 
 input UpdatePackageInfoInput {
-  "Add your inputs here"
   id: OID!
   spaceId: OID
   phid: PHID
@@ -153,6 +144,11 @@ input UpdatePackageInfoInput {
 }
 
 input RemovePackageInput {
-  "Add your inputs here"
   id: OID!
+}
+
+input ReorderPackagesInput {
+  spaceId: OID!
+  packageIds: [OID!]!
+  targetIndex: Int!
 }

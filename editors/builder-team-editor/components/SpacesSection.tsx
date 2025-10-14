@@ -6,6 +6,7 @@ import type {
 } from "../../../document-models/builder-team/index.js";
 import { SpaceForm } from "./SpaceForm.js";
 import { SpaceItem } from "./SpaceItem.js";
+import { SpacesTable } from "./SpacesTable.js";
 
 interface SpacesSectionProps {
   spaces: BuilderTeamDocument["state"]["global"]["spaces"];
@@ -25,6 +26,8 @@ interface SpacesSectionProps {
   onDeletePackage: (packageId: string) => void;
   onSavePackage: (packageInfo: VetraPackageInfo) => void;
   onCancelPackageEdit: () => void;
+  onReorderSpaces: (spaceIds: string[], targetIndex: number) => void;
+  onReorderPackages: (spaceId: string, packageIds: string[], targetIndex: number) => void;
 }
 
 export function SpacesSection({
@@ -45,8 +48,12 @@ export function SpacesSection({
   onDeletePackage,
   onSavePackage,
   onCancelPackageEdit,
+  onReorderSpaces,
+  onReorderPackages,
 }: SpacesSectionProps) {
   const [isAddingSpace, setIsAddingSpace] = useState(false);
+  const [viewMode, setViewMode] = useState<"table" | "cards">("table");
+  const [selectedSpaceId, setSelectedSpaceId] = useState<string | null>(null);
 
   const handleAddSpace = (title: string, description: string) => {
     if (onAddSpace(title, description)) {
@@ -54,9 +61,21 @@ export function SpacesSection({
     }
   };
 
+  const handleEditSpace = (spaceId: string) => {
+    // When editing in table view, make the space visible by selecting it
+    if (viewMode === "table") {
+      setSelectedSpaceId(spaceId);
+    }
+    onStartEditingSpace(spaceId);
+  };
+
+  const selectedSpace = selectedSpaceId
+    ? spaces.find((s) => s.id === selectedSpaceId)
+    : null;
+
   return (
     <div className="bg-white rounded-xl shadow-md border border-gray-200 overflow-hidden">
-      <div className="px-6 py-5 border-b border-gray-200 bg-gray-50">
+      <div className="px-6 py-5 border-b border-gray-200 bg-white">
         <div className="flex items-center justify-between">
           <div>
             <h2 className="text-2xl font-bold text-gray-900">Spaces</h2>
@@ -74,52 +93,143 @@ export function SpacesSection({
           </Button>
         </div>
       </div>
+
+      {/* Tabs */}
+      <div className="border-b border-gray-200 px-6 py-5">
+        <nav className="flex -mb-px">
+          <button
+            className={`px-6 py-3 text-sm font-medium border-b-2 transition-colors ${
+              viewMode === "table"
+                ? "border-blue-600 text-blue-600"
+                : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
+            }`}
+            onClick={() => setViewMode("table")}
+          >
+            Table View
+          </button>
+          <button
+            className={`px-6 py-3 text-sm font-medium border-b-2 transition-colors ${
+              viewMode === "cards"
+                ? "border-blue-600 text-blue-600"
+                : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
+            }`}
+            onClick={() => setViewMode("cards")}
+          >
+            Cards View
+          </button>
+        </nav>
+      </div>
+
+      {/* Tab Content */}
       <div className="p-6">
         {isAddingSpace && (
-          <SpaceForm
-            onSave={handleAddSpace}
-            onCancel={() => setIsAddingSpace(false)}
-          />
+          <div className="mb-6">
+            <SpaceForm
+              onSave={handleAddSpace}
+              onCancel={() => setIsAddingSpace(false)}
+            />
+          </div>
         )}
 
-        <div className="space-y-5">
-          {spaces.length > 0 ? (
-            spaces.map((space) => (
-              <SpaceItem
-                key={space.id}
-                space={space}
-                isEditing={editingSpaceId === space.id}
-                editingSpaceTitle={editingSpaceTitle}
-                editingSpaceDescription={editingSpaceDescription}
-                editingPackageId={editingPackageId}
-                onEdit={() => onStartEditingSpace(space.id)}
-                onDelete={() => onDeleteSpace(space.id)}
-                onSaveEdit={onSaveSpaceEdit}
-                onCancelEdit={onCancelSpaceEdit}
-                onSetEditingTitle={onSetEditingSpaceTitle}
-                onSetEditingDescription={onSetEditingSpaceDescription}
+        {spaces.length > 0 ? (
+          <>
+            {viewMode === "table" ? (
+              <SpacesTable
+                spaces={spaces}
+                onEdit={handleEditSpace}
+                onDelete={onDeleteSpace}
                 onAddPackage={onAddPackageToSpace}
-                onEditPackage={onEditPackage}
-                onDeletePackage={onDeletePackage}
-                onSavePackage={onSavePackage}
-                onCancelPackageEdit={onCancelPackageEdit}
+                onViewPackages={(spaceId) => setSelectedSpaceId(spaceId)}
+                onReorder={onReorderSpaces}
               />
-            ))
-          ) : (
-            <div className="text-center py-12 px-4">
-              <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gray-100 mb-4">
-                <svg className="w-8 h-8 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
-                </svg>
+            ) : (
+              <div className="space-y-5">
+                {spaces.map((space) => (
+                  <SpaceItem
+                    key={space.id}
+                    space={space}
+                    isEditing={editingSpaceId === space.id}
+                    editingSpaceTitle={editingSpaceTitle}
+                    editingSpaceDescription={editingSpaceDescription}
+                    editingPackageId={editingPackageId}
+                    onEdit={() => onStartEditingSpace(space.id)}
+                    onDelete={() => onDeleteSpace(space.id)}
+                    onSaveEdit={onSaveSpaceEdit}
+                    onCancelEdit={onCancelSpaceEdit}
+                    onSetEditingTitle={onSetEditingSpaceTitle}
+                    onSetEditingDescription={onSetEditingSpaceDescription}
+                    onAddPackage={onAddPackageToSpace}
+                    onEditPackage={onEditPackage}
+                    onDeletePackage={onDeletePackage}
+                    onSavePackage={onSavePackage}
+                    onCancelPackageEdit={onCancelPackageEdit}
+                    onReorderPackages={(packageIds, targetIndex) => onReorderPackages(space.id, packageIds, targetIndex)}
+                  />
+                ))}
               </div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">No spaces yet</h3>
-              <p className="text-gray-600 mb-4">
-                Create a space to organize your packages
-              </p>
-              <Button onClick={() => setIsAddingSpace(true)}>Create your first space</Button>
+            )}
+          </>
+        ) : (
+          <div className="text-center py-12 px-4">
+            <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gray-100 mb-4">
+              <svg className="w-8 h-8 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+              </svg>
             </div>
-          )}
-        </div>
+            <h3 className="text-lg font-semibold text-gray-900 mb-2">No spaces yet</h3>
+            <p className="text-gray-600 mb-4">
+              Create a space to organize your packages
+            </p>
+            <Button onClick={() => setIsAddingSpace(true)}>Create your first space</Button>
+          </div>
+        )}
+
+        {/* Selected Space Packages View */}
+        {selectedSpace && viewMode === "table" && (
+          <div className="mt-6 p-4 bg-gray-50 rounded-lg border border-gray-200">
+            <div className="flex items-center justify-between mb-4">
+              <div>
+                <h3 className="text-lg font-semibold text-gray-900">
+                  {selectedSpace.title} - Packages
+                </h3>
+                {selectedSpace.description && (
+                  <p className="text-sm text-gray-600 mt-1">
+                    {selectedSpace.description}
+                  </p>
+                )}
+              </div>
+              <Button
+                color="light"
+                size="sm"
+                onClick={() => setSelectedSpaceId(null)}
+              >
+                Close
+              </Button>
+            </div>
+            <SpaceItem
+              space={selectedSpace}
+              isEditing={editingSpaceId === selectedSpace.id}
+              editingSpaceTitle={editingSpaceTitle}
+              editingSpaceDescription={editingSpaceDescription}
+              editingPackageId={editingPackageId}
+              onEdit={() => onStartEditingSpace(selectedSpace.id)}
+              onDelete={() => {
+                onDeleteSpace(selectedSpace.id);
+                setSelectedSpaceId(null);
+              }}
+              onSaveEdit={onSaveSpaceEdit}
+              onCancelEdit={onCancelSpaceEdit}
+              onSetEditingTitle={onSetEditingSpaceTitle}
+              onSetEditingDescription={onSetEditingSpaceDescription}
+              onAddPackage={onAddPackageToSpace}
+              onEditPackage={onEditPackage}
+              onDeletePackage={onDeletePackage}
+              onSavePackage={onSavePackage}
+              onCancelPackageEdit={onCancelPackageEdit}
+              onReorderPackages={(packageIds, targetIndex) => onReorderPackages(selectedSpace.id, packageIds, targetIndex)}
+            />
+          </div>
+        )}
       </div>
     </div>
   );

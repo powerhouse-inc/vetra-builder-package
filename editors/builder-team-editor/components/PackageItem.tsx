@@ -37,7 +37,7 @@ export function PackageItem({
         <Form onSubmit={(e: React.FormEvent) => e.preventDefault()}>
           <div className="space-y-3">
             <PHIDField
-              name="packageName"
+              name={`packageName-${pkg.id}`}
               label="Package Name"
               initialOptions={
                 selectedPackage.phid
@@ -68,8 +68,8 @@ export function PackageItem({
                     title: pkg.name,
                     description: pkg.description,
                     github: pkg.githubUrl || null,
-                    npm: null,
-                    vetraDriveUrl: null,
+                    npm: pkg.npmUrl || null,
+                    vetraDriveUrl: `${config.vetraDriveBaseUrl}/${pkg.driveId}`,
                   });
                 }
               }}
@@ -85,8 +85,8 @@ export function PackageItem({
                     title: pkg.name,
                     description: pkg.description,
                     github: pkg.githubUrl || null,
-                    npm: null,
-                    vetraDriveUrl: null,
+                    npm: pkg.npmUrl || null,
+                    vetraDriveUrl: `${config.vetraDriveBaseUrl}/${pkg.driveId}`,
                   });
                 }
                 return getPackageOption(value);

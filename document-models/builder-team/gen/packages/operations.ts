@@ -3,6 +3,7 @@ import {
   type AddPackageAction,
   type UpdatePackageInfoAction,
   type RemovePackageAction,
+  type ReorderPackagesAction,
 } from "./actions.js";
 import { type BuilderTeamState } from "../types.js";
 
@@ -20,6 +21,11 @@ export interface BuilderTeamPackagesOperations {
   removePackageOperation: (
     state: BuilderTeamState,
     action: RemovePackageAction,
+    dispatch?: SignalDispatch,
+  ) => void;
+  reorderPackagesOperation: (
+    state: BuilderTeamState,
+    action: ReorderPackagesAction,
     dispatch?: SignalDispatch,
   ) => void;
 }

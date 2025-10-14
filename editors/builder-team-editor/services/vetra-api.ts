@@ -45,8 +45,8 @@ export function packageToOption(pkg: VetraPackageData): PHIDOption {
     value: pkg.documentId,
     description: pkg.description,
     path: {
-      text: `${config.vetraPackageBasePath}/${pkg.documentId}`,
-      url: `${config.vetraPackageBasePath}/${pkg.documentId}`,
+      text: `${config.vetraDriveBaseUrl}/${pkg.driveId}`,
+      url: `${config.vetraDriveBaseUrl}/${pkg.driveId}`,
     },
     icon: "PackageManager",
   };

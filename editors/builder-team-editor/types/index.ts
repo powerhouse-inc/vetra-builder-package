@@ -15,6 +15,7 @@ export interface MemberProfileData {
 
 export interface VetraPackageData {
   documentId: string;
+  driveId: string;
   name: string;
   description: string;
   authorName: string;

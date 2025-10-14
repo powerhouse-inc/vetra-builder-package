@@ -6,12 +6,15 @@ export const reducer: BuilderTeamSpacesOperations = {
     if (state.spaces.find((space) => space.id === id)) {
       return;
     }
+    // Assign sortOrder as the next index
+    const sortOrder = state.spaces.length;
     state.spaces.push({
       id,
       title: "",
       description: "",
       packages: [],
-    });
+      sortOrder,
+    } as any);
   },
   updateSpaceInfoOperation(state, action, dispatch) {
     const { id, title, description } = action.input;
@@ -32,5 +35,21 @@ export const reducer: BuilderTeamSpacesOperations = {
       return;
     }
     state.spaces.splice(spaceIndex, 1);
+  },
+  reorderSpacesOperation(state, action, dispatch) {
+      const { spaceIds, targetIndex } = action.input;
+
+      // Find the spaces to move
+      const spacesToMove = state.spaces.filter(space => spaceIds.includes(space.id));
+      const remainingSpaces = state.spaces.filter(space => !spaceIds.includes(space.id));
+
+      // Insert the spaces at the target index
+      remainingSpaces.splice(targetIndex, 0, ...spacesToMove);
+      state.spaces = remainingSpaces;
+
+      // Update sortOrder for all spaces
+      state.spaces.forEach((space, index) => {
+        (space as any).sortOrder = index;
+      });
   },
 };

@@ -4,8 +4,14 @@ import {
   type AddSpaceInput,
   type UpdateSpaceInfoInput,
   type RemoveSpaceInput,
+  type ReorderSpacesInput,
 } from "../types.js";
-import { addSpace, updateSpaceInfo, removeSpace } from "./creators.js";
+import {
+  addSpace,
+  updateSpaceInfo,
+  removeSpace,
+  reorderSpaces,
+} from "./creators.js";
 import { type BuilderTeamAction } from "../actions.js";
 
 export default class BuilderTeam_Spaces extends BaseDocumentClass<BuilderTeamPHState> {
@@ -19,5 +25,9 @@ export default class BuilderTeam_Spaces extends BaseDocumentClass<BuilderTeamPHS
 
   public removeSpace(input: RemoveSpaceInput) {
     return this.dispatch(removeSpace(input));
+  }
+
+  public reorderSpaces(input: ReorderSpacesInput) {
+    return this.dispatch(reorderSpaces(input));
   }
 }

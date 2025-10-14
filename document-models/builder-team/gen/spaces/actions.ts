@@ -3,6 +3,7 @@ import type {
   AddSpaceInput,
   UpdateSpaceInfoInput,
   RemoveSpaceInput,
+  ReorderSpacesInput,
 } from "../types.js";
 
 export type AddSpaceAction = Action & {
@@ -17,8 +18,13 @@ export type RemoveSpaceAction = Action & {
   type: "REMOVE_SPACE";
   input: RemoveSpaceInput;
 };
+export type ReorderSpacesAction = Action & {
+  type: "REORDER_SPACES";
+  input: ReorderSpacesInput;
+};
 
 export type BuilderTeamSpacesAction =
   | AddSpaceAction
   | UpdateSpaceInfoAction
-  | RemoveSpaceAction;
+  | RemoveSpaceAction
+  | ReorderSpacesAction;

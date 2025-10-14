@@ -70,9 +70,9 @@ export class BuilderTeamHandlers {
       case "UPDATE_SPACE_INFO":
         await this.handleUpdateSpaceInfo(documentId, action, state);
         break;
-      // case "REORDER_SPACES":
-      //   await this.handleReorderSpaces(documentId, action, state);
-      //   break;
+      case "REORDER_SPACES":
+        await this.handleReorderSpaces(documentId, action, state);
+        break;
 
       // Packages operations
       case "ADD_PACKAGE":
@@ -83,6 +83,9 @@ export class BuilderTeamHandlers {
         break;
       case "UPDATE_PACKAGE_INFO":
         await this.handleUpdatePackageInfo(documentId, action, state);
+        break;
+      case "REORDER_PACKAGES":
+        await this.handleReorderPackages(documentId, action, state);
         break;
     }
   }
@@ -194,6 +197,10 @@ export class BuilderTeamHandlers {
   ): Promise<void> {
     await this.dbHelpers.ensureBuilderAccountExistsAndIsNotdeleted(documentId);
 
+    // Find the space in state to get its sortOrder
+    const space = state.spaces.find(s => s.id === action.input.id);
+    const sortOrder = (space as any)?.sortOrder ?? 0;
+
     await this.db
       .insertInto("builder_team_spaces")
       .values({
@@ -201,7 +208,7 @@ export class BuilderTeamHandlers {
         builder_team_id: documentId,
         title: "",
         description: "",
-        sort_order: 0,
+        sort_order: sortOrder,
         created_at: new Date(),
         updated_at: new Date(),
       })
@@ -246,22 +253,18 @@ export class BuilderTeamHandlers {
     }
   }
 
-  // private async handleReorderSpaces(
-  //   documentId: string,
-  //   action: ReorderSpacesAction,
-  //   state: BuilderAccountState
-  // ): Promise<void> {
-  //   const { ids, insertAfter } = action.input;
-
-  //   for (let i = 0; i < ids.length; i++) {
-  //     const spaceId = ids[i];
-  //     const sortOrder = insertAfter !== null ? Number(insertAfter) + i + 1 : i;
-
-  //     await this.dbHelpers.updateBuilderSpace(spaceId, documentId, {
-  //       sort_order: sortOrder,
-  //     });
-  //   }
-  // }
+  private async handleReorderSpaces(
+    documentId: string,
+    action: any,
+    state: BuilderTeamState
+  ): Promise<void> {
+    // Update sortOrder for all spaces based on the state
+    for (const space of state.spaces) {
+      await this.dbHelpers.updateBuilderSpace(space.id, documentId, {
+        sort_order: (space as any).sortOrder,
+      });
+    }
+  }
 
   // Packages operations
   private async handleAddPackage(
@@ -269,6 +272,16 @@ export class BuilderTeamHandlers {
     action: AddPackageAction,
     state: BuilderTeamState
   ): Promise<void> {
+    // Find the package in state to get its sortOrder
+    let sortOrder = 0;
+    for (const space of state.spaces) {
+      const pkg = space.packages.find(p => p.id === action.input.id);
+      if (pkg) {
+        sortOrder = (pkg as any).sortOrder ?? 0;
+        break;
+      }
+    }
+
     await this.db
       .insertInto("builder_team_packages")
       .values({
@@ -283,7 +296,7 @@ export class BuilderTeamHandlers {
         npm_url: "",
         vetra_drive_url: "",
         drive_id: "",
-        sort_order: 0,
+        sort_order: sortOrder,
         created_at: new Date(),
         updated_at: new Date(),
       })
@@ -359,28 +372,30 @@ export class BuilderTeamHandlers {
     }
   }
 
-  // private async handleReorderPackages(
-  //   documentId: string,
-  //   action: ReorderPackagesAction,
-  //   state: BuilderAccountState
-  // ): Promise<void> {
-  //   const { ids, insertAfter, spaceId } = action.input;
+  private async handleReorderPackages(
+    documentId: string,
+    action: any,
+    state: BuilderTeamState
+  ): Promise<void> {
+    const { spaceId } = action.input;
 
-  //   for (let i = 0; i < ids.length; i++) {
-  //     const packageId = ids[i];
-  //     const sortOrder = insertAfter !== null ? Number(insertAfter) + i + 1 : i;
+    // Find the space in state
+    const space = state.spaces.find(s => s.id === spaceId);
+    if (!space) return;
 
-  //     await this.db
-  //       .updateTable("builder_packages")
-  //       .set({
-  //         sort_order: sortOrder,
-  //         updated_at: new Date(),
-  //       })
-  //       .where("id", "=", packageId)
-  //       .where("space_id", "=", spaceId)
-  //       .execute();
-  //   }
-  // }
+    // Update sortOrder for all packages in the space based on the state
+    for (const pkg of space.packages) {
+      await this.db
+        .updateTable("builder_team_packages")
+        .set({
+          sort_order: (pkg as any).sortOrder,
+          updated_at: new Date(),
+        })
+        .where("id", "=", pkg.id)
+        .where("space_id", "=", spaceId)
+        .execute();
+    }
+  }
 
   private async handleDeletePackage(
     documentId: string,

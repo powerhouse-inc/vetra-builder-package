@@ -38,6 +38,7 @@ export const schema: DocumentNode = gql`
     title: String!
     description: String
     packages: [VetraPackageInfo!]!
+    sortOrder: Int!
   }
 
   type VetraPackageInfo {
@@ -48,6 +49,7 @@ export const schema: DocumentNode = gql`
     github: String
     npm: String
     vetraDriveUrl: URL
+    sortOrder: Int!
   }
 
   """
@@ -123,6 +125,11 @@ export const schema: DocumentNode = gql`
       docId: PHID
       input: BuilderTeam_RemoveSpaceInput
     ): Int
+    BuilderTeam_reorderSpaces(
+      driveId: String
+      docId: PHID
+      input: BuilderTeam_ReorderSpacesInput
+    ): Int
     BuilderTeam_addPackage(
       driveId: String
       docId: PHID
@@ -138,29 +145,29 @@ export const schema: DocumentNode = gql`
       docId: PHID
       input: BuilderTeam_RemovePackageInput
     ): Int
+    BuilderTeam_reorderPackages(
+      driveId: String
+      docId: PHID
+      input: BuilderTeam_ReorderPackagesInput
+    ): Int
   }
 
   """
   Module: Profile
   """
   input BuilderTeam_SetLogoInput {
-    "Add your inputs here"
     logo: String
   }
   input BuilderTeam_SetTeamNameInput {
-    "Add your inputs here"
     name: String!
   }
   input BuilderTeam_SetSlugInput {
-    "Add your inputs here"
     slug: String!
   }
   input BuilderTeam_SetDescriptionInput {
-    "Add your inputs here"
     description: String
   }
   input BuilderTeam_SetSocialsInput {
-    "Add your inputs here"
     xProfile: String
     github: String
     website: String
@@ -170,11 +177,9 @@ export const schema: DocumentNode = gql`
   Module: Member
   """
   input BuilderTeam_AddMemberInput {
-    "Add your inputs here"
     id: OID!
   }
   input BuilderTeam_UpdateMemberInfoInput {
-    "Add your inputs here"
     id: OID!
     phid: PHID
     ethAddress: String
@@ -182,7 +187,6 @@ export const schema: DocumentNode = gql`
     profileImage: String
   }
   input BuilderTeam_RemoveMemberInput {
-    "Add your inputs here"
     id: OID!
   }
 
@@ -190,30 +194,29 @@ export const schema: DocumentNode = gql`
   Module: Spaces
   """
   input BuilderTeam_AddSpaceInput {
-    "Add your inputs here"
     id: OID!
   }
   input BuilderTeam_UpdateSpaceInfoInput {
-    "Add your inputs here"
     id: OID!
     title: String
     description: String
   }
   input BuilderTeam_RemoveSpaceInput {
-    "Add your inputs here"
     id: OID!
+  }
+  input BuilderTeam_ReorderSpacesInput {
+    spaceIds: [OID!]!
+    targetIndex: Int!
   }
 
   """
   Module: Packages
   """
   input BuilderTeam_AddPackageInput {
-    "Add your inputs here"
     id: OID!
     spaceId: OID!
   }
   input BuilderTeam_UpdatePackageInfoInput {
-    "Add your inputs here"
     id: OID!
     spaceId: OID
     phid: PHID
@@ -224,7 +227,11 @@ export const schema: DocumentNode = gql`
     vetraDriveUrl: URL
   }
   input BuilderTeam_RemovePackageInput {
-    "Add your inputs here"
     id: OID!
+  }
+  input BuilderTeam_ReorderPackagesInput {
+    spaceId: OID!
+    packageIds: [OID!]!
+    targetIndex: Int!
   }
 `;

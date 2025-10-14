@@ -57,18 +57,15 @@ export type Scalars = {
 };
 
 export type AddMemberInput = {
-  /** Add your inputs here */
   id: Scalars["OID"]["input"];
 };
 
 export type AddPackageInput = {
-  /** Add your inputs here */
   id: Scalars["OID"]["input"];
   spaceId: Scalars["OID"]["input"];
 };
 
 export type AddSpaceInput = {
-  /** Add your inputs here */
   id: Scalars["OID"]["input"];
 };
 
@@ -79,17 +76,14 @@ export type BuilderTeamState = {
 };
 
 export type RemoveMemberInput = {
-  /** Add your inputs here */
   id: Scalars["OID"]["input"];
 };
 
 export type RemovePackageInput = {
-  /** Add your inputs here */
   id: Scalars["OID"]["input"];
 };
 
 export type RemoveSpaceInput = {
-  /** Add your inputs here */
   id: Scalars["OID"]["input"];
 };
 
@@ -101,36 +95,41 @@ export type RenownProfileInfo = {
   profileImage: Maybe<Scalars["String"]["output"]>;
 };
 
+export type ReorderPackagesInput = {
+  packageIds: Array<Scalars["OID"]["input"]>;
+  spaceId: Scalars["OID"]["input"];
+  targetIndex: Scalars["Int"]["input"];
+};
+
+export type ReorderSpacesInput = {
+  spaceIds: Array<Scalars["OID"]["input"]>;
+  targetIndex: Scalars["Int"]["input"];
+};
+
 export type SetDescriptionInput = {
-  /** Add your inputs here */
   description?: InputMaybe<Scalars["String"]["input"]>;
 };
 
 export type SetLogoInput = {
-  /** Add your inputs here */
   logo?: InputMaybe<Scalars["String"]["input"]>;
 };
 
 export type SetSlugInput = {
-  /** Add your inputs here */
   slug: Scalars["String"]["input"];
 };
 
 export type SetSocialsInput = {
   github?: InputMaybe<Scalars["String"]["input"]>;
   website?: InputMaybe<Scalars["String"]["input"]>;
-  /** Add your inputs here */
   xProfile?: InputMaybe<Scalars["String"]["input"]>;
 };
 
 export type SetTeamNameInput = {
-  /** Add your inputs here */
   name: Scalars["String"]["input"];
 };
 
 export type UpdateMemberInfoInput = {
   ethAddress?: InputMaybe<Scalars["String"]["input"]>;
-  /** Add your inputs here */
   id: Scalars["OID"]["input"];
   name?: InputMaybe<Scalars["String"]["input"]>;
   phid?: InputMaybe<Scalars["PHID"]["input"]>;
@@ -140,7 +139,6 @@ export type UpdateMemberInfoInput = {
 export type UpdatePackageInfoInput = {
   description?: InputMaybe<Scalars["String"]["input"]>;
   github?: InputMaybe<Scalars["String"]["input"]>;
-  /** Add your inputs here */
   id: Scalars["OID"]["input"];
   npm?: InputMaybe<Scalars["String"]["input"]>;
   phid?: InputMaybe<Scalars["PHID"]["input"]>;
@@ -151,7 +149,6 @@ export type UpdatePackageInfoInput = {
 
 export type UpdateSpaceInfoInput = {
   description?: InputMaybe<Scalars["String"]["input"]>;
-  /** Add your inputs here */
   id: Scalars["OID"]["input"];
   title?: InputMaybe<Scalars["String"]["input"]>;
 };

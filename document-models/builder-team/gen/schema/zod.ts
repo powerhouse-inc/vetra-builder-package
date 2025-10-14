@@ -8,6 +8,8 @@ import type {
   RemovePackageInput,
   RemoveSpaceInput,
   RenownProfileInfo,
+  ReorderPackagesInput,
+  ReorderSpacesInput,
   SetDescriptionInput,
   SetLogoInput,
   SetSlugInput,
@@ -103,6 +105,25 @@ export function RenownProfileInfoSchema(): z.ZodObject<
     name: z.string().nullable(),
     phid: z.string().nullable(),
     profileImage: z.string().nullable(),
+  });
+}
+
+export function ReorderPackagesInputSchema(): z.ZodObject<
+  Properties<ReorderPackagesInput>
+> {
+  return z.object({
+    packageIds: z.array(z.string()),
+    spaceId: z.string(),
+    targetIndex: z.number(),
+  });
+}
+
+export function ReorderSpacesInputSchema(): z.ZodObject<
+  Properties<ReorderSpacesInput>
+> {
+  return z.object({
+    spaceIds: z.array(z.string()),
+    targetIndex: z.number(),
   });
 }
 

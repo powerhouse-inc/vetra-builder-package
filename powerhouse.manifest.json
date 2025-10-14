@@ -1,10 +1,10 @@
 {
-    "name": "powerhouse/vetra-builder-package",
-    "description": "",
+    "name": "Vetra Builder Package",
+    "description": "a short description",
     "category": "People & Culture",
     "publisher": {
         "name": "Powerhouse Inc.",
-        "url": "https://www.powerhouse.inc"
+        "url": "https://powerhouse.inc"
     },
     "documentModels": [
         {

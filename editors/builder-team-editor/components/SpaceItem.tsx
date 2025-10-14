@@ -1,5 +1,6 @@
 import { Button, Form, StringField, Icon } from "@powerhousedao/document-engineering";
 import { PackageItem } from "./PackageItem.js";
+import { PackagesTable } from "./PackagesTable.js";
 import {
   type VetraBuilderSpace,
   type VetraPackageInfo,
@@ -71,6 +72,7 @@ interface SpaceItemProps {
   onDeletePackage: (packageId: string) => void;
   onSavePackage: (packageInfo: VetraPackageInfo) => void;
   onCancelPackageEdit: () => void;
+  onReorderPackages: (packageIds: string[], targetIndex: number) => void;
 }
 
 export function SpaceItem({
@@ -90,6 +92,7 @@ export function SpaceItem({
   onDeletePackage,
   onSavePackage,
   onCancelPackageEdit,
+  onReorderPackages,
 }: SpaceItemProps) {
   if (isEditing) {
     return (
@@ -159,19 +162,37 @@ export function SpaceItem({
       </div>
 
       {/* Packages in this space */}
-      {space.packages.length > 0 && (
-        <div className="mt-4 pt-4 border-t border-gray-200 space-y-2">
-          {space.packages.map((pkg) => (
-            <PackageItem
-              key={pkg.id}
-              pkg={pkg}
-              isEditing={editingPackageId === pkg.id}
-              onEdit={() => onEditPackage(pkg.id)}
-              onDelete={() => onDeletePackage(pkg.id)}
-              onSave={(selectedPackage) => onSavePackage(selectedPackage)}
-              onCancel={onCancelPackageEdit}
+      {space.packages.length > 0 ? (
+        <div className="mt-4 pt-4 border-t border-gray-200">
+          <div className="mb-3 flex items-center justify-between">
+            <h4 className="text-sm font-semibold text-gray-700">Packages</h4>
+          </div>
+          {editingPackageId ? (
+            <div className="space-y-2">
+              {space.packages.map((pkg) => (
+                <PackageItem
+                  key={pkg.id}
+                  pkg={pkg}
+                  isEditing={editingPackageId === pkg.id}
+                  onEdit={() => onEditPackage(pkg.id)}
+                  onDelete={() => onDeletePackage(pkg.id)}
+                  onSave={(selectedPackage) => onSavePackage(selectedPackage)}
+                  onCancel={onCancelPackageEdit}
+                />
+              ))}
+            </div>
+          ) : (
+            <PackagesTable
+              packages={space.packages}
+              onEdit={onEditPackage}
+              onDelete={onDeletePackage}
+              onReorder={onReorderPackages}
             />
-          ))}
+          )}
+        </div>
+      ) : (
+        <div className="mt-4 pt-4 border-t border-gray-200 text-center py-6">
+          <p className="text-sm text-gray-500">No packages in this space yet</p>
         </div>
       )}
     </div>

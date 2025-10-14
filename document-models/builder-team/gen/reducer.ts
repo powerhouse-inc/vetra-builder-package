@@ -123,6 +123,15 @@ export const stateReducer: StateReducer<BuilderTeamPHState> = (
       );
       break;
 
+    case "REORDER_SPACES":
+      z.ReorderSpacesInputSchema().parse(action.input);
+      SpacesReducer.reorderSpacesOperation(
+        (state as any)[action.scope],
+        action as any,
+        dispatch,
+      );
+      break;
+
     case "ADD_PACKAGE":
       z.AddPackageInputSchema().parse(action.input);
       PackagesReducer.addPackageOperation(
@@ -144,6 +153,15 @@ export const stateReducer: StateReducer<BuilderTeamPHState> = (
     case "REMOVE_PACKAGE":
       z.RemovePackageInputSchema().parse(action.input);
       PackagesReducer.removePackageOperation(
+        (state as any)[action.scope],
+        action as any,
+        dispatch,
+      );
+      break;
+
+    case "REORDER_PACKAGES":
+      z.ReorderPackagesInputSchema().parse(action.input);
+      PackagesReducer.reorderPackagesOperation(
         (state as any)[action.scope],
         action as any,
         dispatch,

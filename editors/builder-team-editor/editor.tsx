@@ -82,6 +82,14 @@ export function Editor(props: IProps) {
     setSelectedSpaceForPackage("");
   };
 
+  const handleReorderSpaces = (spaceIds: string[], targetIndex: number) => {
+    dispatch(actions.reorderSpaces({ spaceIds, targetIndex }));
+  };
+
+  const handleReorderPackages = (spaceId: string, packageIds: string[], targetIndex: number) => {
+    dispatch(actions.reorderPackages({ spaceId, packageIds, targetIndex }));
+  };
+
   return (
     <div className="html-defaults-container min-h-screen bg-gray-50">
       {/* Header */}
@@ -143,6 +151,8 @@ export function Editor(props: IProps) {
                 packageHandlers.handleCancelPackageEdit();
               }}
               onCancelPackageEdit={packageHandlers.handleCancelPackageEdit}
+              onReorderSpaces={handleReorderSpaces}
+              onReorderPackages={handleReorderPackages}
             />
 
             {/* Add Package Modal */}

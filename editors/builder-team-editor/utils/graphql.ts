@@ -39,6 +39,7 @@ export const SEARCH_PACKAGES_QUERY = `
       githubUrl
       npmUrl
       documentId
+      driveId
       description
     }
   }
@@ -52,6 +53,7 @@ export const SEARCH_PACKAGES_BY_DOCUMENT_ID_QUERY = `
       githubUrl
       npmUrl
       documentId
+      driveId
       description
     }
   }

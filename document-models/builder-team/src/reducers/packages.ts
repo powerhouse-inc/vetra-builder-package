@@ -10,6 +10,8 @@ export const reducer: BuilderTeamPackagesOperations = {
       return;
     }
 
+    // Assign sortOrder as the next index
+    const sortOrder = space.packages.length;
     const newPackage: VetraPackageInfo = {
       ...action.input,
       id: action.input.id,
@@ -19,7 +21,8 @@ export const reducer: BuilderTeamPackagesOperations = {
       github: null,
       npm: null,
       vetraDriveUrl: null,
-    };
+      sortOrder,
+    } as any;
 
     space.packages.push(newPackage);
   },
@@ -48,5 +51,27 @@ export const reducer: BuilderTeamPackagesOperations = {
     state.spaces[spaceIndex].packages = state.spaces[
       spaceIndex
     ].packages.filter((p) => p.id !== action.input.id);
+  },
+  reorderPackagesOperation(state, action, dispatch) {
+      const { spaceId, packageIds, targetIndex } = action.input;
+
+      // Find the space
+      const space = state.spaces.find(s => s.id === spaceId);
+      if (!space) {
+        return;
+      }
+
+      // Find the packages to move
+      const packagesToMove = space.packages.filter(pkg => packageIds.includes(pkg.id));
+      const remainingPackages = space.packages.filter(pkg => !packageIds.includes(pkg.id));
+
+      // Insert the packages at the target index
+      remainingPackages.splice(targetIndex, 0, ...packagesToMove);
+      space.packages = remainingPackages;
+
+      // Update sortOrder for all packages
+      space.packages.forEach((pkg, index) => {
+        (pkg as any).sortOrder = index;
+      });
   },
 };
