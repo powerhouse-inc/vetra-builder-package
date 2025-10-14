@@ -37,6 +37,7 @@ export const SEARCH_PACKAGES_QUERY = `
       authorName
       name
       githubUrl
+      npmUrl
       documentId
       description
     }
@@ -49,6 +50,7 @@ export const SEARCH_PACKAGES_BY_DOCUMENT_ID_QUERY = `
       authorName
       name
       githubUrl
+      npmUrl
       documentId
       description
     }

@@ -45,7 +45,6 @@ export function usePackageHandlers(
 
   const handleSavePackageEdit = useCallback(
     (packageId: string, name: string, description: string) => {
-      console.log("handleSavePackageEdit", packageId, name, description);
       if (packageId && name.trim()) {
         dispatch(
           actions.updatePackageInfo({

@@ -39,4 +39,8 @@ export const config = {
     "VETRA_VETRA_PACKAGE_BASE_PATH",
     "phd://staging.vetra.to"
   ),
+  vetraDriveBaseUrl: getEnvVar(
+    "VETRA_DRIVE_BASE_URL",
+    "https://staging.vetra.io/d"
+  ),
 };

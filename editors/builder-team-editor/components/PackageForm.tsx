@@ -6,6 +6,7 @@ import {
 import { useState } from "react";
 import type { VetraPackageInfo } from "../../../document-models/builder-team/index.js";
 import { getPackage, searchPackageOptions, getPackageOption } from "../services/vetra-api.js";
+import { config } from "../config.js";
 
 interface PackageFormProps {
   spaceId: string;
@@ -53,8 +54,8 @@ export function PackageForm({ spaceId, onSave, onCancel }: PackageFormProps) {
                       title: pkg.name,
                       description: pkg.description,
                       github: pkg.githubUrl || null,
-                      npm: null,
-                      vetraDriveUrl: null,
+                      npm: pkg.npmUrl || null,
+                      vetraDriveUrl: `${config.vetraDriveBaseUrl}/${pkg.documentId}`,
                     });
                   }
                 }

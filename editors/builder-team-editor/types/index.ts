@@ -19,6 +19,7 @@ export interface VetraPackageData {
   description: string;
   authorName: string;
   githubUrl: string;
+  npmUrl?: string;
 }
 
 export interface PHIDOption {
