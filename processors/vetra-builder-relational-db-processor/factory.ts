@@ -34,7 +34,6 @@ export const vetraBuilderTeamRelationalDbProcessorFactory =
       filter,
       store
     );
-    console.log("vetraBuilderRelationalDbProcessorFactory", processor);
     return [
       {
         processor,

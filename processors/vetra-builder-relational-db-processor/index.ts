@@ -46,7 +46,6 @@ export class VetraBuilderRelationalDbProcessor extends RelationalDbProcessor<DB>
       if (strand.operations.length === 0) {
         continue;
       }
-      console.log("onStrands", strand);
 
       for (const operation of strand.operations) {
         if (strand.documentType.includes("powerhouse/document-drive")) {
