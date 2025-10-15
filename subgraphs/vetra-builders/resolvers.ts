@@ -199,23 +199,45 @@ export const getResolvers = (subgraph: Subgraph): Record<string, unknown> => {
 
       fetchBuilderTeam: async (
         parent: unknown,
-        args: { driveId?: string; id: string },
+        args: { driveId?: string; id?: string; slug?: string },
         context: { driveId?: string }
       ) => {
         const driveId = args.driveId || DEFAULT_DRIVE_ID;
         context.driveId = driveId;
-        const account = await VetraBuilderRelationalDbProcessor.query<DB>(
-          driveId,
-          db
-        )
+
+        // Require either id or slug
+        if (!args.id && !args.slug) {
+          throw new Error("Either id or slug parameter is required");
+        }
+
+        let query = VetraBuilderRelationalDbProcessor.query<DB>(driveId, db)
           .selectFrom("builder_teams")
-          .selectAll()
+          .select([
+            "builder_teams.id",
+            "builder_teams.profile_name",
+            "builder_teams.profile_slug",
+            "builder_teams.profile_logo",
+            "builder_teams.profile_description",
+            "builder_teams.profile_socials_x",
+            "builder_teams.profile_socials_github",
+            "builder_teams.profile_socials_website",
+            "builder_teams.created_at",
+            "builder_teams.updated_at",
+          ])
           .leftJoin("deleted_files", (join) =>
             join
               .onRef("deleted_files.document_id", "=", "builder_teams.id")
               .on("deleted_files.drive_id", "=", driveId)
-          )
-          .where("builder_teams.id", "=", args.id)
+          );
+
+        // Query by id or slug
+        if (args.id) {
+          query = query.where("builder_teams.id", "=", args.id);
+        } else if (args.slug) {
+          query = query.where("builder_teams.profile_slug", "=", args.slug);
+        }
+
+        const account = await query
           .where("deleted_files.id", "is", null) // Exclude deleted documents
           .executeTakeFirst();
 
