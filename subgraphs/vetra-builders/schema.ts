@@ -47,6 +47,9 @@ export const schema: DocumentNode = gql`
   type BuilderTeamMember {
     id: String!
     builderAccountId: String!
+    phid: String
+    name: String
+    profileImage: String
     ethAddress: String!
     createdAt: String!
   }

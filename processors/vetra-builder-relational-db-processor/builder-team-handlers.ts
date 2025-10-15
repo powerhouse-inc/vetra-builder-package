@@ -167,6 +167,9 @@ export class BuilderTeamHandlers {
 
     if (!action.input.id) return;
 
+    // Find member in state to get full details
+    const member = state.members.find((m) => m.id === action.input.id);
+
     const memberExists = await this.dbHelpers.memberExists(
       documentId,
       action.input.id
@@ -177,9 +180,25 @@ export class BuilderTeamHandlers {
         .values({
           id: action.input.id,
           builder_team_id: documentId,
-          eth_address: "",
+          eth_address: (member as any)?.ethAddress || action.input.id,
+          phid: (member as any)?.phid || null,
+          name: (member as any)?.name || null,
+          profile_image: (member as any)?.profileImage || null,
           created_at: new Date(),
         })
+        .execute();
+    } else {
+      // Update existing member with new information
+      await this.db
+        .updateTable("builder_team_members")
+        .set({
+          eth_address: (member as any)?.ethAddress || action.input.id,
+          phid: (member as any)?.phid || null,
+          name: (member as any)?.name || null,
+          profile_image: (member as any)?.profileImage || null,
+        })
+        .where("id", "=", action.input.id)
+        .where("builder_team_id", "=", documentId)
         .execute();
     }
   }

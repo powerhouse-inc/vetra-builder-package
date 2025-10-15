@@ -11,6 +11,9 @@ export interface BuilderTeamMembers {
   created_at: Generated<Timestamp>;
   eth_address: string;
   id: string;
+  name: string | null;
+  phid: string | null;
+  profile_image: string | null;
 }
 
 export interface BuilderTeamPackageKeywords {

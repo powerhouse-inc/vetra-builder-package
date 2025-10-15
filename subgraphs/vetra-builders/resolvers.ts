@@ -69,6 +69,9 @@ export const getResolvers = (subgraph: Subgraph): Record<string, unknown> => {
           .select([
             "builder_team_members.id",
             "builder_team_members.builder_team_id",
+            "builder_team_members.phid",
+            "builder_team_members.name",
+            "builder_team_members.profile_image",
             "builder_team_members.eth_address",
             "builder_team_members.created_at",
           ])
@@ -88,6 +91,9 @@ export const getResolvers = (subgraph: Subgraph): Record<string, unknown> => {
         return members.map((member) => ({
           id: member.id,
           builderAccountId: member.builder_team_id,
+          phid: member.phid,
+          name: member.name,
+          profileImage: member.profile_image,
           ethAddress: member.eth_address,
           createdAt: member.created_at.toISOString(),
         }));

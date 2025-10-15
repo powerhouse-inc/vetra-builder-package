@@ -32,6 +32,9 @@ export async function up(db: IRelationalDb<DB>): Promise<void> {
     .addColumn("id", "varchar(255)", (col) => col.primaryKey())
     .addColumn("builder_team_id", "varchar(255)", (col) => col.notNull())
     .addColumn("eth_address", "varchar(42)", (col) => col.notNull()) // Ethereum addresses are 42 chars
+    .addColumn("phid", "varchar(255)") // Powerhouse ID for Renown integration
+    .addColumn("name", "varchar(255)") // Member name
+    .addColumn("profile_image", "text") // Profile image URL
     .addColumn("created_at", "timestamp", (col) =>
       col.defaultTo("now()").notNull()
     )
@@ -150,6 +153,13 @@ export async function up(db: IRelationalDb<DB>): Promise<void> {
     .createIndex("idx_builder_team_members_eth_address")
     .on("builder_team_members")
     .column("eth_address")
+    .ifNotExists()
+    .execute();
+
+  await db.schema
+    .createIndex("idx_builder_team_members_phid")
+    .on("builder_team_members")
+    .column("phid")
     .ifNotExists()
     .execute();
 
