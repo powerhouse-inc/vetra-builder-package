@@ -1,30 +1,31 @@
-import type { DB } from "./schema.js";
-import { DatabaseHelpers } from "./database-helpers.js";
 import type { IRelationalDb } from "document-drive";
-import type { Updateable } from "kysely";
-import {
-  type BuilderTeamState,
-  type BuilderTeamAction,
-  type VetraBuilderSpace,
-  type VetraPackageInfo,
-} from "document-models/builder-team/index.js";
 import type {
-  AddSpaceAction,
   AddMemberAction,
   AddPackageAction,
+  AddSpaceAction,
   RemoveMemberAction,
   RemovePackageAction,
   RemoveSpaceAction,
+  ReorderPackagesAction,
+  ReorderSpacesAction,
   SetDescriptionAction,
   SetLogoAction,
   SetSlugAction,
   SetSocialsAction,
   SetTeamNameAction,
+  UpdateMemberInfoAction,
   UpdatePackageInfoAction,
   UpdateSpaceInfoAction,
-  ReorderSpacesAction,
-  ReorderPackagesAction,
 } from "document-models/builder-team/gen/actions.js";
+import {
+  type BuilderTeamAction,
+  type BuilderTeamState,
+  type VetraBuilderSpace,
+  type VetraPackageInfo,
+} from "document-models/builder-team/index.js";
+import type { Updateable } from "kysely";
+import { DatabaseHelpers } from "./database-helpers.js";
+import type { DB } from "./schema.js";
 
 // Extended types that include sortOrder for internal sorting
 type SpaceWithSortOrder = VetraBuilderSpace & { sortOrder: number };
@@ -67,6 +68,9 @@ export class BuilderTeamHandlers {
         break;
       case "REMOVE_MEMBER":
         await this.handleRemoveMember(documentId, action, state);
+        break;
+      case "UPDATE_MEMBER_INFO":
+        await this.handleUpdateMemberInfo(documentId, action, state);
         break;
 
       // Spaces operations
@@ -170,6 +174,12 @@ export class BuilderTeamHandlers {
     // Find member in state to get full details
     const member = state.members.find((m) => m.id === action.input.id);
 
+    // If member not found in state, skip
+    if (!member) {
+      console.warn(`Member ${action.input.id} not found in state`);
+      return;
+    }
+
     const memberExists = await this.dbHelpers.memberExists(
       documentId,
       action.input.id
@@ -180,10 +190,10 @@ export class BuilderTeamHandlers {
         .values({
           id: action.input.id,
           builder_team_id: documentId,
-          eth_address: (member as any)?.ethAddress || action.input.id,
-          phid: (member as any)?.phid || null,
-          name: (member as any)?.name || null,
-          profile_image: (member as any)?.profileImage || null,
+          eth_address: member.ethAddress || "",
+          phid: member.phid || null,
+          name: member.name || null,
+          profile_image: member.profileImage || null,
           created_at: new Date(),
         })
         .execute();
@@ -192,10 +202,10 @@ export class BuilderTeamHandlers {
       await this.db
         .updateTable("builder_team_members")
         .set({
-          eth_address: (member as any)?.ethAddress || action.input.id,
-          phid: (member as any)?.phid || null,
-          name: (member as any)?.name || null,
-          profile_image: (member as any)?.profileImage || null,
+          eth_address: member.ethAddress || "",
+          phid: member.phid || null,
+          name: member.name || null,
+          profile_image: member.profileImage || null,
         })
         .where("id", "=", action.input.id)
         .where("builder_team_id", "=", documentId)
@@ -213,8 +223,51 @@ export class BuilderTeamHandlers {
     await this.db
       .deleteFrom("builder_team_members")
       .where("builder_team_id", "=", documentId)
-      .where("eth_address", "=", action.input.id)
+      .where("id", "=", action.input.id)
       .execute();
+  }
+
+  private async handleUpdateMemberInfo(
+    documentId: string,
+    action: UpdateMemberInfoAction,
+    state: BuilderTeamState
+  ): Promise<void> {
+    if (!action.input.id) return;
+
+    // Find member in state to get full details
+    const member = state.members.find((m) => m.id === action.input.id);
+
+    // If member not found in state, skip
+    if (!member) {
+      console.warn(`Member ${action.input.id} not found in state for update`);
+      return;
+    }
+
+    const updates: Partial<Updateable<DB["builder_team_members"]>> = {};
+
+    // Update fields from state
+    if (member.ethAddress !== undefined) {
+      updates.eth_address = member.ethAddress || "";
+    }
+    if (member.phid !== undefined) {
+      updates.phid = member.phid;
+    }
+    if (member.name !== undefined) {
+      updates.name = member.name;
+    }
+    if (member.profileImage !== undefined) {
+      updates.profile_image = member.profileImage;
+    }
+
+    // Only update if there are actual changes
+    if (Object.keys(updates).length > 0) {
+      await this.db
+        .updateTable("builder_team_members")
+        .set(updates)
+        .where("id", "=", action.input.id)
+        .where("builder_team_id", "=", documentId)
+        .execute();
+    }
   }
 
   // Spaces operations
@@ -267,7 +320,10 @@ export class BuilderTeamHandlers {
     if (action.input.title !== undefined && action.input.title !== null) {
       updates.title = action.input.title;
     }
-    if (action.input.description !== undefined && action.input.description !== null) {
+    if (
+      action.input.description !== undefined &&
+      action.input.description !== null
+    ) {
       updates.description = action.input.description;
     }
 
@@ -368,7 +424,10 @@ export class BuilderTeamHandlers {
     if (action.input.title !== undefined && action.input.title !== null) {
       updates.title = action.input.title;
     }
-    if (action.input.description !== undefined && action.input.description !== null) {
+    if (
+      action.input.description !== undefined &&
+      action.input.description !== null
+    ) {
       updates.description = action.input.description;
     }
     if (action.input.github !== undefined && action.input.github !== null) {
@@ -377,7 +436,10 @@ export class BuilderTeamHandlers {
     if (action.input.npm !== undefined && action.input.npm !== null) {
       updates.npm_url = action.input.npm;
     }
-    if (action.input.vetraDriveUrl !== undefined && action.input.vetraDriveUrl !== null) {
+    if (
+      action.input.vetraDriveUrl !== undefined &&
+      action.input.vetraDriveUrl !== null
+    ) {
       updates.vetra_drive_url = action.input.vetraDriveUrl;
     }
     if (action.input.spaceId !== undefined && action.input.spaceId !== null) {
@@ -405,7 +467,7 @@ export class BuilderTeamHandlers {
     action: ReorderPackagesAction,
     state: BuilderTeamState
   ): Promise<void> {
-    const { spaceId } = action.input ;
+    const { spaceId } = action.input;
 
     // Find the space in state
     const space = state.spaces.find((s) => s.id === spaceId);

@@ -14,12 +14,14 @@ interface MembersSectionProps {
   members: BuilderTeamDocument["state"]["global"]["members"];
   onAddMember: (profileData: MemberProfileData) => boolean;
   onRemoveMember: (id: string) => void;
+  onUpdateMember: (id: string, profileData: Partial<MemberProfileData>) => void;
 }
 
 export function MembersSection({
   members,
   onAddMember,
   onRemoveMember,
+  onUpdateMember,
 }: MembersSectionProps) {
   const [selectedProfile, setSelectedProfile] = useState<RenownProfile | null>(
     null
@@ -46,9 +48,8 @@ export function MembersSection({
 
   const handleUpdateMember = () => {
     if (selectedProfile && existingMember) {
-      // Remove the old member and add the updated one
-      onRemoveMember(existingMember.id);
-      onAddMember({
+      // Update the member with new profile data
+      onUpdateMember(existingMember.id, {
         phid: selectedProfile.documentId,
         ethAddress: selectedProfile.ethAddress,
         name: selectedProfile.username,

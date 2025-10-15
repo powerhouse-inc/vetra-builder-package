@@ -40,8 +40,24 @@ export function useMemberHandlers(dispatch: DocumentDispatch<Action>) {
     [dispatch]
   );
 
+  const handleUpdateMember = useCallback(
+    (id: string, profileData: Partial<MemberProfileData>) => {
+      dispatch(
+        actions.updateMemberInfo({
+          id,
+          ...(profileData.phid !== undefined && { phid: profileData.phid }),
+          ...(profileData.ethAddress !== undefined && { ethAddress: profileData.ethAddress.trim() }),
+          ...(profileData.name !== undefined && { name: profileData.name }),
+          ...(profileData.profileImage !== undefined && { profileImage: profileData.profileImage }),
+        })
+      );
+    },
+    [dispatch]
+  );
+
   return {
     handleAddMember,
     handleRemoveMember,
+    handleUpdateMember,
   };
 }

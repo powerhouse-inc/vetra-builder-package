@@ -172,6 +172,7 @@ export function Editor(props: IProps) {
               members={members}
               onAddMember={memberHandlers.handleAddMember}
               onRemoveMember={memberHandlers.handleRemoveMember}
+              onUpdateMember={memberHandlers.handleUpdateMember}
             />
 
             {/* Quick Stats */}
