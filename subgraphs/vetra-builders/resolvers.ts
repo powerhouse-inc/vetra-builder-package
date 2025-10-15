@@ -155,9 +155,11 @@ export const getResolvers = (subgraph: Subgraph): Record<string, unknown> => {
           driveId?: string;
           search?: string;
           sortOrder?: "asc" | "desc";
-        }
+        },
+        context: { driveId?: string }
       ) => {
         const driveId = args.driveId || DEFAULT_DRIVE_ID;
+        context.driveId = driveId;
         const search = args.search;
         const sortOrder = args.sortOrder || "asc";
 

@@ -1,9 +1,12 @@
 import type { DB } from "./schema.js";
 import { DatabaseHelpers } from "./database-helpers.js";
 import type { IRelationalDb } from "document-drive";
+import type { Updateable } from "kysely";
 import {
   type BuilderTeamState,
   type BuilderTeamAction,
+  type VetraBuilderSpace,
+  type VetraPackageInfo,
 } from "document-models/builder-team/index.js";
 import type {
   AddSpaceAction,
@@ -19,7 +22,13 @@ import type {
   SetTeamNameAction,
   UpdatePackageInfoAction,
   UpdateSpaceInfoAction,
+  ReorderSpacesAction,
+  ReorderPackagesAction,
 } from "document-models/builder-team/gen/actions.js";
+
+// Extended types that include sortOrder for internal sorting
+type SpaceWithSortOrder = VetraBuilderSpace & { sortOrder: number };
+type PackageWithSortOrder = VetraPackageInfo & { sortOrder: number };
 
 export class BuilderTeamHandlers {
   private dbHelpers: DatabaseHelpers;
@@ -198,8 +207,8 @@ export class BuilderTeamHandlers {
     await this.dbHelpers.ensureBuilderAccountExistsAndIsNotdeleted(documentId);
 
     // Find the space in state to get its sortOrder
-    const space = state.spaces.find(s => s.id === action.input.id);
-    const sortOrder = (space as any)?.sortOrder ?? 0;
+    const space = state.spaces.find((s) => s.id === action.input.id);
+    const sortOrder = (space as SpaceWithSortOrder | undefined)?.sortOrder ?? 0;
 
     await this.db
       .insertInto("builder_team_spaces")
@@ -233,13 +242,13 @@ export class BuilderTeamHandlers {
     action: UpdateSpaceInfoAction,
     state: BuilderTeamState
   ): Promise<void> {
-    const updates: Record<string, any> = {};
+    const updates: Partial<Updateable<DB["builder_team_spaces"]>> = {};
 
     // Only include fields that are provided
-    if (action.input.title !== undefined) {
+    if (action.input.title !== undefined && action.input.title !== null) {
       updates.title = action.input.title;
     }
-    if (action.input.description !== undefined) {
+    if (action.input.description !== undefined && action.input.description !== null) {
       updates.description = action.input.description;
     }
 
@@ -255,13 +264,13 @@ export class BuilderTeamHandlers {
 
   private async handleReorderSpaces(
     documentId: string,
-    action: any,
+    action: ReorderSpacesAction,
     state: BuilderTeamState
   ): Promise<void> {
     // Update sortOrder for all spaces based on the state
     for (const space of state.spaces) {
       await this.dbHelpers.updateBuilderSpace(space.id, documentId, {
-        sort_order: (space as any).sortOrder,
+        sort_order: (space as SpaceWithSortOrder).sortOrder,
       });
     }
   }
@@ -275,9 +284,9 @@ export class BuilderTeamHandlers {
     // Find the package in state to get its sortOrder
     let sortOrder = 0;
     for (const space of state.spaces) {
-      const pkg = space.packages.find(p => p.id === action.input.id);
+      const pkg = space.packages.find((p) => p.id === action.input.id);
       if (pkg) {
-        sortOrder = (pkg as any).sortOrder ?? 0;
+        sortOrder = (pkg as PackageWithSortOrder).sortOrder ?? 0;
         break;
       }
     }
@@ -324,12 +333,12 @@ export class BuilderTeamHandlers {
     action: UpdatePackageInfoAction,
     state: BuilderTeamState
   ): Promise<void> {
-    const updates: Record<string, any> = {};
+    const updates: Partial<Updateable<DB["builder_team_packages"]>> = {};
 
     // Find the package in the state to get additional information
     let packageFromState: { phid?: string | null } | null = null;
     for (const space of state.spaces) {
-      const pkg = space.packages.find(p => p.id === action.input.id);
+      const pkg = space.packages.find((p) => p.id === action.input.id);
       if (pkg) {
         packageFromState = pkg as { phid?: string | null };
         break;
@@ -337,22 +346,22 @@ export class BuilderTeamHandlers {
     }
 
     // Map input fields to database columns, only include provided fields
-    if (action.input.title !== undefined) {
+    if (action.input.title !== undefined && action.input.title !== null) {
       updates.title = action.input.title;
     }
-    if (action.input.description !== undefined) {
+    if (action.input.description !== undefined && action.input.description !== null) {
       updates.description = action.input.description;
     }
-    if (action.input.github !== undefined) {
+    if (action.input.github !== undefined && action.input.github !== null) {
       updates.github_url = action.input.github;
     }
-    if (action.input.npm !== undefined) {
+    if (action.input.npm !== undefined && action.input.npm !== null) {
       updates.npm_url = action.input.npm;
     }
-    if (action.input.vetraDriveUrl !== undefined) {
+    if (action.input.vetraDriveUrl !== undefined && action.input.vetraDriveUrl !== null) {
       updates.vetra_drive_url = action.input.vetraDriveUrl;
     }
-    if (action.input.spaceId !== undefined) {
+    if (action.input.spaceId !== undefined && action.input.spaceId !== null) {
       updates.space_id = action.input.spaceId;
     }
 
@@ -374,13 +383,13 @@ export class BuilderTeamHandlers {
 
   private async handleReorderPackages(
     documentId: string,
-    action: any,
+    action: ReorderPackagesAction,
     state: BuilderTeamState
   ): Promise<void> {
-    const { spaceId } = action.input;
+    const { spaceId } = action.input ;
 
     // Find the space in state
-    const space = state.spaces.find(s => s.id === spaceId);
+    const space = state.spaces.find((s) => s.id === spaceId);
     if (!space) return;
 
     // Update sortOrder for all packages in the space based on the state
@@ -388,7 +397,7 @@ export class BuilderTeamHandlers {
       await this.db
         .updateTable("builder_team_packages")
         .set({
-          sort_order: (pkg as any).sortOrder,
+          sort_order: (pkg as PackageWithSortOrder).sortOrder,
           updated_at: new Date(),
         })
         .where("id", "=", pkg.id)

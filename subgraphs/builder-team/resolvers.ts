@@ -19,8 +19,14 @@ import {
   type RemovePackageInput,
   type ReorderPackagesInput,
   type BuilderTeamDocument,
+  type VetraBuilderSpace,
+  type VetraPackageInfo,
 } from "../../document-models/builder-team/index.js";
 import { setName } from "document-model";
+
+// Extended types that include sortOrder for internal sorting
+type SpaceWithSortOrder = VetraBuilderSpace & { sortOrder: number };
+type PackageWithSortOrder = VetraPackageInfo & { sortOrder: number };
 
 export const getResolvers = (subgraph: Subgraph): Record<string, unknown> => {
   const reactor = subgraph.reactor;
@@ -50,10 +56,10 @@ export const getResolvers = (subgraph: Subgraph): Record<string, unknown> => {
             const sortedState = {
               ...doc.state.global,
               spaces: [...doc.state.global.spaces]
-                .sort((a, b) => (a as any).sortOrder - (b as any).sortOrder)
+                .sort((a, b) => (a as SpaceWithSortOrder).sortOrder - (b as SpaceWithSortOrder).sortOrder)
                 .map(space => ({
                   ...space,
-                  packages: [...space.packages].sort((a, b) => (a as any).sortOrder - (b as any).sortOrder)
+                  packages: [...space.packages].sort((a, b) => (a as PackageWithSortOrder).sortOrder - (b as PackageWithSortOrder).sortOrder)
                 }))
             };
             return {
@@ -78,10 +84,10 @@ export const getResolvers = (subgraph: Subgraph): Record<string, unknown> => {
                 const sortedState = {
                   ...doc.state.global,
                   spaces: [...doc.state.global.spaces]
-                    .sort((a, b) => (a as any).sortOrder - (b as any).sortOrder)
+                    .sort((a, b) => (a as SpaceWithSortOrder).sortOrder - (b as SpaceWithSortOrder).sortOrder)
                     .map(space => ({
                       ...space,
-                      packages: [...space.packages].sort((a, b) => (a as any).sortOrder - (b as any).sortOrder)
+                      packages: [...space.packages].sort((a, b) => (a as PackageWithSortOrder).sortOrder - (b as PackageWithSortOrder).sortOrder)
                     }))
                 };
                 return {

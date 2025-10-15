@@ -1,6 +1,9 @@
 import type { VetraPackageInfo } from "document-models/builder-team/gen/types.js";
 import type { BuilderTeamPackagesOperations } from "../../gen/packages/operations.js";
 
+// Extended type that includes sortOrder for internal sorting
+type PackageWithSortOrder = VetraPackageInfo & { sortOrder: number };
+
 export const reducer: BuilderTeamPackagesOperations = {
   addPackageOperation(state, action, dispatch) {
     const space = state.spaces.find(
@@ -12,7 +15,7 @@ export const reducer: BuilderTeamPackagesOperations = {
 
     // Assign sortOrder as the next index
     const sortOrder = space.packages.length;
-    const newPackage: VetraPackageInfo = {
+    const newPackage: PackageWithSortOrder = {
       ...action.input,
       id: action.input.id,
       phid: null,
@@ -22,7 +25,7 @@ export const reducer: BuilderTeamPackagesOperations = {
       npm: null,
       vetraDriveUrl: null,
       sortOrder,
-    } as any;
+    };
 
     space.packages.push(newPackage);
   },
@@ -71,7 +74,7 @@ export const reducer: BuilderTeamPackagesOperations = {
 
       // Update sortOrder for all packages
       space.packages.forEach((pkg, index) => {
-        (pkg as any).sortOrder = index;
+        (pkg as PackageWithSortOrder).sortOrder = index;
       });
   },
 };

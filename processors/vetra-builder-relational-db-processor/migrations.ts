@@ -1,6 +1,7 @@
 import { type IRelationalDb } from "document-drive/processors/types";
+import type { DB } from "./schema.js";
 
-export async function up(db: IRelationalDb<any>): Promise<void> {
+export async function up(db: IRelationalDb<DB>): Promise<void> {
   if (process.env.NODE_ENV !== "production") {
     await down(db);
   }
@@ -202,7 +203,7 @@ export async function up(db: IRelationalDb<any>): Promise<void> {
     .execute();
 }
 
-export async function down(db: IRelationalDb<any>): Promise<void> {
+export async function down(db: IRelationalDb<DB>): Promise<void> {
   // Drop tables in reverse order due to foreign key constraints
   await db.schema.dropTable("deleted_files").ifExists().execute();
   await db.schema

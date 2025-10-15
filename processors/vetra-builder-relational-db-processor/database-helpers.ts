@@ -1,5 +1,6 @@
 import type { IRelationalDb } from "document-drive";
 import type { DB } from "./schema.js";
+import type { Updateable } from "kysely";
 
 export class DatabaseHelpers {
   constructor(private db: IRelationalDb<DB>) {}
@@ -95,7 +96,7 @@ export class DatabaseHelpers {
    */
   async updatePackage(
     documentId: string,
-    updates: Record<string, any>
+    updates: Partial<Updateable<DB["builder_team_packages"]>>
   ): Promise<void> {
     await this.db
       .updateTable("builder_team_packages")
@@ -112,7 +113,7 @@ export class DatabaseHelpers {
    */
   async updateBuilderAccount(
     documentId: string,
-    updates: Record<string, any>
+    updates: Partial<Updateable<DB["builder_teams"]>>
   ): Promise<void> {
     await this.db
       .updateTable("builder_teams")
@@ -130,7 +131,7 @@ export class DatabaseHelpers {
   async updateBuilderSpace(
     spaceId: string,
     documentId: string,
-    updates: Record<string, any>
+    updates: Partial<Updateable<DB["builder_team_spaces"]>>
   ): Promise<void> {
     await this.db
       .updateTable("builder_team_spaces")
@@ -148,7 +149,7 @@ export class DatabaseHelpers {
    */
   async updateBuilderPackage(
     packageId: string,
-    updates: Record<string, any>
+    updates: Partial<Updateable<DB["builder_team_packages"]>>
   ): Promise<void> {
     await this.db
       .updateTable("builder_team_packages")

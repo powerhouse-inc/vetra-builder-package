@@ -1,4 +1,8 @@
 import type { BuilderTeamSpacesOperations } from "../../gen/spaces/operations.js";
+import type { VetraBuilderSpace } from "../../gen/types.js";
+
+// Extended type that includes sortOrder for internal sorting
+type SpaceWithSortOrder = VetraBuilderSpace & { sortOrder: number };
 
 export const reducer: BuilderTeamSpacesOperations = {
   addSpaceOperation(state, action, dispatch) {
@@ -14,7 +18,7 @@ export const reducer: BuilderTeamSpacesOperations = {
       description: "",
       packages: [],
       sortOrder,
-    } as any);
+    } as SpaceWithSortOrder);
   },
   updateSpaceInfoOperation(state, action, dispatch) {
     const { id, title, description } = action.input;
@@ -49,7 +53,7 @@ export const reducer: BuilderTeamSpacesOperations = {
 
       // Update sortOrder for all spaces
       state.spaces.forEach((space, index) => {
-        (space as any).sortOrder = index;
+        (space as SpaceWithSortOrder).sortOrder = index;
       });
   },
 };
