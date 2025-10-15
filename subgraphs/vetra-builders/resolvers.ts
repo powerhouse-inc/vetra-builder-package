@@ -199,9 +199,11 @@ export const getResolvers = (subgraph: Subgraph): Record<string, unknown> => {
 
       fetchBuilderTeam: async (
         parent: unknown,
-        args: { driveId?: string; id: string }
+        args: { driveId?: string; id: string },
+        context: { driveId?: string }
       ) => {
         const driveId = args.driveId || DEFAULT_DRIVE_ID;
+        context.driveId = driveId;
         const account = await VetraBuilderRelationalDbProcessor.query<DB>(
           driveId,
           db
@@ -233,6 +235,8 @@ export const getResolvers = (subgraph: Subgraph): Record<string, unknown> => {
           createdAt: account.created_at.toISOString(),
           updatedAt: account.updated_at.toISOString(),
           driveId: driveId, // Pass driveId to field resolvers
+          spaces: [], // Will be resolved by field resolver
+          members: [], // Will be resolved by field resolver
         };
       },
     },
