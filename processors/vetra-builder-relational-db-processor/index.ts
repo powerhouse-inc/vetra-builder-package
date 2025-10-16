@@ -48,19 +48,29 @@ export class VetraBuilderRelationalDbProcessor extends RelationalDbProcessor<DB>
       }
 
       for (const operation of strand.operations) {
-        if (strand.documentType.includes("powerhouse/document-drive")) {
-          await this.handleDocumentDriveOperation(
-            strand.documentId,
-            strand.driveId,
-            operation.action as DocumentDriveAction,
-            operation.state as unknown as DocumentDriveState
+        try {
+          if (strand.documentType.includes("powerhouse/document-drive")) {
+            await this.handleDocumentDriveOperation(
+              strand.documentId,
+              strand.driveId,
+              operation.action as DocumentDriveAction,
+              operation.state as unknown as DocumentDriveState
+            );
+          } else {
+            await this.builderTeamHandlers.handleBuilderTeamOperation(
+              strand.documentId,
+              operation.action as BuilderTeamAction,
+              operation.state as unknown as BuilderTeamState
+            );
+          }
+        } catch (error) {
+          console.error(
+            `VetraBuilderRelationalDbProcessor: Error processing operation ${JSON.stringify(
+              operation.action
+            )}:`,
+            error
           );
-        } else {
-          await this.builderTeamHandlers.handleBuilderTeamOperation(
-            strand.documentId,
-            operation.action as BuilderTeamAction,
-            operation.state as unknown as BuilderTeamState
-          );
+          break;
         }
       }
     }
