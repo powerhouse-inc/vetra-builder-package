@@ -5,11 +5,11 @@ interface ViteTypeOptions {
 }
 
 interface ImportMetaEnv {
-  readonly PH_VETRA_RENOWN_GRAPHQL_ENDPOINT: string;
-  readonly PH_VETRA_VETRA_GRAPHQL_ENDPOINT: string;
-  readonly PH_VETRA_RENOWN_PROFILE_BASE_PATH: string;
-  readonly PH_VETRA_VETRA_PACKAGE_BASE_PATH: string;
-  readonly PH_VETRA_DRIVE_BASE_URL: string;
+  readonly PH_CONNECT_VETRA_RENOWN_GRAPHQL_ENDPOINT: string;
+  readonly PH_CONNECT_VETRA_VETRA_GRAPHQL_ENDPOINT: string;
+  readonly PH_CONNECT_VETRA_RENOWN_PROFILE_BASE_PATH: string;
+  readonly PH_CONNECT_VETRA_VETRA_PACKAGE_BASE_PATH: string;
+  readonly PH_CONNECT_VETRA_DRIVE_BASE_URL: string;
   // more env variables...
 }
 
