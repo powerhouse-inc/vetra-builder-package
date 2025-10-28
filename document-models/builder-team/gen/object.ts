@@ -3,7 +3,7 @@ import {
   applyMixins,
   type SignalDispatch,
 } from "document-model";
-import { type BuilderTeamPHState } from "./ph-factories.js";
+import { BuilderTeamPHState } from "./ph-factories.js";
 import { type BuilderTeamAction } from "./actions.js";
 import { reducer } from "./reducer.js";
 import { createDocument } from "./utils.js";

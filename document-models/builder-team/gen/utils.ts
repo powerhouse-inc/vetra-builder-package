@@ -12,7 +12,7 @@ import {
   generateId,
 } from "document-model";
 import { type BuilderTeamState, type BuilderTeamLocalState } from "./types.js";
-import { type BuilderTeamPHState } from "./ph-factories.js";
+import { BuilderTeamPHState } from "./ph-factories.js";
 import { reducer } from "./reducer.js";
 
 export const initialGlobalState: BuilderTeamState = {

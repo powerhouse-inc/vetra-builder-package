@@ -1,5 +1,5 @@
 import { BaseDocumentClass } from "document-model";
-import { type BuilderTeamPHState } from "../ph-factories.js";
+import { BuilderTeamPHState } from "../ph-factories.js";
 import {
   type AddPackageInput,
   type UpdatePackageInfoInput,

@@ -50,10 +50,5 @@ export const reducer: BuilderTeamSpacesOperations = {
       // Insert the spaces at the target index
       remainingSpaces.splice(targetIndex, 0, ...spacesToMove);
       state.spaces = remainingSpaces;
-
-      // Update sortOrder for all spaces
-      state.spaces.forEach((space, index) => {
-        (space as SpaceWithSortOrder).sortOrder = index;
-      });
   },
 };

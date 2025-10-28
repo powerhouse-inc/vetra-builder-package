@@ -71,10 +71,5 @@ export const reducer: BuilderTeamPackagesOperations = {
       // Insert the packages at the target index
       remainingPackages.splice(targetIndex, 0, ...packagesToMove);
       space.packages = remainingPackages;
-
-      // Update sortOrder for all packages
-      space.packages.forEach((pkg, index) => {
-        (pkg as PackageWithSortOrder).sortOrder = index;
-      });
   },
 };
