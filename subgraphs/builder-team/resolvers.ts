@@ -1,4 +1,4 @@
-import { type Subgraph } from "@powerhousedao/reactor-api";
+import { type ISubgraph } from "@powerhousedao/reactor-api";
 import { addFile } from "document-drive";
 import {
   actions,
@@ -28,7 +28,7 @@ import { setName } from "document-model";
 type SpaceWithSortOrder = VetraBuilderSpace & { sortOrder: number };
 type PackageWithSortOrder = VetraPackageInfo & { sortOrder: number };
 
-export const getResolvers = (subgraph: Subgraph): Record<string, unknown> => {
+export const getResolvers = (subgraph: ISubgraph): Record<string, unknown> => {
   const reactor = subgraph.reactor;
 
   return {
@@ -46,7 +46,7 @@ export const getResolvers = (subgraph: Subgraph): Record<string, unknown> => {
               const docIds = await reactor.getDocuments(driveId);
               if (!docIds.includes(docId)) {
                 throw new Error(
-                  `Document with id ${docId} is not part of ${driveId}`,
+                  `Document with id ${docId} is not part of ${driveId}`
                 );
               }
             }
@@ -56,11 +56,19 @@ export const getResolvers = (subgraph: Subgraph): Record<string, unknown> => {
             const sortedState = {
               ...doc.state.global,
               spaces: [...doc.state.global.spaces]
-                .sort((a, b) => (a as SpaceWithSortOrder).sortOrder - (b as SpaceWithSortOrder).sortOrder)
-                .map(space => ({
+                .sort(
+                  (a, b) =>
+                    (a as SpaceWithSortOrder).sortOrder -
+                    (b as SpaceWithSortOrder).sortOrder
+                )
+                .map((space) => ({
                   ...space,
-                  packages: [...space.packages].sort((a, b) => (a as PackageWithSortOrder).sortOrder - (b as PackageWithSortOrder).sortOrder)
-                }))
+                  packages: [...space.packages].sort(
+                    (a, b) =>
+                      (a as PackageWithSortOrder).sortOrder -
+                      (b as PackageWithSortOrder).sortOrder
+                  ),
+                })),
             };
             return {
               driveId: driveId,
@@ -78,17 +86,26 @@ export const getResolvers = (subgraph: Subgraph): Record<string, unknown> => {
             const docsIds = await reactor.getDocuments(driveId);
             const docs = await Promise.all(
               docsIds.map(async (docId) => {
-                const doc =
-                  await reactor.getDocument<BuilderTeamDocument>(docId);
+                const doc = await reactor.getDocument<BuilderTeamDocument>(
+                  docId
+                );
                 // Sort spaces and packages by sortOrder
                 const sortedState = {
                   ...doc.state.global,
                   spaces: [...doc.state.global.spaces]
-                    .sort((a, b) => (a as SpaceWithSortOrder).sortOrder - (b as SpaceWithSortOrder).sortOrder)
-                    .map(space => ({
+                    .sort(
+                      (a, b) =>
+                        (a as SpaceWithSortOrder).sortOrder -
+                        (b as SpaceWithSortOrder).sortOrder
+                    )
+                    .map((space) => ({
                       ...space,
-                      packages: [...space.packages].sort((a, b) => (a as PackageWithSortOrder).sortOrder - (b as PackageWithSortOrder).sortOrder)
-                    }))
+                      packages: [...space.packages].sort(
+                        (a, b) =>
+                          (a as PackageWithSortOrder).sortOrder -
+                          (b as PackageWithSortOrder).sortOrder
+                      ),
+                    })),
                 };
                 return {
                   driveId: driveId,
@@ -100,11 +117,11 @@ export const getResolvers = (subgraph: Subgraph): Record<string, unknown> => {
                   stateJSON: sortedState,
                   revision: doc.header?.revision?.global ?? 0,
                 };
-              }),
+              })
             );
 
             return docs.filter(
-              (doc) => doc.header.documentType === "powerhouse/builder-team",
+              (doc) => doc.header.documentType === "powerhouse/builder-team"
             );
           },
         };
@@ -113,7 +130,7 @@ export const getResolvers = (subgraph: Subgraph): Record<string, unknown> => {
     Mutation: {
       BuilderTeam_createDocument: async (
         _: unknown,
-        args: { name: string; driveId?: string },
+        args: { name: string; driveId?: string }
       ) => {
         const { driveId, name } = args;
         const document = await reactor.addDocument("powerhouse/builder-team");
@@ -125,7 +142,7 @@ export const getResolvers = (subgraph: Subgraph): Record<string, unknown> => {
               name,
               id: document.header.id,
               documentType: "powerhouse/builder-team",
-            }),
+            })
           );
         }
 
@@ -138,7 +155,7 @@ export const getResolvers = (subgraph: Subgraph): Record<string, unknown> => {
 
       BuilderTeam_setLogo: async (
         _: unknown,
-        args: { docId: string; input: SetLogoInput },
+        args: { docId: string; input: SetLogoInput }
       ) => {
         const { docId, input } = args;
         const doc = await reactor.getDocument<BuilderTeamDocument>(docId);
@@ -157,7 +174,7 @@ export const getResolvers = (subgraph: Subgraph): Record<string, unknown> => {
 
       BuilderTeam_setTeamName: async (
         _: unknown,
-        args: { docId: string; input: SetTeamNameInput },
+        args: { docId: string; input: SetTeamNameInput }
       ) => {
         const { docId, input } = args;
         const doc = await reactor.getDocument<BuilderTeamDocument>(docId);
@@ -167,7 +184,7 @@ export const getResolvers = (subgraph: Subgraph): Record<string, unknown> => {
 
         const result = await reactor.addAction(
           docId,
-          actions.setTeamName(input),
+          actions.setTeamName(input)
         );
 
         if (result.status !== "SUCCESS") {
@@ -179,7 +196,7 @@ export const getResolvers = (subgraph: Subgraph): Record<string, unknown> => {
 
       BuilderTeam_setSlug: async (
         _: unknown,
-        args: { docId: string; input: SetSlugInput },
+        args: { docId: string; input: SetSlugInput }
       ) => {
         const { docId, input } = args;
         const doc = await reactor.getDocument<BuilderTeamDocument>(docId);
@@ -198,7 +215,7 @@ export const getResolvers = (subgraph: Subgraph): Record<string, unknown> => {
 
       BuilderTeam_setDescription: async (
         _: unknown,
-        args: { docId: string; input: SetDescriptionInput },
+        args: { docId: string; input: SetDescriptionInput }
       ) => {
         const { docId, input } = args;
         const doc = await reactor.getDocument<BuilderTeamDocument>(docId);
@@ -208,7 +225,7 @@ export const getResolvers = (subgraph: Subgraph): Record<string, unknown> => {
 
         const result = await reactor.addAction(
           docId,
-          actions.setDescription(input),
+          actions.setDescription(input)
         );
 
         if (result.status !== "SUCCESS") {
@@ -220,7 +237,7 @@ export const getResolvers = (subgraph: Subgraph): Record<string, unknown> => {
 
       BuilderTeam_setSocials: async (
         _: unknown,
-        args: { docId: string; input: SetSocialsInput },
+        args: { docId: string; input: SetSocialsInput }
       ) => {
         const { docId, input } = args;
         const doc = await reactor.getDocument<BuilderTeamDocument>(docId);
@@ -230,7 +247,7 @@ export const getResolvers = (subgraph: Subgraph): Record<string, unknown> => {
 
         const result = await reactor.addAction(
           docId,
-          actions.setSocials(input),
+          actions.setSocials(input)
         );
 
         if (result.status !== "SUCCESS") {
@@ -242,7 +259,7 @@ export const getResolvers = (subgraph: Subgraph): Record<string, unknown> => {
 
       BuilderTeam_addMember: async (
         _: unknown,
-        args: { docId: string; input: AddMemberInput },
+        args: { docId: string; input: AddMemberInput }
       ) => {
         const { docId, input } = args;
         const doc = await reactor.getDocument<BuilderTeamDocument>(docId);
@@ -261,7 +278,7 @@ export const getResolvers = (subgraph: Subgraph): Record<string, unknown> => {
 
       BuilderTeam_updateMemberInfo: async (
         _: unknown,
-        args: { docId: string; input: UpdateMemberInfoInput },
+        args: { docId: string; input: UpdateMemberInfoInput }
       ) => {
         const { docId, input } = args;
         const doc = await reactor.getDocument<BuilderTeamDocument>(docId);
@@ -271,12 +288,12 @@ export const getResolvers = (subgraph: Subgraph): Record<string, unknown> => {
 
         const result = await reactor.addAction(
           docId,
-          actions.updateMemberInfo(input),
+          actions.updateMemberInfo(input)
         );
 
         if (result.status !== "SUCCESS") {
           throw new Error(
-            result.error?.message ?? "Failed to updateMemberInfo",
+            result.error?.message ?? "Failed to updateMemberInfo"
           );
         }
 
@@ -285,7 +302,7 @@ export const getResolvers = (subgraph: Subgraph): Record<string, unknown> => {
 
       BuilderTeam_removeMember: async (
         _: unknown,
-        args: { docId: string; input: RemoveMemberInput },
+        args: { docId: string; input: RemoveMemberInput }
       ) => {
         const { docId, input } = args;
         const doc = await reactor.getDocument<BuilderTeamDocument>(docId);
@@ -295,7 +312,7 @@ export const getResolvers = (subgraph: Subgraph): Record<string, unknown> => {
 
         const result = await reactor.addAction(
           docId,
-          actions.removeMember(input),
+          actions.removeMember(input)
         );
 
         if (result.status !== "SUCCESS") {
@@ -307,7 +324,7 @@ export const getResolvers = (subgraph: Subgraph): Record<string, unknown> => {
 
       BuilderTeam_addSpace: async (
         _: unknown,
-        args: { docId: string; input: AddSpaceInput },
+        args: { docId: string; input: AddSpaceInput }
       ) => {
         const { docId, input } = args;
         const doc = await reactor.getDocument<BuilderTeamDocument>(docId);
@@ -326,7 +343,7 @@ export const getResolvers = (subgraph: Subgraph): Record<string, unknown> => {
 
       BuilderTeam_updateSpaceInfo: async (
         _: unknown,
-        args: { docId: string; input: UpdateSpaceInfoInput },
+        args: { docId: string; input: UpdateSpaceInfoInput }
       ) => {
         const { docId, input } = args;
         const doc = await reactor.getDocument<BuilderTeamDocument>(docId);
@@ -336,7 +353,7 @@ export const getResolvers = (subgraph: Subgraph): Record<string, unknown> => {
 
         const result = await reactor.addAction(
           docId,
-          actions.updateSpaceInfo(input),
+          actions.updateSpaceInfo(input)
         );
 
         if (result.status !== "SUCCESS") {
@@ -348,7 +365,7 @@ export const getResolvers = (subgraph: Subgraph): Record<string, unknown> => {
 
       BuilderTeam_removeSpace: async (
         _: unknown,
-        args: { docId: string; input: RemoveSpaceInput },
+        args: { docId: string; input: RemoveSpaceInput }
       ) => {
         const { docId, input } = args;
         const doc = await reactor.getDocument<BuilderTeamDocument>(docId);
@@ -358,7 +375,7 @@ export const getResolvers = (subgraph: Subgraph): Record<string, unknown> => {
 
         const result = await reactor.addAction(
           docId,
-          actions.removeSpace(input),
+          actions.removeSpace(input)
         );
 
         if (result.status !== "SUCCESS") {
@@ -370,7 +387,7 @@ export const getResolvers = (subgraph: Subgraph): Record<string, unknown> => {
 
       BuilderTeam_reorderSpaces: async (
         _: unknown,
-        args: { docId: string; input: ReorderSpacesInput },
+        args: { docId: string; input: ReorderSpacesInput }
       ) => {
         const { docId, input } = args;
         const doc = await reactor.getDocument<BuilderTeamDocument>(docId);
@@ -380,7 +397,7 @@ export const getResolvers = (subgraph: Subgraph): Record<string, unknown> => {
 
         const result = await reactor.addAction(
           docId,
-          actions.reorderSpaces(input),
+          actions.reorderSpaces(input)
         );
 
         if (result.status !== "SUCCESS") {
@@ -392,7 +409,7 @@ export const getResolvers = (subgraph: Subgraph): Record<string, unknown> => {
 
       BuilderTeam_addPackage: async (
         _: unknown,
-        args: { docId: string; input: AddPackageInput },
+        args: { docId: string; input: AddPackageInput }
       ) => {
         const { docId, input } = args;
         const doc = await reactor.getDocument<BuilderTeamDocument>(docId);
@@ -402,7 +419,7 @@ export const getResolvers = (subgraph: Subgraph): Record<string, unknown> => {
 
         const result = await reactor.addAction(
           docId,
-          actions.addPackage(input),
+          actions.addPackage(input)
         );
 
         if (result.status !== "SUCCESS") {
@@ -414,7 +431,7 @@ export const getResolvers = (subgraph: Subgraph): Record<string, unknown> => {
 
       BuilderTeam_updatePackageInfo: async (
         _: unknown,
-        args: { docId: string; input: UpdatePackageInfoInput },
+        args: { docId: string; input: UpdatePackageInfoInput }
       ) => {
         const { docId, input } = args;
         const doc = await reactor.getDocument<BuilderTeamDocument>(docId);
@@ -424,12 +441,12 @@ export const getResolvers = (subgraph: Subgraph): Record<string, unknown> => {
 
         const result = await reactor.addAction(
           docId,
-          actions.updatePackageInfo(input),
+          actions.updatePackageInfo(input)
         );
 
         if (result.status !== "SUCCESS") {
           throw new Error(
-            result.error?.message ?? "Failed to updatePackageInfo",
+            result.error?.message ?? "Failed to updatePackageInfo"
           );
         }
 
@@ -438,7 +455,7 @@ export const getResolvers = (subgraph: Subgraph): Record<string, unknown> => {
 
       BuilderTeam_removePackage: async (
         _: unknown,
-        args: { docId: string; input: RemovePackageInput },
+        args: { docId: string; input: RemovePackageInput }
       ) => {
         const { docId, input } = args;
         const doc = await reactor.getDocument<BuilderTeamDocument>(docId);
@@ -448,7 +465,7 @@ export const getResolvers = (subgraph: Subgraph): Record<string, unknown> => {
 
         const result = await reactor.addAction(
           docId,
-          actions.removePackage(input),
+          actions.removePackage(input)
         );
 
         if (result.status !== "SUCCESS") {
@@ -460,7 +477,7 @@ export const getResolvers = (subgraph: Subgraph): Record<string, unknown> => {
 
       BuilderTeam_reorderPackages: async (
         _: unknown,
-        args: { docId: string; input: ReorderPackagesInput },
+        args: { docId: string; input: ReorderPackagesInput }
       ) => {
         const { docId, input } = args;
         const doc = await reactor.getDocument<BuilderTeamDocument>(docId);
@@ -470,7 +487,7 @@ export const getResolvers = (subgraph: Subgraph): Record<string, unknown> => {
 
         const result = await reactor.addAction(
           docId,
-          actions.reorderPackages(input),
+          actions.reorderPackages(input)
         );
 
         if (result.status !== "SUCCESS") {

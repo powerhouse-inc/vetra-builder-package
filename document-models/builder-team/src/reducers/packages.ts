@@ -1,5 +1,5 @@
-import type { VetraPackageInfo } from "document-models/builder-team/gen/types.js";
 import type { BuilderTeamPackagesOperations } from "../../gen/packages/operations.js";
+import type { VetraPackageInfo } from "../../gen/types.js";
 
 // Extended type that includes sortOrder for internal sorting
 type PackageWithSortOrder = VetraPackageInfo & { sortOrder: number };

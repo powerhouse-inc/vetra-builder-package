@@ -1,4 +1,4 @@
-import { type IRelationalDb } from "document-drive/processors/types";
+import { type IRelationalDb } from "document-drive";
 import type { DB } from "./schema.js";
 
 export async function up(db: IRelationalDb<DB>): Promise<void> {

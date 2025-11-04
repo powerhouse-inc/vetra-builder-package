@@ -4,10 +4,15 @@ import {
   PHIDField,
   Icon,
 } from "@powerhousedao/document-engineering";
-import { type VetraPackageInfo } from "document-models/builder-team";
+import { type VetraPackageInfo } from "../../../document-models/builder-team/index.js";
 import { useState } from "react";
 import { config } from "../config.js";
-import { getPackage, searchPackageOptions, getPackageOption, packageDataToPackageInfo } from "../services/vetra-api.js";
+import {
+  getPackage,
+  searchPackageOptions,
+  getPackageOption,
+  packageDataToPackageInfo,
+} from "../services/vetra-api.js";
 interface PackageItemProps {
   pkg: VetraPackageInfo;
   isEditing: boolean;
@@ -62,7 +67,9 @@ export function PackageItem({
                 }
                 const pkg = await getPackage(phid);
                 if (pkg) {
-                  setSelectedPackage(packageDataToPackageInfo(pkg, selectedPackage.id));
+                  setSelectedPackage(
+                    packageDataToPackageInfo(pkg, selectedPackage.id)
+                  );
                 }
               }}
               allowUris={true}
@@ -71,7 +78,9 @@ export function PackageItem({
               fetchSelectedOptionCallback={async (value) => {
                 const pkg = await getPackage(value);
                 if (pkg) {
-                  setSelectedPackage(packageDataToPackageInfo(pkg, selectedPackage.id));
+                  setSelectedPackage(
+                    packageDataToPackageInfo(pkg, selectedPackage.id)
+                  );
                 }
                 return getPackageOption(value);
               }}
@@ -84,16 +93,36 @@ export function PackageItem({
             <div className="flex justify-end space-x-3 pt-2">
               <Button color="light" onClick={onCancel}>
                 <span className="inline-flex items-center gap-1.5">
-                  <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  <svg
+                    className="w-3.5 h-3.5"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M6 18L18 6M6 6l12 12"
+                    />
                   </svg>
                   Cancel
                 </span>
               </Button>
               <Button onClick={handleSave} disabled={!selectedPackage}>
                 <span className="inline-flex items-center gap-1.5">
-                  <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  <svg
+                    className="w-3.5 h-3.5"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M5 13l4 4L19 7"
+                    />
                   </svg>
                   Save Changes
                 </span>
@@ -116,7 +145,9 @@ export function PackageItem({
             </span>
           </div>
           {pkg.description && (
-            <p className="text-sm text-gray-600 ml-6 leading-relaxed">{pkg.description}</p>
+            <p className="text-sm text-gray-600 ml-6 leading-relaxed">
+              {pkg.description}
+            </p>
           )}
           {pkg.phid && (
             <a
@@ -125,8 +156,18 @@ export function PackageItem({
               target="_blank"
               rel="noopener noreferrer"
             >
-              <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+              <svg
+                className="w-3 h-3"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+                />
               </svg>
               View Package
             </a>
@@ -135,16 +176,36 @@ export function PackageItem({
         <div className="flex space-x-2 ml-4">
           <Button color="light" size="sm" onClick={onEdit}>
             <span className="inline-flex items-center gap-1.5">
-              <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+              <svg
+                className="w-3.5 h-3.5"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
+                />
               </svg>
               Edit
             </span>
           </Button>
           <Button color="red" size="sm" onClick={onDelete}>
             <span className="inline-flex items-center gap-1.5">
-              <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+              <svg
+                className="w-3.5 h-3.5"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                />
               </svg>
               Remove
             </span>

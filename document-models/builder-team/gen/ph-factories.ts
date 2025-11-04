@@ -1,42 +1,39 @@
 /**
  * Factory methods for creating BuilderTeamDocument instances
  */
-
+import type {
+  PHAuthState,
+  PHDocumentState,
+  PHBaseState,
+} from "document-model";
 import {
   createBaseState,
   defaultBaseState,
-  type PHAuthState,
-  type PHDocumentState,
-  type PHBaseState,
-} from "document-model";
+} from "document-model/core";
 import type {
   BuilderTeamDocument,
   BuilderTeamLocalState,
-  BuilderTeamState,
+  BuilderTeamGlobalState,
+  BuilderTeamPHState,
 } from "./types.js";
 import { createDocument } from "./utils.js";
 
-export type BuilderTeamPHState = PHBaseState & {
-  global: BuilderTeamState;
-  local: BuilderTeamLocalState;
-};
-
-export function defaultGlobalState(): BuilderTeamState {
+export function defaultGlobalState(): BuilderTeamGlobalState {
   return {
-    profile: {
-      logo: null,
-      name: "",
-      slug: "",
-      description: null,
-      socials: {
-        xProfile: null,
-        github: null,
-        website: null,
-      },
-    },
-    members: [],
-    spaces: [],
-  };
+  "profile": {
+    "logo": null,
+    "name": "",
+    "slug": "",
+    "description": null,
+    "socials": {
+      "xProfile": null,
+      "github": null,
+      "website": null
+    }
+  },
+  "members": [],
+  "spaces": []
+};
 }
 
 export function defaultLocalState(): BuilderTeamLocalState {
@@ -52,12 +49,12 @@ export function defaultPHState(): BuilderTeamPHState {
 }
 
 export function createGlobalState(
-  state?: Partial<BuilderTeamState>,
-): BuilderTeamState {
+  state?: Partial<BuilderTeamGlobalState>,
+): BuilderTeamGlobalState {
   return {
     ...defaultGlobalState(),
     ...(state || {}),
-  } as BuilderTeamState;
+  } as BuilderTeamGlobalState;
 }
 
 export function createLocalState(
@@ -71,7 +68,7 @@ export function createLocalState(
 
 export function createState(
   baseState?: Partial<PHBaseState>,
-  globalState?: Partial<BuilderTeamState>,
+  globalState?: Partial<BuilderTeamGlobalState>,
   localState?: Partial<BuilderTeamLocalState>,
 ): BuilderTeamPHState {
   return {
@@ -90,18 +87,16 @@ export function createBuilderTeamDocument(
   state?: Partial<{
     auth?: Partial<PHAuthState>;
     document?: Partial<PHDocumentState>;
-    global?: Partial<BuilderTeamState>;
+    global?: Partial<BuilderTeamGlobalState>;
     local?: Partial<BuilderTeamLocalState>;
   }>,
 ): BuilderTeamDocument {
   const document = createDocument(
-    state
-      ? createState(
-          createBaseState(state.auth, state.document),
-          state.global,
-          state.local,
-        )
-      : undefined,
+    state ? createState(
+      createBaseState(state.auth, state.document),
+      state.global,
+      state.local,
+    ) : undefined
   );
 
   return document;

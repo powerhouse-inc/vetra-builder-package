@@ -1,25 +1,20 @@
 import type {
   DocumentDriveAction,
-  DocumentDriveState,
+  DocumentDriveGlobalState,
   IRelationalDb,
 } from "document-drive";
 import {
   RelationalDbProcessor,
   type RelationalDbProcessorFilter,
-} from "document-drive/processors/relational";
-import { type InternalTransmitterUpdate } from "document-drive/server/listener/transmitter/internal";
-import type { BuilderTeamState } from "document-models/builder-team/index.js";
+} from "document-drive";
+import { type InternalTransmitterUpdate } from "document-drive";
+import type { BuilderTeamState } from "../../document-models/builder-team/index.js";
 import type { BuilderTeamAction } from "../../document-models/builder-team/gen/actions.js";
 import { BuilderTeamHandlers } from "./builder-team-handlers.js";
 import { up } from "./migrations.js";
 import { type DB } from "./schema.js";
 
 export class VetraBuilderRelationalDbProcessor extends RelationalDbProcessor<DB> {
-  static override getNamespace(driveId: string): string {
-    // Default namespace: `${this.name}_${driveId.replaceAll("-", "_")}`
-    return super.getNamespace(driveId);
-  }
-
   private builderTeamHandlers: BuilderTeamHandlers;
 
   constructor(
@@ -54,7 +49,7 @@ export class VetraBuilderRelationalDbProcessor extends RelationalDbProcessor<DB>
               strand.documentId,
               strand.driveId,
               operation.action as DocumentDriveAction,
-              operation.state as unknown as DocumentDriveState
+              operation.state as unknown as DocumentDriveGlobalState
             );
           } else {
             await this.builderTeamHandlers.handleBuilderTeamOperation(
@@ -80,7 +75,7 @@ export class VetraBuilderRelationalDbProcessor extends RelationalDbProcessor<DB>
     documentId: string,
     driveId: string = "",
     action: DocumentDriveAction,
-    state: DocumentDriveState
+    state: DocumentDriveGlobalState
   ): Promise<void> {
     switch (action.type) {
       case "DELETE_NODE":

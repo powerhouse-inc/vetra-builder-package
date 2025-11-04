@@ -1,8 +1,8 @@
-import { type RelationalDbProcessorFilter } from "document-drive/processors/relational";
+import { type RelationalDbProcessorFilter } from "document-drive";
 import {
   type IProcessorHostModule,
   type ProcessorRecord,
-} from "document-drive/processors/types";
+} from "document-drive";
 import { type PHDocumentHeader } from "document-model";
 import { VetraBuilderRelationalDbProcessor } from "./index.js";
 

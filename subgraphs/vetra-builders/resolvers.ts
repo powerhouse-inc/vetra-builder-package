@@ -1,8 +1,8 @@
-import { type Subgraph } from "@powerhousedao/reactor-api";
+import { type ISubgraph } from "@powerhousedao/reactor-api";
 import { type DB } from "../../processors/vetra-builder-relational-db-processor/schema.js";
 import { VetraBuilderRelationalDbProcessor } from "../../processors/vetra-builder-relational-db-processor/index.js";
 
-export const getResolvers = (subgraph: Subgraph): Record<string, unknown> => {
+export const getResolvers = (subgraph: ISubgraph): Record<string, unknown> => {
   const reactor = subgraph.reactor;
   const db = subgraph.relationalDb;
   const DEFAULT_DRIVE_ID = process.env.VETRA_BUILDER_DRIVE_ID || "powerhouse";

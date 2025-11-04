@@ -6,8 +6,6 @@ export const module: EditorModule = {
   documentTypes: ["powerhouse/builder-team"],
   config: {
     id: "builder-team-editor",
-    disableExternalControls: true,
-    documentToolbarEnabled: true,
-    showSwitchboardLink: true,
+    name: "Builder Team Editor",
   },
 };
