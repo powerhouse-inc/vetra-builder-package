@@ -108,11 +108,7 @@ export function Editor(props: IProps) {
             <ProfileSection
               profile={profile}
               isEditing={isEditingProfile}
-              onSetProfileName={profileHandlers.handleSetProfileName}
-              onSetSlug={profileHandlers.handleSetSlug}
-              onSetDescription={profileHandlers.handleSetProfileDescription}
-              onSetLogo={profileHandlers.handleSetLogo}
-              onUpdateSocials={profileHandlers.handleUpdateSocials}
+              dispatch={dispatch}
               onClose={() => setIsEditingProfile(false)}
             />
 

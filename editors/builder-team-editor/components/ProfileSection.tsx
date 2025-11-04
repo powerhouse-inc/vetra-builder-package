@@ -1,27 +1,97 @@
+import { useState, useEffect } from "react";
 import { Button, Form, StringField, UrlField, Icon } from "@powerhousedao/document-engineering";
 import type { BuilderTeamDocument } from "../../../document-models/builder-team/index.js";
+import { actions } from "../../../document-models/builder-team/index.js";
+import { type Action } from "document-model";
+import { type DocumentDispatch } from "@powerhousedao/reactor-browser";
 
 interface ProfileSectionProps {
   profile: BuilderTeamDocument['state']['global']['profile'];
   isEditing: boolean;
-  onSetProfileName: (name: string) => void;
-  onSetSlug: (slug: string) => void;
-  onSetDescription: (description: string) => void;
-  onSetLogo: (logoUrl: string) => void;
-  onUpdateSocials: (socials: { github?: string | null; website?: string | null; x?: string | null }) => void;
+  dispatch: DocumentDispatch<Action>;
   onClose: () => void;
 }
 
 export function ProfileSection({
   profile,
   isEditing,
-  onSetProfileName,
-  onSetSlug,
-  onSetDescription,
-  onSetLogo,
-  onUpdateSocials,
+  dispatch,
   onClose,
 }: ProfileSectionProps) {
+  // Local state for form fields
+  const [formData, setFormData] = useState({
+    name: profile.name,
+    slug: profile.slug,
+    description: profile.description || "",
+    logo: profile.logo || "",
+    github: profile.socials.github || "",
+    website: profile.socials.website || "",
+    x: profile.socials.xProfile || "",
+  });
+
+  // Reset form data when entering edit mode (not when profile changes during editing)
+  useEffect(() => {
+    if (isEditing) {
+      setFormData({
+        name: profile.name,
+        slug: profile.slug,
+        description: profile.description || "",
+        logo: profile.logo || "",
+        github: profile.socials.github || "",
+        website: profile.socials.website || "",
+        x: profile.socials.xProfile || "",
+      });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isEditing]);
+
+  const handleSaveChanges = () => {
+    // Dispatch all changes when save is clicked
+    const nameTrimmed = formData.name.trim();
+    const slugTrimmed = formData.slug.trim();
+    const descriptionTrimmed = formData.description.trim();
+    const logoTrimmed = formData.logo.trim();
+    const githubTrimmed = formData.github.trim();
+    const websiteTrimmed = formData.website.trim();
+    const xTrimmed = formData.x.trim();
+
+    // Dispatch name change
+    if (nameTrimmed && nameTrimmed !== profile.name) {
+      dispatch(actions.setTeamName({ name: nameTrimmed }));
+    }
+
+    // Dispatch slug change
+    if (slugTrimmed && slugTrimmed !== profile.slug) {
+      dispatch(actions.setSlug({ slug: slugTrimmed }));
+    }
+
+    // Dispatch description change
+    if (descriptionTrimmed !== (profile.description || "")) {
+      dispatch(actions.setDescription({ description: descriptionTrimmed || null }));
+    }
+
+    // Dispatch logo change
+    if (logoTrimmed && logoTrimmed !== (profile.logo || "")) {
+      dispatch(actions.setLogo({ logo: logoTrimmed }));
+    }
+
+    // Dispatch socials change if any social field changed
+    if (
+      githubTrimmed !== (profile.socials.github || "") ||
+      websiteTrimmed !== (profile.socials.website || "") ||
+      xTrimmed !== (profile.socials.xProfile || "")
+    ) {
+      dispatch(
+        actions.setSocials({
+          github: githubTrimmed || null,
+          website: websiteTrimmed || null,
+          xProfile: xTrimmed || null,
+        })
+      );
+    }
+
+    onClose();
+  };
   return (
     <div className="bg-white rounded-xl shadow-md border border-gray-200 overflow-hidden">
       <div className="px-6 py-5 border-b border-gray-200 bg-gray-50">
@@ -40,8 +110,8 @@ export function ProfileSection({
               <StringField
                 name="profileName"
                 label="Profile Name"
-                value={profile.name}
-                onChange={(e) => onSetProfileName(e.target.value)}
+                value={formData.name}
+                onChange={(e) => setFormData(prev => ({ ...prev, name: e.target.value }))}
                 placeholder="Enter your profile name"
                 description="Your public display name"
               />
@@ -49,8 +119,8 @@ export function ProfileSection({
               <StringField
                 name="slug"
                 label="Slug"
-                value={profile.slug}
-                onChange={(e) => onSetSlug(e.target.value)}
+                value={formData.slug}
+                onChange={(e) => setFormData(prev => ({ ...prev, slug: e.target.value }))}
                 placeholder="your-slug"
                 description="Unique identifier for your profile (used in URLs)"
               />
@@ -58,8 +128,8 @@ export function ProfileSection({
               <StringField
                 name="description"
                 label="Description"
-                value={profile.description || ""}
-                onChange={(e) => onSetDescription(e.target.value)}
+                value={formData.description}
+                onChange={(e) => setFormData(prev => ({ ...prev, description: e.target.value }))}
                 placeholder="Tell us about yourself and your work"
                 description="Brief description of your work and interests"
               />
@@ -67,8 +137,8 @@ export function ProfileSection({
               <UrlField
                 name="logo"
                 label="Logo URL"
-                value={profile.logo || ""}
-                onChange={(e) => onSetLogo(e.target.value)}
+                value={formData.logo}
+                onChange={(e) => setFormData(prev => ({ ...prev, logo: e.target.value }))}
                 placeholder="https://example.com/logo.png"
                 description="URL to your profile logo image"
               />
@@ -84,24 +154,24 @@ export function ProfileSection({
                 <UrlField
                   name="github"
                   label="GitHub"
-                  value={profile.socials.github || ""}
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => onUpdateSocials({ ...profile.socials, github: e.target.value })}
+                  value={formData.github}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFormData(prev => ({ ...prev, github: e.target.value }))}
                   placeholder="https://github.com/username"
                 />
 
                 <UrlField
                   name="website"
                   label="Website"
-                  value={profile.socials.website || ""}
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => onUpdateSocials({ ...profile.socials, website: e.target.value })}
+                  value={formData.website}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFormData(prev => ({ ...prev, website: e.target.value }))}
                   placeholder="https://your-website.com"
                 />
 
                 <UrlField
                   name="x"
                   label="X (Twitter)"
-                  value={profile.socials.xProfile || ""}
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => onUpdateSocials({ ...profile.socials, x: e.target.value })}
+                  value={formData.x}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFormData(prev => ({ ...prev, x: e.target.value }))}
                   placeholder="https://x.com/username"
                 />
               </div>
@@ -115,7 +185,7 @@ export function ProfileSection({
                     Cancel
                   </span>
                 </Button>
-                <Button onClick={onClose}>
+                <Button onClick={handleSaveChanges}>
                   <span className="inline-flex items-center gap-1.5">
                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
