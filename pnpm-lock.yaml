@@ -9,26 +9,26 @@ importers:
   .:
     dependencies:
       '@powerhousedao/builder-tools':
-        specifier: latest
-        version: 5.0.1(97d40ab2b1b1927c93531316b229314c)
+        specifier: staging
+        version: 5.0.1-staging.9(97d40ab2b1b1927c93531316b229314c)
       '@powerhousedao/common':
-        specifier: latest
-        version: 5.0.1(962d7119ff8acbcd5dc8cbe3d7b2b4ea)
+        specifier: staging
+        version: 5.0.1-staging.9(962d7119ff8acbcd5dc8cbe3d7b2b4ea)
       '@powerhousedao/connect':
-        specifier: ^5.0.1
-        version: 5.0.1(b8d83d477457af3b571b057216faa1ae)
+        specifier: staging
+        version: 5.0.1-staging.9(b8d83d477457af3b571b057216faa1ae)
       '@powerhousedao/design-system':
-        specifier: latest
-        version: 5.0.1(@tanstack/query-core@5.90.5)(@types/express@4.17.25)(@types/react-dom@19.2.2(@types/react@19.2.2))(@types/react@19.2.2)(bufferutil@4.0.9)(encoding@0.1.13)(react-dom@19.2.0(react@19.2.0))(react-native@0.82.1(@babel/core@7.28.5)(@types/react@19.2.2)(bufferutil@4.0.9)(react@19.2.0)(utf-8-validate@5.0.10))(react@19.2.0)(typescript@5.9.3)(utf-8-validate@5.0.10)
+        specifier: staging
+        version: 5.0.1-staging.9(@tanstack/query-core@5.90.5)(@types/express@4.17.25)(@types/react-dom@19.2.2(@types/react@19.2.2))(@types/react@19.2.2)(bufferutil@4.0.9)(encoding@0.1.13)(react-dom@19.2.0(react@19.2.0))(react-native@0.82.1(@babel/core@7.28.5)(@types/react@19.2.2)(bufferutil@4.0.9)(react@19.2.0)(utf-8-validate@5.0.10))(react@19.2.0)(typescript@5.9.3)(utf-8-validate@5.0.10)
       '@powerhousedao/document-engineering':
         specifier: ^1.38.0
         version: 1.39.0(@types/express@4.17.25)(@types/react-dom@19.2.2(@types/react@19.2.2))(@types/react@19.2.2)(bufferutil@4.0.9)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)(typescript@5.9.3)(utf-8-validate@5.0.10)
       '@renown/sdk':
-        specifier: latest
-        version: 5.0.1(bufferutil@4.0.9)(document-model@5.0.1)(react@19.2.0)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@3.25.76)
+        specifier: staging
+        version: 5.0.1-staging.9(bufferutil@4.0.9)(document-model@5.0.1-staging.9)(react@19.2.0)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@3.25.76)
       document-model:
-        specifier: latest
-        version: 5.0.1
+        specifier: staging
+        version: 5.0.1-staging.9
       graphql:
         specifier: ^16.10.0
         version: 16.11.0
@@ -67,29 +67,29 @@ importers:
         specifier: ^0.5.0
         version: 0.5.0
       '@powerhousedao/codegen':
-        specifier: latest
-        version: 5.0.1(1961abfcd6f9d8f30562ac7fb2e327cc)
+        specifier: staging
+        version: 5.0.1-staging.9(1961abfcd6f9d8f30562ac7fb2e327cc)
       '@powerhousedao/ph-cli':
-        specifier: latest
-        version: 5.0.1(c11f365d3acd42542c4698abd165f2fc)
+        specifier: staging
+        version: 5.0.1-staging.9(c11f365d3acd42542c4698abd165f2fc)
       '@powerhousedao/reactor-api':
-        specifier: latest
-        version: 5.0.1(0e8721e6b01acafa1ae0b99db741998c)
+        specifier: staging
+        version: 5.0.1-staging.9(0e8721e6b01acafa1ae0b99db741998c)
       '@powerhousedao/reactor-browser':
-        specifier: latest
-        version: 5.0.1(@powerhousedao/analytics-engine-knex@0.6.0(@powerhousedao/analytics-engine-core@0.5.0)(sqlite3@5.1.7))(@types/node@22.18.12)(bufferutil@4.0.9)(encoding@0.1.13)(pg@8.16.3)(react-dom@19.2.0(react@19.2.0))(react-native@0.82.1(@babel/core@7.28.5)(@types/react@19.2.2)(bufferutil@4.0.9)(react@19.2.0)(utf-8-validate@5.0.10))(react@19.2.0)(sqlite3@5.1.7)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@3.25.76)
+        specifier: staging
+        version: 5.0.1-staging.9(@powerhousedao/analytics-engine-knex@0.6.0(@powerhousedao/analytics-engine-core@0.5.0)(sqlite3@5.1.7))(@types/node@22.18.12)(bufferutil@4.0.9)(encoding@0.1.13)(pg@8.16.3)(react-dom@19.2.0(react@19.2.0))(react-native@0.82.1(@babel/core@7.28.5)(@types/react@19.2.2)(bufferutil@4.0.9)(react@19.2.0)(utf-8-validate@5.0.10))(react@19.2.0)(sqlite3@5.1.7)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@3.25.76)
       '@powerhousedao/reactor-local':
-        specifier: latest
-        version: 5.0.1(5a393ae8aebd779c3a4733f504b7db45)
+        specifier: staging
+        version: 5.0.1-staging.9(5a393ae8aebd779c3a4733f504b7db45)
       '@powerhousedao/scalars':
-        specifier: latest
-        version: 2.0.1(graphql@16.11.0)(zod@3.25.76)
+        specifier: staging
+        version: 1.33.1-staging.5(graphql@16.11.0)(zod@3.25.76)
       '@powerhousedao/switchboard':
-        specifier: latest
-        version: 5.0.1(02a882d2b0b7dfc37bb0d7fe6516ddc1)
+        specifier: staging
+        version: 5.0.1-staging.9(02a882d2b0b7dfc37bb0d7fe6516ddc1)
       '@powerhousedao/vetra':
-        specifier: latest
-        version: 5.0.1(d6ad154cc90bb3582c9634bd1ee0f54c)
+        specifier: staging
+        version: 5.0.1-staging.9(d6ad154cc90bb3582c9634bd1ee0f54c)
       '@semantic-release/changelog':
         specifier: ^6.0.3
         version: 6.0.3(semantic-release@24.2.9(typescript@5.9.3))
@@ -115,8 +115,8 @@ importers:
         specifier: ^0.5.16
         version: 0.5.16
       document-drive:
-        specifier: latest
-        version: 5.0.1(@types/node@22.18.12)(bufferutil@4.0.9)(encoding@0.1.13)(pg@8.16.3)(react-native@0.82.1(@babel/core@7.28.5)(@types/react@19.2.2)(bufferutil@4.0.9)(react@19.2.0)(utf-8-validate@5.0.10))(utf-8-validate@5.0.10)
+        specifier: staging
+        version: 5.0.1-staging.9(@types/node@22.18.12)(bufferutil@4.0.9)(encoding@0.1.13)(pg@8.16.3)(react-native@0.82.1(@babel/core@7.28.5)(@types/react@19.2.2)(bufferutil@4.0.9)(react@19.2.0)(utf-8-validate@5.0.10))(utf-8-validate@5.0.10)
       eslint:
         specifier: ^9.37.0
         version: 9.38.0(jiti@2.6.1)
@@ -1521,12 +1521,6 @@ packages:
     peerDependencies:
       graphql: ^14.0.0 || ^15.0.0 || ^16.0.0 || ^17.0.0
 
-  '@graphql-tools/merge@9.1.1':
-    resolution: {integrity: sha512-BJ5/7Y7GOhTuvzzO5tSBFL4NGr7PVqTJY3KeIDlVTT8YLcTXtBR+hlrC3uyEym7Ragn+zyWdHeJ9ev+nRX1X2w==}
-    engines: {node: '>=16.0.0'}
-    peerDependencies:
-      graphql: ^14.0.0 || ^15.0.0 || ^16.0.0 || ^17.0.0
-
   '@graphql-tools/merge@9.1.2':
     resolution: {integrity: sha512-Ny9YhWKv+KxZFdXYt+wlyEW55GzhFiq4daV4wYgpP0aRbwQaczNJd1L3VjjBsPKjmW8lctZXUoqYTqU5QPcBGw==}
     engines: {node: '>=16.0.0'}
@@ -1548,12 +1542,6 @@ packages:
 
   '@graphql-tools/relay-operation-optimizer@7.0.21':
     resolution: {integrity: sha512-vMdU0+XfeBh9RCwPqRsr3A05hPA3MsahFn/7OAwXzMySA5EVnSH5R4poWNs3h1a0yT0tDPLhxORhK7qJdSWj2A==}
-    engines: {node: '>=16.0.0'}
-    peerDependencies:
-      graphql: ^14.0.0 || ^15.0.0 || ^16.0.0 || ^17.0.0
-
-  '@graphql-tools/schema@10.0.25':
-    resolution: {integrity: sha512-/PqE8US8kdQ7lB9M5+jlW8AyVjRGCKU7TSktuW3WNKSKmDO0MK1wakvb5gGdyT49MjAIb4a3LWxIpwo5VygZuw==}
     engines: {node: '>=16.0.0'}
     peerDependencies:
       graphql: ^14.0.0 || ^15.0.0 || ^16.0.0 || ^17.0.0
@@ -1582,12 +1570,6 @@ packages:
 
   '@graphql-tools/utils@10.10.0':
     resolution: {integrity: sha512-OOeab5Y9qeKq0zfoJCSScMcDfGcIxp05+LW2xYVCS2l3su+K3lYcg5+cAAx9n0SFxpJl8zF5denq2QDsfM7NnQ==}
-    engines: {node: '>=16.0.0'}
-    peerDependencies:
-      graphql: ^14.0.0 || ^15.0.0 || ^16.0.0 || ^17.0.0
-
-  '@graphql-tools/utils@10.9.1':
-    resolution: {integrity: sha512-B1wwkXk9UvU7LCBkPs8513WxOQ2H8Fo5p8HR1+Id9WmYE5+bd51vqN+MbrqvWczHCH2gwkREgHJN88tE0n1FCw==}
     engines: {node: '>=16.0.0'}
     peerDependencies:
       graphql: ^14.0.0 || ^15.0.0 || ^16.0.0 || ^17.0.0
@@ -2689,30 +2671,30 @@ packages:
       '@powerhousedao/analytics-engine-core': 0.5.0
       '@powerhousedao/analytics-engine-knex': 0.5.1
 
-  '@powerhousedao/builder-tools@5.0.1':
-    resolution: {integrity: sha512-4vcIhYeg8GPyR6v+ptpWubFKm4Dll+a/hekGxu+j3EWP7FRYiB8qtXHgiEwjA9mx2c8uzbbI76sY1r7KcsPGLA==}
+  '@powerhousedao/builder-tools@5.0.1-staging.9':
+    resolution: {integrity: sha512-qVv7x/lCfkpGPgoz4pQw0sVOiVbGq/00hkbpekrZTrqtSmWY5zNN7F0AgA8D+psBlscfZXtpnznymZyT7mCu4w==}
     peerDependencies:
       react: ^19.2.0
       react-dom: ^19.2.0
 
-  '@powerhousedao/codegen@5.0.1':
-    resolution: {integrity: sha512-RL3fgcI2vgcWDSb4RBJBRiexljG2shETILcVQF/7Rpn0uvO6WeLL5RtoyZMgFbP8dkx8UY5Cs16XvSG7+GdSpA==}
+  '@powerhousedao/codegen@5.0.1-staging.9':
+    resolution: {integrity: sha512-TojCfWkVkb1BOrQMucc/CSii6EJXkFGObrcNB9s941QxY8h2I6qlnbXNpdcmftDGo9tiwkoJOIpQYfHsyZgUaA==}
 
-  '@powerhousedao/common@5.0.1':
-    resolution: {integrity: sha512-nTZZQxdTF58sPLLONfT0M1Ynwx1tWMzXOoYNoxWiN9isJIRrrRvC4/nyaR+5wlPb0hdyK14HPknVheOf99cRVg==}
+  '@powerhousedao/common@5.0.1-staging.9':
+    resolution: {integrity: sha512-gpg3B7lNgOt1KNVL6Zn6ZkvSGXhWvdUwDjjyTJ9x+Dmey0JDjKLGF2hsx/ZhSw1CwFduComXqbprtR+jdRMECw==}
     peerDependencies:
       react: ^19.2.0
       react-dom: ^19.2.0
 
-  '@powerhousedao/config@5.0.1':
-    resolution: {integrity: sha512-XIK6AGnAUdAVclGMSuGO6g3+x/7mgFzb98OTPw7zdB1vipVtND5LlFNYSHpsR7CfTLNDvj/DsGauWpkgZLQYBg==}
+  '@powerhousedao/config@5.0.1-staging.9':
+    resolution: {integrity: sha512-3s0B4ryh6fVLtFo8MgeblYxJOHsoeL8eJh6APO4OlMg9BNNP1hIzj2ufRNDTCOVE7h1FuLhzzrFzJfIlSbT2Bg==}
 
-  '@powerhousedao/connect@5.0.1':
-    resolution: {integrity: sha512-rorDU8DrHBLu5WH2hiia0eC26XulT5RxsLFB7oEUbpT++IMMdcswgOJLh7tywVVuq1/s90RP4ZwUGUV9oKfoiw==}
+  '@powerhousedao/connect@5.0.1-staging.9':
+    resolution: {integrity: sha512-COCZ8AJTBpppZezhemcyRhP4jGXlLCisD0Jl4PeO0GaJJFa8FuHZ7Qnv39aH5st87hoyz9PAPckRV+hlsE48xg==}
     engines: {node: '>=22.0.0'}
 
-  '@powerhousedao/design-system@5.0.1':
-    resolution: {integrity: sha512-+rW7O/WLEOYTqH9b4chMecUD3SN026O9RV0tvzfAoYjDpUlmr/izS7Urlv7mls1LPxgeEfjibs+K702lnZ+2QQ==}
+  '@powerhousedao/design-system@5.0.1-staging.9':
+    resolution: {integrity: sha512-IDfGFKAn4DyipINKUHBtpL5b+9WCgUcERVDAOXr75Q7lsWIoSDbt8z/9dcqLKVeDf34CmYpqZ3aGJR8s7C+nCA==}
     peerDependencies:
       react: ^19.2.0
       react-dom: ^19.2.0
@@ -2723,41 +2705,41 @@ packages:
       react: ^19.2.0
       react-dom: ^19.2.0
 
-  '@powerhousedao/ph-cli@5.0.1':
-    resolution: {integrity: sha512-VAM9v6ctImDJ/De0gpCYsAhJFQx0dBfaxhUCE6BD/hIvwy6mkzmXVdS0Ygnw/JtqqI4eCXxT9MXhm2AgbSzdlA==}
+  '@powerhousedao/ph-cli@5.0.1-staging.9':
+    resolution: {integrity: sha512-kOEKnkQUMVaJ74Zus0FI14TI44un+AOKpTBnp1KRSVfbhd/nxVNQdyrbn32X4h+CMkKkMTfjvh7dJY7FLZHdQA==}
     hasBin: true
 
-  '@powerhousedao/reactor-api@5.0.1':
-    resolution: {integrity: sha512-fS2lwaY7e8TjY/QrmwJRmx6kRV5YEpmPLrkA0AaZba2Wv7qql2k8+yq3MglR6scObppZ3uLa045bAuS5//T7/g==}
+  '@powerhousedao/reactor-api@5.0.1-staging.9':
+    resolution: {integrity: sha512-VQio3bcPoVKpFm9OnSAZj0klFE2JqfMenTE8UazXYmOoCN4/vznyXDVM59JaGq/2hSlCXiNlG42QtTRbFxBCLA==}
 
-  '@powerhousedao/reactor-browser@5.0.1':
-    resolution: {integrity: sha512-YLie3FApysKL7ZiPo+IpH1FE+zrCdQAIK0hQJeK9TF3BdG9Ju908SrXhqjt2cO9o5IBUAMk3G+Ol52qZX+XuPw==}
+  '@powerhousedao/reactor-browser@5.0.1-staging.9':
+    resolution: {integrity: sha512-ZPrnoeDFiYGmNqF6wAH4AyYbAJ6T7esksq/kGsoCiYfV/dC3rFzWPlgqS58ZGOt371JqP5NipvuRiVzqICXLvQ==}
     peerDependencies:
       react: ^19.2.0
       react-dom: ^19.2.0
 
-  '@powerhousedao/reactor-local@5.0.1':
-    resolution: {integrity: sha512-CdKVuksVflYbOq8/CtVxfytf6nH/BZ8+y0ndUNb8Rn9j3QIvIHTEH39jMHNr/gdQV6biFj+48cK6gqPDkqN7oA==}
+  '@powerhousedao/reactor-local@5.0.1-staging.9':
+    resolution: {integrity: sha512-b5vp47ovowbn9JaRP0D12/7Ax7DdKPAtr59vqjcNSopQa5hWum6UfBHGsOtBiry24Xa+ev29pBVa6onJT3ko7A==}
 
-  '@powerhousedao/reactor-mcp@5.0.1':
-    resolution: {integrity: sha512-GgfKBpLLoM/CDQxGlpnFKCU8fnaCtcYiymXT54Ll3C6r7dq4s1OXx62+vJA0+FKQcAihW2shKpVgNa2nxIs+AQ==}
+  '@powerhousedao/reactor-mcp@5.0.1-staging.9':
+    resolution: {integrity: sha512-rHUi6KbRYbc30T0x56TM0m3v9q8PaoajvgPk2+27QoFNd2BXHsLWn7xBMix/7KK/hqIMNGYP09SXYDBUTcne+Q==}
     hasBin: true
 
-  '@powerhousedao/reactor@5.0.1':
-    resolution: {integrity: sha512-VN3iZFsEZVg2dCWZQUTT8lmV+iLky/tFRynv7rPeKRW1+U5hddQKVRhcFuGnKUUa4SO2m5yZ3lN6XWtMGo0c6A==}
+  '@powerhousedao/reactor@5.0.1-staging.9':
+    resolution: {integrity: sha512-lCxjcnba8PEusBSI5/No0xEisuPr+pTZmNq+OwMEsxSSeI2lwumjfmh13bxB+hdCI1uku1zur4Z2MpVmoyySsA==}
 
-  '@powerhousedao/scalars@2.0.1':
-    resolution: {integrity: sha512-LKDGuKAg5NJiYO5/2AFwfBeJg2kIRCD4UTUEWqIK/YQeVdXLC5ps92TsW1ga+XcZ+8IYwh8/e3oq3XH4x6N6dg==}
+  '@powerhousedao/scalars@1.33.1-staging.5':
+    resolution: {integrity: sha512-3Tt5HfQuLm/+YwpDkD6LeMN3ig+fzKGfxFNANhFGJVrVWzRLySNBULkCIneTq3cDg+XOjwysrBNYXMK+JQCJ4A==}
     peerDependencies:
       graphql: ^16.9.0
       zod: ^3.24.2
 
-  '@powerhousedao/switchboard@5.0.1':
-    resolution: {integrity: sha512-ZD/7DgzdDRUCzzuwBJPQgKXdk+t8I1Xio5OyzYv5BxIishY0SnZFhkkwlPEge26VDYfR8nc7Q1pHRDw9qTQ1yw==}
+  '@powerhousedao/switchboard@5.0.1-staging.9':
+    resolution: {integrity: sha512-/1i6faF9Yw8xxyg95h75ThWR5Z0Tjrnrm2UyqrZql9Crfd8O8hbtu7H0eJ/JfShj7oQsebF9o8QG++CWF1/5iQ==}
     hasBin: true
 
-  '@powerhousedao/vetra@5.0.1':
-    resolution: {integrity: sha512-mPDD0vEpF7HFmP2pMHzU3+l76WiQkkauc3WOe7pm7Oq10AfNtVl1DBtXUT+hDRrTOI2gOeyF/lZjRV0sHrlwkA==}
+  '@powerhousedao/vetra@5.0.1-staging.9':
+    resolution: {integrity: sha512-Yw1gXu8T6EqcW5ltMPva+C/IqfPkn1DqlmThoJwimy38daex4Az6gVJnQL6G4NglwLPjMHWntS3LHOnpQM5EfQ==}
     peerDependencies:
       react: ^19.2.0
       react-dom: ^19.2.0
@@ -3371,10 +3353,10 @@ packages:
     resolution: {integrity: sha512-O3rHJzAQKamUz1fvE0Qaw0xSFqsA/yafi2iqeE0pvdFtCO1viYx8QL6f3Ln/aCCTLxs68SLf0KPM9eSeM8yBnA==}
     engines: {node: '>=14.0.0'}
 
-  '@renown/sdk@5.0.1':
-    resolution: {integrity: sha512-4IQ2ksbtMoAuyoDtKuG5PX8diR63+7ItsSHebUQxtl3KrYMVYlBFubIBAMiwmpMa6KYLdGbgA8BJBEVZXPdz4g==}
+  '@renown/sdk@5.0.1-staging.9':
+    resolution: {integrity: sha512-nttljnzNi+m2yplEBF0UF786gbmB/OW455fn+Nwz7Q3ju4ADRgHjGSaeys1i+9kqycSZVBipRoyIwyyY8dFVcw==}
     peerDependencies:
-      document-model: 5.0.1
+      document-model: 5.0.1-staging.9
       react: ^18.0.0 || ^19.0.0
     peerDependenciesMeta:
       react:
@@ -5894,14 +5876,14 @@ packages:
     resolution: {integrity: sha512-yS+Q5i3hBf7GBkd4KG8a7eBNNWNGLTaEwwYWUijIYM7zrlYDM0BFXHjjPWlWZ1Rg7UaddZeIDmi9jF3HmqiQ2w==}
     engines: {node: '>=6.0.0'}
 
-  document-drive@5.0.1:
-    resolution: {integrity: sha512-mBZo6Mg/hnx1AtfNdA03pqB8b364Lj/sXixtm5SbPzwnAcnDcDBkF4rw/XOO242ORzzFmkp13Gpbzk9nPIEl7A==}
+  document-drive@5.0.1-staging.9:
+    resolution: {integrity: sha512-0yqFv4qPH53dbWybmaYjbnghk5jrWGhW+R+u/jlyXa36FKMH8kLk2EqbSaj4LnstFVsCrzuKDrROq4+oh/E1Zw==}
 
   document-model-libs@1.130.1:
     resolution: {integrity: sha512-I3zvuBIwgPclb5PeA6eeI2AYvMsiduvOQSDDkbOjEVCFLtode/JkWDrSuNINX9Im9dNzHpKi0vrhWsKaJTMzwg==}
 
-  document-model@5.0.1:
-    resolution: {integrity: sha512-SswcF+oRrz+TFtym8Jtl+oGz0qgX1SS2Kj5Jc5/kJNPWJJM5Ja0wJFtLyZTz/C2u/YVLVmOUBNvwR3dJBD317g==}
+  document-model@5.0.1-staging.9:
+    resolution: {integrity: sha512-52TeERCLai0yBnDhuFMwTxrgHOm9k9Ncoaar3V2n8JmY4I66mUXAtEvBL2rXMKSKkP4dus+Ub3WZKsJX7/y/tw==}
 
   dom-helpers@5.2.1:
     resolution: {integrity: sha512-nRCa7CK3VTrM2NmGkIy4cbK7IZlgBE/PYMn55rrXefr5xXDP0LdtfPnblFDoVdcAfslJ7or6iqAUnx0CCGIWQA==}
@@ -8132,6 +8114,7 @@ packages:
 
   libsql@0.4.7:
     resolution: {integrity: sha512-T9eIRCs6b0J1SHKYIvD8+KCJMcWZ900iZyxdnSCdqxN12Z1ijzT+jY5nrk72Jw4B0HGzms2NgpryArlJqvc3Lw==}
+    cpu: [x64, arm64, wasm32]
     os: [darwin, linux, win32]
 
   lie@3.1.1:
@@ -11983,7 +11966,7 @@ snapshots:
       '@graphql-codegen/plugin-helpers': 5.1.1(graphql@16.11.0)
       '@graphql-codegen/schema-ast': 4.0.0(graphql@16.11.0)
       '@graphql-codegen/visitor-plugin-common': 4.1.2(encoding@0.1.13)(graphql@16.11.0)
-      '@graphql-tools/utils': 10.9.1(graphql@16.11.0)
+      '@graphql-tools/utils': 10.10.0(graphql@16.11.0)
       graphlib: 2.1.8
       graphql: 16.11.0
     transitivePeerDependencies:
@@ -12154,7 +12137,7 @@ snapshots:
       '@apollo/utils.logger': 3.0.0
       '@apollo/utils.usagereporting': 2.1.0(graphql@16.11.0)
       '@apollo/utils.withrequired': 3.0.0
-      '@graphql-tools/schema': 10.0.25(graphql@16.11.0)
+      '@graphql-tools/schema': 10.0.26(graphql@16.11.0)
       async-retry: 1.3.3
       body-parser: 2.2.0
       cors: 2.8.5
@@ -13190,7 +13173,7 @@ snapshots:
       '@graphql-tools/load': 8.1.2(graphql@16.11.0)
       '@graphql-tools/prisma-loader': 8.0.17(@types/node@24.10.0)(bufferutil@4.0.9)(crossws@0.3.5)(encoding@0.1.13)(graphql@16.11.0)(utf-8-validate@5.0.10)
       '@graphql-tools/url-loader': 8.0.33(@types/node@24.10.0)(bufferutil@4.0.9)(crossws@0.3.5)(graphql@16.11.0)(utf-8-validate@5.0.10)
-      '@graphql-tools/utils': 10.9.1(graphql@16.11.0)
+      '@graphql-tools/utils': 10.10.0(graphql@16.11.0)
       '@whatwg-node/fetch': 0.10.11
       chalk: 4.1.2
       cosmiconfig: 8.3.6(typescript@5.9.3)
@@ -13239,7 +13222,7 @@ snapshots:
       '@graphql-codegen/typescript-operations': 4.6.1(encoding@0.1.13)(graphql@16.11.0)
       '@graphql-codegen/visitor-plugin-common': 5.8.0(encoding@0.1.13)(graphql@16.11.0)
       '@graphql-tools/documents': 1.0.1(graphql@16.11.0)
-      '@graphql-tools/utils': 10.9.1(graphql@16.11.0)
+      '@graphql-tools/utils': 10.10.0(graphql@16.11.0)
       '@graphql-typed-document-node/core': 3.2.0(graphql@16.11.0)
       graphql: 16.11.0
       tslib: 2.6.3
@@ -13249,8 +13232,8 @@ snapshots:
   '@graphql-codegen/core@4.0.2(graphql@16.11.0)':
     dependencies:
       '@graphql-codegen/plugin-helpers': 5.1.1(graphql@16.11.0)
-      '@graphql-tools/schema': 10.0.25(graphql@16.11.0)
-      '@graphql-tools/utils': 10.9.1(graphql@16.11.0)
+      '@graphql-tools/schema': 10.0.26(graphql@16.11.0)
+      '@graphql-tools/utils': 10.10.0(graphql@16.11.0)
       graphql: 16.11.0
       tslib: 2.6.3
 
@@ -13258,7 +13241,7 @@ snapshots:
     dependencies:
       '@graphql-codegen/plugin-helpers': 5.1.1(graphql@16.11.0)
       '@graphql-codegen/visitor-plugin-common': 5.8.0(encoding@0.1.13)(graphql@16.11.0)
-      '@graphql-tools/utils': 10.9.1(graphql@16.11.0)
+      '@graphql-tools/utils': 10.10.0(graphql@16.11.0)
       auto-bind: 4.0.0
       graphql: 16.11.0
       tslib: 2.6.3
@@ -13267,7 +13250,7 @@ snapshots:
 
   '@graphql-codegen/plugin-helpers@5.1.1(graphql@16.11.0)':
     dependencies:
-      '@graphql-tools/utils': 10.9.1(graphql@16.11.0)
+      '@graphql-tools/utils': 10.10.0(graphql@16.11.0)
       change-case-all: 1.0.15
       common-tags: 1.8.2
       graphql: 16.11.0
@@ -13278,14 +13261,14 @@ snapshots:
   '@graphql-codegen/schema-ast@4.0.0(graphql@16.11.0)':
     dependencies:
       '@graphql-codegen/plugin-helpers': 5.1.1(graphql@16.11.0)
-      '@graphql-tools/utils': 10.9.1(graphql@16.11.0)
+      '@graphql-tools/utils': 10.10.0(graphql@16.11.0)
       graphql: 16.11.0
       tslib: 2.5.3
 
   '@graphql-codegen/schema-ast@4.1.0(graphql@16.11.0)':
     dependencies:
       '@graphql-codegen/plugin-helpers': 5.1.1(graphql@16.11.0)
-      '@graphql-tools/utils': 10.9.1(graphql@16.11.0)
+      '@graphql-tools/utils': 10.10.0(graphql@16.11.0)
       graphql: 16.11.0
       tslib: 2.6.3
 
@@ -13327,7 +13310,7 @@ snapshots:
       '@graphql-codegen/plugin-helpers': 5.1.1(graphql@16.11.0)
       '@graphql-tools/optimize': 2.0.0(graphql@16.11.0)
       '@graphql-tools/relay-operation-optimizer': 7.0.21(encoding@0.1.13)(graphql@16.11.0)
-      '@graphql-tools/utils': 10.9.1(graphql@16.11.0)
+      '@graphql-tools/utils': 10.10.0(graphql@16.11.0)
       auto-bind: 4.0.0
       change-case-all: 1.0.15
       dependency-graph: 0.11.0
@@ -13343,7 +13326,7 @@ snapshots:
       '@graphql-codegen/plugin-helpers': 5.1.1(graphql@16.11.0)
       '@graphql-tools/optimize': 2.0.0(graphql@16.11.0)
       '@graphql-tools/relay-operation-optimizer': 7.0.21(encoding@0.1.13)(graphql@16.11.0)
-      '@graphql-tools/utils': 10.9.1(graphql@16.11.0)
+      '@graphql-tools/utils': 10.10.0(graphql@16.11.0)
       auto-bind: 4.0.0
       change-case-all: 1.0.15
       dependency-graph: 0.11.0
@@ -13358,7 +13341,7 @@ snapshots:
 
   '@graphql-tools/apollo-engine-loader@8.0.22(graphql@16.11.0)':
     dependencies:
-      '@graphql-tools/utils': 10.9.1(graphql@16.11.0)
+      '@graphql-tools/utils': 10.10.0(graphql@16.11.0)
       '@whatwg-node/fetch': 0.10.11
       graphql: 16.11.0
       sync-fetch: 0.6.0-2
@@ -13374,7 +13357,7 @@ snapshots:
 
   '@graphql-tools/batch-execute@9.0.19(graphql@16.11.0)':
     dependencies:
-      '@graphql-tools/utils': 10.9.1(graphql@16.11.0)
+      '@graphql-tools/utils': 10.10.0(graphql@16.11.0)
       '@whatwg-node/promise-helpers': 1.3.2
       dataloader: 2.2.3
       graphql: 16.11.0
@@ -13383,7 +13366,7 @@ snapshots:
   '@graphql-tools/code-file-loader@8.1.22(graphql@16.11.0)':
     dependencies:
       '@graphql-tools/graphql-tag-pluck': 8.3.21(graphql@16.11.0)
-      '@graphql-tools/utils': 10.9.1(graphql@16.11.0)
+      '@graphql-tools/utils': 10.10.0(graphql@16.11.0)
       globby: 11.1.0
       graphql: 16.11.0
       tslib: 2.8.1
@@ -13395,8 +13378,8 @@ snapshots:
     dependencies:
       '@graphql-tools/batch-execute': 9.0.19(graphql@16.11.0)
       '@graphql-tools/executor': 1.4.9(graphql@16.11.0)
-      '@graphql-tools/schema': 10.0.25(graphql@16.11.0)
-      '@graphql-tools/utils': 10.9.1(graphql@16.11.0)
+      '@graphql-tools/schema': 10.0.26(graphql@16.11.0)
+      '@graphql-tools/utils': 10.10.0(graphql@16.11.0)
       '@repeaterjs/repeater': 3.0.6
       '@whatwg-node/promise-helpers': 1.3.2
       dataloader: 2.2.3
@@ -13424,13 +13407,13 @@ snapshots:
   '@graphql-tools/executor-common@0.0.4(graphql@16.11.0)':
     dependencies:
       '@envelop/core': 5.3.2
-      '@graphql-tools/utils': 10.9.1(graphql@16.11.0)
+      '@graphql-tools/utils': 10.10.0(graphql@16.11.0)
       graphql: 16.11.0
 
   '@graphql-tools/executor-common@0.0.6(graphql@16.11.0)':
     dependencies:
       '@envelop/core': 5.3.2
-      '@graphql-tools/utils': 10.9.1(graphql@16.11.0)
+      '@graphql-tools/utils': 10.10.0(graphql@16.11.0)
       graphql: 16.11.0
 
   '@graphql-tools/executor-graphql-ws@0.0.14(bufferutil@4.0.9)(graphql@16.11.0)(utf-8-validate@5.0.10)':
@@ -13450,7 +13433,7 @@ snapshots:
   '@graphql-tools/executor-graphql-ws@2.0.7(bufferutil@4.0.9)(crossws@0.3.5)(graphql@16.11.0)(utf-8-validate@5.0.10)':
     dependencies:
       '@graphql-tools/executor-common': 0.0.6(graphql@16.11.0)
-      '@graphql-tools/utils': 10.9.1(graphql@16.11.0)
+      '@graphql-tools/utils': 10.10.0(graphql@16.11.0)
       '@whatwg-node/disposablestack': 0.0.6
       graphql: 16.11.0
       graphql-ws: 6.0.6(crossws@0.3.5)(graphql@16.11.0)(ws@8.18.3(bufferutil@4.0.9)(utf-8-validate@5.0.10))
@@ -13496,7 +13479,7 @@ snapshots:
     dependencies:
       '@graphql-hive/signal': 1.0.0
       '@graphql-tools/executor-common': 0.0.4(graphql@16.11.0)
-      '@graphql-tools/utils': 10.9.1(graphql@16.11.0)
+      '@graphql-tools/utils': 10.10.0(graphql@16.11.0)
       '@repeaterjs/repeater': 3.0.6
       '@whatwg-node/disposablestack': 0.0.6
       '@whatwg-node/fetch': 0.10.11
@@ -13521,7 +13504,7 @@ snapshots:
 
   '@graphql-tools/executor-legacy-ws@1.1.19(bufferutil@4.0.9)(graphql@16.11.0)(utf-8-validate@5.0.10)':
     dependencies:
-      '@graphql-tools/utils': 10.9.1(graphql@16.11.0)
+      '@graphql-tools/utils': 10.10.0(graphql@16.11.0)
       '@types/ws': 8.18.1
       graphql: 16.11.0
       isomorphic-ws: 5.0.0(ws@8.18.3(bufferutil@4.0.9)(utf-8-validate@5.0.10))
@@ -13542,7 +13525,7 @@ snapshots:
 
   '@graphql-tools/executor@1.4.9(graphql@16.11.0)':
     dependencies:
-      '@graphql-tools/utils': 10.9.1(graphql@16.11.0)
+      '@graphql-tools/utils': 10.10.0(graphql@16.11.0)
       '@graphql-typed-document-node/core': 3.2.0(graphql@16.11.0)
       '@repeaterjs/repeater': 3.0.6
       '@whatwg-node/disposablestack': 0.0.6
@@ -13553,7 +13536,7 @@ snapshots:
   '@graphql-tools/git-loader@8.0.26(graphql@16.11.0)':
     dependencies:
       '@graphql-tools/graphql-tag-pluck': 8.3.21(graphql@16.11.0)
-      '@graphql-tools/utils': 10.9.1(graphql@16.11.0)
+      '@graphql-tools/utils': 10.10.0(graphql@16.11.0)
       graphql: 16.11.0
       is-glob: 4.0.3
       micromatch: 4.0.8
@@ -13566,7 +13549,7 @@ snapshots:
     dependencies:
       '@graphql-tools/executor-http': 1.3.3(@types/node@24.10.0)(graphql@16.11.0)
       '@graphql-tools/graphql-tag-pluck': 8.3.21(graphql@16.11.0)
-      '@graphql-tools/utils': 10.9.1(graphql@16.11.0)
+      '@graphql-tools/utils': 10.10.0(graphql@16.11.0)
       '@whatwg-node/fetch': 0.10.11
       '@whatwg-node/promise-helpers': 1.3.2
       graphql: 16.11.0
@@ -13588,7 +13571,7 @@ snapshots:
   '@graphql-tools/graphql-file-loader@8.1.2(graphql@16.11.0)':
     dependencies:
       '@graphql-tools/import': 7.1.2(graphql@16.11.0)
-      '@graphql-tools/utils': 10.9.1(graphql@16.11.0)
+      '@graphql-tools/utils': 10.10.0(graphql@16.11.0)
       globby: 11.1.0
       graphql: 16.11.0
       tslib: 2.8.1
@@ -13603,7 +13586,7 @@ snapshots:
       '@babel/plugin-syntax-import-assertions': 7.27.1(@babel/core@7.28.5)
       '@babel/traverse': 7.28.5
       '@babel/types': 7.28.5
-      '@graphql-tools/utils': 10.9.1(graphql@16.11.0)
+      '@graphql-tools/utils': 10.10.0(graphql@16.11.0)
       graphql: 16.11.0
       tslib: 2.8.1
     transitivePeerDependencies:
@@ -13618,7 +13601,7 @@ snapshots:
 
   '@graphql-tools/import@7.1.2(graphql@16.11.0)':
     dependencies:
-      '@graphql-tools/utils': 10.9.1(graphql@16.11.0)
+      '@graphql-tools/utils': 10.10.0(graphql@16.11.0)
       '@theguild/federation-composition': 0.20.2(graphql@16.11.0)
       graphql: 16.11.0
       resolve-from: 5.0.0
@@ -13636,7 +13619,7 @@ snapshots:
 
   '@graphql-tools/json-file-loader@8.0.20(graphql@16.11.0)':
     dependencies:
-      '@graphql-tools/utils': 10.9.1(graphql@16.11.0)
+      '@graphql-tools/utils': 10.10.0(graphql@16.11.0)
       globby: 11.1.0
       graphql: 16.11.0
       tslib: 2.8.1
@@ -13652,8 +13635,8 @@ snapshots:
 
   '@graphql-tools/load@8.1.2(graphql@16.11.0)':
     dependencies:
-      '@graphql-tools/schema': 10.0.25(graphql@16.11.0)
-      '@graphql-tools/utils': 10.9.1(graphql@16.11.0)
+      '@graphql-tools/schema': 10.0.26(graphql@16.11.0)
+      '@graphql-tools/utils': 10.10.0(graphql@16.11.0)
       graphql: 16.11.0
       p-limit: 3.1.0
       tslib: 2.8.1
@@ -13661,12 +13644,6 @@ snapshots:
   '@graphql-tools/merge@8.4.2(graphql@16.11.0)':
     dependencies:
       '@graphql-tools/utils': 9.2.1(graphql@16.11.0)
-      graphql: 16.11.0
-      tslib: 2.8.1
-
-  '@graphql-tools/merge@9.1.1(graphql@16.11.0)':
-    dependencies:
-      '@graphql-tools/utils': 10.9.1(graphql@16.11.0)
       graphql: 16.11.0
       tslib: 2.8.1
 
@@ -13684,7 +13661,7 @@ snapshots:
   '@graphql-tools/prisma-loader@8.0.17(@types/node@24.10.0)(bufferutil@4.0.9)(crossws@0.3.5)(encoding@0.1.13)(graphql@16.11.0)(utf-8-validate@5.0.10)':
     dependencies:
       '@graphql-tools/url-loader': 8.0.33(@types/node@24.10.0)(bufferutil@4.0.9)(crossws@0.3.5)(graphql@16.11.0)(utf-8-validate@5.0.10)
-      '@graphql-tools/utils': 10.9.1(graphql@16.11.0)
+      '@graphql-tools/utils': 10.10.0(graphql@16.11.0)
       '@types/js-yaml': 4.0.9
       '@whatwg-node/fetch': 0.10.11
       chalk: 4.1.2
@@ -13713,18 +13690,11 @@ snapshots:
   '@graphql-tools/relay-operation-optimizer@7.0.21(encoding@0.1.13)(graphql@16.11.0)':
     dependencies:
       '@ardatan/relay-compiler': 12.0.3(encoding@0.1.13)(graphql@16.11.0)
-      '@graphql-tools/utils': 10.9.1(graphql@16.11.0)
+      '@graphql-tools/utils': 10.10.0(graphql@16.11.0)
       graphql: 16.11.0
       tslib: 2.8.1
     transitivePeerDependencies:
       - encoding
-
-  '@graphql-tools/schema@10.0.25(graphql@16.11.0)':
-    dependencies:
-      '@graphql-tools/merge': 9.1.1(graphql@16.11.0)
-      '@graphql-tools/utils': 10.9.1(graphql@16.11.0)
-      graphql: 16.11.0
-      tslib: 2.8.1
 
   '@graphql-tools/schema@10.0.26(graphql@16.11.0)':
     dependencies:
@@ -13790,7 +13760,7 @@ snapshots:
       '@graphql-tools/executor-graphql-ws': 2.0.7(bufferutil@4.0.9)(crossws@0.3.5)(graphql@16.11.0)(utf-8-validate@5.0.10)
       '@graphql-tools/executor-http': 1.3.3(@types/node@24.10.0)(graphql@16.11.0)
       '@graphql-tools/executor-legacy-ws': 1.1.19(bufferutil@4.0.9)(graphql@16.11.0)(utf-8-validate@5.0.10)
-      '@graphql-tools/utils': 10.9.1(graphql@16.11.0)
+      '@graphql-tools/utils': 10.10.0(graphql@16.11.0)
       '@graphql-tools/wrap': 10.1.4(graphql@16.11.0)
       '@types/ws': 8.18.1
       '@whatwg-node/fetch': 0.10.11
@@ -13817,15 +13787,6 @@ snapshots:
       graphql: 16.11.0
       tslib: 2.8.1
 
-  '@graphql-tools/utils@10.9.1(graphql@16.11.0)':
-    dependencies:
-      '@graphql-typed-document-node/core': 3.2.0(graphql@16.11.0)
-      '@whatwg-node/promise-helpers': 1.3.2
-      cross-inspect: 1.0.1
-      dset: 3.1.4
-      graphql: 16.11.0
-      tslib: 2.8.1
-
   '@graphql-tools/utils@9.2.1(graphql@16.11.0)':
     dependencies:
       '@graphql-typed-document-node/core': 3.2.0(graphql@16.11.0)
@@ -13835,8 +13796,8 @@ snapshots:
   '@graphql-tools/wrap@10.1.4(graphql@16.11.0)':
     dependencies:
       '@graphql-tools/delegate': 10.2.23(graphql@16.11.0)
-      '@graphql-tools/schema': 10.0.25(graphql@16.11.0)
-      '@graphql-tools/utils': 10.9.1(graphql@16.11.0)
+      '@graphql-tools/schema': 10.0.26(graphql@16.11.0)
+      '@graphql-tools/utils': 10.10.0(graphql@16.11.0)
       '@whatwg-node/promise-helpers': 1.3.2
       graphql: 16.11.0
       tslib: 2.8.1
@@ -15796,7 +15757,7 @@ snapshots:
     dependencies:
       '@powerhousedao/analytics-engine-core': 0.5.0
       '@types/luxon': 3.7.1
-      '@types/node': 22.18.12
+      '@types/node': 22.19.0
       '@types/pg': 8.15.6
       date-fns: 3.6.0
       knex: 3.1.0(pg@8.16.3)(sqlite3@5.1.7)
@@ -15828,7 +15789,7 @@ snapshots:
       - supports-color
       - tedious
 
-  '@powerhousedao/builder-tools@5.0.1(76824445cb993e4a72f62bc2d4ce9093)':
+  '@powerhousedao/builder-tools@5.0.1-staging.9(76824445cb993e4a72f62bc2d4ce9093)':
     dependencies:
       '@codemirror/autocomplete': 6.18.6
       '@codemirror/commands': 6.8.1
@@ -15840,13 +15801,13 @@ snapshots:
       '@codemirror/state': 6.5.2
       '@codemirror/theme-one-dark': 6.1.2
       '@codemirror/view': 6.36.7
-      '@graphql-tools/schema': 10.0.25(graphql@16.11.0)
-      '@graphql-tools/utils': 10.9.1(graphql@16.11.0)
+      '@graphql-tools/schema': 10.0.26(graphql@16.11.0)
+      '@graphql-tools/utils': 10.10.0(graphql@16.11.0)
       '@hookform/resolvers': 5.2.2(react-hook-form@7.65.0(react@19.2.0))
-      '@powerhousedao/config': 5.0.1(@types/node@24.10.0)
-      '@powerhousedao/design-system': 5.0.1(@tanstack/query-core@5.90.5)(@types/express@4.17.25)(@types/react-dom@19.2.2(@types/react@19.2.2))(@types/react@19.2.2)(bufferutil@4.0.9)(encoding@0.1.13)(react-dom@19.2.0(react@19.2.0))(react-native@0.82.1(@babel/core@7.28.5)(@types/react@19.2.2)(bufferutil@4.0.9)(react@19.2.0)(utf-8-validate@5.0.10))(react@19.2.0)(typescript@5.9.3)(utf-8-validate@5.0.10)
+      '@powerhousedao/config': 5.0.1-staging.9(@types/node@24.10.0)
+      '@powerhousedao/design-system': 5.0.1-staging.9(@tanstack/query-core@5.90.5)(@types/express@4.17.25)(@types/react-dom@19.2.2(@types/react@19.2.2))(@types/react@19.2.2)(bufferutil@4.0.9)(encoding@0.1.13)(react-dom@19.2.0(react@19.2.0))(react-native@0.82.1(@babel/core@7.28.5)(@types/react@19.2.2)(bufferutil@4.0.9)(react@19.2.0)(utf-8-validate@5.0.10))(react@19.2.0)(typescript@5.9.3)(utf-8-validate@5.0.10)
       '@powerhousedao/document-engineering': 1.39.0(@types/express@4.17.25)(@types/react-dom@19.2.2(@types/react@19.2.2))(@types/react@19.2.2)(bufferutil@4.0.9)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)(typescript@5.9.3)(utf-8-validate@5.0.10)
-      '@powerhousedao/reactor-browser': 5.0.1(@powerhousedao/analytics-engine-knex@0.6.0(@powerhousedao/analytics-engine-core@0.5.0)(sqlite3@5.1.7))(@types/node@24.10.0)(bufferutil@4.0.9)(encoding@0.1.13)(pg@8.16.3)(react-dom@19.2.0(react@19.2.0))(react-native@0.82.1(@babel/core@7.28.5)(@types/react@19.2.2)(bufferutil@4.0.9)(react@19.2.0)(utf-8-validate@5.0.10))(react@19.2.0)(sqlite3@5.1.7)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@3.25.76)
+      '@powerhousedao/reactor-browser': 5.0.1-staging.9(@powerhousedao/analytics-engine-knex@0.6.0(@powerhousedao/analytics-engine-core@0.5.0)(sqlite3@5.1.7))(@types/node@24.10.0)(bufferutil@4.0.9)(encoding@0.1.13)(pg@8.16.3)(react-dom@19.2.0(react@19.2.0))(react-native@0.82.1(@babel/core@7.28.5)(@types/react@19.2.2)(bufferutil@4.0.9)(react@19.2.0)(utf-8-validate@5.0.10))(react@19.2.0)(sqlite3@5.1.7)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@3.25.76)
       '@prettier/sync': 0.5.5(prettier@3.6.2)
       '@radix-ui/react-checkbox': 1.3.3(@types/react-dom@19.2.2(@types/react@19.2.2))(@types/react@19.2.2)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
       '@radix-ui/react-icons': 1.3.2(react@19.2.0)
@@ -15870,7 +15831,7 @@ snapshots:
       constrained-editor-plugin: 1.4.0
       copy-anything: 4.0.5
       date-fns: 3.6.0
-      document-model: 5.0.1
+      document-model: 5.0.1-staging.9
       dspot-powerhouse-components: 1.1.0(@emotion/react@11.14.0(@types/react@19.2.2)(react@19.2.0))(@emotion/styled@11.14.1(@emotion/react@11.14.0(@types/react@19.2.2)(react@19.2.0))(@types/react@19.2.2)(react@19.2.0))(@mui/material@5.18.0(@emotion/react@11.14.0(@types/react@19.2.2)(react@19.2.0))(@emotion/styled@11.14.1(@emotion/react@11.14.0(@types/react@19.2.2)(react@19.2.0))(@types/react@19.2.2)(react@19.2.0))(@types/react@19.2.2)(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(document-model-libs@1.130.1(@codemirror/language@6.11.0)(@codemirror/state@6.5.2)(@codemirror/view@6.36.7)(@types/react-dom@19.2.2(@types/react@19.2.2))(@types/react@19.2.2)(graphql@16.11.0)(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
       es-toolkit: 1.41.0
       esbuild: 0.25.11
@@ -15956,7 +15917,7 @@ snapshots:
       - utf-8-validate
       - vite
 
-  '@powerhousedao/builder-tools@5.0.1(97d40ab2b1b1927c93531316b229314c)':
+  '@powerhousedao/builder-tools@5.0.1-staging.9(97d40ab2b1b1927c93531316b229314c)':
     dependencies:
       '@codemirror/autocomplete': 6.18.6
       '@codemirror/commands': 6.8.1
@@ -15968,13 +15929,13 @@ snapshots:
       '@codemirror/state': 6.5.2
       '@codemirror/theme-one-dark': 6.1.2
       '@codemirror/view': 6.36.7
-      '@graphql-tools/schema': 10.0.25(graphql@16.11.0)
-      '@graphql-tools/utils': 10.9.1(graphql@16.11.0)
+      '@graphql-tools/schema': 10.0.26(graphql@16.11.0)
+      '@graphql-tools/utils': 10.10.0(graphql@16.11.0)
       '@hookform/resolvers': 5.2.2(react-hook-form@7.65.0(react@19.2.0))
-      '@powerhousedao/config': 5.0.1(@types/node@22.18.12)
-      '@powerhousedao/design-system': 5.0.1(@tanstack/query-core@5.90.5)(@types/express@4.17.25)(@types/react-dom@19.2.2(@types/react@19.2.2))(@types/react@19.2.2)(bufferutil@4.0.9)(encoding@0.1.13)(react-dom@19.2.0(react@19.2.0))(react-native@0.82.1(@babel/core@7.28.5)(@types/react@19.2.2)(bufferutil@4.0.9)(react@19.2.0)(utf-8-validate@5.0.10))(react@19.2.0)(typescript@5.9.3)(utf-8-validate@5.0.10)
+      '@powerhousedao/config': 5.0.1-staging.9(@types/node@22.18.12)
+      '@powerhousedao/design-system': 5.0.1-staging.9(@tanstack/query-core@5.90.5)(@types/express@4.17.25)(@types/react-dom@19.2.2(@types/react@19.2.2))(@types/react@19.2.2)(bufferutil@4.0.9)(encoding@0.1.13)(react-dom@19.2.0(react@19.2.0))(react-native@0.82.1(@babel/core@7.28.5)(@types/react@19.2.2)(bufferutil@4.0.9)(react@19.2.0)(utf-8-validate@5.0.10))(react@19.2.0)(typescript@5.9.3)(utf-8-validate@5.0.10)
       '@powerhousedao/document-engineering': 1.39.0(@types/express@4.17.25)(@types/react-dom@19.2.2(@types/react@19.2.2))(@types/react@19.2.2)(bufferutil@4.0.9)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)(typescript@5.9.3)(utf-8-validate@5.0.10)
-      '@powerhousedao/reactor-browser': 5.0.1(@powerhousedao/analytics-engine-knex@0.6.0(@powerhousedao/analytics-engine-core@0.5.0)(sqlite3@5.1.7))(@types/node@22.18.12)(bufferutil@4.0.9)(encoding@0.1.13)(pg@8.16.3)(react-dom@19.2.0(react@19.2.0))(react-native@0.82.1(@babel/core@7.28.5)(@types/react@19.2.2)(bufferutil@4.0.9)(react@19.2.0)(utf-8-validate@5.0.10))(react@19.2.0)(sqlite3@5.1.7)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@3.25.76)
+      '@powerhousedao/reactor-browser': 5.0.1-staging.9(@powerhousedao/analytics-engine-knex@0.6.0(@powerhousedao/analytics-engine-core@0.5.0)(sqlite3@5.1.7))(@types/node@22.18.12)(bufferutil@4.0.9)(encoding@0.1.13)(pg@8.16.3)(react-dom@19.2.0(react@19.2.0))(react-native@0.82.1(@babel/core@7.28.5)(@types/react@19.2.2)(bufferutil@4.0.9)(react@19.2.0)(utf-8-validate@5.0.10))(react@19.2.0)(sqlite3@5.1.7)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@3.25.76)
       '@prettier/sync': 0.5.5(prettier@3.6.2)
       '@radix-ui/react-checkbox': 1.3.3(@types/react-dom@19.2.2(@types/react@19.2.2))(@types/react@19.2.2)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
       '@radix-ui/react-icons': 1.3.2(react@19.2.0)
@@ -15998,7 +15959,7 @@ snapshots:
       constrained-editor-plugin: 1.4.0
       copy-anything: 4.0.5
       date-fns: 3.6.0
-      document-model: 5.0.1
+      document-model: 5.0.1-staging.9
       dspot-powerhouse-components: 1.1.0(@emotion/react@11.14.0(@types/react@19.2.2)(react@19.2.0))(@emotion/styled@11.14.1(@emotion/react@11.14.0(@types/react@19.2.2)(react@19.2.0))(@types/react@19.2.2)(react@19.2.0))(@mui/material@5.18.0(@emotion/react@11.14.0(@types/react@19.2.2)(react@19.2.0))(@emotion/styled@11.14.1(@emotion/react@11.14.0(@types/react@19.2.2)(react@19.2.0))(@types/react@19.2.2)(react@19.2.0))(@types/react@19.2.2)(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(document-model-libs@1.130.1(@codemirror/language@6.11.0)(@codemirror/state@6.5.2)(@codemirror/view@6.36.7)(@types/react-dom@19.2.2(@types/react@19.2.2))(@types/react@19.2.2)(graphql@16.11.0)(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
       es-toolkit: 1.41.0
       esbuild: 0.25.11
@@ -16084,22 +16045,22 @@ snapshots:
       - utf-8-validate
       - vite
 
-  '@powerhousedao/codegen@5.0.1(1961abfcd6f9d8f30562ac7fb2e327cc)':
+  '@powerhousedao/codegen@5.0.1-staging.9(1961abfcd6f9d8f30562ac7fb2e327cc)':
     dependencies:
       '@acaldas/graphql-codegen-typescript-validation-schema': 0.12.4(encoding@0.1.13)(graphql@16.11.0)
       '@anatine/zod-mock': 3.14.0(@faker-js/faker@8.4.1)(zod@3.25.76)
       '@faker-js/faker': 8.4.1
       '@graphql-codegen/cli': 5.0.7(@parcel/watcher@2.5.1)(@types/node@24.10.0)(bufferutil@4.0.9)(crossws@0.3.5)(encoding@0.1.13)(enquirer@2.4.1)(graphql@16.11.0)(typescript@5.9.3)(utf-8-validate@5.0.10)
       '@graphql-codegen/typescript': 4.1.6(encoding@0.1.13)(graphql@16.11.0)
-      '@powerhousedao/common': 5.0.1(f9204e131cb8690020d5dea928829e18)
-      '@powerhousedao/config': 5.0.1(@types/node@24.10.0)
-      '@powerhousedao/design-system': 5.0.1(@tanstack/query-core@5.90.5)(@types/express@4.17.25)(@types/react-dom@19.2.2(@types/react@19.2.2))(@types/react@19.2.2)(bufferutil@4.0.9)(encoding@0.1.13)(react-dom@19.2.0(react@19.2.0))(react-native@0.82.1(@babel/core@7.28.5)(@types/react@19.2.2)(bufferutil@4.0.9)(react@19.2.0)(utf-8-validate@5.0.10))(react@19.2.0)(typescript@5.9.3)(utf-8-validate@5.0.10)
+      '@powerhousedao/common': 5.0.1-staging.9(f9204e131cb8690020d5dea928829e18)
+      '@powerhousedao/config': 5.0.1-staging.9(@types/node@24.10.0)
+      '@powerhousedao/design-system': 5.0.1-staging.9(@tanstack/query-core@5.90.5)(@types/express@4.17.25)(@types/react-dom@19.2.2(@types/react@19.2.2))(@types/react@19.2.2)(bufferutil@4.0.9)(encoding@0.1.13)(react-dom@19.2.0(react@19.2.0))(react-native@0.82.1(@babel/core@7.28.5)(@types/react@19.2.2)(bufferutil@4.0.9)(react@19.2.0)(utf-8-validate@5.0.10))(react@19.2.0)(typescript@5.9.3)(utf-8-validate@5.0.10)
       '@powerhousedao/document-engineering': 1.39.0(@types/express@4.17.25)(@types/react-dom@19.2.2(@types/react@19.2.2))(@types/react@19.2.2)(bufferutil@4.0.9)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)(typescript@5.9.3)(utf-8-validate@5.0.10)
-      '@powerhousedao/reactor-browser': 5.0.1(@powerhousedao/analytics-engine-knex@0.6.0(@powerhousedao/analytics-engine-core@0.5.0)(sqlite3@5.1.7))(@types/node@24.10.0)(bufferutil@4.0.9)(encoding@0.1.13)(pg@8.16.3)(react-dom@19.2.0(react@19.2.0))(react-native@0.82.1(@babel/core@7.28.5)(@types/react@19.2.2)(bufferutil@4.0.9)(react@19.2.0)(utf-8-validate@5.0.10))(react@19.2.0)(sqlite3@5.1.7)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@3.25.76)
+      '@powerhousedao/reactor-browser': 5.0.1-staging.9(@powerhousedao/analytics-engine-knex@0.6.0(@powerhousedao/analytics-engine-core@0.5.0)(sqlite3@5.1.7))(@types/node@24.10.0)(bufferutil@4.0.9)(encoding@0.1.13)(pg@8.16.3)(react-dom@19.2.0(react@19.2.0))(react-native@0.82.1(@babel/core@7.28.5)(@types/react@19.2.2)(bufferutil@4.0.9)(react@19.2.0)(utf-8-validate@5.0.10))(react@19.2.0)(sqlite3@5.1.7)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@3.25.76)
       '@types/node': 24.10.0
       arg: 5.0.2
       change-case: 4.1.2
-      document-model: 5.0.1
+      document-model: 5.0.1-staging.9
       enquirer: 2.4.1
       execa: 8.0.1
       graphql: 16.11.0
@@ -16183,15 +16144,15 @@ snapshots:
       - vite
       - zod
 
-  '@powerhousedao/common@5.0.1(962d7119ff8acbcd5dc8cbe3d7b2b4ea)':
+  '@powerhousedao/common@5.0.1-staging.9(962d7119ff8acbcd5dc8cbe3d7b2b4ea)':
     dependencies:
       '@powerhousedao/analytics-engine-core': 0.5.0
-      '@powerhousedao/builder-tools': 5.0.1(97d40ab2b1b1927c93531316b229314c)
-      '@powerhousedao/design-system': 5.0.1(@tanstack/query-core@5.90.5)(@types/express@4.17.25)(@types/react-dom@19.2.2(@types/react@19.2.2))(@types/react@19.2.2)(bufferutil@4.0.9)(encoding@0.1.13)(react-dom@19.2.0(react@19.2.0))(react-native@0.82.1(@babel/core@7.28.5)(@types/react@19.2.2)(bufferutil@4.0.9)(react@19.2.0)(utf-8-validate@5.0.10))(react@19.2.0)(typescript@5.9.3)(utf-8-validate@5.0.10)
+      '@powerhousedao/builder-tools': 5.0.1-staging.9(97d40ab2b1b1927c93531316b229314c)
+      '@powerhousedao/design-system': 5.0.1-staging.9(@tanstack/query-core@5.90.5)(@types/express@4.17.25)(@types/react-dom@19.2.2(@types/react@19.2.2))(@types/react@19.2.2)(bufferutil@4.0.9)(encoding@0.1.13)(react-dom@19.2.0(react@19.2.0))(react-native@0.82.1(@babel/core@7.28.5)(@types/react@19.2.2)(bufferutil@4.0.9)(react@19.2.0)(utf-8-validate@5.0.10))(react@19.2.0)(typescript@5.9.3)(utf-8-validate@5.0.10)
       '@tanstack/react-virtual': 3.13.12(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
       '@types/luxon': 3.7.1
-      document-drive: 5.0.1(@types/node@22.18.12)(bufferutil@4.0.9)(encoding@0.1.13)(pg@8.16.3)(react-native@0.82.1(@babel/core@7.28.5)(@types/react@19.2.2)(bufferutil@4.0.9)(react@19.2.0)(utf-8-validate@5.0.10))(utf-8-validate@5.0.10)
-      document-model: 5.0.1
+      document-drive: 5.0.1-staging.9(@types/node@22.18.12)(bufferutil@4.0.9)(encoding@0.1.13)(pg@8.16.3)(react-native@0.82.1(@babel/core@7.28.5)(@types/react@19.2.2)(bufferutil@4.0.9)(react@19.2.0)(utf-8-validate@5.0.10))(utf-8-validate@5.0.10)
+      document-model: 5.0.1-staging.9
       luxon: 3.7.2
       react: 19.2.0
       react-dom: 19.2.0(react@19.2.0)
@@ -16260,15 +16221,15 @@ snapshots:
       - utf-8-validate
       - vite
 
-  '@powerhousedao/common@5.0.1(f9204e131cb8690020d5dea928829e18)':
+  '@powerhousedao/common@5.0.1-staging.9(f9204e131cb8690020d5dea928829e18)':
     dependencies:
       '@powerhousedao/analytics-engine-core': 0.5.0
-      '@powerhousedao/builder-tools': 5.0.1(76824445cb993e4a72f62bc2d4ce9093)
-      '@powerhousedao/design-system': 5.0.1(@tanstack/query-core@5.90.5)(@types/express@4.17.25)(@types/react-dom@19.2.2(@types/react@19.2.2))(@types/react@19.2.2)(bufferutil@4.0.9)(encoding@0.1.13)(react-dom@19.2.0(react@19.2.0))(react-native@0.82.1(@babel/core@7.28.5)(@types/react@19.2.2)(bufferutil@4.0.9)(react@19.2.0)(utf-8-validate@5.0.10))(react@19.2.0)(typescript@5.9.3)(utf-8-validate@5.0.10)
+      '@powerhousedao/builder-tools': 5.0.1-staging.9(76824445cb993e4a72f62bc2d4ce9093)
+      '@powerhousedao/design-system': 5.0.1-staging.9(@tanstack/query-core@5.90.5)(@types/express@4.17.25)(@types/react-dom@19.2.2(@types/react@19.2.2))(@types/react@19.2.2)(bufferutil@4.0.9)(encoding@0.1.13)(react-dom@19.2.0(react@19.2.0))(react-native@0.82.1(@babel/core@7.28.5)(@types/react@19.2.2)(bufferutil@4.0.9)(react@19.2.0)(utf-8-validate@5.0.10))(react@19.2.0)(typescript@5.9.3)(utf-8-validate@5.0.10)
       '@tanstack/react-virtual': 3.13.12(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
       '@types/luxon': 3.7.1
-      document-drive: 5.0.1(@types/node@24.10.0)(bufferutil@4.0.9)(encoding@0.1.13)(pg@8.16.3)(react-native@0.82.1(@babel/core@7.28.5)(@types/react@19.2.2)(bufferutil@4.0.9)(react@19.2.0)(utf-8-validate@5.0.10))(utf-8-validate@5.0.10)
-      document-model: 5.0.1
+      document-drive: 5.0.1-staging.9(@types/node@24.10.0)(bufferutil@4.0.9)(encoding@0.1.13)(pg@8.16.3)(react-native@0.82.1(@babel/core@7.28.5)(@types/react@19.2.2)(bufferutil@4.0.9)(react@19.2.0)(utf-8-validate@5.0.10))(utf-8-validate@5.0.10)
+      document-model: 5.0.1-staging.9
       luxon: 3.7.2
       react: 19.2.0
       react-dom: 19.2.0(react@19.2.0)
@@ -16337,30 +16298,30 @@ snapshots:
       - utf-8-validate
       - vite
 
-  '@powerhousedao/config@5.0.1(@types/node@22.18.12)':
+  '@powerhousedao/config@5.0.1-staging.9(@types/node@22.18.12)':
     dependencies:
       '@microsoft/api-extractor': 7.53.3(@types/node@22.18.12)
     transitivePeerDependencies:
       - '@types/node'
 
-  '@powerhousedao/config@5.0.1(@types/node@24.10.0)':
+  '@powerhousedao/config@5.0.1-staging.9(@types/node@24.10.0)':
     dependencies:
       '@microsoft/api-extractor': 7.53.3(@types/node@24.10.0)
     transitivePeerDependencies:
       - '@types/node'
 
-  '@powerhousedao/connect@5.0.1(b8d83d477457af3b571b057216faa1ae)':
+  '@powerhousedao/connect@5.0.1-staging.9(b8d83d477457af3b571b057216faa1ae)':
     dependencies:
       '@electric-sql/pglite': 0.2.17
       '@openfeature/core': 1.9.1
       '@openfeature/web-sdk': 1.7.1(@openfeature/core@1.9.1)
       '@powerhousedao/analytics-engine-core': 0.5.0
-      '@powerhousedao/builder-tools': 5.0.1(76824445cb993e4a72f62bc2d4ce9093)
-      '@powerhousedao/common': 5.0.1(f9204e131cb8690020d5dea928829e18)
-      '@powerhousedao/config': 5.0.1(@types/node@24.10.0)
-      '@powerhousedao/design-system': 5.0.1(@tanstack/query-core@5.90.5)(@types/express@4.17.25)(@types/react-dom@19.2.2(@types/react@19.2.2))(@types/react@19.2.2)(bufferutil@4.0.9)(encoding@0.1.13)(react-dom@19.2.0(react@19.2.0))(react-native@0.82.1(@babel/core@7.28.5)(@types/react@19.2.2)(bufferutil@4.0.9)(react@19.2.0)(utf-8-validate@5.0.10))(react@19.2.0)(typescript@5.9.3)(utf-8-validate@5.0.10)
-      '@powerhousedao/reactor-browser': 5.0.1(@powerhousedao/analytics-engine-knex@0.6.0(@powerhousedao/analytics-engine-core@0.5.0)(sqlite3@5.1.7))(@types/node@24.10.0)(bufferutil@4.0.9)(encoding@0.1.13)(pg@8.16.3)(react-dom@19.2.0(react@19.2.0))(react-native@0.82.1(@babel/core@7.28.5)(@types/react@19.2.2)(bufferutil@4.0.9)(react@19.2.0)(utf-8-validate@5.0.10))(react@19.2.0)(sqlite3@5.1.7)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@3.25.76)
-      '@renown/sdk': 5.0.1(bufferutil@4.0.9)(document-model@5.0.1)(react@19.2.0)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@3.25.76)
+      '@powerhousedao/builder-tools': 5.0.1-staging.9(76824445cb993e4a72f62bc2d4ce9093)
+      '@powerhousedao/common': 5.0.1-staging.9(f9204e131cb8690020d5dea928829e18)
+      '@powerhousedao/config': 5.0.1-staging.9(@types/node@24.10.0)
+      '@powerhousedao/design-system': 5.0.1-staging.9(@tanstack/query-core@5.90.5)(@types/express@4.17.25)(@types/react-dom@19.2.2(@types/react@19.2.2))(@types/react@19.2.2)(bufferutil@4.0.9)(encoding@0.1.13)(react-dom@19.2.0(react@19.2.0))(react-native@0.82.1(@babel/core@7.28.5)(@types/react@19.2.2)(bufferutil@4.0.9)(react@19.2.0)(utf-8-validate@5.0.10))(react@19.2.0)(typescript@5.9.3)(utf-8-validate@5.0.10)
+      '@powerhousedao/reactor-browser': 5.0.1-staging.9(@powerhousedao/analytics-engine-knex@0.6.0(@powerhousedao/analytics-engine-core@0.5.0)(sqlite3@5.1.7))(@types/node@24.10.0)(bufferutil@4.0.9)(encoding@0.1.13)(pg@8.16.3)(react-dom@19.2.0(react@19.2.0))(react-native@0.82.1(@babel/core@7.28.5)(@types/react@19.2.2)(bufferutil@4.0.9)(react@19.2.0)(utf-8-validate@5.0.10))(react@19.2.0)(sqlite3@5.1.7)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@3.25.76)
+      '@renown/sdk': 5.0.1-staging.9(bufferutil@4.0.9)(document-model@5.0.1-staging.9)(react@19.2.0)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@3.25.76)
       '@sentry/browser': 10.22.0
       '@sentry/react': 10.22.0(react@19.2.0)
       '@sentry/vite-plugin': 4.6.0(encoding@0.1.13)
@@ -16370,8 +16331,8 @@ snapshots:
       '@types/react-dom': 19.2.2(@types/react@19.2.2)
       '@types/wicg-file-system-access': 2023.10.7
       '@vitejs/plugin-react': 5.1.0(vite@7.1.12(@types/node@22.18.12)(jiti@2.6.1)(lightningcss@1.30.2)(terser@5.44.0)(tsx@4.20.6)(yaml@2.8.1))
-      document-drive: 5.0.1(@types/node@24.10.0)(bufferutil@4.0.9)(encoding@0.1.13)(pg@8.16.3)(react-native@0.82.1(@babel/core@7.28.5)(@types/react@19.2.2)(bufferutil@4.0.9)(react@19.2.0)(utf-8-validate@5.0.10))(utf-8-validate@5.0.10)
-      document-model: 5.0.1
+      document-drive: 5.0.1-staging.9(@types/node@24.10.0)(bufferutil@4.0.9)(encoding@0.1.13)(pg@8.16.3)(react-native@0.82.1(@babel/core@7.28.5)(@types/react@19.2.2)(bufferutil@4.0.9)(react@19.2.0)(utf-8-validate@5.0.10))(utf-8-validate@5.0.10)
+      document-model: 5.0.1-staging.9
       fast-deep-equal: 3.1.3
       graphql: 16.11.0
       graphql-request: 7.3.1(graphql@16.11.0)
@@ -16458,7 +16419,7 @@ snapshots:
       - yaml
       - zod
 
-  '@powerhousedao/design-system@5.0.1(@tanstack/query-core@5.90.5)(@types/express@4.17.25)(@types/react-dom@19.2.2(@types/react@19.2.2))(@types/react@19.2.2)(bufferutil@4.0.9)(encoding@0.1.13)(react-dom@19.2.0(react@19.2.0))(react-native@0.82.1(@babel/core@7.28.5)(@types/react@19.2.2)(bufferutil@4.0.9)(react@19.2.0)(utf-8-validate@5.0.10))(react@19.2.0)(typescript@5.9.3)(utf-8-validate@5.0.10)':
+  '@powerhousedao/design-system@5.0.1-staging.9(@tanstack/query-core@5.90.5)(@types/express@4.17.25)(@types/react-dom@19.2.2(@types/react@19.2.2))(@types/react@19.2.2)(bufferutil@4.0.9)(encoding@0.1.13)(react-dom@19.2.0(react@19.2.0))(react-native@0.82.1(@babel/core@7.28.5)(@types/react@19.2.2)(bufferutil@4.0.9)(react@19.2.0)(utf-8-validate@5.0.10))(react@19.2.0)(typescript@5.9.3)(utf-8-validate@5.0.10)':
     dependencies:
       '@internationalized/date': 3.10.0
       '@powerhousedao/document-engineering': 1.39.0(@types/express@4.17.25)(@types/react-dom@19.2.2(@types/react@19.2.2))(@types/react@19.2.2)(bufferutil@4.0.9)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)(typescript@5.9.3)(utf-8-validate@5.0.10)
@@ -16482,7 +16443,7 @@ snapshots:
       date-fns: 4.1.0
       date-fns-tz: 3.2.0(date-fns@4.1.0)
       diff: 7.0.0
-      document-model: 5.0.1
+      document-model: 5.0.1-staging.9
       focus-trap-react: 11.0.4(@types/react-dom@19.2.2(@types/react@19.2.2))(@types/react@19.2.2)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
       mathjs: 13.2.3
       nanoid: 5.1.6
@@ -16598,17 +16559,17 @@ snapshots:
       - typescript
       - utf-8-validate
 
-  '@powerhousedao/ph-cli@5.0.1(c11f365d3acd42542c4698abd165f2fc)':
+  '@powerhousedao/ph-cli@5.0.1-staging.9(c11f365d3acd42542c4698abd165f2fc)':
     dependencies:
-      '@powerhousedao/builder-tools': 5.0.1(97d40ab2b1b1927c93531316b229314c)
-      '@powerhousedao/codegen': 5.0.1(1961abfcd6f9d8f30562ac7fb2e327cc)
-      '@powerhousedao/config': 5.0.1(@types/node@22.18.12)
-      '@powerhousedao/reactor-local': 5.0.1(5a393ae8aebd779c3a4733f504b7db45)
-      '@powerhousedao/switchboard': 5.0.1(02a882d2b0b7dfc37bb0d7fe6516ddc1)
+      '@powerhousedao/builder-tools': 5.0.1-staging.9(97d40ab2b1b1927c93531316b229314c)
+      '@powerhousedao/codegen': 5.0.1-staging.9(1961abfcd6f9d8f30562ac7fb2e327cc)
+      '@powerhousedao/config': 5.0.1-staging.9(@types/node@22.18.12)
+      '@powerhousedao/reactor-local': 5.0.1-staging.9(5a393ae8aebd779c3a4733f504b7db45)
+      '@powerhousedao/switchboard': 5.0.1-staging.9(02a882d2b0b7dfc37bb0d7fe6516ddc1)
       colorette: 2.0.20
       commander: 12.1.0
-      document-drive: 5.0.1(@types/node@22.18.12)(bufferutil@4.0.9)(encoding@0.1.13)(pg@8.16.3)(react-native@0.82.1(@babel/core@7.28.5)(@types/react@19.2.2)(bufferutil@4.0.9)(react@19.2.0)(utf-8-validate@5.0.10))(utf-8-validate@5.0.10)
-      document-model: 5.0.1
+      document-drive: 5.0.1-staging.9(@types/node@22.18.12)(bufferutil@4.0.9)(encoding@0.1.13)(pg@8.16.3)(react-native@0.82.1(@babel/core@7.28.5)(@types/react@19.2.2)(bufferutil@4.0.9)(react@19.2.0)(utf-8-validate@5.0.10))(utf-8-validate@5.0.10)
+      document-model: 5.0.1-staging.9
       pm2: 5.4.3(bufferutil@4.0.9)(utf-8-validate@5.0.10)
     transitivePeerDependencies:
       - '@aws-sdk/client-rds-data'
@@ -16715,7 +16676,7 @@ snapshots:
       - yaml
       - zod
 
-  '@powerhousedao/reactor-api@5.0.1(0e8721e6b01acafa1ae0b99db741998c)':
+  '@powerhousedao/reactor-api@5.0.1-staging.9(0e8721e6b01acafa1ae0b99db741998c)':
     dependencies:
       '@apollo/gateway': 2.11.3(encoding@0.1.13)(graphql@16.11.0)
       '@apollo/server': 5.1.0(graphql@16.11.0)
@@ -16727,17 +16688,17 @@ snapshots:
       '@powerhousedao/analytics-engine-core': 0.5.0
       '@powerhousedao/analytics-engine-graphql': 0.4.0(@powerhousedao/analytics-engine-core@0.5.0)
       '@powerhousedao/analytics-engine-pg': 0.6.0(@powerhousedao/analytics-engine-core@0.5.0)(@powerhousedao/analytics-engine-knex@0.6.0(@powerhousedao/analytics-engine-core@0.5.0)(sqlite3@5.1.7))(sqlite3@5.1.7)
-      '@powerhousedao/config': 5.0.1(@types/node@22.18.12)
+      '@powerhousedao/config': 5.0.1-staging.9(@types/node@22.18.12)
       '@powerhousedao/document-engineering': 1.39.0(@types/express@4.17.25)(@types/react-dom@19.2.2(@types/react@19.2.2))(@types/react@19.2.2)(bufferutil@4.0.9)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)(typescript@5.9.3)(utf-8-validate@5.0.10)
-      '@powerhousedao/reactor': 5.0.1(@types/node@22.18.12)(bufferutil@4.0.9)(encoding@0.1.13)(pg@8.16.3)(react-native@0.82.1(@babel/core@7.28.5)(@types/react@19.2.2)(bufferutil@4.0.9)(react@19.2.0)(utf-8-validate@5.0.10))(tarn@3.0.2)(utf-8-validate@5.0.10)
-      '@powerhousedao/reactor-mcp': 5.0.1(874300f8749926a14576b9c9f15cd62d)
-      '@renown/sdk': 5.0.1(bufferutil@4.0.9)(document-model@5.0.1)(react@19.2.0)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@3.25.76)
+      '@powerhousedao/reactor': 5.0.1-staging.9(@types/node@22.18.12)(bufferutil@4.0.9)(encoding@0.1.13)(pg@8.16.3)(react-native@0.82.1(@babel/core@7.28.5)(@types/react@19.2.2)(bufferutil@4.0.9)(react@19.2.0)(utf-8-validate@5.0.10))(tarn@3.0.2)(utf-8-validate@5.0.10)
+      '@powerhousedao/reactor-mcp': 5.0.1-staging.9(874300f8749926a14576b9c9f15cd62d)
+      '@renown/sdk': 5.0.1-staging.9(bufferutil@4.0.9)(document-model@5.0.1-staging.9)(react@19.2.0)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@3.25.76)
       body-parser: 1.20.3
       change-case: 5.4.4
       cors: 2.8.5
       devcert: 1.2.2
-      document-drive: 5.0.1(@types/node@22.18.12)(bufferutil@4.0.9)(encoding@0.1.13)(pg@8.16.3)(react-native@0.82.1(@babel/core@7.28.5)(@types/react@19.2.2)(bufferutil@4.0.9)(react@19.2.0)(utf-8-validate@5.0.10))(utf-8-validate@5.0.10)
-      document-model: 5.0.1
+      document-drive: 5.0.1-staging.9(@types/node@22.18.12)(bufferutil@4.0.9)(encoding@0.1.13)(pg@8.16.3)(react-native@0.82.1(@babel/core@7.28.5)(@types/react@19.2.2)(bufferutil@4.0.9)(react@19.2.0)(utf-8-validate@5.0.10))(utf-8-validate@5.0.10)
+      document-model: 5.0.1-staging.9
       dotenv: 16.6.1
       drizzle-kit: 0.25.0
       drizzle-orm: 0.34.1(@electric-sql/pglite@0.2.17)(@libsql/client@0.14.0(bufferutil@4.0.9)(utf-8-validate@5.0.10))(@opentelemetry/api@1.9.0)(@prisma/client@5.17.0(prisma@5.17.0))(@types/pg@8.15.6)(@types/react@19.2.2)(knex@3.1.0(pg@8.16.3)(sqlite3@5.1.7))(kysely@0.28.8)(pg@8.16.3)(prisma@5.17.0)(react@19.2.0)(sqlite3@5.1.7)
@@ -16857,21 +16818,21 @@ snapshots:
       - utf-8-validate
       - yaml
 
-  '@powerhousedao/reactor-browser@5.0.1(@powerhousedao/analytics-engine-knex@0.6.0(@powerhousedao/analytics-engine-core@0.5.0)(sqlite3@5.1.7))(@types/node@22.18.12)(bufferutil@4.0.9)(encoding@0.1.13)(pg@8.16.3)(react-dom@19.2.0(react@19.2.0))(react-native@0.82.1(@babel/core@7.28.5)(@types/react@19.2.2)(bufferutil@4.0.9)(react@19.2.0)(utf-8-validate@5.0.10))(react@19.2.0)(sqlite3@5.1.7)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@3.25.76)':
+  '@powerhousedao/reactor-browser@5.0.1-staging.9(@powerhousedao/analytics-engine-knex@0.6.0(@powerhousedao/analytics-engine-core@0.5.0)(sqlite3@5.1.7))(@types/node@22.18.12)(bufferutil@4.0.9)(encoding@0.1.13)(pg@8.16.3)(react-dom@19.2.0(react@19.2.0))(react-native@0.82.1(@babel/core@7.28.5)(@types/react@19.2.2)(bufferutil@4.0.9)(react@19.2.0)(utf-8-validate@5.0.10))(react@19.2.0)(sqlite3@5.1.7)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@3.25.76)':
     dependencies:
       '@electric-sql/pglite': 0.2.17
       '@electric-sql/pglite-react': 0.2.29(@electric-sql/pglite@0.2.17)(react@19.2.0)
       '@powerhousedao/analytics-engine-browser': 0.6.0(@powerhousedao/analytics-engine-core@0.5.0)(@powerhousedao/analytics-engine-knex@0.6.0(@powerhousedao/analytics-engine-core@0.5.0)(sqlite3@5.1.7))(pg@8.16.3)(sqlite3@5.1.7)
       '@powerhousedao/analytics-engine-core': 0.5.0
-      '@powerhousedao/config': 5.0.1(@types/node@22.18.12)
-      '@renown/sdk': 5.0.1(bufferutil@4.0.9)(document-model@5.0.1)(react@19.2.0)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@3.25.76)
+      '@powerhousedao/config': 5.0.1-staging.9(@types/node@22.18.12)
+      '@renown/sdk': 5.0.1-staging.9(bufferutil@4.0.9)(document-model@5.0.1-staging.9)(react@19.2.0)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@3.25.76)
       '@tanstack/react-query': 5.90.5(react@19.2.0)
       change-case: 5.4.4
       did-jwt: 8.0.18
       did-jwt-vc: 4.0.16
       did-key-creator: 1.2.0
-      document-drive: 5.0.1(@types/node@22.18.12)(bufferutil@4.0.9)(encoding@0.1.13)(pg@8.16.3)(react-native@0.82.1(@babel/core@7.28.5)(@types/react@19.2.2)(bufferutil@4.0.9)(react@19.2.0)(utf-8-validate@5.0.10))(utf-8-validate@5.0.10)
-      document-model: 5.0.1
+      document-drive: 5.0.1-staging.9(@types/node@22.18.12)(bufferutil@4.0.9)(encoding@0.1.13)(pg@8.16.3)(react-native@0.82.1(@babel/core@7.28.5)(@types/react@19.2.2)(bufferutil@4.0.9)(react@19.2.0)(utf-8-validate@5.0.10))(utf-8-validate@5.0.10)
+      document-model: 5.0.1-staging.9
       fast-deep-equal: 3.1.3
       kysely: 0.28.8
       kysely-pglite-dialect: 1.2.0(@electric-sql/pglite@0.2.17)(kysely@0.28.8)
@@ -16906,21 +16867,21 @@ snapshots:
       - utf-8-validate
       - zod
 
-  '@powerhousedao/reactor-browser@5.0.1(@powerhousedao/analytics-engine-knex@0.6.0(@powerhousedao/analytics-engine-core@0.5.0)(sqlite3@5.1.7))(@types/node@24.10.0)(bufferutil@4.0.9)(encoding@0.1.13)(pg@8.16.3)(react-dom@19.2.0(react@19.2.0))(react-native@0.82.1(@babel/core@7.28.5)(@types/react@19.2.2)(bufferutil@4.0.9)(react@19.2.0)(utf-8-validate@5.0.10))(react@19.2.0)(sqlite3@5.1.7)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@3.25.76)':
+  '@powerhousedao/reactor-browser@5.0.1-staging.9(@powerhousedao/analytics-engine-knex@0.6.0(@powerhousedao/analytics-engine-core@0.5.0)(sqlite3@5.1.7))(@types/node@24.10.0)(bufferutil@4.0.9)(encoding@0.1.13)(pg@8.16.3)(react-dom@19.2.0(react@19.2.0))(react-native@0.82.1(@babel/core@7.28.5)(@types/react@19.2.2)(bufferutil@4.0.9)(react@19.2.0)(utf-8-validate@5.0.10))(react@19.2.0)(sqlite3@5.1.7)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@3.25.76)':
     dependencies:
       '@electric-sql/pglite': 0.2.17
       '@electric-sql/pglite-react': 0.2.29(@electric-sql/pglite@0.2.17)(react@19.2.0)
       '@powerhousedao/analytics-engine-browser': 0.6.0(@powerhousedao/analytics-engine-core@0.5.0)(@powerhousedao/analytics-engine-knex@0.6.0(@powerhousedao/analytics-engine-core@0.5.0)(sqlite3@5.1.7))(pg@8.16.3)(sqlite3@5.1.7)
       '@powerhousedao/analytics-engine-core': 0.5.0
-      '@powerhousedao/config': 5.0.1(@types/node@24.10.0)
-      '@renown/sdk': 5.0.1(bufferutil@4.0.9)(document-model@5.0.1)(react@19.2.0)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@3.25.76)
+      '@powerhousedao/config': 5.0.1-staging.9(@types/node@24.10.0)
+      '@renown/sdk': 5.0.1-staging.9(bufferutil@4.0.9)(document-model@5.0.1-staging.9)(react@19.2.0)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@3.25.76)
       '@tanstack/react-query': 5.90.5(react@19.2.0)
       change-case: 5.4.4
       did-jwt: 8.0.18
       did-jwt-vc: 4.0.16
       did-key-creator: 1.2.0
-      document-drive: 5.0.1(@types/node@24.10.0)(bufferutil@4.0.9)(encoding@0.1.13)(pg@8.16.3)(react-native@0.82.1(@babel/core@7.28.5)(@types/react@19.2.2)(bufferutil@4.0.9)(react@19.2.0)(utf-8-validate@5.0.10))(utf-8-validate@5.0.10)
-      document-model: 5.0.1
+      document-drive: 5.0.1-staging.9(@types/node@24.10.0)(bufferutil@4.0.9)(encoding@0.1.13)(pg@8.16.3)(react-native@0.82.1(@babel/core@7.28.5)(@types/react@19.2.2)(bufferutil@4.0.9)(react@19.2.0)(utf-8-validate@5.0.10))(utf-8-validate@5.0.10)
+      document-model: 5.0.1-staging.9
       fast-deep-equal: 3.1.3
       kysely: 0.28.8
       kysely-pglite-dialect: 1.2.0(@electric-sql/pglite@0.2.17)(kysely@0.28.8)
@@ -16955,7 +16916,7 @@ snapshots:
       - utf-8-validate
       - zod
 
-  '@powerhousedao/reactor-local@5.0.1(5a393ae8aebd779c3a4733f504b7db45)':
+  '@powerhousedao/reactor-local@5.0.1-staging.9(5a393ae8aebd779c3a4733f504b7db45)':
     dependencies:
       '@apollo/subgraph': 2.11.3(graphql@16.11.0)
       '@electric-sql/pglite': 0.2.17
@@ -16963,13 +16924,13 @@ snapshots:
       '@openfeature/core': 1.9.1
       '@openfeature/env-var-provider': 0.3.1(@openfeature/server-sdk@1.20.0(@openfeature/core@1.9.1))
       '@openfeature/server-sdk': 1.20.0(@openfeature/core@1.9.1)
-      '@powerhousedao/common': 5.0.1(962d7119ff8acbcd5dc8cbe3d7b2b4ea)
-      '@powerhousedao/reactor': 5.0.1(@types/node@22.18.12)(bufferutil@4.0.9)(encoding@0.1.13)(pg@8.16.3)(react-native@0.82.1(@babel/core@7.28.5)(@types/react@19.2.2)(bufferutil@4.0.9)(react@19.2.0)(utf-8-validate@5.0.10))(tarn@3.0.2)(utf-8-validate@5.0.10)
-      '@powerhousedao/reactor-api': 5.0.1(0e8721e6b01acafa1ae0b99db741998c)
+      '@powerhousedao/common': 5.0.1-staging.9(962d7119ff8acbcd5dc8cbe3d7b2b4ea)
+      '@powerhousedao/reactor': 5.0.1-staging.9(@types/node@22.18.12)(bufferutil@4.0.9)(encoding@0.1.13)(pg@8.16.3)(react-native@0.82.1(@babel/core@7.28.5)(@types/react@19.2.2)(bufferutil@4.0.9)(react@19.2.0)(utf-8-validate@5.0.10))(tarn@3.0.2)(utf-8-validate@5.0.10)
+      '@powerhousedao/reactor-api': 5.0.1-staging.9(0e8721e6b01acafa1ae0b99db741998c)
       change-case: 5.4.4
       commander: 12.1.0
-      document-drive: 5.0.1(@types/node@22.18.12)(bufferutil@4.0.9)(encoding@0.1.13)(pg@8.16.3)(react-native@0.82.1(@babel/core@7.28.5)(@types/react@19.2.2)(bufferutil@4.0.9)(react@19.2.0)(utf-8-validate@5.0.10))(utf-8-validate@5.0.10)
-      document-model: 5.0.1
+      document-drive: 5.0.1-staging.9(@types/node@22.18.12)(bufferutil@4.0.9)(encoding@0.1.13)(pg@8.16.3)(react-native@0.82.1(@babel/core@7.28.5)(@types/react@19.2.2)(bufferutil@4.0.9)(react@19.2.0)(utf-8-validate@5.0.10))(utf-8-validate@5.0.10)
+      document-model: 5.0.1-staging.9
       dotenv: 16.6.1
       express: 4.21.2
       graphql: 16.11.0
@@ -17081,19 +17042,19 @@ snapshots:
       - vite
       - yaml
 
-  '@powerhousedao/reactor-mcp@5.0.1(874300f8749926a14576b9c9f15cd62d)':
+  '@powerhousedao/reactor-mcp@5.0.1-staging.9(874300f8749926a14576b9c9f15cd62d)':
     dependencies:
       '@ai-sdk/openai': 2.0.56(zod@3.25.76)
       '@modelcontextprotocol/sdk': 1.20.2
       '@openfeature/core': 1.9.1
       '@openfeature/env-var-provider': 0.3.1(@openfeature/server-sdk@1.20.0(@openfeature/core@1.9.1))
       '@openfeature/server-sdk': 1.20.0(@openfeature/core@1.9.1)
-      '@powerhousedao/codegen': 5.0.1(1961abfcd6f9d8f30562ac7fb2e327cc)
-      '@powerhousedao/config': 5.0.1(@types/node@22.18.12)
+      '@powerhousedao/codegen': 5.0.1-staging.9(1961abfcd6f9d8f30562ac7fb2e327cc)
+      '@powerhousedao/config': 5.0.1-staging.9(@types/node@22.18.12)
       ai: 5.0.81(zod@3.25.76)
       change-case: 5.4.4
-      document-drive: 5.0.1(@types/node@22.18.12)(bufferutil@4.0.9)(encoding@0.1.13)(pg@8.16.3)(react-native@0.82.1(@babel/core@7.28.5)(@types/react@19.2.2)(bufferutil@4.0.9)(react@19.2.0)(utf-8-validate@5.0.10))(utf-8-validate@5.0.10)
-      document-model: 5.0.1
+      document-drive: 5.0.1-staging.9(@types/node@22.18.12)(bufferutil@4.0.9)(encoding@0.1.13)(pg@8.16.3)(react-native@0.82.1(@babel/core@7.28.5)(@types/react@19.2.2)(bufferutil@4.0.9)(react@19.2.0)(utf-8-validate@5.0.10))(utf-8-validate@5.0.10)
+      document-model: 5.0.1-staging.9
       express: 4.21.2
       vite: 7.1.12(@types/node@22.18.12)(jiti@2.6.1)(lightningcss@1.30.2)(terser@5.44.0)(tsx@4.20.6)(yaml@2.8.1)
       zod: 3.25.76
@@ -17181,11 +17142,11 @@ snapshots:
       - utf-8-validate
       - yaml
 
-  '@powerhousedao/reactor@5.0.1(@types/node@22.18.12)(bufferutil@4.0.9)(encoding@0.1.13)(pg@8.16.3)(react-native@0.82.1(@babel/core@7.28.5)(@types/react@19.2.2)(bufferutil@4.0.9)(react@19.2.0)(utf-8-validate@5.0.10))(tarn@3.0.2)(utf-8-validate@5.0.10)':
+  '@powerhousedao/reactor@5.0.1-staging.9(@types/node@22.18.12)(bufferutil@4.0.9)(encoding@0.1.13)(pg@8.16.3)(react-native@0.82.1(@babel/core@7.28.5)(@types/react@19.2.2)(bufferutil@4.0.9)(react@19.2.0)(utf-8-validate@5.0.10))(tarn@3.0.2)(utf-8-validate@5.0.10)':
     dependencies:
       '@electric-sql/pglite': 0.2.17
-      document-drive: 5.0.1(@types/node@22.18.12)(bufferutil@4.0.9)(encoding@0.1.13)(pg@8.16.3)(react-native@0.82.1(@babel/core@7.28.5)(@types/react@19.2.2)(bufferutil@4.0.9)(react@19.2.0)(utf-8-validate@5.0.10))(utf-8-validate@5.0.10)
-      document-model: 5.0.1
+      document-drive: 5.0.1-staging.9(@types/node@22.18.12)(bufferutil@4.0.9)(encoding@0.1.13)(pg@8.16.3)(react-native@0.82.1(@babel/core@7.28.5)(@types/react@19.2.2)(bufferutil@4.0.9)(react@19.2.0)(utf-8-validate@5.0.10))(utf-8-validate@5.0.10)
+      document-model: 5.0.1-staging.9
       kysely: 0.28.8
       kysely-pglite: 0.6.1(@electric-sql/pglite@0.2.17)(kysely@0.28.8)(pg@8.16.3)(tarn@3.0.2)
       uuid: 11.1.0
@@ -17211,27 +17172,27 @@ snapshots:
       - tedious
       - utf-8-validate
 
-  '@powerhousedao/scalars@2.0.1(graphql@16.11.0)(zod@3.25.76)':
+  '@powerhousedao/scalars@1.33.1-staging.5(graphql@16.11.0)(zod@3.25.76)':
     dependencies:
       graphql: 16.11.0
       zod: 3.25.76
 
-  '@powerhousedao/switchboard@5.0.1(02a882d2b0b7dfc37bb0d7fe6516ddc1)':
+  '@powerhousedao/switchboard@5.0.1-staging.9(02a882d2b0b7dfc37bb0d7fe6516ddc1)':
     dependencies:
       '@openfeature/core': 1.9.1
       '@openfeature/env-var-provider': 0.3.1(@openfeature/server-sdk@1.20.0(@openfeature/core@1.9.1))
       '@openfeature/server-sdk': 1.20.0(@openfeature/core@1.9.1)
       '@powerhousedao/analytics-engine-core': 0.5.0
       '@powerhousedao/analytics-engine-knex': 0.6.0(@powerhousedao/analytics-engine-core@0.5.0)(sqlite3@5.1.7)
-      '@powerhousedao/config': 5.0.1(@types/node@22.18.12)
-      '@powerhousedao/reactor': 5.0.1(@types/node@22.18.12)(bufferutil@4.0.9)(encoding@0.1.13)(pg@8.16.3)(react-native@0.82.1(@babel/core@7.28.5)(@types/react@19.2.2)(bufferutil@4.0.9)(react@19.2.0)(utf-8-validate@5.0.10))(tarn@3.0.2)(utf-8-validate@5.0.10)
-      '@powerhousedao/reactor-api': 5.0.1(0e8721e6b01acafa1ae0b99db741998c)
+      '@powerhousedao/config': 5.0.1-staging.9(@types/node@22.18.12)
+      '@powerhousedao/reactor': 5.0.1-staging.9(@types/node@22.18.12)(bufferutil@4.0.9)(encoding@0.1.13)(pg@8.16.3)(react-native@0.82.1(@babel/core@7.28.5)(@types/react@19.2.2)(bufferutil@4.0.9)(react@19.2.0)(utf-8-validate@5.0.10))(tarn@3.0.2)(utf-8-validate@5.0.10)
+      '@powerhousedao/reactor-api': 5.0.1-staging.9(0e8721e6b01acafa1ae0b99db741998c)
       '@pyroscope/nodejs': 0.4.5
       '@sentry/node': 9.46.0
       body-parser: 1.20.3
       cors: 2.8.5
-      document-drive: 5.0.1(@types/node@22.18.12)(bufferutil@4.0.9)(encoding@0.1.13)(pg@8.16.3)(react-native@0.82.1(@babel/core@7.28.5)(@types/react@19.2.2)(bufferutil@4.0.9)(react@19.2.0)(utf-8-validate@5.0.10))(utf-8-validate@5.0.10)
-      document-model: 5.0.1
+      document-drive: 5.0.1-staging.9(@types/node@22.18.12)(bufferutil@4.0.9)(encoding@0.1.13)(pg@8.16.3)(react-native@0.82.1(@babel/core@7.28.5)(@types/react@19.2.2)(bufferutil@4.0.9)(react@19.2.0)(utf-8-validate@5.0.10))(utf-8-validate@5.0.10)
+      document-model: 5.0.1-staging.9
       dotenv: 16.6.1
       exponential-backoff: 3.1.3
       express: 4.21.2
@@ -17337,16 +17298,16 @@ snapshots:
       - utf-8-validate
       - yaml
 
-  '@powerhousedao/vetra@5.0.1(d6ad154cc90bb3582c9634bd1ee0f54c)':
+  '@powerhousedao/vetra@5.0.1-staging.9(d6ad154cc90bb3582c9634bd1ee0f54c)':
     dependencies:
-      '@powerhousedao/builder-tools': 5.0.1(97d40ab2b1b1927c93531316b229314c)
-      '@powerhousedao/common': 5.0.1(962d7119ff8acbcd5dc8cbe3d7b2b4ea)
-      '@powerhousedao/config': 5.0.1(@types/node@22.18.12)
-      '@powerhousedao/connect': 5.0.1(b8d83d477457af3b571b057216faa1ae)
-      '@powerhousedao/design-system': 5.0.1(@tanstack/query-core@5.90.5)(@types/express@4.17.25)(@types/react-dom@19.2.2(@types/react@19.2.2))(@types/react@19.2.2)(bufferutil@4.0.9)(encoding@0.1.13)(react-dom@19.2.0(react@19.2.0))(react-native@0.82.1(@babel/core@7.28.5)(@types/react@19.2.2)(bufferutil@4.0.9)(react@19.2.0)(utf-8-validate@5.0.10))(react@19.2.0)(typescript@5.9.3)(utf-8-validate@5.0.10)
+      '@powerhousedao/builder-tools': 5.0.1-staging.9(97d40ab2b1b1927c93531316b229314c)
+      '@powerhousedao/common': 5.0.1-staging.9(962d7119ff8acbcd5dc8cbe3d7b2b4ea)
+      '@powerhousedao/config': 5.0.1-staging.9(@types/node@22.18.12)
+      '@powerhousedao/connect': 5.0.1-staging.9(b8d83d477457af3b571b057216faa1ae)
+      '@powerhousedao/design-system': 5.0.1-staging.9(@tanstack/query-core@5.90.5)(@types/express@4.17.25)(@types/react-dom@19.2.2(@types/react@19.2.2))(@types/react@19.2.2)(bufferutil@4.0.9)(encoding@0.1.13)(react-dom@19.2.0(react@19.2.0))(react-native@0.82.1(@babel/core@7.28.5)(@types/react@19.2.2)(bufferutil@4.0.9)(react@19.2.0)(utf-8-validate@5.0.10))(react@19.2.0)(typescript@5.9.3)(utf-8-validate@5.0.10)
       change-case: 5.4.4
       colorette: 2.0.20
-      document-model: 5.0.1
+      document-model: 5.0.1-staging.9
       graphql: 16.11.0
       graphql-tag: 2.12.6(graphql@16.11.0)
       kysely: 0.28.8
@@ -18056,14 +18017,14 @@ snapshots:
 
   '@remix-run/router@1.23.0': {}
 
-  '@renown/sdk@5.0.1(bufferutil@4.0.9)(document-model@5.0.1)(react@19.2.0)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@3.25.76)':
+  '@renown/sdk@5.0.1-staging.9(bufferutil@4.0.9)(document-model@5.0.1-staging.9)(react@19.2.0)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@3.25.76)':
     dependencies:
       '@didtools/key-did': 1.0.0(bufferutil@4.0.9)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@3.25.76)
       did-jwt: 8.0.18
       did-jwt-vc: 4.0.16
       did-key-creator: 1.2.0
       did-resolver: 4.1.0
-      document-model: 5.0.1
+      document-model: 5.0.1-staging.9
       key-did-resolver: 4.0.0
       uint8arrays: 5.1.0
     optionalDependencies:
@@ -19182,7 +19143,7 @@ snapshots:
 
   '@types/connect@3.4.38':
     dependencies:
-      '@types/node': 22.18.12
+      '@types/node': 22.19.0
 
   '@types/debug@0.0.30': {}
 
@@ -19194,7 +19155,7 @@ snapshots:
 
   '@types/dns-packet@5.6.5':
     dependencies:
-      '@types/node': 22.18.12
+      '@types/node': 22.19.0
 
   '@types/doctrine@0.0.9': {}
 
@@ -19221,7 +19182,7 @@ snapshots:
   '@types/glob@5.0.38':
     dependencies:
       '@types/minimatch': 6.0.0
-      '@types/node': 22.18.12
+      '@types/node': 22.19.0
 
   '@types/graceful-fs@4.1.9':
     dependencies:
@@ -19265,22 +19226,22 @@ snapshots:
 
   '@types/mkdirp@0.5.2':
     dependencies:
-      '@types/node': 22.18.12
+      '@types/node': 22.19.0
 
   '@types/ms@2.1.0': {}
 
   '@types/multicast-dns@7.2.4':
     dependencies:
       '@types/dns-packet': 5.6.5
-      '@types/node': 22.18.12
+      '@types/node': 22.19.0
 
   '@types/mysql@2.15.26':
     dependencies:
-      '@types/node': 22.18.12
+      '@types/node': 22.19.0
 
   '@types/node-fetch@2.6.13':
     dependencies:
-      '@types/node': 22.18.12
+      '@types/node': 22.19.0
       form-data: 4.0.4
 
   '@types/node@17.0.45': {}
@@ -19315,13 +19276,13 @@ snapshots:
 
   '@types/pg@8.15.6':
     dependencies:
-      '@types/node': 22.18.12
+      '@types/node': 22.19.0
       pg-protocol: 1.10.3
       pg-types: 2.2.0
 
   '@types/pg@8.6.1':
     dependencies:
-      '@types/node': 22.18.12
+      '@types/node': 22.19.0
       pg-protocol: 1.10.3
       pg-types: 2.2.0
 
@@ -19352,7 +19313,7 @@ snapshots:
   '@types/rimraf@2.0.5':
     dependencies:
       '@types/glob': 5.0.38
-      '@types/node': 22.18.12
+      '@types/node': 22.19.0
 
   '@types/send@0.17.6':
     dependencies:
@@ -19384,7 +19345,7 @@ snapshots:
 
   '@types/tedious@4.0.14':
     dependencies:
-      '@types/node': 22.18.12
+      '@types/node': 22.19.0
 
   '@types/tmp@0.0.33': {}
 
@@ -19401,7 +19362,7 @@ snapshots:
 
   '@types/ws@8.18.1':
     dependencies:
-      '@types/node': 22.18.12
+      '@types/node': 22.19.0
 
   '@types/yargs-parser@21.0.3': {}
 
@@ -21743,13 +21704,13 @@ snapshots:
     dependencies:
       esutils: 2.0.3
 
-  document-drive@5.0.1(@types/node@22.18.12)(bufferutil@4.0.9)(encoding@0.1.13)(pg@8.16.3)(react-native@0.82.1(@babel/core@7.28.5)(@types/react@19.2.2)(bufferutil@4.0.9)(react@19.2.0)(utf-8-validate@5.0.10))(utf-8-validate@5.0.10):
+  document-drive@5.0.1-staging.9(@types/node@22.18.12)(bufferutil@4.0.9)(encoding@0.1.13)(pg@8.16.3)(react-native@0.82.1(@babel/core@7.28.5)(@types/react@19.2.2)(bufferutil@4.0.9)(react@19.2.0)(utf-8-validate@5.0.10))(utf-8-validate@5.0.10):
     dependencies:
       '@helia/mfs': 4.0.3(encoding@0.1.13)
-      '@powerhousedao/config': 5.0.1(@types/node@22.18.12)
+      '@powerhousedao/config': 5.0.1-staging.9(@types/node@22.18.12)
       '@sindresorhus/fnv1a': 3.1.0
       change-case: 5.4.4
-      document-model: 5.0.1
+      document-model: 5.0.1-staging.9
       exponential-backoff: 3.1.3
       graphql: 16.11.0
       graphql-request: 6.1.0(encoding@0.1.13)(graphql@16.11.0)
@@ -21786,13 +21747,13 @@ snapshots:
       - tedious
       - utf-8-validate
 
-  document-drive@5.0.1(@types/node@24.10.0)(bufferutil@4.0.9)(encoding@0.1.13)(pg@8.16.3)(react-native@0.82.1(@babel/core@7.28.5)(@types/react@19.2.2)(bufferutil@4.0.9)(react@19.2.0)(utf-8-validate@5.0.10))(utf-8-validate@5.0.10):
+  document-drive@5.0.1-staging.9(@types/node@24.10.0)(bufferutil@4.0.9)(encoding@0.1.13)(pg@8.16.3)(react-native@0.82.1(@babel/core@7.28.5)(@types/react@19.2.2)(bufferutil@4.0.9)(react@19.2.0)(utf-8-validate@5.0.10))(utf-8-validate@5.0.10):
     dependencies:
       '@helia/mfs': 4.0.3(encoding@0.1.13)
-      '@powerhousedao/config': 5.0.1(@types/node@24.10.0)
+      '@powerhousedao/config': 5.0.1-staging.9(@types/node@24.10.0)
       '@sindresorhus/fnv1a': 3.1.0
       change-case: 5.4.4
-      document-model: 5.0.1
+      document-model: 5.0.1-staging.9
       exponential-backoff: 3.1.3
       graphql: 16.11.0
       graphql-request: 6.1.0(encoding@0.1.13)(graphql@16.11.0)
@@ -21853,7 +21814,7 @@ snapshots:
       - react
       - react-dom
 
-  document-model@5.0.1:
+  document-model@5.0.1-staging.9:
     dependencies:
       change-case: 5.4.4
       jszip: 3.10.1
@@ -23212,9 +23173,9 @@ snapshots:
       '@graphql-tools/graphql-file-loader': 8.1.2(graphql@16.11.0)
       '@graphql-tools/json-file-loader': 8.0.20(graphql@16.11.0)
       '@graphql-tools/load': 8.1.2(graphql@16.11.0)
-      '@graphql-tools/merge': 9.1.1(graphql@16.11.0)
+      '@graphql-tools/merge': 9.1.2(graphql@16.11.0)
       '@graphql-tools/url-loader': 8.0.33(@types/node@24.10.0)(bufferutil@4.0.9)(crossws@0.3.5)(graphql@16.11.0)(utf-8-validate@5.0.10)
-      '@graphql-tools/utils': 10.9.1(graphql@16.11.0)
+      '@graphql-tools/utils': 10.10.0(graphql@16.11.0)
       cosmiconfig: 8.3.6(typescript@5.9.3)
       graphql: 16.11.0
       jiti: 2.6.1
@@ -28865,7 +28826,7 @@ snapshots:
 
   wkx@0.5.0:
     dependencies:
-      '@types/node': 22.18.12
+      '@types/node': 22.19.0
     optional: true
 
   word-wrap@1.2.5: {}
