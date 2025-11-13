@@ -2,10 +2,6 @@ import { type IRelationalDb } from "document-drive";
 import type { DB } from "./schema.js";
 
 export async function up(db: IRelationalDb<DB>): Promise<void> {
-  if (process.env.NODE_ENV !== "production") {
-    await down(db);
-  }
-
   // Create builder_teams table
   await db.schema
     .createTable("builder_teams")
