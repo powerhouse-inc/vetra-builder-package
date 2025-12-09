@@ -5,14 +5,18 @@
 
 import { describe, it, expect, beforeEach } from 'vitest';
 import { generateMock } from '@powerhousedao/codegen';
-import utils from '../../gen/utils.js';
+import * as utils from '../../gen/utils.js';
 import {
-    z,
     type AddPackageInput,
     type SetPackageDriveIdInput,
     type UpdatePackageInput,
     type ReorderPackagesInput,
     type DeletePackageInput,
+    AddPackageInputSchema,
+    SetPackageDriveIdInputSchema,
+    UpdatePackageInputSchema,
+    ReorderPackagesInputSchema,
+    DeletePackageInputSchema,
 } from '../../gen/schema/index.js';
 import { reducer } from '../../gen/reducer.js';
 import * as creators from '../../gen/packages/creators.js';
@@ -27,7 +31,7 @@ describe('Packages Operations', () => {
 
     it('should handle addPackage operation', () => {
         const input: AddPackageInput = generateMock(
-            z.AddPackageInputSchema(),
+            AddPackageInputSchema(),
         );
 
         const updatedDocument = reducer(
@@ -44,7 +48,7 @@ describe('Packages Operations', () => {
     });
     it('should handle setPackageDriveId operation', () => {
         const input: SetPackageDriveIdInput = generateMock(
-            z.SetPackageDriveIdInputSchema(),
+            SetPackageDriveIdInputSchema(),
         );
 
         const updatedDocument = reducer(
@@ -61,7 +65,7 @@ describe('Packages Operations', () => {
     });
     it('should handle updatePackage operation', () => {
         const input: UpdatePackageInput = generateMock(
-            z.UpdatePackageInputSchema(),
+            UpdatePackageInputSchema(),
         );
 
         const updatedDocument = reducer(
@@ -78,7 +82,7 @@ describe('Packages Operations', () => {
     });
     it('should handle reorderPackages operation', () => {
         const input: ReorderPackagesInput = generateMock(
-            z.ReorderPackagesInputSchema(),
+            ReorderPackagesInputSchema(),
         );
 
         const updatedDocument = reducer(
@@ -95,7 +99,7 @@ describe('Packages Operations', () => {
     });
     it('should handle deletePackage operation', () => {
         const input: DeletePackageInput = generateMock(
-            z.DeletePackageInputSchema(),
+            DeletePackageInputSchema(),
         );
 
         const updatedDocument = reducer(

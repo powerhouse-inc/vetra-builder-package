@@ -4,14 +4,15 @@
  */
 
 import { describe, it, expect, beforeEach } from "vitest";
-import utils, {
+import {
+  createDocument,
   initialGlobalState,
   initialLocalState,
 } from "../../gen/utils.js";
 
 describe("Builder Account Document Model", () => {
   it("should create a new Builder Account document", () => {
-    const document = utils.createDocument();
+    const document = createDocument();
 
     expect(document).toBeDefined();
     expect(document.header.documentType).toBe(
@@ -20,7 +21,7 @@ describe("Builder Account Document Model", () => {
   });
 
   it("should create a new Builder Account document with a valid initial state", () => {
-    const document = utils.createDocument();
+    const document = createDocument();
     expect(document.state.global).toStrictEqual(initialGlobalState);
     expect(document.state.local).toStrictEqual(initialLocalState);
   });

@@ -1,6 +1,4 @@
-import { type IRelationalDb } from "document-drive/processors/types";
-import { RelationalDbProcessor } from "document-drive/processors/relational";
-import { type InternalTransmitterUpdate } from "document-drive/server/listener/transmitter/internal";
+import { RelationalDbProcessor, type InternalTransmitterUpdate, } from "document-drive";
 import { up } from "./migrations.js";
 import { type DB } from "./schema.js";
 import { generateId } from "document-model";

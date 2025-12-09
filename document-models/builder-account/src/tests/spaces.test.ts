@@ -5,14 +5,18 @@
 
 import { describe, it, expect, beforeEach } from 'vitest';
 import { generateMock } from '@powerhousedao/codegen';
-import utils from '../../gen/utils.js';
+import * as utils from '../../gen/utils.js';
 import {
-    z,
     type AddSpaceInput,
     type DeleteSpaceInput,
     type SetSpaceTitleInput,
     type SetSpaceDescriptionInput,
     type ReorderSpacesInput,
+    AddSpaceInputSchema,
+    DeleteSpaceInputSchema,
+    SetSpaceTitleInputSchema,
+    SetSpaceDescriptionInputSchema,
+    ReorderSpacesInputSchema,
 } from '../../gen/schema/index.js';
 import { reducer } from '../../gen/reducer.js';
 import * as creators from '../../gen/spaces/creators.js';
@@ -27,7 +31,7 @@ describe('Spaces Operations', () => {
 
     it('should handle addSpace operation', () => {
         const input: AddSpaceInput = generateMock(
-            z.AddSpaceInputSchema(),
+            AddSpaceInputSchema(),
         );
 
         const updatedDocument = reducer(
@@ -44,7 +48,7 @@ describe('Spaces Operations', () => {
     });
     it('should handle deleteSpace operation', () => {
         const input: DeleteSpaceInput = generateMock(
-            z.DeleteSpaceInputSchema(),
+            DeleteSpaceInputSchema(),
         );
 
         const updatedDocument = reducer(
@@ -61,7 +65,7 @@ describe('Spaces Operations', () => {
     });
     it('should handle setSpaceTitle operation', () => {
         const input: SetSpaceTitleInput = generateMock(
-            z.SetSpaceTitleInputSchema(),
+            SetSpaceTitleInputSchema(),
         );
 
         const updatedDocument = reducer(
@@ -78,7 +82,7 @@ describe('Spaces Operations', () => {
     });
     it('should handle setSpaceDescription operation', () => {
         const input: SetSpaceDescriptionInput = generateMock(
-            z.SetSpaceDescriptionInputSchema(),
+            SetSpaceDescriptionInputSchema(),
         );
 
         const updatedDocument = reducer(
@@ -95,7 +99,7 @@ describe('Spaces Operations', () => {
     });
     it('should handle reorderSpaces operation', () => {
         const input: ReorderSpacesInput = generateMock(
-            z.ReorderSpacesInputSchema(),
+            ReorderSpacesInputSchema(),
         );
 
         const updatedDocument = reducer(

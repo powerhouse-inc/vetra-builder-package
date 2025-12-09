@@ -5,11 +5,12 @@
 
 import { describe, it, expect, beforeEach } from 'vitest';
 import { generateMock } from '@powerhousedao/codegen';
-import utils from '../../gen/utils.js';
+import * as utils from '../../gen/utils.js';
 import {
-    z,
     type AddMemberInput,
     type RemoveMemberInput,
+    AddMemberInputSchema,
+    RemoveMemberInputSchema,
 } from '../../gen/schema/index.js';
 import { reducer } from '../../gen/reducer.js';
 import * as creators from '../../gen/members/creators.js';
@@ -24,7 +25,7 @@ describe('Members Operations', () => {
 
     it('should handle addMember operation', () => {
         const input: AddMemberInput = generateMock(
-            z.AddMemberInputSchema(),
+            AddMemberInputSchema(),
         );
 
         const updatedDocument = reducer(
@@ -41,7 +42,7 @@ describe('Members Operations', () => {
     });
     it('should handle removeMember operation', () => {
         const input: RemoveMemberInput = generateMock(
-            z.RemoveMemberInputSchema(),
+            RemoveMemberInputSchema(),
         );
 
         const updatedDocument = reducer(

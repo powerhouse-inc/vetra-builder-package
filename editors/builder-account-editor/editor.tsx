@@ -1,5 +1,5 @@
-import { Button } from "@powerhousedao/design-system";
-import { useDocumentById } from "@powerhousedao/reactor-browser";
+import { PowerhouseButton as Button } from "@powerhousedao/design-system/powerhouse/components/index";
+import { useSelectedDocument } from "@powerhousedao/reactor-browser";
 import type { EditorProps } from "document-model";
 import { useCallback, useState } from "react";
 import {
@@ -12,7 +12,7 @@ export type IProps = EditorProps;
 
 export default function Editor(props: IProps) {
   const { document: initialDocument } = props;
-  const [document, dispatch] = useDocumentById(initialDocument.header.id);
+  const [document, dispatch] = useSelectedDocument();
   const typedDocument = document as BuilderAccountDocument;
   
   // Local form state

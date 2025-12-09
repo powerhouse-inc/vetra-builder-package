@@ -1,9 +1,9 @@
-import { Subgraph } from "@powerhousedao/reactor-api";
+import { BaseSubgraph } from "@powerhousedao/reactor-api";
 import type { DocumentNode } from "graphql";
 import { schema } from "./schema.js";
 import { getResolvers } from "./resolvers.js";
 
-export class BuilderAccountSubgraph extends Subgraph {
+export class BuilderAccountSubgraph extends BaseSubgraph {
   name = "builder-account";
   typeDefs: DocumentNode = schema;
   resolvers = getResolvers(this);

@@ -5,14 +5,18 @@
 
 import { describe, it, expect, beforeEach } from 'vitest';
 import { generateMock } from '@powerhousedao/codegen';
-import utils from '../../gen/utils.js';
+import * as utils from '../../gen/utils.js';
 import {
-    z,
     type SetLogoInput,
     type SetProfileNameInput,
     type SetSlugInput,
     type SetProfileDescriptionInput,
     type UpdateSocialsInput,
+    SetLogoInputSchema,
+    SetProfileNameInputSchema,
+    SetSlugInputSchema,
+    SetProfileDescriptionInputSchema,
+    UpdateSocialsInputSchema,
 } from '../../gen/schema/index.js';
 import { reducer } from '../../gen/reducer.js';
 import * as creators from '../../gen/profile/creators.js';
@@ -27,7 +31,7 @@ describe('Profile Operations', () => {
 
     it('should handle setLogo operation', () => {
         const input: SetLogoInput = generateMock(
-            z.SetLogoInputSchema(),
+            SetLogoInputSchema(),
         );
 
         const updatedDocument = reducer(
@@ -44,7 +48,7 @@ describe('Profile Operations', () => {
     });
     it('should handle setProfileName operation', () => {
         const input: SetProfileNameInput = generateMock(
-            z.SetProfileNameInputSchema(),
+            SetProfileNameInputSchema(),
         );
 
         const updatedDocument = reducer(
@@ -61,7 +65,7 @@ describe('Profile Operations', () => {
     });
     it('should handle setSlug operation', () => {
         const input: SetSlugInput = generateMock(
-            z.SetSlugInputSchema(),
+            SetSlugInputSchema(),
         );
 
         const updatedDocument = reducer(
@@ -78,7 +82,7 @@ describe('Profile Operations', () => {
     });
     it('should handle setProfileDescription operation', () => {
         const input: SetProfileDescriptionInput = generateMock(
-            z.SetProfileDescriptionInputSchema(),
+            SetProfileDescriptionInputSchema(),
         );
 
         const updatedDocument = reducer(
@@ -95,7 +99,7 @@ describe('Profile Operations', () => {
     });
     it('should handle updateSocials operation', () => {
         const input: UpdateSocialsInput = generateMock(
-            z.UpdateSocialsInputSchema(),
+            UpdateSocialsInputSchema(),
         );
 
         const updatedDocument = reducer(

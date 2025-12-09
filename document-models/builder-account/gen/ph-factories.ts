@@ -1,27 +1,17 @@
 /**
  * Factory methods for creating BuilderAccountDocument instances
  */
-
-import {
-  createBaseState,
-  defaultBaseState,
-  type PHAuthState,
-  type PHDocumentState,
-  type PHBaseState,
-} from "document-model";
+import type { PHAuthState, PHDocumentState, PHBaseState } from "document-model";
+import { createBaseState, defaultBaseState } from "document-model/core";
 import type {
   BuilderAccountDocument,
   BuilderAccountLocalState,
-  BuilderAccountState,
+  BuilderAccountGlobalState,
+  BuilderAccountPHState,
 } from "./types.js";
 import { createDocument } from "./utils.js";
 
-export type BuilderAccountPHState = PHBaseState & {
-  global: BuilderAccountState;
-  local: BuilderAccountLocalState;
-};
-
-export function defaultGlobalState(): BuilderAccountState {
+export function defaultGlobalState(): BuilderAccountGlobalState {
   return {
     profile: {
       logo: null,
@@ -52,12 +42,12 @@ export function defaultPHState(): BuilderAccountPHState {
 }
 
 export function createGlobalState(
-  state?: Partial<BuilderAccountState>,
-): BuilderAccountState {
+  state?: Partial<BuilderAccountGlobalState>,
+): BuilderAccountGlobalState {
   return {
     ...defaultGlobalState(),
     ...(state || {}),
-  } as BuilderAccountState;
+  } as BuilderAccountGlobalState;
 }
 
 export function createLocalState(
@@ -71,7 +61,7 @@ export function createLocalState(
 
 export function createState(
   baseState?: Partial<PHBaseState>,
-  globalState?: Partial<BuilderAccountState>,
+  globalState?: Partial<BuilderAccountGlobalState>,
   localState?: Partial<BuilderAccountLocalState>,
 ): BuilderAccountPHState {
   return {
@@ -90,7 +80,7 @@ export function createBuilderAccountDocument(
   state?: Partial<{
     auth?: Partial<PHAuthState>;
     document?: Partial<PHDocumentState>;
-    global?: Partial<BuilderAccountState>;
+    global?: Partial<BuilderAccountGlobalState>;
     local?: Partial<BuilderAccountLocalState>;
   }>,
 ): BuilderAccountDocument {

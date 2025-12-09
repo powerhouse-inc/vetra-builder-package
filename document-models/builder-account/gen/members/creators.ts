@@ -1,13 +1,17 @@
-import { createAction } from "document-model";
-import { z, type AddMemberInput, type RemoveMemberInput } from "../types.js";
-import { type AddMemberAction, type RemoveMemberAction } from "./actions.js";
+import { createAction } from "document-model/core";
+import {
+  AddMemberInputSchema,
+  RemoveMemberInputSchema,
+} from "../schema/zod.js";
+import type { AddMemberInput, RemoveMemberInput } from "../types.js";
+import type { AddMemberAction, RemoveMemberAction } from "./actions.js";
 
 export const addMember = (input: AddMemberInput) =>
   createAction<AddMemberAction>(
     "ADD_MEMBER",
     { ...input },
     undefined,
-    z.AddMemberInputSchema,
+    AddMemberInputSchema,
     "global",
   );
 
@@ -16,6 +20,6 @@ export const removeMember = (input: RemoveMemberInput) =>
     "REMOVE_MEMBER",
     { ...input },
     undefined,
-    z.RemoveMemberInputSchema,
+    RemoveMemberInputSchema,
     "global",
   );
