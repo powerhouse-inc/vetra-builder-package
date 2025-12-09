@@ -1,7 +1,7 @@
 import { generateId } from "document-model";
-import type { BuilderAccountSpacesOperations } from "../../gen/spaces/operations.js";
+import type { BuilderAccountSpacesOperations } from "@powerhousedao/vetra-builder-package/document-models/builder-account";
 
-export const reducer: BuilderAccountSpacesOperations = {
+export const builderAccountSpacesOperations: BuilderAccountSpacesOperations = {
   addSpaceOperation(state, action, dispatch) {
     const { title, description } = action.input;
     state.spaces.push({

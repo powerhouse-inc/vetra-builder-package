@@ -1,6 +1,6 @@
-import type { BuilderAccountMembersOperations } from "../../gen/members/operations.js";
+import type { BuilderAccountMembersOperations } from "@powerhousedao/vetra-builder-package/document-models/builder-account";
 
-export const reducer: BuilderAccountMembersOperations = {
+export const builderAccountMembersOperations: BuilderAccountMembersOperations = {
   addMemberOperation(state, action, dispatch) {
     if (state.members.find((member) => member === action.input.ethAddress!)) {
       return;

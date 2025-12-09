@@ -1,18 +1,24 @@
-import { createAction } from "document-model";
+import { createAction } from "document-model/core";
 import {
-  z,
-  type SetLogoInput,
-  type SetProfileNameInput,
-  type SetSlugInput,
-  type SetProfileDescriptionInput,
-  type UpdateSocialsInput,
+  SetLogoInputSchema,
+  SetProfileNameInputSchema,
+  SetSlugInputSchema,
+  SetProfileDescriptionInputSchema,
+  UpdateSocialsInputSchema,
+} from "../schema/zod.js";
+import type {
+  SetLogoInput,
+  SetProfileNameInput,
+  SetSlugInput,
+  SetProfileDescriptionInput,
+  UpdateSocialsInput,
 } from "../types.js";
-import {
-  type SetLogoAction,
-  type SetProfileNameAction,
-  type SetSlugAction,
-  type SetProfileDescriptionAction,
-  type UpdateSocialsAction,
+import type {
+  SetLogoAction,
+  SetProfileNameAction,
+  SetSlugAction,
+  SetProfileDescriptionAction,
+  UpdateSocialsAction,
 } from "./actions.js";
 
 export const setLogo = (input: SetLogoInput) =>
@@ -20,7 +26,7 @@ export const setLogo = (input: SetLogoInput) =>
     "SET_LOGO",
     { ...input },
     undefined,
-    z.SetLogoInputSchema,
+    SetLogoInputSchema,
     "global",
   );
 
@@ -29,7 +35,7 @@ export const setProfileName = (input: SetProfileNameInput) =>
     "SET_PROFILE_NAME",
     { ...input },
     undefined,
-    z.SetProfileNameInputSchema,
+    SetProfileNameInputSchema,
     "global",
   );
 
@@ -38,7 +44,7 @@ export const setSlug = (input: SetSlugInput) =>
     "SET_SLUG",
     { ...input },
     undefined,
-    z.SetSlugInputSchema,
+    SetSlugInputSchema,
     "global",
   );
 
@@ -47,7 +53,7 @@ export const setProfileDescription = (input: SetProfileDescriptionInput) =>
     "SET_PROFILE_DESCRIPTION",
     { ...input },
     undefined,
-    z.SetProfileDescriptionInputSchema,
+    SetProfileDescriptionInputSchema,
     "global",
   );
 
@@ -56,6 +62,6 @@ export const updateSocials = (input: UpdateSocialsInput) =>
     "UPDATE_SOCIALS",
     { ...input },
     undefined,
-    z.UpdateSocialsInputSchema,
+    UpdateSocialsInputSchema,
     "global",
   );

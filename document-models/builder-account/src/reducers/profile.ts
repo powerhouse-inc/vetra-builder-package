@@ -1,6 +1,6 @@
-import type { BuilderAccountProfileOperations } from "../../gen/profile/operations.js";
+import type { BuilderAccountProfileOperations } from "@powerhousedao/vetra-builder-package/document-models/builder-account";
 
-export const reducer: BuilderAccountProfileOperations = {
+export const builderAccountProfileOperations: BuilderAccountProfileOperations = {
   setLogoOperation(state, action, dispatch) {
     const { logoUrl } = action.input;
     state.profile.logo = logoUrl ?? state.profile.logo;

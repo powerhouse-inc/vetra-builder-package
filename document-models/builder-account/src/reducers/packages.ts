@@ -1,7 +1,7 @@
 import { generateId } from "document-model";
-import type { BuilderAccountPackagesOperations } from "../../gen/packages/operations.js";
+import type { BuilderAccountPackagesOperations } from "@powerhousedao/vetra-builder-package/document-models/builder-account";
 
-export const reducer: BuilderAccountPackagesOperations = {
+export const builderAccountPackagesOperations: BuilderAccountPackagesOperations = {
   addPackageOperation(state, action, dispatch) {
     const { spaceId } = action.input;
     const packageId = generateId();

@@ -1,20 +1,36 @@
 // TODO: remove eslint-disable rules once refactor is done
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
+import type { StateReducer } from "document-model";
+import { isDocumentAction, createReducer } from "document-model/core";
+import type { BuilderAccountPHState } from "@powerhousedao/vetra-builder-package/document-models/builder-account";
+
+import { builderAccountProfileOperations } from "../src/reducers/profile.js";
+import { builderAccountMembersOperations } from "../src/reducers/members.js";
+import { builderAccountSpacesOperations } from "../src/reducers/spaces.js";
+import { builderAccountPackagesOperations } from "../src/reducers/packages.js";
+
 import {
-  type StateReducer,
-  isDocumentAction,
-  createReducer,
-} from "document-model";
-import { BuilderAccountPHState } from "./ph-factories.js";
-import { z } from "./types.js";
+  SetLogoInputSchema,
+  SetProfileNameInputSchema,
+  SetSlugInputSchema,
+  SetProfileDescriptionInputSchema,
+  UpdateSocialsInputSchema,
+  AddMemberInputSchema,
+  RemoveMemberInputSchema,
+  AddSpaceInputSchema,
+  DeleteSpaceInputSchema,
+  SetSpaceTitleInputSchema,
+  SetSpaceDescriptionInputSchema,
+  ReorderSpacesInputSchema,
+  AddPackageInputSchema,
+  SetPackageDriveIdInputSchema,
+  UpdatePackageInputSchema,
+  ReorderPackagesInputSchema,
+  DeletePackageInputSchema,
+} from "./schema/zod.js";
 
-import { reducer as ProfileReducer } from "../src/reducers/profile.js";
-import { reducer as MembersReducer } from "../src/reducers/members.js";
-import { reducer as SpacesReducer } from "../src/reducers/spaces.js";
-import { reducer as PackagesReducer } from "../src/reducers/packages.js";
-
-export const stateReducer: StateReducer<BuilderAccountPHState> = (
+const stateReducer: StateReducer<BuilderAccountPHState> = (
   state,
   action,
   dispatch,
@@ -25,8 +41,8 @@ export const stateReducer: StateReducer<BuilderAccountPHState> = (
 
   switch (action.type) {
     case "SET_LOGO":
-      z.SetLogoInputSchema().parse(action.input);
-      ProfileReducer.setLogoOperation(
+      SetLogoInputSchema().parse(action.input);
+      builderAccountProfileOperations.setLogoOperation(
         (state as any)[action.scope],
         action as any,
         dispatch,
@@ -34,8 +50,8 @@ export const stateReducer: StateReducer<BuilderAccountPHState> = (
       break;
 
     case "SET_PROFILE_NAME":
-      z.SetProfileNameInputSchema().parse(action.input);
-      ProfileReducer.setProfileNameOperation(
+      SetProfileNameInputSchema().parse(action.input);
+      builderAccountProfileOperations.setProfileNameOperation(
         (state as any)[action.scope],
         action as any,
         dispatch,
@@ -43,8 +59,8 @@ export const stateReducer: StateReducer<BuilderAccountPHState> = (
       break;
 
     case "SET_SLUG":
-      z.SetSlugInputSchema().parse(action.input);
-      ProfileReducer.setSlugOperation(
+      SetSlugInputSchema().parse(action.input);
+      builderAccountProfileOperations.setSlugOperation(
         (state as any)[action.scope],
         action as any,
         dispatch,
@@ -52,8 +68,8 @@ export const stateReducer: StateReducer<BuilderAccountPHState> = (
       break;
 
     case "SET_PROFILE_DESCRIPTION":
-      z.SetProfileDescriptionInputSchema().parse(action.input);
-      ProfileReducer.setProfileDescriptionOperation(
+      SetProfileDescriptionInputSchema().parse(action.input);
+      builderAccountProfileOperations.setProfileDescriptionOperation(
         (state as any)[action.scope],
         action as any,
         dispatch,
@@ -61,8 +77,8 @@ export const stateReducer: StateReducer<BuilderAccountPHState> = (
       break;
 
     case "UPDATE_SOCIALS":
-      z.UpdateSocialsInputSchema().parse(action.input);
-      ProfileReducer.updateSocialsOperation(
+      UpdateSocialsInputSchema().parse(action.input);
+      builderAccountProfileOperations.updateSocialsOperation(
         (state as any)[action.scope],
         action as any,
         dispatch,
@@ -70,8 +86,8 @@ export const stateReducer: StateReducer<BuilderAccountPHState> = (
       break;
 
     case "ADD_MEMBER":
-      z.AddMemberInputSchema().parse(action.input);
-      MembersReducer.addMemberOperation(
+      AddMemberInputSchema().parse(action.input);
+      builderAccountMembersOperations.addMemberOperation(
         (state as any)[action.scope],
         action as any,
         dispatch,
@@ -79,8 +95,8 @@ export const stateReducer: StateReducer<BuilderAccountPHState> = (
       break;
 
     case "REMOVE_MEMBER":
-      z.RemoveMemberInputSchema().parse(action.input);
-      MembersReducer.removeMemberOperation(
+      RemoveMemberInputSchema().parse(action.input);
+      builderAccountMembersOperations.removeMemberOperation(
         (state as any)[action.scope],
         action as any,
         dispatch,
@@ -88,8 +104,8 @@ export const stateReducer: StateReducer<BuilderAccountPHState> = (
       break;
 
     case "ADD_SPACE":
-      z.AddSpaceInputSchema().parse(action.input);
-      SpacesReducer.addSpaceOperation(
+      AddSpaceInputSchema().parse(action.input);
+      builderAccountSpacesOperations.addSpaceOperation(
         (state as any)[action.scope],
         action as any,
         dispatch,
@@ -97,8 +113,8 @@ export const stateReducer: StateReducer<BuilderAccountPHState> = (
       break;
 
     case "DELETE_SPACE":
-      z.DeleteSpaceInputSchema().parse(action.input);
-      SpacesReducer.deleteSpaceOperation(
+      DeleteSpaceInputSchema().parse(action.input);
+      builderAccountSpacesOperations.deleteSpaceOperation(
         (state as any)[action.scope],
         action as any,
         dispatch,
@@ -106,8 +122,8 @@ export const stateReducer: StateReducer<BuilderAccountPHState> = (
       break;
 
     case "SET_SPACE_TITLE":
-      z.SetSpaceTitleInputSchema().parse(action.input);
-      SpacesReducer.setSpaceTitleOperation(
+      SetSpaceTitleInputSchema().parse(action.input);
+      builderAccountSpacesOperations.setSpaceTitleOperation(
         (state as any)[action.scope],
         action as any,
         dispatch,
@@ -115,8 +131,8 @@ export const stateReducer: StateReducer<BuilderAccountPHState> = (
       break;
 
     case "SET_SPACE_DESCRIPTION":
-      z.SetSpaceDescriptionInputSchema().parse(action.input);
-      SpacesReducer.setSpaceDescriptionOperation(
+      SetSpaceDescriptionInputSchema().parse(action.input);
+      builderAccountSpacesOperations.setSpaceDescriptionOperation(
         (state as any)[action.scope],
         action as any,
         dispatch,
@@ -124,8 +140,8 @@ export const stateReducer: StateReducer<BuilderAccountPHState> = (
       break;
 
     case "REORDER_SPACES":
-      z.ReorderSpacesInputSchema().parse(action.input);
-      SpacesReducer.reorderSpacesOperation(
+      ReorderSpacesInputSchema().parse(action.input);
+      builderAccountSpacesOperations.reorderSpacesOperation(
         (state as any)[action.scope],
         action as any,
         dispatch,
@@ -133,8 +149,8 @@ export const stateReducer: StateReducer<BuilderAccountPHState> = (
       break;
 
     case "ADD_PACKAGE":
-      z.AddPackageInputSchema().parse(action.input);
-      PackagesReducer.addPackageOperation(
+      AddPackageInputSchema().parse(action.input);
+      builderAccountPackagesOperations.addPackageOperation(
         (state as any)[action.scope],
         action as any,
         dispatch,
@@ -142,8 +158,8 @@ export const stateReducer: StateReducer<BuilderAccountPHState> = (
       break;
 
     case "SET_PACKAGE_DRIVE_ID":
-      z.SetPackageDriveIdInputSchema().parse(action.input);
-      PackagesReducer.setPackageDriveIdOperation(
+      SetPackageDriveIdInputSchema().parse(action.input);
+      builderAccountPackagesOperations.setPackageDriveIdOperation(
         (state as any)[action.scope],
         action as any,
         dispatch,
@@ -151,8 +167,8 @@ export const stateReducer: StateReducer<BuilderAccountPHState> = (
       break;
 
     case "UPDATE_PACKAGE":
-      z.UpdatePackageInputSchema().parse(action.input);
-      PackagesReducer.updatePackageOperation(
+      UpdatePackageInputSchema().parse(action.input);
+      builderAccountPackagesOperations.updatePackageOperation(
         (state as any)[action.scope],
         action as any,
         dispatch,
@@ -160,8 +176,8 @@ export const stateReducer: StateReducer<BuilderAccountPHState> = (
       break;
 
     case "REORDER_PACKAGES":
-      z.ReorderPackagesInputSchema().parse(action.input);
-      PackagesReducer.reorderPackagesOperation(
+      ReorderPackagesInputSchema().parse(action.input);
+      builderAccountPackagesOperations.reorderPackagesOperation(
         (state as any)[action.scope],
         action as any,
         dispatch,
@@ -169,8 +185,8 @@ export const stateReducer: StateReducer<BuilderAccountPHState> = (
       break;
 
     case "DELETE_PACKAGE":
-      z.DeletePackageInputSchema().parse(action.input);
-      PackagesReducer.deletePackageOperation(
+      DeletePackageInputSchema().parse(action.input);
+      builderAccountPackagesOperations.deletePackageOperation(
         (state as any)[action.scope],
         action as any,
         dispatch,

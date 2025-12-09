@@ -1,8 +1,8 @@
-import { type Subgraph } from "@powerhousedao/reactor-api";
+import type { BaseSubgraph } from "@powerhousedao/reactor-api";
 import { VetraReadModelProcessor } from "../../processors/vetra-read-model/index.js";
 import { type DB } from "../../processors/vetra-read-model/schema.js";
 
-export const getResolvers = (subgraph: Subgraph): Record<string, unknown> => {
+export const getResolvers = (subgraph: BaseSubgraph): Record<string, unknown> => {
   const reactor = subgraph.reactor;
   const db = subgraph.relationalDb;
 

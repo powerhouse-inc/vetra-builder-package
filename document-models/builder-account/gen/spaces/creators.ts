@@ -1,18 +1,24 @@
-import { createAction } from "document-model";
+import { createAction } from "document-model/core";
 import {
-  z,
-  type AddSpaceInput,
-  type DeleteSpaceInput,
-  type SetSpaceTitleInput,
-  type SetSpaceDescriptionInput,
-  type ReorderSpacesInput,
+  AddSpaceInputSchema,
+  DeleteSpaceInputSchema,
+  SetSpaceTitleInputSchema,
+  SetSpaceDescriptionInputSchema,
+  ReorderSpacesInputSchema,
+} from "../schema/zod.js";
+import type {
+  AddSpaceInput,
+  DeleteSpaceInput,
+  SetSpaceTitleInput,
+  SetSpaceDescriptionInput,
+  ReorderSpacesInput,
 } from "../types.js";
-import {
-  type AddSpaceAction,
-  type DeleteSpaceAction,
-  type SetSpaceTitleAction,
-  type SetSpaceDescriptionAction,
-  type ReorderSpacesAction,
+import type {
+  AddSpaceAction,
+  DeleteSpaceAction,
+  SetSpaceTitleAction,
+  SetSpaceDescriptionAction,
+  ReorderSpacesAction,
 } from "./actions.js";
 
 export const addSpace = (input: AddSpaceInput) =>
@@ -20,7 +26,7 @@ export const addSpace = (input: AddSpaceInput) =>
     "ADD_SPACE",
     { ...input },
     undefined,
-    z.AddSpaceInputSchema,
+    AddSpaceInputSchema,
     "global",
   );
 
@@ -29,7 +35,7 @@ export const deleteSpace = (input: DeleteSpaceInput) =>
     "DELETE_SPACE",
     { ...input },
     undefined,
-    z.DeleteSpaceInputSchema,
+    DeleteSpaceInputSchema,
     "global",
   );
 
@@ -38,7 +44,7 @@ export const setSpaceTitle = (input: SetSpaceTitleInput) =>
     "SET_SPACE_TITLE",
     { ...input },
     undefined,
-    z.SetSpaceTitleInputSchema,
+    SetSpaceTitleInputSchema,
     "global",
   );
 
@@ -47,7 +53,7 @@ export const setSpaceDescription = (input: SetSpaceDescriptionInput) =>
     "SET_SPACE_DESCRIPTION",
     { ...input },
     undefined,
-    z.SetSpaceDescriptionInputSchema,
+    SetSpaceDescriptionInputSchema,
     "global",
   );
 
@@ -56,6 +62,6 @@ export const reorderSpaces = (input: ReorderSpacesInput) =>
     "REORDER_SPACES",
     { ...input },
     undefined,
-    z.ReorderSpacesInputSchema,
+    ReorderSpacesInputSchema,
     "global",
   );

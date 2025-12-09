@@ -1,18 +1,24 @@
-import { createAction } from "document-model";
+import { createAction } from "document-model/core";
 import {
-  z,
-  type AddPackageInput,
-  type SetPackageDriveIdInput,
-  type UpdatePackageInput,
-  type ReorderPackagesInput,
-  type DeletePackageInput,
+  AddPackageInputSchema,
+  SetPackageDriveIdInputSchema,
+  UpdatePackageInputSchema,
+  ReorderPackagesInputSchema,
+  DeletePackageInputSchema,
+} from "../schema/zod.js";
+import type {
+  AddPackageInput,
+  SetPackageDriveIdInput,
+  UpdatePackageInput,
+  ReorderPackagesInput,
+  DeletePackageInput,
 } from "../types.js";
-import {
-  type AddPackageAction,
-  type SetPackageDriveIdAction,
-  type UpdatePackageAction,
-  type ReorderPackagesAction,
-  type DeletePackageAction,
+import type {
+  AddPackageAction,
+  SetPackageDriveIdAction,
+  UpdatePackageAction,
+  ReorderPackagesAction,
+  DeletePackageAction,
 } from "./actions.js";
 
 export const addPackage = (input: AddPackageInput) =>
@@ -20,7 +26,7 @@ export const addPackage = (input: AddPackageInput) =>
     "ADD_PACKAGE",
     { ...input },
     undefined,
-    z.AddPackageInputSchema,
+    AddPackageInputSchema,
     "global",
   );
 
@@ -29,7 +35,7 @@ export const setPackageDriveId = (input: SetPackageDriveIdInput) =>
     "SET_PACKAGE_DRIVE_ID",
     { ...input },
     undefined,
-    z.SetPackageDriveIdInputSchema,
+    SetPackageDriveIdInputSchema,
     "global",
   );
 
@@ -38,7 +44,7 @@ export const updatePackage = (input: UpdatePackageInput) =>
     "UPDATE_PACKAGE",
     { ...input },
     undefined,
-    z.UpdatePackageInputSchema,
+    UpdatePackageInputSchema,
     "global",
   );
 
@@ -47,7 +53,7 @@ export const reorderPackages = (input: ReorderPackagesInput) =>
     "REORDER_PACKAGES",
     { ...input },
     undefined,
-    z.ReorderPackagesInputSchema,
+    ReorderPackagesInputSchema,
     "global",
   );
 
@@ -56,6 +62,6 @@ export const deletePackage = (input: DeletePackageInput) =>
     "DELETE_PACKAGE",
     { ...input },
     undefined,
-    z.DeletePackageInputSchema,
+    DeletePackageInputSchema,
     "global",
   );

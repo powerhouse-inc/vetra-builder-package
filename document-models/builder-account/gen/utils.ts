@@ -1,24 +1,26 @@
+import type { DocumentModelUtils } from "document-model";
 import {
-  type CreateDocument,
-  type CreateState,
-  type LoadFromFile,
-  type LoadFromInput,
   baseCreateDocument,
-  baseSaveToFile,
   baseSaveToFileHandle,
-  baseLoadFromFile,
   baseLoadFromInput,
   defaultBaseState,
   generateId,
-} from "document-model";
-import {
-  type BuilderAccountState,
-  type BuilderAccountLocalState,
+} from "document-model/core";
+import type {
+  BuilderAccountGlobalState,
+  BuilderAccountLocalState,
 } from "./types.js";
-import { BuilderAccountPHState } from "./ph-factories.js";
+import type { BuilderAccountPHState } from "./types.js";
 import { reducer } from "./reducer.js";
+import { builderAccountDocumentType } from "./document-type.js";
+import {
+  isBuilderAccountDocument,
+  assertIsBuilderAccountDocument,
+  isBuilderAccountState,
+  assertIsBuilderAccountState,
+} from "./document-schema.js";
 
-export const initialGlobalState: BuilderAccountState = {
+export const initialGlobalState: BuilderAccountGlobalState = {
   profile: {
     logo: null,
     name: "",
@@ -35,48 +37,50 @@ export const initialGlobalState: BuilderAccountState = {
 };
 export const initialLocalState: BuilderAccountLocalState = {};
 
-export const createState: CreateState<BuilderAccountPHState> = (state) => {
-  return {
-    ...defaultBaseState(),
-    global: { ...initialGlobalState, ...(state?.global ?? {}) },
-    local: { ...initialLocalState, ...(state?.local ?? {}) },
-  };
-};
-
-export const createDocument: CreateDocument<BuilderAccountPHState> = (
-  state,
-) => {
-  const document = baseCreateDocument(createState, state);
-  document.header.documentType = "powerhouse/vetra/builder-account";
-  // for backwards compatibility, but this is NOT a valid signed document id
-  document.header.id = generateId();
-  return document;
-};
-
-export const saveToFile = (document: any, path: string, name?: string) => {
-  return baseSaveToFile(document, path, "phvba", name);
-};
-
-export const saveToFileHandle = (document: any, input: any) => {
-  return baseSaveToFileHandle(document, input);
-};
-
-export const loadFromFile: LoadFromFile<BuilderAccountPHState> = (path) => {
-  return baseLoadFromFile(path, reducer);
-};
-
-export const loadFromInput: LoadFromInput<BuilderAccountPHState> = (input) => {
-  return baseLoadFromInput(input, reducer);
-};
-
-const utils = {
+export const utils: DocumentModelUtils<BuilderAccountPHState> = {
   fileExtension: "phvba",
-  createState,
-  createDocument,
-  saveToFile,
-  saveToFileHandle,
-  loadFromFile,
-  loadFromInput,
+  createState(state) {
+    return {
+      ...defaultBaseState(),
+      global: { ...initialGlobalState, ...state?.global },
+      local: { ...initialLocalState, ...state?.local },
+    };
+  },
+  createDocument(state) {
+    const document = baseCreateDocument(utils.createState, state);
+
+    document.header.documentType = builderAccountDocumentType;
+
+    // for backwards compatibility, but this is NOT a valid signed document id
+    document.header.id = generateId();
+
+    return document;
+  },
+  saveToFileHandle(document, input) {
+    return baseSaveToFileHandle(document, input);
+  },
+  loadFromInput(input) {
+    return baseLoadFromInput(input, reducer);
+  },
+  isStateOfType(state) {
+    return isBuilderAccountState(state);
+  },
+  assertIsStateOfType(state) {
+    return assertIsBuilderAccountState(state);
+  },
+  isDocumentOfType(document) {
+    return isBuilderAccountDocument(document);
+  },
+  assertIsDocumentOfType(document) {
+    return assertIsBuilderAccountDocument(document);
+  },
 };
 
-export default utils;
+export const createDocument = utils.createDocument;
+export const createState = utils.createState;
+export const saveToFileHandle = utils.saveToFileHandle;
+export const loadFromInput = utils.loadFromInput;
+export const isStateOfType = utils.isStateOfType;
+export const assertIsStateOfType = utils.assertIsStateOfType;
+export const isDocumentOfType = utils.isDocumentOfType;
+export const assertIsDocumentOfType = utils.assertIsDocumentOfType;
