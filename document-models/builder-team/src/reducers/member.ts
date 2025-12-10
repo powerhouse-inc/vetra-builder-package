@@ -1,7 +1,7 @@
-import type { BuilderTeamMemberOperations } from "../../gen/member/operations.js";
+import type { BuilderTeamMemberOperations } from "@powerhousedao/vetra-builder-package/document-models/builder-team";
 
-export const reducer: BuilderTeamMemberOperations = {
-  addMemberOperation(state, action, dispatch) {
+export const builderTeamMemberOperations: BuilderTeamMemberOperations = {
+  addMemberOperation(state, action) {
     if (state.members.find((member) => member.id === action.input.id)) {
       return;
     }
@@ -15,7 +15,7 @@ export const reducer: BuilderTeamMemberOperations = {
     };
     state.members.push(newMember);
   },
-  updateMemberInfoOperation(state, action, dispatch) {
+  updateMemberInfoOperation(state, action) {
     const memberIndex = state.members.findIndex(
       (member) => member.id === action.input.id
     );
@@ -24,7 +24,7 @@ export const reducer: BuilderTeamMemberOperations = {
     }
     state.members[memberIndex] = { ...state.members[memberIndex], ...action.input };
   },
-  removeMemberOperation(state, action, dispatch) {
+  removeMemberOperation(state, action) {
     const memberIndex = state.members.findIndex(
       (member) => member.id === action.input.id
     );

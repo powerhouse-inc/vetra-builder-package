@@ -41,9 +41,7 @@ export class BuilderTeamHandlers {
   async handleBuilderTeamOperation(
     documentId: string,
     action: BuilderTeamAction,
-    state: BuilderTeamState,
-    driveId?: string
-  ): Promise<void> {
+    state: BuilderTeamState  ): Promise<void> {
     switch (action.type) {
       // Profile operations
       case "SET_LOGO":

@@ -12,7 +12,6 @@ import { SpacesSection } from "./components/SpacesSection.js";
 import { PackageForm } from "./components/PackageForm.js";
 import { MembersSection } from "./components/MembersSection.js";
 import { QuickStats } from "./components/QuickStats.js";
-import { useProfileHandlers } from "./hooks/useProfileHandlers.js";
 import { useSpaceHandlers } from "./hooks/useSpaceHandlers.js";
 import { usePackageHandlers } from "./hooks/usePackageHandlers.js";
 import { useMemberHandlers } from "./hooks/useMemberHandlers.js";
@@ -20,7 +19,7 @@ import { generateNanoId } from "../../utils/nano-id.js";
 
 export type IProps = EditorProps;
 
-export function Editor(props: IProps) {
+export default function Editor() {
   const [document, dispatch] = useSelectedDocument();
   const typedDocument = document as BuilderTeamDocument;
 
@@ -36,9 +35,8 @@ export function Editor(props: IProps) {
   const { profile, spaces, members } = global;
 
   // Custom hooks for handlers
-  const profileHandlers = useProfileHandlers(profile, dispatch);
   const spaceHandlers = useSpaceHandlers(spaces, dispatch);
-  const packageHandlers = usePackageHandlers(spaces, dispatch);
+  const packageHandlers = usePackageHandlers(dispatch);
   const memberHandlers = useMemberHandlers(dispatch);
 
   // Wrapper handlers for components

@@ -1,15 +1,8 @@
 /**
  * Factory methods for creating BuilderTeamDocument instances
  */
-import type {
-  PHAuthState,
-  PHDocumentState,
-  PHBaseState,
-} from "document-model";
-import {
-  createBaseState,
-  defaultBaseState,
-} from "document-model/core";
+import type { PHAuthState, PHDocumentState, PHBaseState } from "document-model";
+import { createBaseState, defaultBaseState } from "document-model/core";
 import type {
   BuilderTeamDocument,
   BuilderTeamLocalState,
@@ -20,20 +13,20 @@ import { createDocument } from "./utils.js";
 
 export function defaultGlobalState(): BuilderTeamGlobalState {
   return {
-  "profile": {
-    "logo": null,
-    "name": "",
-    "slug": "",
-    "description": null,
-    "socials": {
-      "xProfile": null,
-      "github": null,
-      "website": null
-    }
-  },
-  "members": [],
-  "spaces": []
-};
+    profile: {
+      logo: null,
+      name: "",
+      slug: "",
+      description: null,
+      socials: {
+        xProfile: null,
+        github: null,
+        website: null,
+      },
+    },
+    members: [],
+    spaces: [],
+  };
 }
 
 export function defaultLocalState(): BuilderTeamLocalState {
@@ -92,11 +85,13 @@ export function createBuilderTeamDocument(
   }>,
 ): BuilderTeamDocument {
   const document = createDocument(
-    state ? createState(
-      createBaseState(state.auth, state.document),
-      state.global,
-      state.local,
-    ) : undefined
+    state
+      ? createState(
+          createBaseState(state.auth, state.document),
+          state.global,
+          state.local,
+        )
+      : undefined,
   );
 
   return document;

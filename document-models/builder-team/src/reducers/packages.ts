@@ -1,11 +1,11 @@
-import type { BuilderTeamPackagesOperations } from "../../gen/packages/operations.js";
 import type { VetraPackageInfo } from "../../gen/types.js";
+import type { BuilderTeamPackagesOperations } from "@powerhousedao/vetra-builder-package/document-models/builder-team";
 
 // Extended type that includes sortOrder for internal sorting
 type PackageWithSortOrder = VetraPackageInfo & { sortOrder: number };
 
-export const reducer: BuilderTeamPackagesOperations = {
-  addPackageOperation(state, action, dispatch) {
+export const builderTeamPackagesOperations: BuilderTeamPackagesOperations = {
+  addPackageOperation(state, action) {
     const space = state.spaces.find(
       (space) => space.id === action.input.spaceId
     );
@@ -29,7 +29,7 @@ export const reducer: BuilderTeamPackagesOperations = {
 
     space.packages.push(newPackage);
   },
-  updatePackageInfoOperation(state, action, dispatch) {
+  updatePackageInfoOperation(state, action) {
     let packageIndex = -1;
     const spaceIndex = state.spaces.findIndex((space) => {
       packageIndex = space.packages.findIndex((p) => p.id === action.input.id);
@@ -44,7 +44,7 @@ export const reducer: BuilderTeamPackagesOperations = {
       ...action.input,
     };
   },
-  removePackageOperation(state, action, dispatch) {
+  removePackageOperation(state, action) {
     const spaceIndex = state.spaces.findIndex((space) =>
       space.packages.find((p) => p.id === action.input.id)
     );
@@ -55,7 +55,7 @@ export const reducer: BuilderTeamPackagesOperations = {
       spaceIndex
     ].packages.filter((p) => p.id !== action.input.id);
   },
-  reorderPackagesOperation(state, action, dispatch) {
+  reorderPackagesOperation(state, action) {
       const { spaceId, packageIds, targetIndex } = action.input;
 
       // Find the space

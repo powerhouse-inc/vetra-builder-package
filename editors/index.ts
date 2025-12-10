@@ -1,2 +1,1 @@
-export {};
-export { module as BuilderTeamEditor } from "./builder-team-editor/index.js";
+export { BuilderTeamEditor } from "./builder-team-editor/module.js";

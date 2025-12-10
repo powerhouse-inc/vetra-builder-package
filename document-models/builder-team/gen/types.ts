@@ -1,11 +1,7 @@
-import type { PHDocument, PHBaseState } from 'document-model';
-import type { BuilderTeamAction } from './actions.js';
-import type {
-  BuilderTeamState as BuilderTeamGlobalState,
-} from './schema/types.js';
+import type { PHDocument, PHBaseState } from "document-model";
+import type { BuilderTeamAction } from "./actions.js";
+import type { BuilderTeamState as BuilderTeamGlobalState } from "./schema/types.js";
 
-export { z } from './schema/index.js';
-export * from './schema/types.js';
 type BuilderTeamLocalState = Record<PropertyKey, never>;
 type BuilderTeamPHState = PHBaseState & {
   global: BuilderTeamGlobalState;
@@ -13,10 +9,12 @@ type BuilderTeamPHState = PHBaseState & {
 };
 type BuilderTeamDocument = PHDocument<BuilderTeamPHState>;
 
-export type { 
-  BuilderTeamGlobalState, 
+export * from "./schema/types.js";
+
+export type {
+  BuilderTeamGlobalState,
   BuilderTeamLocalState,
-  BuilderTeamPHState, 
+  BuilderTeamPHState,
   BuilderTeamAction,
   BuilderTeamDocument,
 };

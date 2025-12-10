@@ -1,6 +1,5 @@
 import { useCallback, useState } from "react";
 import {
-  type BuilderTeamDocument,
   actions,
 } from "../../../document-models/builder-team/index.js";
 import { generateNanoId } from "../../../utils/nano-id.js";
@@ -8,7 +7,6 @@ import { type DocumentDispatch } from "@powerhousedao/reactor-browser";
 import { type Action } from "document-model";
 
 export function usePackageHandlers(
-  spaces: BuilderTeamDocument["state"]["global"]["spaces"],
   dispatch: DocumentDispatch<Action>
 ) {
   const [editingPackageId, setEditingPackageId] = useState<string | null>(null);

@@ -1,11 +1,11 @@
-import type { BuilderTeamSpacesOperations } from "../../gen/spaces/operations.js";
 import type { VetraBuilderSpace } from "../../gen/types.js";
+import type { BuilderTeamSpacesOperations } from "@powerhousedao/vetra-builder-package/document-models/builder-team";
 
 // Extended type that includes sortOrder for internal sorting
 type SpaceWithSortOrder = VetraBuilderSpace & { sortOrder: number };
 
-export const reducer: BuilderTeamSpacesOperations = {
-  addSpaceOperation(state, action, dispatch) {
+export const builderTeamSpacesOperations: BuilderTeamSpacesOperations = {
+  addSpaceOperation(state, action) {
     const { id } = action.input;
     if (state.spaces.find((space) => space.id === id)) {
       return;
@@ -20,7 +20,7 @@ export const reducer: BuilderTeamSpacesOperations = {
       sortOrder,
     } as SpaceWithSortOrder);
   },
-  updateSpaceInfoOperation(state, action, dispatch) {
+  updateSpaceInfoOperation(state, action) {
     const { id, title, description } = action.input;
     const spaceIndex = state.spaces.findIndex((space) => space.id === id);
     if (spaceIndex === -1) {
@@ -32,7 +32,7 @@ export const reducer: BuilderTeamSpacesOperations = {
       description: description ?? state.spaces[spaceIndex].description,
     };
   },
-  removeSpaceOperation(state, action, dispatch) {
+  removeSpaceOperation(state, action) {
     const { id } = action.input;
     const spaceIndex = state.spaces.findIndex((space) => space.id === id);
     if (spaceIndex === -1) {
@@ -40,7 +40,7 @@ export const reducer: BuilderTeamSpacesOperations = {
     }
     state.spaces.splice(spaceIndex, 1);
   },
-  reorderSpacesOperation(state, action, dispatch) {
+  reorderSpacesOperation(state, action) {
       const { spaceIds, targetIndex } = action.input;
 
       // Find the spaces to move

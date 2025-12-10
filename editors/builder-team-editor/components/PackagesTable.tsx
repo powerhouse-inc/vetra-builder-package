@@ -26,7 +26,6 @@ export function PackagesTable({
         width: "250px",
         renderHeader: () => <div className="px-4">Package Name</div>,
         renderCell: (value, context) => {
-          const pkg = context.row;
           return (
             <div className="flex items-center gap-2 px-4">
               <Icon name="PackageManager" size="16px" color="rgb(75 85 99)" />

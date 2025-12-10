@@ -5,18 +5,22 @@
 
 import { describe, it, expect, beforeEach } from "vitest";
 import { generateMock } from "@powerhousedao/codegen";
-import utils from "../../gen/utils.js";
 import {
-  z,
   type SetLogoInput,
   type SetTeamNameInput,
   type SetSlugInput,
   type SetDescriptionInput,
   type SetSocialsInput,
+  SetDescriptionInputSchema,
+  SetLogoInputSchema,
+  SetSlugInputSchema,
+  SetSocialsInputSchema,
+  SetTeamNameInputSchema,
 } from "../../gen/schema/index.js";
 import { reducer } from "../../gen/reducer.js";
 import * as creators from "../../gen/profile/creators.js";
 import type { BuilderTeamDocument } from "../../gen/types.js";
+import { utils } from "../../utils.js";
 
 describe("Profile Operations", () => {
   let document: BuilderTeamDocument;
@@ -26,7 +30,7 @@ describe("Profile Operations", () => {
   });
 
   it("should handle setLogo operation", () => {
-    const input: SetLogoInput = generateMock(z.SetLogoInputSchema());
+    const input: SetLogoInput = generateMock(SetLogoInputSchema());
 
     const updatedDocument = reducer(document, creators.setLogo(input));
 
@@ -38,7 +42,7 @@ describe("Profile Operations", () => {
     expect(updatedDocument.operations.global[0].index).toEqual(0);
   });
   it("should handle setTeamName operation", () => {
-    const input: SetTeamNameInput = generateMock(z.SetTeamNameInputSchema());
+    const input: SetTeamNameInput = generateMock(SetTeamNameInputSchema());
 
     const updatedDocument = reducer(document, creators.setTeamName(input));
 
@@ -52,7 +56,7 @@ describe("Profile Operations", () => {
     expect(updatedDocument.operations.global[0].index).toEqual(0);
   });
   it("should handle setSlug operation", () => {
-    const input: SetSlugInput = generateMock(z.SetSlugInputSchema());
+    const input: SetSlugInput = generateMock(SetSlugInputSchema());
 
     const updatedDocument = reducer(document, creators.setSlug(input));
 
@@ -65,7 +69,7 @@ describe("Profile Operations", () => {
   });
   it("should handle setDescription operation", () => {
     const input: SetDescriptionInput = generateMock(
-      z.SetDescriptionInputSchema(),
+      SetDescriptionInputSchema(),
     );
 
     const updatedDocument = reducer(document, creators.setDescription(input));
@@ -80,7 +84,7 @@ describe("Profile Operations", () => {
     expect(updatedDocument.operations.global[0].index).toEqual(0);
   });
   it("should handle setSocials operation", () => {
-    const input: SetSocialsInput = generateMock(z.SetSocialsInputSchema());
+    const input: SetSocialsInput = generateMock(SetSocialsInputSchema());
 
     const updatedDocument = reducer(document, creators.setSocials(input));
 

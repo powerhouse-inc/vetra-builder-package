@@ -1,51 +1,55 @@
-import { createAction } from 'document-model/core';
-import { z,
-    type AddPackageInput,
-    type UpdatePackageInfoInput,
-    type RemovePackageInput,
-    type ReorderPackagesInput,
-} from '../types.js';
+import { createAction } from "document-model/core";
 import {
-    type AddPackageAction,
-    type UpdatePackageInfoAction,
-    type RemovePackageAction,
-    type ReorderPackagesAction,
-} from './actions.js';
+  AddPackageInputSchema,
+  UpdatePackageInfoInputSchema,
+  RemovePackageInputSchema,
+  ReorderPackagesInputSchema,
+} from "../schema/zod.js";
+import type {
+  AddPackageInput,
+  UpdatePackageInfoInput,
+  RemovePackageInput,
+  ReorderPackagesInput,
+} from "../types.js";
+import type {
+  AddPackageAction,
+  UpdatePackageInfoAction,
+  RemovePackageAction,
+  ReorderPackagesAction,
+} from "./actions.js";
 
 export const addPackage = (input: AddPackageInput) =>
-    createAction<AddPackageAction>(
-        'ADD_PACKAGE',
-        {...input},
-        undefined,
-        z.AddPackageInputSchema,
-        'global'
-    );
+  createAction<AddPackageAction>(
+    "ADD_PACKAGE",
+    { ...input },
+    undefined,
+    AddPackageInputSchema,
+    "global",
+  );
 
 export const updatePackageInfo = (input: UpdatePackageInfoInput) =>
-    createAction<UpdatePackageInfoAction>(
-        'UPDATE_PACKAGE_INFO',
-        {...input},
-        undefined,
-        z.UpdatePackageInfoInputSchema,
-        'global'
-    );
+  createAction<UpdatePackageInfoAction>(
+    "UPDATE_PACKAGE_INFO",
+    { ...input },
+    undefined,
+    UpdatePackageInfoInputSchema,
+    "global",
+  );
 
 export const removePackage = (input: RemovePackageInput) =>
-    createAction<RemovePackageAction>(
-        'REMOVE_PACKAGE',
-        {...input},
-        undefined,
-        z.RemovePackageInputSchema,
-        'global'
-    );
+  createAction<RemovePackageAction>(
+    "REMOVE_PACKAGE",
+    { ...input },
+    undefined,
+    RemovePackageInputSchema,
+    "global",
+  );
 
 export const reorderPackages = (input: ReorderPackagesInput) =>
-    createAction<ReorderPackagesAction>(
-        'REORDER_PACKAGES',
-        {...input},
-        undefined,
-        z.ReorderPackagesInputSchema,
-        'global'
-    );
-
-
+  createAction<ReorderPackagesAction>(
+    "REORDER_PACKAGES",
+    { ...input },
+    undefined,
+    ReorderPackagesInputSchema,
+    "global",
+  );

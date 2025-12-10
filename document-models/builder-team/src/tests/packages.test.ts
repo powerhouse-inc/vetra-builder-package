@@ -5,16 +5,18 @@
 
 import { describe, it, expect, beforeEach } from "vitest";
 import { generateMock } from "@powerhousedao/codegen";
-import utils from "../../gen/utils.js";
 import {
-  z,
   type AddPackageInput,
   type UpdatePackageInfoInput,
   type RemovePackageInput,
+  AddPackageInputSchema,
+  RemovePackageInputSchema,
+  UpdatePackageInfoInputSchema,
 } from "../../gen/schema/index.js";
 import { reducer } from "../../gen/reducer.js";
 import * as creators from "../../gen/packages/creators.js";
 import type { BuilderTeamDocument } from "../../gen/types.js";
+import { utils } from "../../utils.js";
 
 describe("Packages Operations", () => {
   let document: BuilderTeamDocument;
@@ -24,7 +26,7 @@ describe("Packages Operations", () => {
   });
 
   it("should handle addPackage operation", () => {
-    const input: AddPackageInput = generateMock(z.AddPackageInputSchema());
+    const input: AddPackageInput = generateMock(AddPackageInputSchema());
 
     const updatedDocument = reducer(document, creators.addPackage(input));
 
@@ -39,7 +41,7 @@ describe("Packages Operations", () => {
   });
   it("should handle updatePackageInfo operation", () => {
     const input: UpdatePackageInfoInput = generateMock(
-      z.UpdatePackageInfoInputSchema(),
+      UpdatePackageInfoInputSchema(),
     );
 
     const updatedDocument = reducer(
@@ -58,7 +60,7 @@ describe("Packages Operations", () => {
   });
   it("should handle removePackage operation", () => {
     const input: RemovePackageInput = generateMock(
-      z.RemovePackageInputSchema(),
+      RemovePackageInputSchema(),
     );
 
     const updatedDocument = reducer(document, creators.removePackage(input));

@@ -5,16 +5,18 @@
 
 import { describe, it, expect, beforeEach } from "vitest";
 import { generateMock } from "@powerhousedao/codegen";
-import utils from "../../gen/utils.js";
 import {
-  z,
   type AddMemberInput,
   type UpdateMemberInfoInput,
   type RemoveMemberInput,
+  AddMemberInputSchema,
+  RemoveMemberInputSchema,
+  UpdateMemberInfoInputSchema,
 } from "../../gen/schema/index.js";
 import { reducer } from "../../gen/reducer.js";
 import * as creators from "../../gen/member/creators.js";
 import type { BuilderTeamDocument } from "../../gen/types.js";
+import { utils } from "../../utils.js";
 
 describe("Member Operations", () => {
   let document: BuilderTeamDocument;
@@ -24,7 +26,7 @@ describe("Member Operations", () => {
   });
 
   it("should handle addMember operation", () => {
-    const input: AddMemberInput = generateMock(z.AddMemberInputSchema());
+    const input: AddMemberInput = generateMock(AddMemberInputSchema());
 
     const updatedDocument = reducer(document, creators.addMember(input));
 
@@ -37,7 +39,7 @@ describe("Member Operations", () => {
   });
   it("should handle updateMemberInfo operation", () => {
     const input: UpdateMemberInfoInput = generateMock(
-      z.UpdateMemberInfoInputSchema(),
+      UpdateMemberInfoInputSchema(),
     );
 
     const updatedDocument = reducer(document, creators.updateMemberInfo(input));
@@ -52,7 +54,7 @@ describe("Member Operations", () => {
     expect(updatedDocument.operations.global[0].index).toEqual(0);
   });
   it("should handle removeMember operation", () => {
-    const input: RemoveMemberInput = generateMock(z.RemoveMemberInputSchema());
+    const input: RemoveMemberInput = generateMock(RemoveMemberInputSchema());
 
     const updatedDocument = reducer(document, creators.removeMember(input));
 
