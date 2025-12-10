@@ -3,7 +3,6 @@ import { type DB } from "../../processors/vetra-builder-relational-db-processor/
 import { VetraBuilderRelationalDbProcessor } from "../../processors/vetra-builder-relational-db-processor/index.js";
 
 export const getResolvers = (subgraph: ISubgraph): Record<string, unknown> => {
-  const reactor = subgraph.reactor;
   const db = subgraph.relationalDb;
   const DEFAULT_DRIVE_ID = process.env.VETRA_BUILDER_DRIVE_ID || "powerhouse";
 

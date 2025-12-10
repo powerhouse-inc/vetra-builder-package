@@ -3,12 +3,9 @@
  * - change it by adding new tests or modifying the existing ones
  */
 
-import { describe, it, expect, beforeEach } from "vitest";
-import utils, {
-  initialGlobalState,
-  initialLocalState,
-} from "../../gen/utils.js";
-
+import { describe, it, expect } from "vitest";
+import { initialGlobalState, initialLocalState } from "../../gen/utils.js";
+import { utils } from "../../utils.js";
 describe("Builder Team Document Model", () => {
   it("should create a new Builder Team document", () => {
     const document = utils.createDocument();

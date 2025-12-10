@@ -36,44 +36,46 @@
   },
   "exports": {
     ".": {
-      "development": "./index.ts",
       "types": "./dist/index.d.ts",
       "default": "./dist/index.js"
     },
     "./document-models": {
-      "development": "./document-models/index.ts",
       "types": "./dist/document-models/index.d.ts",
       "default": "./dist/document-models/index.js"
     },
     "./editors": {
-      "development": "./editors/index.ts",
       "types": "./dist/editors/index.d.ts",
       "default": "./dist/editors/index.js"
     },
     "./subgraphs": {
-      "development": "./subgraphs/index.ts",
       "types": "./dist/subgraphs/index.d.ts",
       "default": "./dist/subgraphs/index.js"
     },
     "./processors": {
-      "development": "./processors/index.ts",
       "types": "./dist/processors/index.d.ts",
       "default": "./dist/processors/index.js"
     },
     "./manifest": {
-      "development": "./powerhouse.manifest.json",
       "default": "./dist/powerhouse.manifest.json"
     },
-    "./style.css": "./dist/style.css"
+    "./style.css": "./dist/style.css",
+    "./document-models/*": {
+      "types": "./dist/document-models/*/index.d.ts",
+      "default": "./dist/document-models/*/index.js"
+    },
+    "./editors/*": {
+      "types": "./dist/editors/*/index.d.ts",
+      "default": "./dist/editors/*/index.js"
+    }
   },
   "scripts": {
-    "lint": "eslint . --cache",
-    "lint:fix": "eslint . --fix --cache",
+    "lint": "eslint --config eslint.config.js --cache --cache-strategy content",
+    "lint:fix": "npm run lint -- --fix",
     "build:tsc": "tsc",
     "build:tsc:watch": "tsc --watch",
     "build:css": "npx @tailwindcss/cli -i ./style.css -o ./dist/style.css",
     "build:css:watch": "npx @tailwindcss/cli -i ./style.css -o ./dist/style.css --watch",
-    "build": "npm run build:tsc && npm run build:css",
+    "build": "npm run tsc && npm run tailwind",
     "test": "vitest run",
     "test:watch": "vitest",
     "typecheck": "tsc --noEmit",
@@ -83,7 +85,13 @@
     "reactor": "ph-cli reactor",
     "service": "ph-cli service",
     "service-startup": "bash ./node_modules/@powerhousedao/ph-cli/dist/scripts/service-startup.sh",
-    "service-unstartup": "bash ./node_modules/@powerhousedao/ph-cli/dist/scripts/service-unstartup.sh"
+    "service-unstartup": "bash ./node_modules/@powerhousedao/ph-cli/dist/scripts/service-unstartup.sh",
+    "tsc": "tsc",
+    "tsc:watch": "tsc --watch",
+    "tailwind": "npx @tailwindcss/cli -i ./style.css -o ./dist/style.css",
+    "check-circular-imports": "npx dpdm -T ./index.ts",
+    "vetra": "ph-cli vetra",
+    "migrate": "ph-cli migrate"
   },
   "dependencies": {
     "@powerhousedao/builder-tools": "staging",
@@ -104,10 +112,11 @@
   },
   "devDependencies": {
     "@electric-sql/pglite": "^0.2.17",
-    "@eslint/js": "^9.37.0",
+    "@eslint/js": "^9.38.0",
     "@openfeature/core": "^1.9.1",
     "@powerhousedao/analytics-engine-core": "^0.5.0",
     "@powerhousedao/codegen": "staging",
+    "@powerhousedao/config": "staging",
     "@powerhousedao/ph-cli": "staging",
     "@powerhousedao/reactor-api": "staging",
     "@powerhousedao/reactor-browser": "staging",
@@ -117,25 +126,30 @@
     "@powerhousedao/vetra": "staging",
     "@semantic-release/changelog": "^6.0.3",
     "@semantic-release/git": "^10.0.1",
-    "@tailwindcss/cli": "^4.1.14",
-    "@types/node": "^22.13.11",
+    "@tailwindcss/cli": "^4.1.4",
+    "@testing-library/react": "^16.3.0",
+    "@types/adm-zip": "^0.5.7",
+    "@types/node": "^24.9.2",
     "@types/react": "^19.2.2",
     "@types/react-dom": "^19.2.2",
-    "@vitejs/plugin-react": "^5.0.4",
+    "@vitejs/plugin-react": "^5.1.0",
     "adm-zip": "^0.5.16",
     "document-drive": "staging",
-    "eslint": "^9.37.0",
-    "eslint-plugin-react": "^7.37.4",
-    "eslint-plugin-react-hooks": "^5.2.0",
-    "globals": "^16.0.0",
+    "eslint": "^9.38.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-prettier": "^5.5.4",
+    "eslint-plugin-react": "^7.37.5",
+    "eslint-plugin-react-hooks": "^7.0.1",
+    "globals": "^16.4.0",
+    "package-manager-detector": "^0.2.8",
     "pm2": "^5.4.3",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "storybook": "^8.6.14",
-    "tailwindcss": "^4.1.14",
+    "tailwindcss": "^4.1.16",
     "typescript": "^5.9.3",
-    "typescript-eslint": "^8.46.0",
-    "vite": "^7.1.9",
+    "typescript-eslint": "^8.46.2",
+    "vite": "^6.2.3",
     "vite-plugin-node-polyfills": "^0.24.0",
     "vitest": "^3.0.9"
   },
@@ -146,5 +160,7 @@
   "overrides": {
     "react": "^19.2.0",
     "react-dom": "^19.2.0"
-  }
+  },
+  "readme": "ERROR: No README data found!",
+  "_id": "@powerhousedao/vetra-builder-package@5.0.1-staging"
 }

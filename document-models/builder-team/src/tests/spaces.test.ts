@@ -5,16 +5,18 @@
 
 import { describe, it, expect, beforeEach } from "vitest";
 import { generateMock } from "@powerhousedao/codegen";
-import utils from "../../gen/utils.js";
 import {
-  z,
   type AddSpaceInput,
   type UpdateSpaceInfoInput,
   type RemoveSpaceInput,
+  AddSpaceInputSchema,
+  RemoveSpaceInputSchema,
+  UpdateSpaceInfoInputSchema,
 } from "../../gen/schema/index.js";
 import { reducer } from "../../gen/reducer.js";
 import * as creators from "../../gen/spaces/creators.js";
 import type { BuilderTeamDocument } from "../../gen/types.js";
+import { utils } from "../../utils.js";
 
 describe("Spaces Operations", () => {
   let document: BuilderTeamDocument;
@@ -24,7 +26,7 @@ describe("Spaces Operations", () => {
   });
 
   it("should handle addSpace operation", () => {
-    const input: AddSpaceInput = generateMock(z.AddSpaceInputSchema());
+    const input: AddSpaceInput = generateMock(AddSpaceInputSchema());
 
     const updatedDocument = reducer(document, creators.addSpace(input));
 
@@ -37,7 +39,7 @@ describe("Spaces Operations", () => {
   });
   it("should handle updateSpaceInfo operation", () => {
     const input: UpdateSpaceInfoInput = generateMock(
-      z.UpdateSpaceInfoInputSchema(),
+      UpdateSpaceInfoInputSchema(),
     );
 
     const updatedDocument = reducer(document, creators.updateSpaceInfo(input));
@@ -52,7 +54,7 @@ describe("Spaces Operations", () => {
     expect(updatedDocument.operations.global[0].index).toEqual(0);
   });
   it("should handle removeSpace operation", () => {
-    const input: RemoveSpaceInput = generateMock(z.RemoveSpaceInputSchema());
+    const input: RemoveSpaceInput = generateMock(RemoveSpaceInputSchema());
 
     const updatedDocument = reducer(document, creators.removeSpace(input));
 
