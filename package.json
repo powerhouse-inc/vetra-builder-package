@@ -1,7 +1,7 @@
 {
   "name": "@powerhousedao/vetra-builder-package",
   "description": "",
-  "version": "5.0.2-alpha",
+  "version": "5.1.0-staging.0",
   "license": "AGPL-3.0-only",
   "type": "module",
   "files": [
