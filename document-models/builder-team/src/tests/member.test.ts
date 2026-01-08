@@ -1,42 +1,25 @@
-/**
- * This is a scaffold file meant for customization:
- * - change it by adding new tests or modifying the existing ones
- */
-
-import { describe, it, expect, beforeEach } from "vitest";
 import { generateMock } from "@powerhousedao/codegen";
-import {
-  type AddMemberInput,
-  type UpdateMemberInfoInput,
-  type RemoveMemberInput,
-  AddMemberInputSchema,
-  RemoveMemberInputSchema,
-  UpdateMemberInfoInputSchema,
-} from "../../gen/schema/index.js";
-import { reducer } from "../../gen/reducer.js";
-import * as creators from "../../gen/member/creators.js";
-import type { BuilderTeamDocument } from "../../gen/types.js";
-import { utils } from "../../utils.js";
+import { describe, expect, it } from "vitest";
 import {
   reducer,
   utils,
+  isBuilderTeamDocument,
+  addMember,
+  updateMemberInfo,
+  removeMember,
   AddMemberInputSchema,
   UpdateMemberInfoInputSchema,
   RemoveMemberInputSchema,
 } from "@powerhousedao/vetra-builder-package/document-models/builder-team";
 
-describe("Member Operations", () => {
-  let document: BuilderTeamDocument;
-
-  beforeEach(() => {
-    document = utils.createDocument();
-  });
-
+describe("MemberOperations", () => {
   it("should handle addMember operation", () => {
-    const input: AddMemberInput = generateMock(AddMemberInputSchema());
+    const document = utils.createDocument();
+    const input = generateMock(AddMemberInputSchema());
 
-    const updatedDocument = reducer(document, creators.addMember(input));
+    const updatedDocument = reducer(document, addMember(input));
 
+    expect(isBuilderTeamDocument(updatedDocument)).toBe(true);
     expect(updatedDocument.operations.global).toHaveLength(1);
     expect(updatedDocument.operations.global[0].action.type).toBe("ADD_MEMBER");
     expect(updatedDocument.operations.global[0].action.input).toStrictEqual(
@@ -44,13 +27,14 @@ describe("Member Operations", () => {
     );
     expect(updatedDocument.operations.global[0].index).toEqual(0);
   });
+
   it("should handle updateMemberInfo operation", () => {
-    const input: UpdateMemberInfoInput = generateMock(
-      UpdateMemberInfoInputSchema(),
-    );
+    const document = utils.createDocument();
+    const input = generateMock(UpdateMemberInfoInputSchema());
 
-    const updatedDocument = reducer(document, creators.updateMemberInfo(input));
+    const updatedDocument = reducer(document, updateMemberInfo(input));
 
+    expect(isBuilderTeamDocument(updatedDocument)).toBe(true);
     expect(updatedDocument.operations.global).toHaveLength(1);
     expect(updatedDocument.operations.global[0].action.type).toBe(
       "UPDATE_MEMBER_INFO",
@@ -60,11 +44,14 @@ describe("Member Operations", () => {
     );
     expect(updatedDocument.operations.global[0].index).toEqual(0);
   });
+
   it("should handle removeMember operation", () => {
-    const input: RemoveMemberInput = generateMock(RemoveMemberInputSchema());
+    const document = utils.createDocument();
+    const input = generateMock(RemoveMemberInputSchema());
 
-    const updatedDocument = reducer(document, creators.removeMember(input));
+    const updatedDocument = reducer(document, removeMember(input));
 
+    expect(isBuilderTeamDocument(updatedDocument)).toBe(true);
     expect(updatedDocument.operations.global).toHaveLength(1);
     expect(updatedDocument.operations.global[0].action.type).toBe(
       "REMOVE_MEMBER",

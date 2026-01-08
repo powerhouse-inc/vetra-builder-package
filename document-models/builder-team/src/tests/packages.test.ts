@@ -1,26 +1,12 @@
-/**
- * This is a scaffold file meant for customization:
- * - change it by adding new tests or modifying the existing ones
- */
-
-import { describe, it, expect, beforeEach } from "vitest";
 import { generateMock } from "@powerhousedao/codegen";
-import {
-  type AddPackageInput,
-  type UpdatePackageInfoInput,
-  type RemovePackageInput,
-  AddPackageInputSchema,
-  RemovePackageInputSchema,
-  UpdatePackageInfoInputSchema,
-} from "../../gen/schema/index.js";
-import { reducer } from "../../gen/reducer.js";
-import * as creators from "../../gen/packages/creators.js";
-import type { BuilderTeamDocument } from "../../gen/types.js";
-import { utils } from "../../utils.js";
+import { describe, expect, it } from "vitest";
 import {
   reducer,
   utils,
   isBuilderTeamDocument,
+  addPackage,
+  updatePackageInfo,
+  removePackage,
   reorderPackages,
   AddPackageInputSchema,
   UpdatePackageInfoInputSchema,
@@ -28,18 +14,14 @@ import {
   ReorderPackagesInputSchema,
 } from "@powerhousedao/vetra-builder-package/document-models/builder-team";
 
-describe("Packages Operations", () => {
-  let document: BuilderTeamDocument;
-
-  beforeEach(() => {
-    document = utils.createDocument();
-  });
-
+describe("PackagesOperations", () => {
   it("should handle addPackage operation", () => {
-    const input: AddPackageInput = generateMock(AddPackageInputSchema());
+    const document = utils.createDocument();
+    const input = generateMock(AddPackageInputSchema());
 
-    const updatedDocument = reducer(document, creators.addPackage(input));
+    const updatedDocument = reducer(document, addPackage(input));
 
+    expect(isBuilderTeamDocument(updatedDocument)).toBe(true);
     expect(updatedDocument.operations.global).toHaveLength(1);
     expect(updatedDocument.operations.global[0].action.type).toBe(
       "ADD_PACKAGE",
@@ -49,16 +31,14 @@ describe("Packages Operations", () => {
     );
     expect(updatedDocument.operations.global[0].index).toEqual(0);
   });
+
   it("should handle updatePackageInfo operation", () => {
-    const input: UpdatePackageInfoInput = generateMock(
-      UpdatePackageInfoInputSchema(),
-    );
+    const document = utils.createDocument();
+    const input = generateMock(UpdatePackageInfoInputSchema());
 
-    const updatedDocument = reducer(
-      document,
-      creators.updatePackageInfo(input),
-    );
+    const updatedDocument = reducer(document, updatePackageInfo(input));
 
+    expect(isBuilderTeamDocument(updatedDocument)).toBe(true);
     expect(updatedDocument.operations.global).toHaveLength(1);
     expect(updatedDocument.operations.global[0].action.type).toBe(
       "UPDATE_PACKAGE_INFO",
@@ -68,11 +48,14 @@ describe("Packages Operations", () => {
     );
     expect(updatedDocument.operations.global[0].index).toEqual(0);
   });
+
   it("should handle removePackage operation", () => {
-    const input: RemovePackageInput = generateMock(RemovePackageInputSchema());
+    const document = utils.createDocument();
+    const input = generateMock(RemovePackageInputSchema());
 
-    const updatedDocument = reducer(document, creators.removePackage(input));
+    const updatedDocument = reducer(document, removePackage(input));
 
+    expect(isBuilderTeamDocument(updatedDocument)).toBe(true);
     expect(updatedDocument.operations.global).toHaveLength(1);
     expect(updatedDocument.operations.global[0].action.type).toBe(
       "REMOVE_PACKAGE",
