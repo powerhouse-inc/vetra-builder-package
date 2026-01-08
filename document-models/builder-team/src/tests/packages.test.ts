@@ -17,6 +17,16 @@ import { reducer } from "../../gen/reducer.js";
 import * as creators from "../../gen/packages/creators.js";
 import type { BuilderTeamDocument } from "../../gen/types.js";
 import { utils } from "../../utils.js";
+import {
+  reducer,
+  utils,
+  isBuilderTeamDocument,
+  reorderPackages,
+  AddPackageInputSchema,
+  UpdatePackageInfoInputSchema,
+  RemovePackageInputSchema,
+  ReorderPackagesInputSchema,
+} from "@powerhousedao/vetra-builder-package/document-models/builder-team";
 
 describe("Packages Operations", () => {
   let document: BuilderTeamDocument;
@@ -59,15 +69,30 @@ describe("Packages Operations", () => {
     expect(updatedDocument.operations.global[0].index).toEqual(0);
   });
   it("should handle removePackage operation", () => {
-    const input: RemovePackageInput = generateMock(
-      RemovePackageInputSchema(),
-    );
+    const input: RemovePackageInput = generateMock(RemovePackageInputSchema());
 
     const updatedDocument = reducer(document, creators.removePackage(input));
 
     expect(updatedDocument.operations.global).toHaveLength(1);
     expect(updatedDocument.operations.global[0].action.type).toBe(
       "REMOVE_PACKAGE",
+    );
+    expect(updatedDocument.operations.global[0].action.input).toStrictEqual(
+      input,
+    );
+    expect(updatedDocument.operations.global[0].index).toEqual(0);
+  });
+
+  it("should handle reorderPackages operation", () => {
+    const document = utils.createDocument();
+    const input = generateMock(ReorderPackagesInputSchema());
+
+    const updatedDocument = reducer(document, reorderPackages(input));
+
+    expect(isBuilderTeamDocument(updatedDocument)).toBe(true);
+    expect(updatedDocument.operations.global).toHaveLength(1);
+    expect(updatedDocument.operations.global[0].action.type).toBe(
+      "REORDER_PACKAGES",
     );
     expect(updatedDocument.operations.global[0].action.input).toStrictEqual(
       input,

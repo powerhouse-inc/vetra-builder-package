@@ -1,12 +1,12 @@
 import { type SignalDispatch } from "document-model";
-import {
-  type SetLogoAction,
-  type SetTeamNameAction,
-  type SetSlugAction,
-  type SetDescriptionAction,
-  type SetSocialsAction,
+import type {
+  SetLogoAction,
+  SetTeamNameAction,
+  SetSlugAction,
+  SetDescriptionAction,
+  SetSocialsAction,
 } from "./actions.js";
-import { type BuilderTeamState } from "../types.js";
+import type { BuilderTeamState } from "../types.js";
 
 export interface BuilderTeamProfileOperations {
   setLogoOperation: (

@@ -17,16 +17,19 @@ export const builderTeamMemberOperations: BuilderTeamMemberOperations = {
   },
   updateMemberInfoOperation(state, action) {
     const memberIndex = state.members.findIndex(
-      (member) => member.id === action.input.id
+      (member) => member.id === action.input.id,
     );
     if (memberIndex === -1) {
       return;
     }
-    state.members[memberIndex] = { ...state.members[memberIndex], ...action.input };
+    state.members[memberIndex] = {
+      ...state.members[memberIndex],
+      ...action.input,
+    };
   },
   removeMemberOperation(state, action) {
     const memberIndex = state.members.findIndex(
-      (member) => member.id === action.input.id
+      (member) => member.id === action.input.id,
     );
     if (memberIndex === -1) {
       return;

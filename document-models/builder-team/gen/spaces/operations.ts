@@ -1,11 +1,11 @@
 import { type SignalDispatch } from "document-model";
-import {
-  type AddSpaceAction,
-  type UpdateSpaceInfoAction,
-  type RemoveSpaceAction,
-  type ReorderSpacesAction,
+import type {
+  AddSpaceAction,
+  UpdateSpaceInfoAction,
+  RemoveSpaceAction,
+  ReorderSpacesAction,
 } from "./actions.js";
-import { type BuilderTeamState } from "../types.js";
+import type { BuilderTeamState } from "../types.js";
 
 export interface BuilderTeamSpacesOperations {
   addSpaceOperation: (

@@ -1,11 +1,11 @@
 import { type SignalDispatch } from "document-model";
-import {
-  type AddPackageAction,
-  type UpdatePackageInfoAction,
-  type RemovePackageAction,
-  type ReorderPackagesAction,
+import type {
+  AddPackageAction,
+  UpdatePackageInfoAction,
+  RemovePackageAction,
+  ReorderPackagesAction,
 } from "./actions.js";
-import { type BuilderTeamState } from "../types.js";
+import type { BuilderTeamState } from "../types.js";
 
 export interface BuilderTeamPackagesOperations {
   addPackageOperation: (

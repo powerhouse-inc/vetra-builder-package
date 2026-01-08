@@ -21,6 +21,15 @@ import { reducer } from "../../gen/reducer.js";
 import * as creators from "../../gen/profile/creators.js";
 import type { BuilderTeamDocument } from "../../gen/types.js";
 import { utils } from "../../utils.js";
+import {
+  reducer,
+  utils,
+  SetLogoInputSchema,
+  SetTeamNameInputSchema,
+  SetSlugInputSchema,
+  SetDescriptionInputSchema,
+  SetSocialsInputSchema,
+} from "@powerhousedao/vetra-builder-package/document-models/builder-team";
 
 describe("Profile Operations", () => {
   let document: BuilderTeamDocument;

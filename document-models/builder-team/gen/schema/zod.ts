@@ -1,4 +1,4 @@
-import { z } from "zod";
+import * as z from "zod";
 import type {
   AddMemberInput,
   AddPackageInput,
@@ -25,7 +25,7 @@ import type {
 } from "./types.js";
 
 type Properties<T> = Required<{
-  [K in keyof T]: z.ZodType<T[K], any, T[K]>;
+  [K in keyof T]: z.ZodType<T[K]>;
 }>;
 
 type definedNonNullAny = {};
@@ -65,9 +65,9 @@ export function BuilderTeamStateSchema(): z.ZodObject<
 > {
   return z.object({
     __typename: z.literal("BuilderTeamState").optional(),
-    members: z.array(RenownProfileInfoSchema()),
-    profile: VetraBuilderProfileSchema(),
-    spaces: z.array(VetraBuilderSpaceSchema()),
+    members: z.array(z.lazy(() => RenownProfileInfoSchema())),
+    profile: z.lazy(() => VetraBuilderProfileSchema()),
+    spaces: z.array(z.lazy(() => VetraBuilderSpaceSchema())),
   });
 }
 
@@ -100,11 +100,11 @@ export function RenownProfileInfoSchema(): z.ZodObject<
 > {
   return z.object({
     __typename: z.literal("RenownProfileInfo").optional(),
-    ethAddress: z.string().nullable(),
+    ethAddress: z.string().nullish(),
     id: z.string(),
-    name: z.string().nullable(),
-    phid: z.string().nullable(),
-    profileImage: z.string().nullable(),
+    name: z.string().nullish(),
+    phid: z.string().nullish(),
+    profileImage: z.string().nullish(),
   });
 }
 
@@ -207,11 +207,11 @@ export function VetraBuilderProfileSchema(): z.ZodObject<
 > {
   return z.object({
     __typename: z.literal("VetraBuilderProfile").optional(),
-    description: z.string().nullable(),
-    logo: z.string().url().nullable(),
+    description: z.string().nullish(),
+    logo: z.string().url().nullish(),
     name: z.string(),
     slug: z.string(),
-    socials: VetraBuilderSocialsSchema(),
+    socials: z.lazy(() => VetraBuilderSocialsSchema()),
   });
 }
 
@@ -220,9 +220,9 @@ export function VetraBuilderSocialsSchema(): z.ZodObject<
 > {
   return z.object({
     __typename: z.literal("VetraBuilderSocials").optional(),
-    github: z.string().url().nullable(),
-    website: z.string().url().nullable(),
-    xProfile: z.string().url().nullable(),
+    github: z.string().url().nullish(),
+    website: z.string().url().nullish(),
+    xProfile: z.string().url().nullish(),
   });
 }
 
@@ -231,9 +231,9 @@ export function VetraBuilderSpaceSchema(): z.ZodObject<
 > {
   return z.object({
     __typename: z.literal("VetraBuilderSpace").optional(),
-    description: z.string().nullable(),
+    description: z.string().nullish(),
     id: z.string(),
-    packages: z.array(VetraPackageInfoSchema()),
+    packages: z.array(z.lazy(() => VetraPackageInfoSchema())),
     title: z.string(),
   });
 }
@@ -243,12 +243,12 @@ export function VetraPackageInfoSchema(): z.ZodObject<
 > {
   return z.object({
     __typename: z.literal("VetraPackageInfo").optional(),
-    description: z.string().nullable(),
-    github: z.string().nullable(),
+    description: z.string().nullish(),
+    github: z.string().nullish(),
     id: z.string(),
-    npm: z.string().nullable(),
-    phid: z.string().nullable(),
-    title: z.string().nullable(),
-    vetraDriveUrl: z.string().url().nullable(),
+    npm: z.string().nullish(),
+    phid: z.string().nullish(),
+    title: z.string().nullish(),
+    vetraDriveUrl: z.string().url().nullish(),
   });
 }

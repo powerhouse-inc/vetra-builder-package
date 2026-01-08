@@ -1,10 +1,10 @@
 import { type SignalDispatch } from "document-model";
-import {
-  type AddMemberAction,
-  type UpdateMemberInfoAction,
-  type RemoveMemberAction,
+import type {
+  AddMemberAction,
+  UpdateMemberInfoAction,
+  RemoveMemberAction,
 } from "./actions.js";
-import { type BuilderTeamState } from "../types.js";
+import type { BuilderTeamState } from "../types.js";
 
 export interface BuilderTeamMemberOperations {
   addMemberOperation: (

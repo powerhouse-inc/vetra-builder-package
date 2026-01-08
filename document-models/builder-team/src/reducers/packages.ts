@@ -7,7 +7,7 @@ type PackageWithSortOrder = VetraPackageInfo & { sortOrder: number };
 export const builderTeamPackagesOperations: BuilderTeamPackagesOperations = {
   addPackageOperation(state, action) {
     const space = state.spaces.find(
-      (space) => space.id === action.input.spaceId
+      (space) => space.id === action.input.spaceId,
     );
     if (!space) {
       return;
@@ -46,7 +46,7 @@ export const builderTeamPackagesOperations: BuilderTeamPackagesOperations = {
   },
   removePackageOperation(state, action) {
     const spaceIndex = state.spaces.findIndex((space) =>
-      space.packages.find((p) => p.id === action.input.id)
+      space.packages.find((p) => p.id === action.input.id),
     );
     if (spaceIndex === -1) {
       return;
@@ -56,20 +56,24 @@ export const builderTeamPackagesOperations: BuilderTeamPackagesOperations = {
     ].packages.filter((p) => p.id !== action.input.id);
   },
   reorderPackagesOperation(state, action) {
-      const { spaceId, packageIds, targetIndex } = action.input;
+    const { spaceId, packageIds, targetIndex } = action.input;
 
-      // Find the space
-      const space = state.spaces.find(s => s.id === spaceId);
-      if (!space) {
-        return;
-      }
+    // Find the space
+    const space = state.spaces.find((s) => s.id === spaceId);
+    if (!space) {
+      return;
+    }
 
-      // Find the packages to move
-      const packagesToMove = space.packages.filter(pkg => packageIds.includes(pkg.id));
-      const remainingPackages = space.packages.filter(pkg => !packageIds.includes(pkg.id));
+    // Find the packages to move
+    const packagesToMove = space.packages.filter((pkg) =>
+      packageIds.includes(pkg.id),
+    );
+    const remainingPackages = space.packages.filter(
+      (pkg) => !packageIds.includes(pkg.id),
+    );
 
-      // Insert the packages at the target index
-      remainingPackages.splice(targetIndex, 0, ...packagesToMove);
-      space.packages = remainingPackages;
+    // Insert the packages at the target index
+    remainingPackages.splice(targetIndex, 0, ...packagesToMove);
+    space.packages = remainingPackages;
   },
 };

@@ -17,6 +17,13 @@ import { reducer } from "../../gen/reducer.js";
 import * as creators from "../../gen/member/creators.js";
 import type { BuilderTeamDocument } from "../../gen/types.js";
 import { utils } from "../../utils.js";
+import {
+  reducer,
+  utils,
+  AddMemberInputSchema,
+  UpdateMemberInfoInputSchema,
+  RemoveMemberInputSchema,
+} from "@powerhousedao/vetra-builder-package/document-models/builder-team";
 
 describe("Member Operations", () => {
   let document: BuilderTeamDocument;

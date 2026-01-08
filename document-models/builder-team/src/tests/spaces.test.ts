@@ -17,6 +17,16 @@ import { reducer } from "../../gen/reducer.js";
 import * as creators from "../../gen/spaces/creators.js";
 import type { BuilderTeamDocument } from "../../gen/types.js";
 import { utils } from "../../utils.js";
+import {
+  reducer,
+  utils,
+  isBuilderTeamDocument,
+  reorderSpaces,
+  AddSpaceInputSchema,
+  UpdateSpaceInfoInputSchema,
+  RemoveSpaceInputSchema,
+  ReorderSpacesInputSchema,
+} from "@powerhousedao/vetra-builder-package/document-models/builder-team";
 
 describe("Spaces Operations", () => {
   let document: BuilderTeamDocument;
@@ -61,6 +71,23 @@ describe("Spaces Operations", () => {
     expect(updatedDocument.operations.global).toHaveLength(1);
     expect(updatedDocument.operations.global[0].action.type).toBe(
       "REMOVE_SPACE",
+    );
+    expect(updatedDocument.operations.global[0].action.input).toStrictEqual(
+      input,
+    );
+    expect(updatedDocument.operations.global[0].index).toEqual(0);
+  });
+
+  it("should handle reorderSpaces operation", () => {
+    const document = utils.createDocument();
+    const input = generateMock(ReorderSpacesInputSchema());
+
+    const updatedDocument = reducer(document, reorderSpaces(input));
+
+    expect(isBuilderTeamDocument(updatedDocument)).toBe(true);
+    expect(updatedDocument.operations.global).toHaveLength(1);
+    expect(updatedDocument.operations.global[0].action.type).toBe(
+      "REORDER_SPACES",
     );
     expect(updatedDocument.operations.global[0].action.input).toStrictEqual(
       input,

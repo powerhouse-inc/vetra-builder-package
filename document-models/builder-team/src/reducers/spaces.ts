@@ -41,14 +41,18 @@ export const builderTeamSpacesOperations: BuilderTeamSpacesOperations = {
     state.spaces.splice(spaceIndex, 1);
   },
   reorderSpacesOperation(state, action) {
-      const { spaceIds, targetIndex } = action.input;
+    const { spaceIds, targetIndex } = action.input;
 
-      // Find the spaces to move
-      const spacesToMove = state.spaces.filter(space => spaceIds.includes(space.id));
-      const remainingSpaces = state.spaces.filter(space => !spaceIds.includes(space.id));
+    // Find the spaces to move
+    const spacesToMove = state.spaces.filter((space) =>
+      spaceIds.includes(space.id),
+    );
+    const remainingSpaces = state.spaces.filter(
+      (space) => !spaceIds.includes(space.id),
+    );
 
-      // Insert the spaces at the target index
-      remainingSpaces.splice(targetIndex, 0, ...spacesToMove);
-      state.spaces = remainingSpaces;
+    // Insert the spaces at the target index
+    remainingSpaces.splice(targetIndex, 0, ...spacesToMove);
+    state.spaces = remainingSpaces;
   },
 };
