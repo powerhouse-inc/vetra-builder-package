@@ -1,7 +1,7 @@
 {
   "name": "@powerhousedao/vetra-builder-package",
   "description": "",
-  "version": "5.1.0-staging",
+  "version": "5.2.0-staging.10",
   "license": "AGPL-3.0-only",
   "type": "module",
   "files": [
@@ -94,13 +94,13 @@
     "migrate": "ph-cli migrate"
   },
   "dependencies": {
-    "@powerhousedao/builder-tools": "latest",
-    "@powerhousedao/common": "latest",
-    "@powerhousedao/connect": "latest",
-    "@powerhousedao/design-system": "latest",
+    "@powerhousedao/builder-tools": "staging",
+    "@powerhousedao/common": "staging",
+    "@powerhousedao/connect": "staging",
+    "@powerhousedao/design-system": "staging",
     "@powerhousedao/document-engineering": "^1.38.0",
-    "@renown/sdk": "latest",
-    "document-model": "latest",
+    "@renown/sdk": "staging",
+    "document-model": "staging",
     "graphql": "^16.10.0",
     "graphql-request": "^7.2.0",
     "graphql-tag": "^2.12.6",
