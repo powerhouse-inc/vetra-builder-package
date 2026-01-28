@@ -1,3 +1,10 @@
+## [1.0.2](https://github.com/powerhouse-inc/vetra-builder-package/compare/v1.0.1...v1.0.2) (2026-01-28)
+
+
+### Bug Fixes
+
+* add config documentation comment ([b56c39f](https://github.com/powerhouse-inc/vetra-builder-package/commit/b56c39f678f03baf80e7f2a4fb0fac5be26bd4b3))
+
 ## [1.0.1](https://github.com/powerhouse-inc/vetra-builder-package/compare/v1.0.0...v1.0.1) (2026-01-28)
 
 
