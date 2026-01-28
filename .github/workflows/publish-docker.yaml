@@ -79,7 +79,7 @@ jobs:
             fi
           fi
 
-          PROJECT_NAME="vetra-builder"
+          PROJECT_NAME="vetra"
 
           echo "channel=$CHANNEL" >> $GITHUB_OUTPUT
           echo "branch=$BRANCH" >> $GITHUB_OUTPUT
