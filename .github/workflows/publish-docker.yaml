@@ -1,9 +1,11 @@
 name: Publish Docker
 
 on:
-  # Triggered after semantic release completes
-  release:
-    types: [published]
+  # Triggered after Semantic Release workflow completes
+  workflow_run:
+    workflows: ["Semantic Release"]
+    types: [completed]
+    branches: [main, staging, dev]
 
   # Manual trigger
   workflow_dispatch:
@@ -34,21 +36,63 @@ jobs:
   prepare:
     name: Prepare
     runs-on: ubuntu-latest
+    # Only run if workflow_run was successful or if manually triggered
+    if: github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success' || github.event.workflow_run.conclusion == 'failure'
     outputs:
       channel: ${{ steps.params.outputs.channel }}
       branch: ${{ steps.params.outputs.branch }}
       project_name: ${{ steps.params.outputs.project_name }}
       version: ${{ steps.params.outputs.version }}
+      should_run: ${{ steps.check-release.outputs.should_run }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Check for new release
+        id: check-release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_run" ]; then
+            # Get the latest release
+            LATEST_RELEASE=$(gh release list --limit 1 --json tagName,createdAt -q '.[0]')
+            if [ -z "$LATEST_RELEASE" ] || [ "$LATEST_RELEASE" = "null" ]; then
+              echo "No releases found"
+              echo "should_run=false" >> $GITHUB_OUTPUT
+              exit 0
+            fi
+
+            TAG=$(echo "$LATEST_RELEASE" | jq -r '.tagName')
+            CREATED=$(echo "$LATEST_RELEASE" | jq -r '.createdAt')
+
+            # Check if release was created in the last 10 minutes
+            CREATED_TS=$(date -d "$CREATED" +%s)
+            NOW_TS=$(date +%s)
+            DIFF=$((NOW_TS - CREATED_TS))
+
+            if [ $DIFF -lt 600 ]; then
+              echo "Recent release found: $TAG (created ${DIFF}s ago)"
+              echo "should_run=true" >> $GITHUB_OUTPUT
+            else
+              echo "No recent release (latest: $TAG, created ${DIFF}s ago)"
+              echo "should_run=false" >> $GITHUB_OUTPUT
+            fi
+          else
+            echo "Manual trigger, proceeding"
+            echo "should_run=true" >> $GITHUB_OUTPUT
+          fi
 
       - name: Determine parameters
+        if: steps.check-release.outputs.should_run == 'true'
         id: params
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
-          if [ "${{ github.event_name }}" = "release" ]; then
-            # Extract version from release tag (v1.0.0 -> 1.0.0)
-            VERSION="${{ github.event.release.tag_name }}"
+          if [ "${{ github.event_name }}" = "workflow_run" ]; then
+            # Get version from latest release tag
+            VERSION=$(gh release list --limit 1 --json tagName -q '.[0].tagName')
             VERSION="${VERSION#v}"
 
             # Determine channel from version
@@ -97,6 +141,7 @@ jobs:
   docker:
     name: Docker (${{ matrix.target }})
     needs: [prepare]
+    if: needs.prepare.outputs.should_run == 'true'
     runs-on: ubuntu-latest
     permissions:
       contents: read
