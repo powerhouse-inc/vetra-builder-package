@@ -1,6 +1,7 @@
 import { getConnectBaseViteConfig } from "@powerhousedao/builder-tools";
 import { defineConfig, mergeConfig, type UserConfig } from "vite";
 
+/** Vite configuration for Vetra builder package */
 export default defineConfig(({ mode }) => {
   const baseConnectViteConfig = getConnectBaseViteConfig({
     mode,
