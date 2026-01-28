@@ -156,6 +156,9 @@ importers:
       react-dom:
         specifier: ^19.2.0
         version: 19.2.1(react@19.2.1)
+      semantic-release:
+        specifier: ^25.0.2
+        version: 25.0.2(typescript@5.9.3)
       storybook:
         specifier: ^8.6.14
         version: 8.6.14(bufferutil@4.0.9)(prettier@3.7.4)(utf-8-validate@5.0.10)
