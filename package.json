@@ -1,6 +1,6 @@
 {
   "name": "@powerhousedao/vetra-builder-package",
-  "description": "",
+  "description": "Vetra document models, editors, and processors for Powerhouse",
   "version": "5.2.0-staging.10",
   "license": "AGPL-3.0-only",
   "type": "module",
