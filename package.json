@@ -1,7 +1,7 @@
 {
   "name": "@powerhousedao/vetra-builder-package",
   "description": "",
-  "version": "0.0.3",
+  "version": "0.0.4-staging.0",
   "license": "AGPL-3.0-only",
   "type": "module",
   "files": [
@@ -105,9 +105,10 @@
   "devDependencies": {
     "@electric-sql/pglite": "^0.2.12",
     "@eslint/js": "^9.38.0",
-    "@powerhousedao/analytics-engine-core": "^0.5.0",
+    "@powerhousedao/analytics-engine-core": "6.0.1-staging.1",
     "@powerhousedao/codegen": "staging",
     "@powerhousedao/config": "staging",
+    "@powerhousedao/connect": "staging",
     "@powerhousedao/ph-cli": "staging",
     "@powerhousedao/reactor-api": "staging",
     "@powerhousedao/reactor-browser": "staging",
@@ -115,7 +116,6 @@
     "@powerhousedao/scalars": "staging",
     "@powerhousedao/switchboard": "staging",
     "@powerhousedao/vetra": "staging",
-    "@powerhousedao/connect": "staging",
     "@semantic-release/changelog": "^6.0.3",
     "@semantic-release/git": "^10.0.1",
     "@tailwindcss/cli": "^4.1.4",
@@ -125,11 +125,10 @@
     "@vitejs/plugin-react": "^5.1.0",
     "document-drive": "staging",
     "eslint": "^9.38.0",
-    "vite-plugin-node-polyfills": "^0.24.0",
-    "eslint-plugin-react": "^7.37.5",
-    "eslint-plugin-react-hooks": "^7.0.1",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-prettier": "^5.5.4",
+    "eslint-plugin-react": "^7.37.5",
+    "eslint-plugin-react-hooks": "^7.0.1",
     "globals": "^16.4.0",
     "package-manager-detector": "^0.2.8",
     "pm2": "^5.4.3",
@@ -140,6 +139,7 @@
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.46.2",
     "vite": "^6.2.3",
+    "vite-plugin-node-polyfills": "^0.24.0",
     "vitest": "^3.0.9"
   },
   "peerDependencies": {
