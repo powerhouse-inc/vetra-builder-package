@@ -166,9 +166,17 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
-      - name: Update Powerhouse dependencies to latest
+      - name: Update Powerhouse dependencies
+        env:
+          CHANNEL: ${{ needs.prepare.outputs.channel }}
         run: |
-          echo "Updating monorepo @powerhousedao/* and document-model/document-drive to latest"
+          # Use the channel as the npm dist-tag (dev, staging, or latest)
+          TAG="$CHANNEL"
+          if [ "$TAG" = "main" ]; then
+            TAG="latest"
+          fi
+
+          echo "Updating @powerhousedao/* and document-model/document-drive to @${TAG}"
 
           PACKAGES=$(node -e "
             const pkg = require('./package.json');
@@ -180,11 +188,11 @@ jobs:
           ")
 
           for pkg in $PACKAGES; do
-            echo "Updating $pkg to latest"
-            pnpm add "${pkg}@latest" || echo "Warning: Failed to update $pkg"
+            echo "Updating $pkg to @${TAG}"
+            pnpm add "${pkg}@${TAG}" || echo "Warning: Failed to update $pkg"
           done
 
-          echo "Powerhouse dependencies updated to latest"
+          echo "Powerhouse dependencies updated to @${TAG}"
 
       - name: Update downstream dependency
         if: needs.prepare.outputs.dep_package != '' && needs.prepare.outputs.dep_version != ''
