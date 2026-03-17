@@ -42,8 +42,8 @@ RUN case "$TAG" in \
 
 WORKDIR /app/project
 
-# Workaround: Install cmd-ts missing from @powerhousedao/common
-RUN pnpm add cmd-ts
+# Workaround: Install missing transitive dependencies from @powerhousedao packages
+RUN pnpm add cmd-ts @tailwindcss/vite
 
 # Copy package files for the current package
 COPY package.json pnpm-lock.yaml ./
