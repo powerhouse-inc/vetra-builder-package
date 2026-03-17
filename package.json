@@ -3,6 +3,10 @@
   "description": "Vetra document models, editors, and processors for Powerhouse",
   "version": "5.2.0-staging.11",
   "license": "AGPL-3.0-only",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/powerhouse-inc/vetra-builder-package.git"
+  },
   "type": "module",
   "files": [
     "/dist"
