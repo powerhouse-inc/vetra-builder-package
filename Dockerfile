@@ -42,6 +42,9 @@ RUN case "$TAG" in \
 
 WORKDIR /app/project
 
+# Workaround: Install cmd-ts (missing from @powerhousedao/common, needed by ph-cli)
+RUN pnpm add cmd-ts
+
 # Copy package files for the current package
 COPY package.json pnpm-lock.yaml ./
 
@@ -55,8 +58,8 @@ RUN if [ -n "$PACKAGE_NAME" ]; then \
         pnpm install; \
     fi
 
-# Workaround: Install missing transitive dependencies from @powerhousedao packages
-RUN pnpm add cmd-ts @tailwindcss/vite @testing-library/react
+# Workaround: Install missing transitive deps (needed for build steps)
+RUN pnpm add @tailwindcss/vite @testing-library/react
 
 # Regenerate Prisma client for Alpine Linux
 RUN prisma generate --schema node_modules/document-drive/dist/prisma/schema.prisma || true
