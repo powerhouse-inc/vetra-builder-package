@@ -111,6 +111,7 @@
     "luxon": "^3.7.2",
     "nanoid": "^5.1.6",
     "uuid": "^11.1.0",
+    "cmd-ts": "^0.15.0",
     "zod": "4.3.6"
   },
   "devDependencies": {
@@ -138,7 +139,6 @@
     "@types/react-dom": "^19.2.2",
     "@vitejs/plugin-react": "^5.1.0",
     "adm-zip": "^0.5.16",
-    "cmd-ts": "^0.15.0",
     "document-drive": "dev",
     "eslint": "^9.38.0",
     "eslint-config-prettier": "^10.1.8",
