@@ -42,6 +42,9 @@ RUN case "$TAG" in \
 
 WORKDIR /app/project
 
+# Workaround: Install cmd-ts missing from @powerhousedao/common
+RUN pnpm add cmd-ts
+
 # Copy package files for the current package
 COPY package.json pnpm-lock.yaml ./
 
