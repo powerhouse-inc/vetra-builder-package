@@ -1,4 +1,4 @@
-import type { IRelationalDb } from "document-drive";
+import type { IRelationalDb } from "@powerhousedao/reactor";
 import type {
   AddMemberAction,
   AddPackageAction,

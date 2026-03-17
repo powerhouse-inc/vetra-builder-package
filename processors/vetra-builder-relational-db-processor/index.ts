@@ -1,13 +1,9 @@
-import type {
-  DocumentDriveAction,
-  DocumentDriveGlobalState,
-  IRelationalDb,
-} from "document-drive";
 import {
   RelationalDbProcessor,
-  type RelationalDbProcessorFilter,
-} from "document-drive";
-import { type InternalTransmitterUpdate } from "document-drive";
+  type IRelationalDb,
+  type ProcessorFilter,
+  type OperationWithContext,
+} from "@powerhousedao/reactor";
 import type { BuilderTeamState } from "../../document-models/builder-team/index.js";
 import type { BuilderTeamAction } from "../../document-models/builder-team/gen/actions.js";
 import { BuilderTeamHandlers } from "./builder-team-handlers.js";
@@ -19,7 +15,7 @@ export class VetraBuilderRelationalDbProcessor extends RelationalDbProcessor<DB>
 
   constructor(
     _namespace: string,
-    _filter: RelationalDbProcessorFilter,
+    _filter: ProcessorFilter,
     relationalDb: IRelationalDb<DB>
   ) {
     super(_namespace, _filter, relationalDb);
@@ -30,64 +26,62 @@ export class VetraBuilderRelationalDbProcessor extends RelationalDbProcessor<DB>
     await up(this.relationalDb);
   }
 
-  override async onStrands(
-    strands: InternalTransmitterUpdate[]
+  override async onOperations(
+    operations: OperationWithContext[]
   ): Promise<void> {
-    if (strands.length === 0) {
+    if (operations.length === 0) {
       return;
     }
 
-    for (const strand of strands) {
-      if (strand.operations.length === 0) {
-        continue;
-      }
-
-      for (const operation of strand.operations) {
-        try {
-          if (strand.documentType.includes("powerhouse/document-drive")) {
-            await this.handleDocumentDriveOperation(
-              strand.documentId,
-              strand.driveId,
-              operation.action as DocumentDriveAction,
-              operation.state as unknown as DocumentDriveGlobalState
-            );
-          } else {
-            await this.builderTeamHandlers.handleBuilderTeamOperation(
-              strand.documentId,
-              operation.action as BuilderTeamAction,
-              operation.state as unknown as BuilderTeamState
-            );
-          }
-        } catch (error) {
-          console.error(
-            `VetraBuilderRelationalDbProcessor: Error processing operation ${JSON.stringify(
-              operation.action
-            )}:`,
-            error
+    for (const op of operations) {
+      try {
+        if (op.context.documentType.includes("powerhouse/document-drive")) {
+          await this.handleDocumentDriveOperation(
+            op.context.documentId,
+            "",
+            op.operation.action as unknown as { type: string; input: Record<string, unknown> },
+            op.operation.resultingState
+              ? (JSON.parse(op.operation.resultingState) as Record<string, unknown>)
+              : undefined
           );
-          break;
+        } else {
+          await this.builderTeamHandlers.handleBuilderTeamOperation(
+            op.context.documentId,
+            op.operation.action as unknown as BuilderTeamAction,
+            op.operation.resultingState
+              ? (JSON.parse(op.operation.resultingState) as unknown as BuilderTeamState)
+              : ({} as BuilderTeamState)
+          );
         }
+      } catch (error) {
+        console.error(
+          `VetraBuilderRelationalDbProcessor: Error processing operation ${JSON.stringify(
+            op.operation.action
+          )}:`,
+          error
+        );
+        break;
       }
     }
   }
 
   private async handleDocumentDriveOperation(
     documentId: string,
-    driveId: string = "",
-    action: DocumentDriveAction,
-    state: DocumentDriveGlobalState
+    driveId: string,
+    action: { type: string; input: Record<string, unknown> },
+    state?: Record<string, unknown>
   ): Promise<void> {
     switch (action.type) {
       case "DELETE_NODE":
         await this.relationalDb
           .insertInto("deleted_files")
           .values({
-            id: documentId + "-" + action.input.id,
-            document_id: action.input.id,
+            id: documentId + "-" + (action.input.id as string),
+            document_id: action.input.id as string,
             drive_id: driveId,
             deleted_at: new Date(),
           })
-          .onConflict((oc) => oc.column("id").doNothing())
+          .onConflict((oc: any) => oc.column("id").doNothing())
           .execute();
         break;
     }

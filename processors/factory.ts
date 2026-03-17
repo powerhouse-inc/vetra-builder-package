@@ -6,7 +6,7 @@
 import {
   type IProcessorHostModule,
   type ProcessorRecord,
-} from "document-drive";
+} from "@powerhousedao/reactor";
 
 // Import other processor factories here as they are generated
 import { type PHDocumentHeader } from "document-model";
