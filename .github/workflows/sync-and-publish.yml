@@ -1,6 +1,13 @@
 name: Sync and Publish
 
 on:
+  # Triggered on push to release branches
+  push:
+    branches:
+      - main
+      - staging
+      - dev
+
   # Triggered by powerhouse monorepo or downstream packages after release
   repository_dispatch:
     types: [powerhouse-release, dependency-release]
@@ -33,7 +40,7 @@ on:
         default: false
 
 concurrency:
-  group: sync-and-publish
+  group: sync-and-publish-${{ github.ref }}
   cancel-in-progress: false
 
 env:
@@ -72,8 +79,23 @@ jobs:
           INPUT_VERSION: ${{ inputs.version }}
           INPUT_DRY_RUN: ${{ inputs.dry-run }}
           INPUT_SKIP_DOCKER: ${{ inputs.skip-docker }}
+          GIT_REF: ${{ github.ref }}
         run: |
-          if [ "$EVENT_NAME" = "repository_dispatch" ]; then
+          if [ "$EVENT_NAME" = "push" ]; then
+            # Derive channel from branch name
+            BRANCH_NAME="${GIT_REF#refs/heads/}"
+            case "$BRANCH_NAME" in
+              main) CHANNEL="latest" ;;
+              staging) CHANNEL="staging" ;;
+              dev) CHANNEL="dev" ;;
+              *) CHANNEL="staging" ;;
+            esac
+            VERSION=""
+            DRY_RUN="false"
+            SKIP_DOCKER="false"
+            DEP_PACKAGE=""
+            DEP_VERSION=""
+          elif [ "$EVENT_NAME" = "repository_dispatch" ]; then
             CHANNEL="$PAYLOAD_CHANNEL"
             DRY_RUN="false"
             SKIP_DOCKER="false"
