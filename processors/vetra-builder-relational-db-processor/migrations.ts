@@ -1,4 +1,4 @@
-import { type IRelationalDb } from "document-drive";
+import { type IRelationalDb } from "@powerhousedao/reactor";
 import type { DB } from "./schema.js";
 
 export async function up(db: IRelationalDb<DB>): Promise<void> {

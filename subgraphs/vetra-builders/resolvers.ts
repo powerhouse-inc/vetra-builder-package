@@ -1,9 +1,10 @@
 import { type ISubgraph } from "@powerhousedao/reactor-api";
+import { type IRelationalDb } from "@powerhousedao/reactor";
 import { type DB } from "../../processors/vetra-builder-relational-db-processor/schema.js";
 import { VetraBuilderRelationalDbProcessor } from "../../processors/vetra-builder-relational-db-processor/index.js";
 
 export const getResolvers = (subgraph: ISubgraph): Record<string, unknown> => {
-  const db = subgraph.relationalDb;
+  const db = subgraph.relationalDb as unknown as IRelationalDb;
   const DEFAULT_DRIVE_ID = process.env.VETRA_BUILDER_DRIVE_ID || "powerhouse";
 
   return {

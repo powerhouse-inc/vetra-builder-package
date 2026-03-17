@@ -1,8 +1,8 @@
-import { type RelationalDbProcessorFilter } from "document-drive";
 import {
   type IProcessorHostModule,
+  type ProcessorFilter,
   type ProcessorRecord,
-} from "document-drive";
+} from "@powerhousedao/reactor";
 import { type PHDocumentHeader } from "document-model";
 import { VetraBuilderRelationalDbProcessor } from "./index.js";
 
@@ -21,7 +21,7 @@ export const vetraBuilderTeamRelationalDbProcessorFactory =
       );
 
     // Create a filter for the processor
-    const filter: RelationalDbProcessorFilter = {
+    const filter: ProcessorFilter = {
       branch: ["main"],
       documentId: ["*"],
       documentType: ["powerhouse/builder-team", "powerhouse/document-drive"],
