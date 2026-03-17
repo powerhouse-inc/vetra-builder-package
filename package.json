@@ -1,7 +1,7 @@
 {
   "name": "@powerhousedao/vetra-builder-package",
   "description": "Vetra document models, editors, and processors for Powerhouse",
-  "version": "5.2.0-dev.7",
+  "version": "5.2.0-dev.8",
   "license": "AGPL-3.0-only",
   "repository": {
     "type": "git",
@@ -103,6 +103,7 @@
     "@powerhousedao/design-system": "dev",
     "@powerhousedao/document-engineering": "^1.38.0",
     "@renown/sdk": "dev",
+    "cmd-ts": "^0.15.0",
     "document-model": "dev",
     "graphql": "^16.10.0",
     "graphql-request": "^7.2.0",
@@ -111,14 +112,13 @@
     "luxon": "^3.7.2",
     "nanoid": "^5.1.6",
     "uuid": "^11.1.0",
-    "cmd-ts": "^0.15.0",
     "zod": "4.3.6"
   },
   "devDependencies": {
     "@electric-sql/pglite": "^0.3.15",
     "@eslint/js": "^9.38.0",
     "@openfeature/core": "^1.9.1",
-    "@powerhousedao/analytics-engine-core": "6.0.0-dev.91",
+    "@powerhousedao/analytics-engine-core": "6.0.0-dev.95",
     "@powerhousedao/codegen": "dev",
     "@powerhousedao/config": "dev",
     "@powerhousedao/ph-cli": "dev",

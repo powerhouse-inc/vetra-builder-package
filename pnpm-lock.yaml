@@ -67,8 +67,8 @@ importers:
         specifier: ^1.9.1
         version: 1.9.1
       '@powerhousedao/analytics-engine-core':
-        specifier: 6.0.0-dev.91
-        version: 6.0.0-dev.91
+        specifier: 6.0.0-dev.95
+        version: 6.0.0-dev.95
       '@powerhousedao/codegen':
         specifier: dev
         version: 6.0.0-dev.91(@electric-sql/pglite@0.3.15)(@parcel/watcher@2.5.1)(@types/react-dom@19.2.3(@types/react@19.2.7))(@types/react@19.2.7)(bufferutil@4.0.9)(crossws@0.3.5)(encoding@0.1.13)(react-dom@19.2.1(react@19.2.1))(react@19.2.1)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@4.3.6)
@@ -2719,6 +2719,9 @@ packages:
 
   '@powerhousedao/analytics-engine-core@6.0.0-dev.91':
     resolution: {integrity: sha512-yTeZ3r+2bZlA/me+2gT8RLzLfwtZuiwcFigc9w/waNVXyDn/HkC+GsJLdNqGQNA4jePnr283bXPwvyRwZoHB8w==}
+
+  '@powerhousedao/analytics-engine-core@6.0.0-dev.95':
+    resolution: {integrity: sha512-3Q8yGgTElhUVtLcndQSMcXx6l1wVceDox0YA3J12SvB1j1HklwR5/rMpXlLS9JcwxxNW6HsQL8dC73kA9MXnEg==}
 
   '@powerhousedao/analytics-engine-graphql@6.0.0-dev.91':
     resolution: {integrity: sha512-j2Ih/FcUL2t+0oKCLaecwgJd0p7ZCHN2a1Zpf15x7f9u5GZo0YAbyS2IC3t4st3F/8CuEyFtz+WRcw96a1XFsg==}
@@ -14392,6 +14395,11 @@ snapshots:
       config-chain: 1.1.13
 
   '@powerhousedao/analytics-engine-core@6.0.0-dev.91':
+    dependencies:
+      date-fns: 4.1.0
+      luxon: 3.7.2
+
+  '@powerhousedao/analytics-engine-core@6.0.0-dev.95':
     dependencies:
       date-fns: 4.1.0
       luxon: 3.7.2
