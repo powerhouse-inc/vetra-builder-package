@@ -437,7 +437,7 @@ jobs:
           push: true
           tags: ${{ steps.tags.outputs.tags }}
           build-args: |
-            TAG=${{ needs.prepare.outputs.channel == 'latest' && 'latest' || needs.prepare.outputs.version }}
+            TAG=${{ needs.prepare.outputs.version || needs.prepare.outputs.channel }}
             PACKAGE_NAME=${{ steps.package.outputs.name }}
             PH_CONNECT_BASE_PATH=/
           cache-from: type=gha
