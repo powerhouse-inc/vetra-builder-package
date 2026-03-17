@@ -58,8 +58,8 @@ RUN if [ -n "$PACKAGE_NAME" ]; then \
         pnpm install; \
     fi
 
-# Workaround: Install missing transitive deps (needed for build steps)
-RUN pnpm add @tailwindcss/vite @testing-library/react
+# Workaround: Install missing transitive deps from @powerhousedao/builder-tools
+RUN pnpm add @tailwindcss/vite @vitejs/plugin-react vite-plugin-html vite-plugin-svgr @testing-library/react
 
 # Regenerate Prisma client for Alpine Linux
 RUN prisma generate --schema node_modules/document-drive/dist/prisma/schema.prisma || true
