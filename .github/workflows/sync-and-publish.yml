@@ -261,6 +261,7 @@ jobs:
         run: |
           git add package.json pnpm-lock.yaml
           git add -A document-models/*/gen/ editors/*/gen/ || true
+          git checkout -- . || true
 
           MSG="chore: bump version to ${NEW_VERSION}"
           DETAILS=""
