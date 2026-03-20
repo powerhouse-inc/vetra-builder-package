@@ -45,21 +45,18 @@ WORKDIR /app/project
 # Workaround: Install cmd-ts (missing from @powerhousedao/common, needed by ph-cli)
 RUN pnpm add cmd-ts
 
-# Copy package files for the current package
-COPY package.json pnpm-lock.yaml ./
+# Copy the full project source
+COPY . .
 
-# Install the current package (this package)
-ARG PACKAGE_NAME
-RUN if [ -n "$PACKAGE_NAME" ]; then \
-        echo "Installing package: $PACKAGE_NAME"; \
-        ph install "$PACKAGE_NAME"; \
-    else \
-        echo "Warning: PACKAGE_NAME not provided, using local build"; \
-        pnpm install; \
-    fi
+# Install dependencies
+RUN pnpm install
 
 # Workaround: Install missing transitive deps from @powerhousedao/builder-tools
 RUN pnpm add @tailwindcss/vite @vitejs/plugin-react vite-plugin-html vite-plugin-svgr @testing-library/react
+
+# Generate code and build the package
+RUN pnpm generate
+RUN pnpm build
 
 # Regenerate Prisma client for Alpine Linux
 RUN prisma generate --schema node_modules/document-drive/dist/prisma/schema.prisma || true
@@ -111,7 +108,7 @@ FROM node:24-alpine AS switchboard
 WORKDIR /app
 
 # Install runtime dependencies
-RUN apk add --no-cache curl openssl
+RUN apk add --no-cache curl openssl git
 
 # Setup pnpm
 ENV PNPM_HOME="/pnpm"
@@ -146,4 +143,3 @@ HEALTHCHECK --interval=30s --timeout=3s --start-period=30s --retries=3 \
     CMD curl -f http://localhost:${PORT}/health || exit 1
 
 ENTRYPOINT ["/app/entrypoint.sh"]
-
