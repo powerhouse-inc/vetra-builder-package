@@ -479,17 +479,24 @@ jobs:
       - name: Commit and push changes
         env:
           VERSION: "v${{ needs.update-and-publish.outputs.new_version }}"
+          CHANNEL: ${{ needs.prepare.outputs.channel }}
         run: |
           cd k8s-hosting
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-          git add "tenants/vetra/powerhouse-values.yaml"
+          if [ "$CHANNEL" = "latest" ] || [ "$CHANNEL" = "main" ]; then
+            TENANT="vetra"
+          else
+            TENANT="staging"
+          fi
+
+          git add "tenants/${TENANT}/powerhouse-values.yaml"
 
           if git diff --staged --quiet; then
             echo "No changes to commit"
           else
-            git commit -m "chore(vetra): update image tags to ${VERSION}"
+            git commit -m "chore(${TENANT}): update image tags to ${VERSION}"
             git push
           fi
 
