@@ -14,6 +14,11 @@
       "packageName": "@powerhousedao/vetra",
       "version": "latest",
       "provider": "npm"
+    },
+    {
+      "packageName": "@powerhousedao/vetra-cloud-package",
+      "version": "0.0.0-dev.1",
+      "provider": "npm"
     }
   ],
   "vetra": {
