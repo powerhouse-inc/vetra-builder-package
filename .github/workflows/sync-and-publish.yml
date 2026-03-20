@@ -465,8 +465,15 @@ jobs:
       - name: Update image tags
         env:
           VERSION: "v${{ needs.update-and-publish.outputs.new_version }}"
+          CHANNEL: ${{ needs.prepare.outputs.channel }}
         run: |
-          VALUES_FILE="k8s-hosting/tenants/vetra/powerhouse-values.yaml"
+          if [ "$CHANNEL" = "latest" ] || [ "$CHANNEL" = "main" ]; then
+            TENANT="vetra"
+          else
+            TENANT="staging"
+          fi
+
+          VALUES_FILE="k8s-hosting/tenants/${TENANT}/powerhouse-values.yaml"
 
           echo "Updating ${VALUES_FILE} with version ${VERSION}"
 
