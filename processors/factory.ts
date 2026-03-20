@@ -11,6 +11,7 @@ import {
 // Import other processor factories here as they are generated
 import { type PHDocumentHeader } from "document-model";
 import { vetraBuilderTeamRelationalDbProcessorFactory } from "./vetra-builder-relational-db-processor/factory.js";
+import { processorFactory as cloudProcessorFactory } from "@powerhousedao/vetra-cloud-package/processors";
 
 export const processorFactory = (module: IProcessorHostModule) => {
   // Initialize all processor factories once with the module
@@ -20,6 +21,12 @@ export const processorFactory = (module: IProcessorHostModule) => {
   // Add other processors here as they are generated
   factories.push(vetraBuilderTeamRelationalDbProcessorFactory(module));
 
+  // Cloud environment processor (gitops sync)
+  let cloudFactory: ((driveHeader: PHDocumentHeader) => Promise<ProcessorRecord[]>) | null = null;
+  const cloudFactoryReady = cloudProcessorFactory(module).then((f) => {
+    cloudFactory = f;
+  });
+
   // Return the inner function that will be called for each drive
   return async (driveHeader: PHDocumentHeader): Promise<ProcessorRecord[]> => {
     const processors: ProcessorRecord[] = [];
@@ -28,6 +35,13 @@ export const processorFactory = (module: IProcessorHostModule) => {
     for (const factory of factories) {
       const factoryProcessors = await factory(driveHeader);
       processors.push(...factoryProcessors);
+    }
+
+    // Add cloud processors
+    await cloudFactoryReady;
+    if (cloudFactory) {
+      const cloudProcessors = await cloudFactory(driveHeader);
+      processors.push(...cloudProcessors);
     }
 
     return processors;
