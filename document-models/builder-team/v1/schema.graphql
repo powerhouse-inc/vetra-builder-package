@@ -1,0 +1,156 @@
+scalar Unknown
+scalar DateTime
+scalar Attachment
+scalar Address
+scalar Amount_Tokens
+scalar EthereumAddress
+scalar EmailAddress
+scalar Amount_Percentage
+scalar Date
+scalar URL
+scalar Amount_Money
+scalar OLabel
+scalar Currency
+scalar PHID
+scalar OID
+scalar Amount_Fiat
+scalar Amount_Currency
+scalar Amount_Crypto
+scalar Amount
+scalar Upload
+
+type BuilderTeamState {
+  profile: VetraBuilderProfile!
+  members: [RenownProfileInfo!]!
+  spaces: [VetraBuilderSpace!]!
+}
+
+type RenownProfileInfo { 
+  id: OID!
+  phid: PHID
+  ethAddress: String
+  name: String
+  profileImage: String
+}
+
+type VetraBuilderProfile {
+  logo: URL
+  name: String!
+  slug: String!
+  description: String
+  socials: VetraBuilderSocials!
+}
+
+type VetraBuilderSocials {
+  xProfile: URL
+  github: URL 
+  website: URL
+}
+
+type VetraBuilderSpace {
+  id: OID!
+  title: String!
+  description: String
+  packages: [VetraPackageInfo!]!
+}
+
+type VetraPackageInfo { 
+  id: OID!
+  phid: PHID
+  title: String
+  description: String
+  github: String
+  npm: String
+  vetraDriveUrl: URL
+}
+
+# profile
+
+input SetLogoInput {
+  logo: String
+}
+
+input SetTeamNameInput {
+  name: String!
+}
+
+input SetSlugInput {
+  slug: String!
+}
+
+input SetDescriptionInput {
+  description: String
+}
+
+input SetSocialsInput {
+  xProfile: String
+  github: String
+  website: String
+}
+
+# member
+
+input AddMemberInput {
+  id: OID!
+}
+
+input UpdateMemberInfoInput {
+  id: OID!
+  phid: PHID
+  ethAddress: String
+  name: String
+  profileImage: String
+}
+
+input RemoveMemberInput {
+  id: OID!
+}
+
+# spaces
+
+input AddSpaceInput {
+  id: OID!
+}
+
+input UpdateSpaceInfoInput {
+  id: OID!
+  title: String
+  description: String
+}
+
+input RemoveSpaceInput {
+  id: OID!
+}
+
+input ReorderSpacesInput {
+  spaceIds: [OID!]!
+  targetIndex: Int!
+}
+
+# packages
+
+input AddPackageInput {
+  id: OID!
+  spaceId: OID!
+}
+
+input UpdatePackageInfoInput {
+  id: OID!
+  spaceId: OID
+  phid: PHID
+  title: String
+  description: String
+  github: String
+  npm: String
+  vetraDriveUrl: URL
+}
+
+input RemovePackageInput {
+  id: OID!
+}
+
+input ReorderPackagesInput {
+  spaceId: OID!
+  packageIds: [OID!]!
+  targetIndex: Int!
+}
