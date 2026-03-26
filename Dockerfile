@@ -21,7 +21,7 @@ RUN apk add --no-cache python3 make g++ git bash \
 # Setup pnpm
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
-RUN corepack enable && corepack prepare pnpm@latest --activate
+RUN corepack enable && corepack prepare pnpm@10 --activate
 
 # Configure JSR registry
 RUN pnpm config set @jsr:registry https://npm.jsr.io
@@ -48,8 +48,8 @@ RUN pnpm add cmd-ts
 # Copy the full project source
 COPY . .
 
-# Install dependencies
-RUN pnpm install
+# Install dependencies (no-frozen-lockfile: lockfile may drift from ph init)
+RUN pnpm install --no-frozen-lockfile
 
 # Workaround: Install missing transitive deps from @powerhousedao/builder-tools
 RUN pnpm add @tailwindcss/vite @vitejs/plugin-react vite-plugin-html vite-plugin-svgr @testing-library/react
@@ -113,7 +113,7 @@ RUN apk add --no-cache curl openssl git
 # Setup pnpm
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
-RUN corepack enable && corepack prepare pnpm@latest --activate
+RUN corepack enable && corepack prepare pnpm@10 --activate
 
 # Configure JSR registry
 RUN pnpm config set @jsr:registry https://npm.jsr.io
