@@ -55,6 +55,11 @@
             "id": "vetra-builders",
             "name": "VetraBuilders",
             "documentTypes": []
+        },
+        {
+            "id": "vetra-cloud-observability",
+            "name": "VetraCloudObservability",
+            "documentTypes": []
         }
     ],
     "importScripts": []
