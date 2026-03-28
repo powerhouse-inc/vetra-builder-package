@@ -48,8 +48,13 @@ RUN pnpm add cmd-ts
 # Copy the full project source
 COPY . .
 
-# Install dependencies and ensure package versions match package.json
-RUN pnpm install --no-frozen-lockfile && pnpm update @powerhousedao/vetra-cloud-package
+# Install dependencies
+RUN pnpm install --no-frozen-lockfile
+
+# Force install the exact vetra-cloud-package version from package.json
+RUN VCP_VERSION=$(node -p "require('./package.json').dependencies['@powerhousedao/vetra-cloud-package']") && \
+    echo "Installing @powerhousedao/vetra-cloud-package@${VCP_VERSION}" && \
+    pnpm add "@powerhousedao/vetra-cloud-package@${VCP_VERSION}"
 
 # Workaround: Install missing transitive deps from @powerhousedao/builder-tools
 RUN pnpm add @tailwindcss/vite @vitejs/plugin-react vite-plugin-html vite-plugin-svgr @testing-library/react
