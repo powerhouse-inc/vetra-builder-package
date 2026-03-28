@@ -102,7 +102,7 @@
     "@powerhousedao/connect": "6.0.0-dev.101",
     "@powerhousedao/design-system": "6.0.0-dev.101",
     "@powerhousedao/document-engineering": "^1.40.1",
-    "@powerhousedao/vetra-cloud-package": "0.0.0-dev.15",
+    "@powerhousedao/vetra-cloud-package": "0.0.0-dev.16",
     "@renown/sdk": "dev",
     "cmd-ts": "^0.15.0",
     "document-model": "6.0.0-dev.101",
