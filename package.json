@@ -97,15 +97,15 @@
     "migrate": "ph-cli migrate"
   },
   "dependencies": {
-    "@powerhousedao/builder-tools": "6.0.0-dev.101",
-    "@powerhousedao/common": "6.0.0-dev.101",
-    "@powerhousedao/connect": "6.0.0-dev.101",
-    "@powerhousedao/design-system": "6.0.0-dev.101",
+    "@powerhousedao/builder-tools": "6.0.0-dev.118",
+    "@powerhousedao/common": "6.0.0-dev.118",
+    "@powerhousedao/connect": "6.0.0-dev.118",
+    "@powerhousedao/design-system": "6.0.0-dev.118",
     "@powerhousedao/document-engineering": "^1.40.1",
     "@powerhousedao/vetra-cloud-package": "0.0.0-dev.22",
     "@renown/sdk": "dev",
     "cmd-ts": "^0.15.0",
-    "document-model": "6.0.0-dev.101",
+    "document-model": "6.0.0-dev.118",
     "graphql": "^16.13.1",
     "graphql-request": "^7.4.0",
     "graphql-tag": "^2.12.6",
@@ -120,16 +120,16 @@
     "@eslint/js": "^9.39.4",
     "@openfeature/core": "^1.9.2",
     "@powerhousedao/analytics-engine-core": "6.0.0-dev.101",
-    "@powerhousedao/codegen": "6.0.0-dev.101",
-    "@powerhousedao/config": "6.0.0-dev.101",
-    "@powerhousedao/ph-cli": "6.0.0-dev.101",
-    "@powerhousedao/reactor": "6.0.0-dev.101",
-    "@powerhousedao/reactor-api": "6.0.0-dev.101",
-    "@powerhousedao/reactor-browser": "6.0.0-dev.101",
-    "@powerhousedao/reactor-local": "6.0.0-dev.101",
+    "@powerhousedao/codegen": "6.0.0-dev.118",
+    "@powerhousedao/config": "6.0.0-dev.118",
+    "@powerhousedao/ph-cli": "6.0.0-dev.118",
+    "@powerhousedao/reactor": "6.0.0-dev.118",
+    "@powerhousedao/reactor-api": "6.0.0-dev.118",
+    "@powerhousedao/reactor-browser": "6.0.0-dev.118",
+    "@powerhousedao/reactor-local": "6.0.0-dev.118",
     "@powerhousedao/scalars": "dev",
-    "@powerhousedao/switchboard": "6.0.0-dev.101",
-    "@powerhousedao/vetra": "6.0.0-dev.101",
+    "@powerhousedao/switchboard": "6.0.0-dev.118",
+    "@powerhousedao/vetra": "6.0.0-dev.118",
     "@semantic-release/changelog": "^6.0.3",
     "@semantic-release/git": "^10.0.1",
     "@tailwindcss/cli": "^4.2.2",
@@ -167,14 +167,12 @@
     "overrides": {
       "react": "^19.2.4",
       "react-dom": "^19.2.4"
-    },
-    "patchedDependencies": {
-      "@powerhousedao/codegen@6.0.0-dev.101": "patches/@powerhousedao__codegen@6.0.0-dev.101.patch"
     }
   },
   "readme": "ERROR: No README data found!",
   "bugs": {
     "url": "https://github.com/powerhouse-inc/vetra-builder-package/issues"
   },
-  "homepage": "https://github.com/powerhouse-inc/vetra-builder-package#readme"
+  "homepage": "https://github.com/powerhouse-inc/vetra-builder-package#readme",
+  "_id": "@powerhousedao/vetra-builder-package@5.2.0-dev.30"
 }
