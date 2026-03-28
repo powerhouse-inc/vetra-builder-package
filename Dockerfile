@@ -59,7 +59,8 @@ RUN pnpm generate
 RUN pnpm build
 
 # Regenerate Prisma client for Alpine Linux
-RUN prisma generate --schema node_modules/document-drive/dist/prisma/schema.prisma || true
+RUN PRISMA_SCHEMA=$(find node_modules -path "*/document-drive/dist/prisma/schema.prisma" -print -quit 2>/dev/null) && \
+    if [ -n "$PRISMA_SCHEMA" ]; then prisma generate --schema "$PRISMA_SCHEMA"; else echo "Prisma schema not found, skipping"; fi
 
 # -----------------------------------------------------------------------------
 # Connect build stage
