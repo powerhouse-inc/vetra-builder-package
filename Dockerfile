@@ -12,7 +12,7 @@
 # -----------------------------------------------------------------------------
 FROM node:24-alpine AS base
 
-WORKDIR /app
+WORKDIR /app/project
 
 # Install build dependencies
 RUN apk add --no-cache python3 make g++ git bash \
@@ -30,34 +30,14 @@ RUN pnpm config set @jsr:registry https://npm.jsr.io
 ARG TAG=latest
 ARG PH_CONNECT_BASE_PATH="/"
 
-# Install ph-cmd, prisma, and prettier globally
-RUN pnpm add -g ph-cmd@$TAG prisma@5.17.0 prettier
+# Install ph-cmd and prisma globally
+RUN pnpm add -g ph-cmd@$TAG prisma@5.17.0
 
-# Initialize project based on tag (dev/staging/latest)
-RUN case "$TAG" in \
-        *dev*) ph init project --dev --package-manager pnpm ;; \
-        *staging*) ph init project --staging --package-manager pnpm ;; \
-        *) ph init project --package-manager pnpm ;; \
-    esac
-
-WORKDIR /app/project
-
-# Workaround: Install cmd-ts (missing from @powerhousedao/common, needed by ph-cli)
-RUN pnpm add cmd-ts
-
-# Copy the full project source
+# Copy project source
 COPY . .
 
 # Install dependencies
 RUN pnpm install --no-frozen-lockfile
-
-# Force install the exact vetra-cloud-package version from package.json
-RUN VCP_VERSION=$(node -p "require('./package.json').dependencies['@powerhousedao/vetra-cloud-package']") && \
-    echo "Installing @powerhousedao/vetra-cloud-package@${VCP_VERSION}" && \
-    pnpm add "@powerhousedao/vetra-cloud-package@${VCP_VERSION}"
-
-# Workaround: Install missing transitive deps from @powerhousedao/builder-tools
-RUN pnpm add @tailwindcss/vite @vitejs/plugin-react vite-plugin-html vite-plugin-svgr @testing-library/react
 
 # Generate code and build the package
 RUN pnpm generate
