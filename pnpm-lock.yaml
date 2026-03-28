@@ -33,8 +33,8 @@ importers:
         specifier: ^1.40.1
         version: 1.40.1(@types/react-dom@19.2.3(@types/react@19.2.14))(@types/react@19.2.14)(bufferutil@4.0.9)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(typescript@5.9.3)(utf-8-validate@5.0.10)
       '@powerhousedao/vetra-cloud-package':
-        specifier: 0.0.0-dev.17
-        version: 0.0.0-dev.17(0a90fac793f6ed3afa529a4553e15fcc)
+        specifier: 0.0.0-dev.19
+        version: 0.0.0-dev.19(0a90fac793f6ed3afa529a4553e15fcc)
       '@renown/sdk':
         specifier: dev
         version: 6.0.0-dev.105(bufferutil@4.0.9)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@4.3.6)
@@ -2906,8 +2906,8 @@ packages:
     engines: {node: '>=24.0.0'}
     hasBin: true
 
-  '@powerhousedao/vetra-cloud-package@0.0.0-dev.17':
-    resolution: {integrity: sha512-hUeKGwivGeFKIPxcqcPqsINckFlxJxlyMRD4kUr6ZXIOevLjycLRfFXntlpwqOJwvPblCZAIffsKfF+3YOBsEg==}
+  '@powerhousedao/vetra-cloud-package@0.0.0-dev.19':
+    resolution: {integrity: sha512-RZkMz8VuAP1OCZ1JYGmHcwvKmCCXH2R29l77f/4hflcPHY8UZeaHW7gYYrup+Ta/J/se5M5sDCmaPgAe9VYsxg==}
     peerDependencies:
       react: ^19.2.4
       react-dom: ^19.2.4
@@ -15692,7 +15692,7 @@ snapshots:
       - yaml
       - zod
 
-  '@powerhousedao/vetra-cloud-package@0.0.0-dev.17(0a90fac793f6ed3afa529a4553e15fcc)':
+  '@powerhousedao/vetra-cloud-package@0.0.0-dev.19(0a90fac793f6ed3afa529a4553e15fcc)':
     dependencies:
       '@kubernetes/client-node': 1.4.0(bufferutil@4.0.9)(encoding@0.1.13)(utf-8-validate@5.0.10)
       '@powerhousedao/builder-tools': 6.0.0-dev.100
