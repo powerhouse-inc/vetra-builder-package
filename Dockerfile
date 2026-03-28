@@ -48,8 +48,8 @@ RUN pnpm add cmd-ts
 # Copy the full project source
 COPY . .
 
-# Install dependencies (no-frozen-lockfile: lockfile may drift from ph init)
-RUN pnpm install --no-frozen-lockfile
+# Install dependencies and ensure package versions match package.json
+RUN pnpm install --no-frozen-lockfile && pnpm update @powerhousedao/vetra-cloud-package
 
 # Workaround: Install missing transitive deps from @powerhousedao/builder-tools
 RUN pnpm add @tailwindcss/vite @vitejs/plugin-react vite-plugin-html vite-plugin-svgr @testing-library/react
