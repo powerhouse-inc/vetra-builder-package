@@ -1,7 +1,7 @@
 {
   "name": "@powerhousedao/vetra-builder-package",
   "description": "Vetra document models, editors, and processors for Powerhouse",
-  "version": "5.2.0-dev.31",
+  "version": "5.2.0-dev.32",
   "license": "AGPL-3.0-only",
   "repository": {
     "type": "git",
@@ -173,6 +173,5 @@
   "bugs": {
     "url": "https://github.com/powerhouse-inc/vetra-builder-package/issues"
   },
-  "homepage": "https://github.com/powerhouse-inc/vetra-builder-package#readme",
-  "_id": "@powerhousedao/vetra-builder-package@5.2.0-dev.30"
+  "homepage": "https://github.com/powerhouse-inc/vetra-builder-package#readme"
 }
