@@ -113,7 +113,8 @@
     "luxon": "^3.7.2",
     "nanoid": "^5.1.7",
     "uuid": "^11.1.0",
-    "zod": "4.3.6"
+    "zod": "4.3.6",
+    "@opentelemetry/exporter-prometheus": "^0.57.2"
   },
   "devDependencies": {
     "@electric-sql/pglite": "^0.3.16",
