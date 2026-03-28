@@ -36,8 +36,12 @@
     "isolatedModules": true,
     "noUncheckedSideEffectImports": true,
     "moduleDetection": "force",
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "paths": {
+      "document-model/core": ["./node_modules/document-model/dist/index.d.ts"],
+      "document-models/*": ["./document-models/*"]
+    }
   },
   "include": ["**/*", "./powerhouse.manifest.json"],
-  "exclude": ["dist", "node_modules", ".ph", "main.tsx", "main.ts"]
+  "exclude": ["dist", "node_modules", ".ph", "main.tsx", "main.ts", "**/*.test.ts"]
 }
