@@ -33,11 +33,14 @@ ARG PH_CONNECT_BASE_PATH="/"
 # Install ph-cmd and prisma globally
 RUN pnpm add -g ph-cmd@$TAG prisma@5.17.0
 
+# Cache bust: changes with every build to ensure fresh COPY
+ARG CACHE_BUST=0
+
 # Copy project source
 COPY . .
 
-# Install dependencies (delete lockfile to force fresh resolution from package.json)
-RUN rm -f pnpm-lock.yaml && pnpm install
+# Install dependencies (lockfile excluded via .dockerignore, resolves fresh from package.json)
+RUN pnpm install
 
 # Generate code and build the package
 RUN pnpm generate

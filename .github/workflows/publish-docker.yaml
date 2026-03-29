@@ -249,6 +249,7 @@ jobs:
             TAG=${{ steps.ph-tag.outputs.tag }}
             PACKAGE_NAME=${{ steps.package.outputs.name }}
             PH_CONNECT_BASE_PATH=/
+            CACHE_BUST=${{ github.run_id }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
