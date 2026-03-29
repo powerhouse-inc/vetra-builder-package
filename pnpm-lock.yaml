@@ -32,8 +32,8 @@ importers:
         specifier: ^1.40.1
         version: 1.40.1(@types/react-dom@19.2.3(@types/react@19.2.14))(@types/react@19.2.14)(bufferutil@4.0.9)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(typescript@5.9.3)(utf-8-validate@5.0.10)
       '@powerhousedao/vetra-cloud-package':
-        specifier: 0.0.0-dev.37
-        version: 0.0.0-dev.37(917fa9c7b88c178c1a6ba927065d941d)
+        specifier: 0.0.0-dev.38
+        version: 0.0.0-dev.38(917fa9c7b88c178c1a6ba927065d941d)
       '@renown/sdk':
         specifier: dev
         version: 6.0.0-dev.105(bufferutil@4.0.9)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@4.3.6)
@@ -3428,8 +3428,8 @@ packages:
     engines: {node: '>=24.0.0'}
     hasBin: true
 
-  '@powerhousedao/vetra-cloud-package@0.0.0-dev.37':
-    resolution: {integrity: sha512-SCRDmkq9EcbaN0gaP2Z0h/TwjmTgo+L3ytuJ7+8VrQ5mZ9ONbaN89UrYV7XUNcAShR2ZspQkk5Y/6dO1hYpWGA==}
+  '@powerhousedao/vetra-cloud-package@0.0.0-dev.38':
+    resolution: {integrity: sha512-+62dFkJ+vOoR0/3Cu5/f5HC2mdn15V/4Ie6zD7iG6bGuP4SXdjqVTczrkhqmOYjG70/1wF+lhQIxiP08ks49KA==}
     peerDependencies:
       react: ^19.2.4
       react-dom: ^19.2.4
@@ -18231,7 +18231,7 @@ snapshots:
       - yaml
       - zod
 
-  '@powerhousedao/vetra-cloud-package@0.0.0-dev.37(917fa9c7b88c178c1a6ba927065d941d)':
+  '@powerhousedao/vetra-cloud-package@0.0.0-dev.38(917fa9c7b88c178c1a6ba927065d941d)':
     dependencies:
       '@kubernetes/client-node': 1.4.0(bufferutil@4.0.9)(encoding@0.1.13)(utf-8-validate@5.0.10)
       '@powerhousedao/builder-tools': 6.0.0-dev.122(@emnapi/core@1.9.1)(@emnapi/runtime@1.9.1)(@types/node@24.12.0)(babel-plugin-react-compiler@1.0.0)(encoding@0.1.13)(expo-constants@55.0.10-canary-20260328-2049187(expo@55.0.10-canary-20260328-2049187)(react-native@0.82.1(@babel/core@7.29.0)(@types/react@19.2.14)(bufferutil@4.0.9)(react@19.2.4)(utf-8-validate@5.0.10))(typescript@5.9.3))(jiti@2.6.1)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(rollup@4.60.0)(synckit@0.11.12)(terser@5.46.1)(tsx@4.21.0)(typescript@5.9.3)(yaml@2.8.3)
