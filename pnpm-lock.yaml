@@ -32,8 +32,8 @@ importers:
         specifier: ^1.40.1
         version: 1.40.1(@types/react-dom@19.2.3(@types/react@19.2.14))(@types/react@19.2.14)(bufferutil@4.0.9)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(typescript@5.9.3)(utf-8-validate@5.0.10)
       '@powerhousedao/vetra-cloud-package':
-        specifier: 0.0.0-dev.24
-        version: 0.0.0-dev.24(917fa9c7b88c178c1a6ba927065d941d)
+        specifier: 0.0.0-dev.26
+        version: 0.0.0-dev.26(917fa9c7b88c178c1a6ba927065d941d)
       '@renown/sdk':
         specifier: dev
         version: 6.0.0-dev.105(bufferutil@4.0.9)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@4.3.6)
@@ -2236,9 +2236,11 @@ packages:
 
   '@metamask/sdk-analytics@0.0.5':
     resolution: {integrity: sha512-fDah+keS1RjSUlC8GmYXvx6Y26s3Ax1U9hGpWb6GSY5SAdmTSIqp2CvYy6yW0WgLhnYhW+6xERuD0eVqV63QIQ==}
+    deprecated: No longer maintained, superseded by @metamask/connect-analytics
 
   '@metamask/sdk-communication-layer@0.33.1':
     resolution: {integrity: sha512-0bI9hkysxcfbZ/lk0T2+aKVo1j0ynQVTuB3sJ5ssPWlz+Z3VwveCkP1O7EVu1tsVVCb0YV5WxK9zmURu2FIiaA==}
+    deprecated: No longer maintained, superseded by https://docs.metamask.io/metamask-connect
     peerDependencies:
       cross-fetch: ^4.0.0
       eciesjs: '*'
@@ -2248,6 +2250,7 @@ packages:
 
   '@metamask/sdk-install-modal-web@0.32.1':
     resolution: {integrity: sha512-MGmAo6qSjf1tuYXhCu2EZLftq+DSt5Z7fsIKr2P+lDgdTPWgLfZB1tJKzNcwKKOdf6q9Qmmxn7lJuI/gq5LrKw==}
+    deprecated: No longer maintained, superseded by https://docs.metamask.io/metamask-connect
 
   '@metamask/sdk@0.33.1':
     resolution: {integrity: sha512-1mcOQVGr9rSrVcbKPNVzbZ8eCl1K0FATsYH3WJ/MH4WcZDWGECWrXJPNMZoEAkLxWiMe8jOQBumg2pmcDa9zpQ==}
@@ -3425,8 +3428,8 @@ packages:
     engines: {node: '>=24.0.0'}
     hasBin: true
 
-  '@powerhousedao/vetra-cloud-package@0.0.0-dev.24':
-    resolution: {integrity: sha512-HBRou2Th+prLf+ZcB3jTMHZMxfb2IIqhsjGb28C8YBffztKXZy3YzwmeWJbG9w8KM5TzszP9ghEM+u6c7+WiVw==}
+  '@powerhousedao/vetra-cloud-package@0.0.0-dev.26':
+    resolution: {integrity: sha512-HZ7Ge2UV78ADxoOfBqVpi9o+pvUKoA2rmSq900wkMpdt8TycAdexVGHDPEPWXrYs5rzkZTL8lhHsRXBrfFHUlA==}
     peerDependencies:
       react: ^19.2.4
       react-dom: ^19.2.4
@@ -18228,7 +18231,7 @@ snapshots:
       - yaml
       - zod
 
-  '@powerhousedao/vetra-cloud-package@0.0.0-dev.24(917fa9c7b88c178c1a6ba927065d941d)':
+  '@powerhousedao/vetra-cloud-package@0.0.0-dev.26(917fa9c7b88c178c1a6ba927065d941d)':
     dependencies:
       '@kubernetes/client-node': 1.4.0(bufferutil@4.0.9)(encoding@0.1.13)(utf-8-validate@5.0.10)
       '@powerhousedao/builder-tools': 6.0.0-dev.118(@emnapi/core@1.9.1)(@emnapi/runtime@1.9.1)(@types/node@24.12.0)(babel-plugin-react-compiler@1.0.0)(encoding@0.1.13)(expo-constants@55.0.10-canary-20260328-2049187(expo@55.0.10-canary-20260328-2049187)(react-native@0.82.1(@babel/core@7.29.0)(@types/react@19.2.14)(bufferutil@4.0.9)(react@19.2.4)(utf-8-validate@5.0.10))(typescript@5.9.3))(jiti@2.6.1)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(rollup@4.60.0)(synckit@0.11.12)(terser@5.46.1)(tsx@4.21.0)(typescript@5.9.3)(yaml@2.8.3)
