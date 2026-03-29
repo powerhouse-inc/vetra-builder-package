@@ -36,8 +36,8 @@ RUN pnpm add -g ph-cmd@$TAG prisma@5.17.0
 # Copy project source
 COPY . .
 
-# Install dependencies
-RUN pnpm install --no-frozen-lockfile
+# Install dependencies (delete lockfile to force fresh resolution from package.json)
+RUN rm -f pnpm-lock.yaml && pnpm install
 
 # Generate code and build the package
 RUN pnpm generate
