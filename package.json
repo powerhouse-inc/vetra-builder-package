@@ -97,15 +97,16 @@
     "migrate": "ph-cli migrate"
   },
   "dependencies": {
-    "@powerhousedao/builder-tools": "6.0.0-dev.118",
-    "@powerhousedao/common": "6.0.0-dev.118",
-    "@powerhousedao/connect": "6.0.0-dev.118",
-    "@powerhousedao/design-system": "6.0.0-dev.118",
+    "@opentelemetry/exporter-prometheus": "^0.57.2",
+    "@powerhousedao/builder-tools": "6.0.0-dev.121",
+    "@powerhousedao/common": "6.0.0-dev.121",
+    "@powerhousedao/connect": "6.0.0-dev.121",
+    "@powerhousedao/design-system": "6.0.0-dev.121",
     "@powerhousedao/document-engineering": "^1.40.1",
-    "@powerhousedao/vetra-cloud-package": "0.0.0-dev.28",
+    "@powerhousedao/vetra-cloud-package": "0.0.0-dev.29",
     "@renown/sdk": "dev",
     "cmd-ts": "^0.15.0",
-    "document-model": "6.0.0-dev.118",
+    "document-model": "6.0.0-dev.121",
     "graphql": "^16.13.1",
     "graphql-request": "^7.4.0",
     "graphql-tag": "^2.12.6",
@@ -113,24 +114,23 @@
     "luxon": "^3.7.2",
     "nanoid": "^5.1.7",
     "uuid": "^11.1.0",
-    "zod": "4.3.6",
-    "@opentelemetry/exporter-prometheus": "^0.57.2"
+    "zod": "4.3.6"
   },
   "devDependencies": {
     "@electric-sql/pglite": "^0.3.16",
     "@eslint/js": "^9.39.4",
     "@openfeature/core": "^1.9.2",
     "@powerhousedao/analytics-engine-core": "6.0.0-dev.101",
-    "@powerhousedao/codegen": "6.0.0-dev.118",
-    "@powerhousedao/config": "6.0.0-dev.118",
-    "@powerhousedao/ph-cli": "6.0.0-dev.118",
-    "@powerhousedao/reactor": "6.0.0-dev.118",
-    "@powerhousedao/reactor-api": "6.0.0-dev.118",
-    "@powerhousedao/reactor-browser": "6.0.0-dev.118",
-    "@powerhousedao/reactor-local": "6.0.0-dev.118",
+    "@powerhousedao/codegen": "6.0.0-dev.121",
+    "@powerhousedao/config": "6.0.0-dev.121",
+    "@powerhousedao/ph-cli": "6.0.0-dev.121",
+    "@powerhousedao/reactor": "6.0.0-dev.121",
+    "@powerhousedao/reactor-api": "6.0.0-dev.121",
+    "@powerhousedao/reactor-browser": "6.0.0-dev.121",
+    "@powerhousedao/reactor-local": "6.0.0-dev.121",
     "@powerhousedao/scalars": "dev",
-    "@powerhousedao/switchboard": "6.0.0-dev.118",
-    "@powerhousedao/vetra": "6.0.0-dev.118",
+    "@powerhousedao/switchboard": "6.0.0-dev.121",
+    "@powerhousedao/vetra": "6.0.0-dev.121",
     "@semantic-release/changelog": "^6.0.3",
     "@semantic-release/git": "^10.0.1",
     "@tailwindcss/cli": "^4.2.2",
@@ -175,5 +175,6 @@
   "bugs": {
     "url": "https://github.com/powerhouse-inc/vetra-builder-package/issues"
   },
-  "homepage": "https://github.com/powerhouse-inc/vetra-builder-package#readme"
+  "homepage": "https://github.com/powerhouse-inc/vetra-builder-package#readme",
+  "_id": "@powerhousedao/vetra-builder-package@5.2.0-dev.40"
 }
