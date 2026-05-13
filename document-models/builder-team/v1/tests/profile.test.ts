@@ -1,20 +1,20 @@
-import { generateMock } from "@powerhousedao/common/utils";
-import { describe, expect, it } from "vitest";
+import { generateMock } from "document-model";
 import {
-  reducer,
-  utils,
   isBuilderTeamDocument,
-  setLogo,
-  setTeamName,
-  setSlug,
+  reducer,
   setDescription,
-  setSocials,
-  SetLogoInputSchema,
-  SetTeamNameInputSchema,
-  SetSlugInputSchema,
   SetDescriptionInputSchema,
+  setLogo,
+  SetLogoInputSchema,
+  setSlug,
+  SetSlugInputSchema,
+  setSocials,
   SetSocialsInputSchema,
-} from "@powerhousedao/vetra-builder-package/document-models/builder-team/v1";
+  setTeamName,
+  SetTeamNameInputSchema,
+  utils,
+} from "document-models/builder-team/v1";
+import { describe, expect, it } from "vitest";
 
 describe("ProfileOperations", () => {
   it("should handle setLogo operation", () => {

@@ -1,33 +1,32 @@
-// TODO: remove eslint-disable rules once refactor is done
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
-import type { StateReducer } from "document-model";
-import { isDocumentAction, createReducer } from "document-model/core";
-import type { BuilderAccountPHState } from "@powerhousedao/vetra-builder-package/document-models/builder-account/v1";
+import type { Reducer, StateReducer } from "document-model";
+import { createReducer, isDocumentAction } from "document-model";
+import type { BuilderAccountPHState } from "document-models/builder-account/v1";
 
-import { builderAccountProfileOperations } from "../src/reducers/profile.js";
 import { builderAccountMembersOperations } from "../src/reducers/members.js";
-import { builderAccountSpacesOperations } from "../src/reducers/spaces.js";
 import { builderAccountPackagesOperations } from "../src/reducers/packages.js";
+import { builderAccountProfileOperations } from "../src/reducers/profile.js";
+import { builderAccountSpacesOperations } from "../src/reducers/spaces.js";
 
 import {
+  AddMemberInputSchema,
+  AddPackageInputSchema,
+  AddSpaceInputSchema,
+  DeletePackageInputSchema,
+  DeleteSpaceInputSchema,
+  RemoveMemberInputSchema,
+  ReorderPackagesInputSchema,
+  ReorderSpacesInputSchema,
   SetLogoInputSchema,
+  SetPackageDriveIdInputSchema,
+  SetProfileDescriptionInputSchema,
   SetProfileNameInputSchema,
   SetSlugInputSchema,
-  SetProfileDescriptionInputSchema,
-  UpdateSocialsInputSchema,
-  AddMemberInputSchema,
-  RemoveMemberInputSchema,
-  AddSpaceInputSchema,
-  DeleteSpaceInputSchema,
-  SetSpaceTitleInputSchema,
   SetSpaceDescriptionInputSchema,
-  ReorderSpacesInputSchema,
-  AddPackageInputSchema,
-  SetPackageDriveIdInputSchema,
+  SetSpaceTitleInputSchema,
   UpdatePackageInputSchema,
-  ReorderPackagesInputSchema,
-  DeletePackageInputSchema,
+  UpdateSocialsInputSchema,
 } from "./schema/zod.js";
 
 const stateReducer: StateReducer<BuilderAccountPHState> = (
@@ -248,4 +247,5 @@ const stateReducer: StateReducer<BuilderAccountPHState> = (
   }
 };
 
-export const reducer = createReducer<BuilderAccountPHState>(stateReducer);
+export const reducer: Reducer<BuilderAccountPHState> =
+  createReducer(stateReducer);

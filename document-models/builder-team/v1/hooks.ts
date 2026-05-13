@@ -1,3 +1,7 @@
+/**
+ * WARNING: DO NOT EDIT
+ * This file is auto-generated and updated by codegen
+ */
 import type { DocumentDispatch } from "@powerhousedao/reactor-browser";
 import {
   useDocumentById,
@@ -8,7 +12,7 @@ import {
 import type {
   BuilderTeamAction,
   BuilderTeamDocument,
-} from "@powerhousedao/vetra-builder-package/document-models/builder-team/v1";
+} from "document-models/builder-team/v1";
 import {
   assertIsBuilderTeamDocument,
   isBuilderTeamDocument,

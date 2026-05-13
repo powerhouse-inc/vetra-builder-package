@@ -1,7 +1,7 @@
 {
   "name": "@powerhousedao/vetra-builder-package",
   "description": "Vetra document models, editors, and processors for Powerhouse",
-  "version": "5.2.0-dev.54",
+  "version": "5.2.0-dev.55",
   "license": "AGPL-3.0-only",
   "repository": {
     "type": "git",
@@ -39,37 +39,49 @@
   },
   "exports": {
     ".": {
-      "types": "./dist/index.d.ts",
-      "default": "./dist/index.js"
+      "types": "./dist/browser/index.d.ts",
+      "browser": "./dist/browser/index.js",
+      "node": "./dist/node/index.mjs",
+      "default": "./dist/browser/index.js"
     },
     "./document-models": {
-      "types": "./dist/document-models/index.d.ts",
-      "default": "./dist/document-models/index.js"
+      "types": "./dist/browser/document-models/index.d.ts",
+      "browser": "./dist/browser/document-models/index.js",
+      "node": "./dist/node/document-models/index.mjs",
+      "default": "./dist/browser/document-models/index.js"
+    },
+    "./document-models/*": {
+      "types": "./dist/browser/document-models/*/index.d.ts",
+      "browser": "./dist/browser/document-models/*/index.js",
+      "node": "./dist/node/document-models/*/index.mjs",
+      "default": "./dist/browser/document-models/*/index.js"
     },
     "./editors": {
-      "types": "./dist/editors/index.d.ts",
-      "default": "./dist/editors/index.js"
-    },
-    "./subgraphs": {
-      "types": "./dist/subgraphs/index.d.ts",
-      "default": "./dist/subgraphs/index.js"
-    },
-    "./processors": {
-      "types": "./dist/processors/index.d.ts",
-      "default": "./dist/processors/index.js"
-    },
-    "./manifest": {
-      "default": "./dist/powerhouse.manifest.json"
-    },
-    "./style.css": "./dist/style.css",
-    "./document-models/*": {
-      "types": "./dist/document-models/*/index.d.ts",
-      "default": "./dist/document-models/*/index.js"
+      "types": "./dist/browser/editors/index.d.ts",
+      "browser": "./dist/browser/editors/index.js",
+      "node": "./dist/node/editors/index.mjs",
+      "default": "./dist/browser/editors/index.js"
     },
     "./editors/*": {
-      "types": "./dist/editors/*/index.d.ts",
-      "default": "./dist/editors/*/index.js"
-    }
+      "types": "./dist/browser/editors/*/index.d.ts",
+      "browser": "./dist/browser/editors/*/index.js",
+      "node": "./dist/node/editors/*/index.mjs",
+      "default": "./dist/browser/editors/*/index.js"
+    },
+    "./subgraphs": {
+      "types": "./dist/browser/subgraphs/index.d.ts",
+      "browser": "./dist/browser/subgraphs/index.js",
+      "node": "./dist/node/subgraphs/index.mjs",
+      "default": "./dist/browser/subgraphs/index.js"
+    },
+    "./processors": {
+      "types": "./dist/browser/processors/index.d.ts",
+      "browser": "./dist/browser/processors/index.js",
+      "node": "./dist/node/processors/index.mjs",
+      "default": "./dist/browser/processors/index.js"
+    },
+    "./manifest": "./dist/powerhouse.manifest.json",
+    "./style.css": "./dist/style.css"
   },
   "scripts": {
     "lint": "eslint --config eslint.config.js --cache --cache-strategy content",
@@ -78,7 +90,7 @@
     "build:tsc:watch": "tsc --watch",
     "build:css": "npx @tailwindcss/cli -i ./style.css -o ./dist/style.css",
     "build:css:watch": "npx @tailwindcss/cli -i ./style.css -o ./dist/style.css --watch",
-    "build": "npm run tsc && npm run tailwind",
+    "build": "ph-cli build",
     "test": "vitest run",
     "test:watch": "vitest",
     "typecheck": "tsc --noEmit",
@@ -103,10 +115,9 @@
     "@powerhousedao/connect": "6.0.0-dev.244",
     "@powerhousedao/design-system": "6.0.0-dev.244",
     "@powerhousedao/document-engineering": "^1.40.1",
-    "@powerhousedao/vetra-cloud-package": "0.0.0-dev.39",
     "@renown/sdk": "dev",
     "cmd-ts": "^0.15.0",
-    "document-model": "6.0.0-dev.122",
+    "document-model": "6.0.0-dev.244",
     "graphql": "^16.13.1",
     "graphql-request": "^7.4.0",
     "graphql-tag": "^2.12.6",
@@ -114,7 +125,8 @@
     "luxon": "^3.7.2",
     "nanoid": "^5.1.7",
     "uuid": "^11.1.0",
-    "zod": "4.3.6"
+    "zod": "4.3.6",
+    "@powerhousedao/shared": "6.0.0-dev.244"
   },
   "devDependencies": {
     "@electric-sql/pglite": "^0.3.16",
@@ -127,8 +139,7 @@
     "@powerhousedao/reactor": "6.0.0-dev.244",
     "@powerhousedao/reactor-api": "6.0.0-dev.244",
     "@powerhousedao/reactor-browser": "6.0.0-dev.244",
-    "@powerhousedao/reactor-local": "6.0.0-dev.154",
-    "@powerhousedao/scalars": "dev",
+    "@powerhousedao/scalars": "staging",
     "@powerhousedao/switchboard": "6.0.0-dev.244",
     "@powerhousedao/vetra": "6.0.0-dev.244",
     "@semantic-release/changelog": "^6.0.3",

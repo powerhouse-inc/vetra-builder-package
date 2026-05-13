@@ -1,18 +1,18 @@
-import { generateMock } from "@powerhousedao/common/utils";
-import { describe, expect, it } from "vitest";
+import { generateMock } from "document-model";
 import {
-  reducer,
-  utils,
-  isBuilderTeamDocument,
   addPackage,
-  updatePackageInfo,
-  removePackage,
-  reorderPackages,
   AddPackageInputSchema,
-  UpdatePackageInfoInputSchema,
+  isBuilderTeamDocument,
+  reducer,
+  removePackage,
   RemovePackageInputSchema,
+  reorderPackages,
   ReorderPackagesInputSchema,
-} from "@powerhousedao/vetra-builder-package/document-models/builder-team/v1";
+  updatePackageInfo,
+  UpdatePackageInfoInputSchema,
+  utils,
+} from "document-models/builder-team/v1";
+import { describe, expect, it } from "vitest";
 
 describe("PackagesOperations", () => {
   it("should handle addPackage operation", () => {

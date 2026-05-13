@@ -28,8 +28,8 @@ export const documentModel: DocumentModelGlobalState = {
               reducer: "",
               schema:
                 'input SetLogoInput {\n  "Add your inputs here"\n  logoUrl: String!\n}',
-              scope: "global",
               template: "",
+              scope: "global",
             },
             {
               description: "",
@@ -40,8 +40,8 @@ export const documentModel: DocumentModelGlobalState = {
               reducer: "",
               schema:
                 'input SetProfileNameInput {\n  "Add your inputs here"\n  name: String!\n}',
-              scope: "global",
               template: "",
+              scope: "global",
             },
             {
               description: "",
@@ -52,8 +52,8 @@ export const documentModel: DocumentModelGlobalState = {
               reducer: "",
               schema:
                 'input SetSlugInput {\n  "Add your inputs here"\n  slug: String!\n}',
-              scope: "global",
               template: "",
+              scope: "global",
             },
             {
               description: "",
@@ -64,8 +64,8 @@ export const documentModel: DocumentModelGlobalState = {
               reducer: "",
               schema:
                 'input SetProfileDescriptionInput {\n  "Add your inputs here"\n  description: String\n}',
-              scope: "global",
               template: "",
+              scope: "global",
             },
             {
               description: "",
@@ -76,8 +76,8 @@ export const documentModel: DocumentModelGlobalState = {
               reducer: "",
               schema:
                 'input UpdateSocialsInput {\n  "Add your inputs here"\n  x: URL\n  github: URL\n  website: URL\n}',
-              scope: "global",
               template: "",
+              scope: "global",
             },
           ],
         },
@@ -95,8 +95,8 @@ export const documentModel: DocumentModelGlobalState = {
               reducer: "",
               schema:
                 'input AddMemberInput {\n  "Add your inputs here"\n  ethAddress: EthereumAddress\n}',
-              scope: "global",
               template: "",
+              scope: "global",
             },
             {
               description: "",
@@ -107,8 +107,8 @@ export const documentModel: DocumentModelGlobalState = {
               reducer: "",
               schema:
                 'input RemoveMemberInput {\n  "Add your inputs here"\n  ethAddress: EthereumAddress\n}',
-              scope: "global",
               template: "",
+              scope: "global",
             },
           ],
         },
@@ -126,8 +126,8 @@ export const documentModel: DocumentModelGlobalState = {
               reducer: "",
               schema:
                 'input AddSpaceInput {\n  "Add your inputs here"\n  title: String!\n  description: String\n}',
-              scope: "global",
               template: "",
+              scope: "global",
             },
             {
               description: "",
@@ -146,8 +146,8 @@ export const documentModel: DocumentModelGlobalState = {
               reducer: "",
               schema:
                 'input DeleteSpaceInput {\n  "Add your inputs here"\n  id: OID!\n}',
-              scope: "global",
               template: "",
+              scope: "global",
             },
             {
               description: "",
@@ -158,8 +158,8 @@ export const documentModel: DocumentModelGlobalState = {
               reducer: "",
               schema:
                 'input SetSpaceTitleInput {\n  "Add your inputs here"\n  id: OID!\n  newTitle: String!\n}',
-              scope: "global",
               template: "",
+              scope: "global",
             },
             {
               description: "",
@@ -170,8 +170,8 @@ export const documentModel: DocumentModelGlobalState = {
               reducer: "",
               schema:
                 'input SetSpaceDescriptionInput {\n  "Add your inputs here"\n  id: OID!\n  description: String!\n}',
-              scope: "global",
               template: "",
+              scope: "global",
             },
             {
               description: "",
@@ -182,8 +182,8 @@ export const documentModel: DocumentModelGlobalState = {
               reducer: "",
               schema:
                 'input ReorderSpacesInput {\n  "Add your inputs here"\n  ids: [OID!]!, insertAfter: OID\n}',
-              scope: "global",
               template: "",
+              scope: "global",
             },
           ],
         },
@@ -201,8 +201,8 @@ export const documentModel: DocumentModelGlobalState = {
               reducer: "",
               schema:
                 'input AuthorInput {\n  name: String!\n  website: URL\n}\n\ninput AddPackageInput {\n  "Add your inputs here"\n  spaceId: OID!\n  name: String!\n  description: String\n  category: String\n  author: AuthorInput\n  keywords: [String!]\n  github: URL\n  npm: URL\n  vetraDriveUrl: URL\n}',
-              scope: "global",
               template: "",
+              scope: "global",
             },
             {
               description: "",
@@ -213,8 +213,8 @@ export const documentModel: DocumentModelGlobalState = {
               reducer: "",
               schema:
                 'input SetPackageDriveIdInput {\n  "Add your inputs here"\n  packageId: OID!\n  driveId: String\n}',
-              scope: "global",
               template: "",
+              scope: "global",
             },
             {
               description: "",
@@ -225,8 +225,8 @@ export const documentModel: DocumentModelGlobalState = {
               reducer: "",
               schema:
                 'input UpdatePackageInput {\n  "Add your inputs here"\n  id: OID!\n  title: String\n  description: String\n}',
-              scope: "global",
               template: "",
+              scope: "global",
             },
             {
               description: "",
@@ -237,8 +237,8 @@ export const documentModel: DocumentModelGlobalState = {
               reducer: "",
               schema:
                 'input ReorderPackagesInput {\n  "Add your inputs here"\n  spaceId: OID!\n  ids: [OID!]!\n  insertAfter: OID\n}',
-              scope: "global",
               template: "",
+              scope: "global",
             },
             {
               description: "",
@@ -249,8 +249,8 @@ export const documentModel: DocumentModelGlobalState = {
               reducer: "",
               schema:
                 'input DeletePackageInput {\n  "Add your inputs here"\n  id: OID!\n}',
-              scope: "global",
               template: "",
+              scope: "global",
             },
           ],
         },

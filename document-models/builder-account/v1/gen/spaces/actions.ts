@@ -1,10 +1,14 @@
+/**
+ * WARNING: DO NOT EDIT
+ * This file is auto-generated and updated by codegen
+ */
 import type { Action } from "document-model";
 import type {
   AddSpaceInput,
   DeleteSpaceInput,
-  SetSpaceTitleInput,
-  SetSpaceDescriptionInput,
   ReorderSpacesInput,
+  SetSpaceDescriptionInput,
+  SetSpaceTitleInput,
 } from "../types.js";
 
 export type AddSpaceAction = Action & {

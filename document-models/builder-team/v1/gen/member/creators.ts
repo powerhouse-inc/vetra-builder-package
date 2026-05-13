@@ -1,18 +1,22 @@
-import { createAction } from "document-model/core";
+/**
+ * WARNING: DO NOT EDIT
+ * This file is auto-generated and updated by codegen
+ */
+import { createAction } from "document-model";
 import {
   AddMemberInputSchema,
-  UpdateMemberInfoInputSchema,
   RemoveMemberInputSchema,
+  UpdateMemberInfoInputSchema,
 } from "../schema/zod.js";
 import type {
   AddMemberInput,
-  UpdateMemberInfoInput,
   RemoveMemberInput,
+  UpdateMemberInfoInput,
 } from "../types.js";
 import type {
   AddMemberAction,
-  UpdateMemberInfoAction,
   RemoveMemberAction,
+  UpdateMemberInfoAction,
 } from "./actions.js";
 
 export const addMember = (input: AddMemberInput) =>

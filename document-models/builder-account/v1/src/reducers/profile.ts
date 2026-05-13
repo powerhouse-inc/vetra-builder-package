@@ -1,4 +1,4 @@
-import type { BuilderAccountProfileOperations } from "@powerhousedao/vetra-builder-package/document-models/builder-account/v1";
+import type { BuilderAccountProfileOperations } from "document-models/builder-account/v1";
 
 export const builderAccountProfileOperations: BuilderAccountProfileOperations =
   {

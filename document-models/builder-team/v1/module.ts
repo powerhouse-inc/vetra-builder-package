@@ -1,17 +1,20 @@
+/**
+ * WARNING: DO NOT EDIT
+ * This file is auto-generated and updated by codegen
+ */
 import type { DocumentModelModule } from "document-model";
-import { createState } from "document-model";
-import { defaultBaseState } from "document-model/core";
-import type { BuilderTeamPHState } from "./gen/types.js";
+import { createState, defaultBaseState } from "document-model";
+import { actions } from "./actions.js";
 import { documentModel } from "./gen/document-model.js";
 import { reducer } from "./gen/reducer.js";
-import { actions } from "./actions.js";
+import type { BuilderTeamPHState } from "./gen/types.js";
 import { utils } from "./utils.js";
 
 /** Document model module for the BuilderTeam document type */
-export const BuilderTeam: DocumentModelModule<BuilderTeamPHState> = {
+export const BuilderTeam = {
   version: 1,
   reducer,
   actions,
   utils,
   documentModel: createState(defaultBaseState(), documentModel),
-};
+} as const satisfies DocumentModelModule<BuilderTeamPHState>;

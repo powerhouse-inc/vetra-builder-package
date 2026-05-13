@@ -1,36 +1,40 @@
+/**
+ * WARNING: DO NOT EDIT
+ * This file is auto-generated and updated by codegen
+ */
 import { type SignalDispatch } from "document-model";
+import type { BuilderAccountGlobalState } from "../types.js";
 import type {
   SetLogoAction,
+  SetProfileDescriptionAction,
   SetProfileNameAction,
   SetSlugAction,
-  SetProfileDescriptionAction,
   UpdateSocialsAction,
 } from "./actions.js";
-import type { BuilderAccountState } from "../types.js";
 
 export interface BuilderAccountProfileOperations {
   setLogoOperation: (
-    state: BuilderAccountState,
+    state: BuilderAccountGlobalState,
     action: SetLogoAction,
     dispatch?: SignalDispatch,
   ) => void;
   setProfileNameOperation: (
-    state: BuilderAccountState,
+    state: BuilderAccountGlobalState,
     action: SetProfileNameAction,
     dispatch?: SignalDispatch,
   ) => void;
   setSlugOperation: (
-    state: BuilderAccountState,
+    state: BuilderAccountGlobalState,
     action: SetSlugAction,
     dispatch?: SignalDispatch,
   ) => void;
   setProfileDescriptionOperation: (
-    state: BuilderAccountState,
+    state: BuilderAccountGlobalState,
     action: SetProfileDescriptionAction,
     dispatch?: SignalDispatch,
   ) => void;
   updateSocialsOperation: (
-    state: BuilderAccountState,
+    state: BuilderAccountGlobalState,
     action: UpdateSocialsAction,
     dispatch?: SignalDispatch,
   ) => void;

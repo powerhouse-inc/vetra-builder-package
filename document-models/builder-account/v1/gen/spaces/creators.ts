@@ -1,24 +1,28 @@
-import { createAction } from "document-model/core";
+/**
+ * WARNING: DO NOT EDIT
+ * This file is auto-generated and updated by codegen
+ */
+import { createAction } from "document-model";
 import {
   AddSpaceInputSchema,
   DeleteSpaceInputSchema,
-  SetSpaceTitleInputSchema,
-  SetSpaceDescriptionInputSchema,
   ReorderSpacesInputSchema,
+  SetSpaceDescriptionInputSchema,
+  SetSpaceTitleInputSchema,
 } from "../schema/zod.js";
 import type {
   AddSpaceInput,
   DeleteSpaceInput,
-  SetSpaceTitleInput,
-  SetSpaceDescriptionInput,
   ReorderSpacesInput,
+  SetSpaceDescriptionInput,
+  SetSpaceTitleInput,
 } from "../types.js";
 import type {
   AddSpaceAction,
   DeleteSpaceAction,
-  SetSpaceTitleAction,
-  SetSpaceDescriptionAction,
   ReorderSpacesAction,
+  SetSpaceDescriptionAction,
+  SetSpaceTitleAction,
 } from "./actions.js";
 
 export const addSpace = (input: AddSpaceInput) =>

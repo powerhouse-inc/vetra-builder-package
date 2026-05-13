@@ -1,30 +1,34 @@
+/**
+ * WARNING: DO NOT EDIT
+ * This file is auto-generated and updated by codegen
+ */
 import { type SignalDispatch } from "document-model";
+import type { BuilderTeamGlobalState } from "../types.js";
 import type {
   AddSpaceAction,
-  UpdateSpaceInfoAction,
   RemoveSpaceAction,
   ReorderSpacesAction,
+  UpdateSpaceInfoAction,
 } from "./actions.js";
-import type { BuilderTeamState } from "../types.js";
 
 export interface BuilderTeamSpacesOperations {
   addSpaceOperation: (
-    state: BuilderTeamState,
+    state: BuilderTeamGlobalState,
     action: AddSpaceAction,
     dispatch?: SignalDispatch,
   ) => void;
   updateSpaceInfoOperation: (
-    state: BuilderTeamState,
+    state: BuilderTeamGlobalState,
     action: UpdateSpaceInfoAction,
     dispatch?: SignalDispatch,
   ) => void;
   removeSpaceOperation: (
-    state: BuilderTeamState,
+    state: BuilderTeamGlobalState,
     action: RemoveSpaceAction,
     dispatch?: SignalDispatch,
   ) => void;
   reorderSpacesOperation: (
-    state: BuilderTeamState,
+    state: BuilderTeamGlobalState,
     action: ReorderSpacesAction,
     dispatch?: SignalDispatch,
   ) => void;

@@ -1,6 +1,10 @@
+/**
+ * WARNING: DO NOT EDIT
+ * This file is auto-generated and updated by codegen
+ */
 import type { UpgradeManifest } from "document-model";
-import { builderAccountUpgradeManifest } from "./builder-account/upgrades/upgrade-manifest.js";
-import { builderTeamUpgradeManifest } from "./builder-team/upgrades/upgrade-manifest.js";
+import { builderAccountUpgradeManifest } from "document-models/builder-account/upgrades";
+import { builderTeamUpgradeManifest } from "document-models/builder-team/upgrades";
 
 export const upgradeManifests: UpgradeManifest<readonly number[]>[] = [
   builderAccountUpgradeManifest,

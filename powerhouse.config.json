@@ -1,28 +1,23 @@
 {
-  "documentModelsDir": "./document-models",
-  "editorsDir": "./editors",
-  "processorsDir": "./processors",
-  "subgraphsDir": "./subgraphs",
-  "studio": {
-    "port": 3000
-  },
-  "reactor": {
-    "port": 4001
-  },
-  "packages": [
-    {
-      "packageName": "@powerhousedao/vetra",
-      "version": "latest",
-      "provider": "npm"
+    "documentModelsDir": "./document-models",
+    "editorsDir": "./editors",
+    "processorsDir": "./processors",
+    "subgraphsDir": "./subgraphs",
+    "studio": {
+        "port": 3000
     },
-    {
-      "packageName": "@powerhousedao/vetra-cloud-package",
-      "version": "0.0.0-dev.37",
-      "provider": "npm"
+    "reactor": {
+        "port": 4001
+    },
+    "packages": [
+        {
+            "packageName": "@powerhousedao/vetra",
+            "version": "latest",
+            "provider": "npm"
+        }
+    ],
+    "vetra": {
+        "driveId": "vetra-builder-package",
+        "driveUrl": "https://switchboard.staging.vetra.io/d/vetra-builder-package"
     }
-  ],
-  "vetra": {
-    "driveId": "vetra-builder-package",
-    "driveUrl": "https://switchboard.staging.vetra.io/d/vetra-builder-package"
-  }
 }

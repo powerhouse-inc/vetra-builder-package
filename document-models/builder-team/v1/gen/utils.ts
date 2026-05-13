@@ -1,21 +1,28 @@
+/**
+ * WARNING: DO NOT EDIT
+ * This file is auto-generated and updated by codegen
+ */
 import type { DocumentModelUtils } from "document-model";
 import {
   baseCreateDocument,
-  baseSaveToFileHandle,
   baseLoadFromInput,
+  baseSaveToFileHandle,
   defaultBaseState,
   generateId,
-} from "document-model/core";
-import type { BuilderTeamGlobalState, BuilderTeamLocalState } from "./types.js";
-import type { BuilderTeamPHState } from "./types.js";
-import { reducer } from "./reducer.js";
-import { builderTeamDocumentType } from "./document-type.js";
+} from "document-model";
 import {
-  isBuilderTeamDocument,
   assertIsBuilderTeamDocument,
-  isBuilderTeamState,
   assertIsBuilderTeamState,
+  isBuilderTeamDocument,
+  isBuilderTeamState,
 } from "./document-schema.js";
+import { builderTeamDocumentType } from "./document-type.js";
+import { reducer } from "./reducer.js";
+import type {
+  BuilderTeamGlobalState,
+  BuilderTeamLocalState,
+  BuilderTeamPHState,
+} from "./types.js";
 
 export const initialGlobalState: BuilderTeamGlobalState = {
   profile: {
@@ -72,12 +79,3 @@ export const utils: DocumentModelUtils<BuilderTeamPHState> = {
     return assertIsBuilderTeamDocument(document);
   },
 };
-
-export const createDocument = utils.createDocument;
-export const createState = utils.createState;
-export const saveToFileHandle = utils.saveToFileHandle;
-export const loadFromInput = utils.loadFromInput;
-export const isStateOfType = utils.isStateOfType;
-export const assertIsStateOfType = utils.assertIsStateOfType;
-export const isDocumentOfType = utils.isDocumentOfType;
-export const assertIsDocumentOfType = utils.assertIsDocumentOfType;

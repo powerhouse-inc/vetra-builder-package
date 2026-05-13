@@ -1,4 +1,4 @@
-import type { BuilderTeamSpacesOperations } from "@powerhousedao/vetra-builder-package/document-models/builder-team/v1";
+import type { BuilderTeamSpacesOperations } from "document-models/builder-team/v1";
 
 export const builderTeamSpacesOperations: BuilderTeamSpacesOperations = {
   addSpaceOperation(state, action) {

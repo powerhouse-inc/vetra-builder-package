@@ -1,24 +1,28 @@
-import { createAction } from "document-model/core";
+/**
+ * WARNING: DO NOT EDIT
+ * This file is auto-generated and updated by codegen
+ */
+import { createAction } from "document-model";
 import {
-  SetLogoInputSchema,
-  SetTeamNameInputSchema,
-  SetSlugInputSchema,
   SetDescriptionInputSchema,
+  SetLogoInputSchema,
+  SetSlugInputSchema,
   SetSocialsInputSchema,
+  SetTeamNameInputSchema,
 } from "../schema/zod.js";
 import type {
-  SetLogoInput,
-  SetTeamNameInput,
-  SetSlugInput,
   SetDescriptionInput,
+  SetLogoInput,
+  SetSlugInput,
   SetSocialsInput,
+  SetTeamNameInput,
 } from "../types.js";
 import type {
-  SetLogoAction,
-  SetTeamNameAction,
-  SetSlugAction,
   SetDescriptionAction,
+  SetLogoAction,
+  SetSlugAction,
   SetSocialsAction,
+  SetTeamNameAction,
 } from "./actions.js";
 
 export const setLogo = (input: SetLogoInput) =>

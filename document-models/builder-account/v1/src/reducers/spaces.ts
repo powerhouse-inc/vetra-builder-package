@@ -1,4 +1,4 @@
-import type { BuilderAccountSpacesOperations } from "@powerhousedao/vetra-builder-package/document-models/builder-account/v1";
+import type { BuilderAccountSpacesOperations } from "document-models/builder-account/v1";
 
 export const builderAccountSpacesOperations: BuilderAccountSpacesOperations = {
   addSpaceOperation(state, action) {

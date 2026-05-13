@@ -1,4 +1,8 @@
-import { createAction } from "document-model/core";
+/**
+ * WARNING: DO NOT EDIT
+ * This file is auto-generated and updated by codegen
+ */
+import { createAction } from "document-model";
 import {
   AddMemberInputSchema,
   RemoveMemberInputSchema,

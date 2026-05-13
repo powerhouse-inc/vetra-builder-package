@@ -38,7 +38,6 @@
     "moduleDetection": "force",
     "skipLibCheck": true,
     "paths": {
-      "document-model/core": ["./node_modules/document-model/dist/index.d.ts"],
       "document-models/builder-account/v1": ["./document-models/builder-account/v1/index.ts"],
       "document-models/builder-team/v1": ["./document-models/builder-team/v1/index.ts"]
     }

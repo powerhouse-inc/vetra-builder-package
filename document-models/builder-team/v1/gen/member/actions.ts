@@ -1,8 +1,12 @@
+/**
+ * WARNING: DO NOT EDIT
+ * This file is auto-generated and updated by codegen
+ */
 import type { Action } from "document-model";
 import type {
   AddMemberInput,
-  UpdateMemberInfoInput,
   RemoveMemberInput,
+  UpdateMemberInfoInput,
 } from "../types.js";
 
 export type AddMemberAction = Action & {

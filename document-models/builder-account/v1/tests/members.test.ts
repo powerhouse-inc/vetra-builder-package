@@ -1,14 +1,14 @@
-import { generateMock } from "@powerhousedao/common/utils";
-import { describe, expect, it } from "vitest";
+import { generateMock } from "document-model";
 import {
-  reducer,
-  utils,
-  isBuilderAccountDocument,
   addMember,
-  removeMember,
   AddMemberInputSchema,
+  isBuilderAccountDocument,
+  reducer,
+  removeMember,
   RemoveMemberInputSchema,
-} from "@powerhousedao/vetra-builder-package/document-models/builder-account/v1";
+  utils,
+} from "document-models/builder-account/v1";
+import { describe, expect, it } from "vitest";
 
 describe("MembersOperations", () => {
   it("should handle addMember operation", () => {
