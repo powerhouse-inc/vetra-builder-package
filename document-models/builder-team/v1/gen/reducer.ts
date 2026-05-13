@@ -1,32 +1,31 @@
-// TODO: remove eslint-disable rules once refactor is done
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
-import type { StateReducer } from "document-model";
-import { isDocumentAction, createReducer } from "document-model/core";
-import type { BuilderTeamPHState } from "@powerhousedao/vetra-builder-package/document-models/builder-team/v1";
+import type { Reducer, StateReducer } from "document-model";
+import { createReducer, isDocumentAction } from "document-model";
+import type { BuilderTeamPHState } from "document-models/builder-team/v1";
 
-import { builderTeamProfileOperations } from "../src/reducers/profile.js";
 import { builderTeamMemberOperations } from "../src/reducers/member.js";
-import { builderTeamSpacesOperations } from "../src/reducers/spaces.js";
 import { builderTeamPackagesOperations } from "../src/reducers/packages.js";
+import { builderTeamProfileOperations } from "../src/reducers/profile.js";
+import { builderTeamSpacesOperations } from "../src/reducers/spaces.js";
 
 import {
-  SetLogoInputSchema,
-  SetTeamNameInputSchema,
-  SetSlugInputSchema,
-  SetDescriptionInputSchema,
-  SetSocialsInputSchema,
   AddMemberInputSchema,
-  UpdateMemberInfoInputSchema,
-  RemoveMemberInputSchema,
-  AddSpaceInputSchema,
-  UpdateSpaceInfoInputSchema,
-  RemoveSpaceInputSchema,
-  ReorderSpacesInputSchema,
   AddPackageInputSchema,
-  UpdatePackageInfoInputSchema,
+  AddSpaceInputSchema,
+  RemoveMemberInputSchema,
   RemovePackageInputSchema,
+  RemoveSpaceInputSchema,
   ReorderPackagesInputSchema,
+  ReorderSpacesInputSchema,
+  SetDescriptionInputSchema,
+  SetLogoInputSchema,
+  SetSlugInputSchema,
+  SetSocialsInputSchema,
+  SetTeamNameInputSchema,
+  UpdateMemberInfoInputSchema,
+  UpdatePackageInfoInputSchema,
+  UpdateSpaceInfoInputSchema,
 } from "./schema/zod.js";
 
 const stateReducer: StateReducer<BuilderTeamPHState> = (
@@ -235,4 +234,4 @@ const stateReducer: StateReducer<BuilderTeamPHState> = (
   }
 };
 
-export const reducer = createReducer<BuilderTeamPHState>(stateReducer);
+export const reducer: Reducer<BuilderTeamPHState> = createReducer(stateReducer);

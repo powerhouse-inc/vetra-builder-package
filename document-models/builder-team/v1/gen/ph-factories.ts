@@ -1,15 +1,17 @@
 /**
+ * WARNING: DO NOT EDIT
+ * This file is auto-generated and updated by codegen
  * Factory methods for creating BuilderTeamDocument instances
  */
-import type { PHAuthState, PHDocumentState, PHBaseState } from "document-model";
-import { createBaseState, defaultBaseState } from "document-model/core";
+import type { PHAuthState, PHBaseState, PHDocumentState } from "document-model";
+import { createBaseState, defaultBaseState } from "document-model";
 import type {
   BuilderTeamDocument,
-  BuilderTeamLocalState,
   BuilderTeamGlobalState,
+  BuilderTeamLocalState,
   BuilderTeamPHState,
 } from "./types.js";
-import { createDocument } from "./utils.js";
+import { utils } from "./utils.js";
 
 export function defaultGlobalState(): BuilderTeamGlobalState {
   return {
@@ -47,7 +49,7 @@ export function createGlobalState(
   return {
     ...defaultGlobalState(),
     ...(state || {}),
-  } as BuilderTeamGlobalState;
+  };
 }
 
 export function createLocalState(
@@ -84,7 +86,7 @@ export function createBuilderTeamDocument(
     local?: Partial<BuilderTeamLocalState>;
   }>,
 ): BuilderTeamDocument {
-  const document = createDocument(
+  const document = utils.createDocument(
     state
       ? createState(
           createBaseState(state.auth, state.document),

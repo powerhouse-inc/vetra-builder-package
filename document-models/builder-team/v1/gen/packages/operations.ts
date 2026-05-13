@@ -1,30 +1,34 @@
+/**
+ * WARNING: DO NOT EDIT
+ * This file is auto-generated and updated by codegen
+ */
 import { type SignalDispatch } from "document-model";
+import type { BuilderTeamGlobalState } from "../types.js";
 import type {
   AddPackageAction,
-  UpdatePackageInfoAction,
   RemovePackageAction,
   ReorderPackagesAction,
+  UpdatePackageInfoAction,
 } from "./actions.js";
-import type { BuilderTeamState } from "../types.js";
 
 export interface BuilderTeamPackagesOperations {
   addPackageOperation: (
-    state: BuilderTeamState,
+    state: BuilderTeamGlobalState,
     action: AddPackageAction,
     dispatch?: SignalDispatch,
   ) => void;
   updatePackageInfoOperation: (
-    state: BuilderTeamState,
+    state: BuilderTeamGlobalState,
     action: UpdatePackageInfoAction,
     dispatch?: SignalDispatch,
   ) => void;
   removePackageOperation: (
-    state: BuilderTeamState,
+    state: BuilderTeamGlobalState,
     action: RemovePackageAction,
     dispatch?: SignalDispatch,
   ) => void;
   reorderPackagesOperation: (
-    state: BuilderTeamState,
+    state: BuilderTeamGlobalState,
     action: ReorderPackagesAction,
     dispatch?: SignalDispatch,
   ) => void;

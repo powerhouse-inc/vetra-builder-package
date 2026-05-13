@@ -7,17 +7,17 @@
  * - change it by adding new tests or modifying the existing ones
  */
 
-import { describe, it, expect } from "vitest";
 import {
-  utils,
+  assertIsBuilderTeamDocument,
+  assertIsBuilderTeamState,
+  builderTeamDocumentType,
   initialGlobalState,
   initialLocalState,
-  builderTeamDocumentType,
   isBuilderTeamDocument,
-  assertIsBuilderTeamDocument,
   isBuilderTeamState,
-  assertIsBuilderTeamState,
-} from "@powerhousedao/vetra-builder-package/document-models/builder-team/v1";
+  utils,
+} from "document-models/builder-team/v1";
+import { describe, expect, it } from "vitest";
 import { ZodError } from "zod";
 
 describe("BuilderTeam Document Model", () => {

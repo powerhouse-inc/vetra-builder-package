@@ -1,17 +1,21 @@
+/**
+ * WARNING: DO NOT EDIT
+ * This file is auto-generated and updated by codegen
+ */
 import { baseActions } from "document-model";
 import {
-  profileActions,
-  membersActions,
-  spacesActions,
-  packagesActions,
+  builderAccountMembersActions,
+  builderAccountPackagesActions,
+  builderAccountProfileActions,
+  builderAccountSpacesActions,
 } from "./gen/creators.js";
 
 /** Actions for the BuilderAccount document model */
 
 export const actions = {
   ...baseActions,
-  ...profileActions,
-  ...membersActions,
-  ...spacesActions,
-  ...packagesActions,
+  ...builderAccountProfileActions,
+  ...builderAccountMembersActions,
+  ...builderAccountSpacesActions,
+  ...builderAccountPackagesActions,
 };

@@ -1,24 +1,28 @@
-import { createAction } from "document-model/core";
+/**
+ * WARNING: DO NOT EDIT
+ * This file is auto-generated and updated by codegen
+ */
+import { createAction } from "document-model";
 import {
   AddPackageInputSchema,
+  DeletePackageInputSchema,
+  ReorderPackagesInputSchema,
   SetPackageDriveIdInputSchema,
   UpdatePackageInputSchema,
-  ReorderPackagesInputSchema,
-  DeletePackageInputSchema,
 } from "../schema/zod.js";
 import type {
   AddPackageInput,
+  DeletePackageInput,
+  ReorderPackagesInput,
   SetPackageDriveIdInput,
   UpdatePackageInput,
-  ReorderPackagesInput,
-  DeletePackageInput,
 } from "../types.js";
 import type {
   AddPackageAction,
+  DeletePackageAction,
+  ReorderPackagesAction,
   SetPackageDriveIdAction,
   UpdatePackageAction,
-  ReorderPackagesAction,
-  DeletePackageAction,
 } from "./actions.js";
 
 export const addPackage = (input: AddPackageInput) =>

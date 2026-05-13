@@ -1,23 +1,27 @@
-import { createAction } from "document-model/core";
+/**
+ * WARNING: DO NOT EDIT
+ * This file is auto-generated and updated by codegen
+ */
+import { createAction } from "document-model";
 import {
   SetLogoInputSchema,
+  SetProfileDescriptionInputSchema,
   SetProfileNameInputSchema,
   SetSlugInputSchema,
-  SetProfileDescriptionInputSchema,
   UpdateSocialsInputSchema,
 } from "../schema/zod.js";
 import type {
   SetLogoInput,
+  SetProfileDescriptionInput,
   SetProfileNameInput,
   SetSlugInput,
-  SetProfileDescriptionInput,
   UpdateSocialsInput,
 } from "../types.js";
 import type {
   SetLogoAction,
+  SetProfileDescriptionAction,
   SetProfileNameAction,
   SetSlugAction,
-  SetProfileDescriptionAction,
   UpdateSocialsAction,
 } from "./actions.js";
 

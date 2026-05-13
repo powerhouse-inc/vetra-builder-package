@@ -7,17 +7,17 @@
  * - change it by adding new tests or modifying the existing ones
  */
 
-import { describe, it, expect } from "vitest";
 import {
-  utils,
+  assertIsBuilderAccountDocument,
+  assertIsBuilderAccountState,
+  builderAccountDocumentType,
   initialGlobalState,
   initialLocalState,
-  builderAccountDocumentType,
   isBuilderAccountDocument,
-  assertIsBuilderAccountDocument,
   isBuilderAccountState,
-  assertIsBuilderAccountState,
-} from "@powerhousedao/vetra-builder-package/document-models/builder-account/v1";
+  utils,
+} from "document-models/builder-account/v1";
+import { describe, expect, it } from "vitest";
 import { ZodError } from "zod";
 
 describe("BuilderAccount Document Model", () => {

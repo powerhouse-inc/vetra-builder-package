@@ -27,8 +27,8 @@ export const documentModel: DocumentModelGlobalState = {
               name: "SET_LOGO",
               reducer: "",
               schema: "input SetLogoInput {\n  logo: String\n}",
-              scope: "global",
               template: "",
+              scope: "global",
             },
             {
               description: "",
@@ -38,8 +38,8 @@ export const documentModel: DocumentModelGlobalState = {
               name: "SET_TEAM_NAME",
               reducer: "",
               schema: "input SetTeamNameInput {\n  name: String!\n}",
-              scope: "global",
               template: "",
+              scope: "global",
             },
             {
               description: "",
@@ -49,8 +49,8 @@ export const documentModel: DocumentModelGlobalState = {
               name: "SET_SLUG",
               reducer: "",
               schema: "input SetSlugInput {\n  slug: String!\n}",
-              scope: "global",
               template: "",
+              scope: "global",
             },
             {
               description: "",
@@ -60,8 +60,8 @@ export const documentModel: DocumentModelGlobalState = {
               name: "SET_DESCRIPTION",
               reducer: "",
               schema: "input SetDescriptionInput {\n  description: String\n}",
-              scope: "global",
               template: "",
+              scope: "global",
             },
             {
               description: "",
@@ -72,8 +72,8 @@ export const documentModel: DocumentModelGlobalState = {
               reducer: "",
               schema:
                 "input SetSocialsInput {\n  xProfile: String\n  github: String\n  website: String\n}",
-              scope: "global",
               template: "",
+              scope: "global",
             },
           ],
         },
@@ -90,8 +90,8 @@ export const documentModel: DocumentModelGlobalState = {
               name: "ADD_MEMBER",
               reducer: "",
               schema: "input AddMemberInput {\n  id: OID!\n}",
-              scope: "global",
               template: "",
+              scope: "global",
             },
             {
               description: "",
@@ -102,8 +102,8 @@ export const documentModel: DocumentModelGlobalState = {
               reducer: "",
               schema:
                 "input UpdateMemberInfoInput {\n  id: OID!\n  phid: PHID\n  ethAddress: String\n  name: String\n  profileImage: String\n}",
-              scope: "global",
               template: "",
+              scope: "global",
             },
             {
               description: "",
@@ -113,8 +113,8 @@ export const documentModel: DocumentModelGlobalState = {
               name: "REMOVE_MEMBER",
               reducer: "",
               schema: "input RemoveMemberInput {\n  id: OID!\n}",
-              scope: "global",
               template: "",
+              scope: "global",
             },
           ],
         },
@@ -131,8 +131,8 @@ export const documentModel: DocumentModelGlobalState = {
               name: "ADD_SPACE",
               reducer: "",
               schema: "input AddSpaceInput {\n  id: OID!\n}",
-              scope: "global",
               template: "",
+              scope: "global",
             },
             {
               description: "",
@@ -143,8 +143,8 @@ export const documentModel: DocumentModelGlobalState = {
               reducer: "",
               schema:
                 "input UpdateSpaceInfoInput {\n  id: OID!\n  title: String\n  description: String\n}",
-              scope: "global",
               template: "",
+              scope: "global",
             },
             {
               description: "",
@@ -154,8 +154,8 @@ export const documentModel: DocumentModelGlobalState = {
               name: "REMOVE_SPACE",
               reducer: "",
               schema: "input RemoveSpaceInput {\n  id: OID!\n}",
-              scope: "global",
               template: "",
+              scope: "global",
             },
             {
               description: "Reorders the spaces array based on provided order",
@@ -167,8 +167,8 @@ export const documentModel: DocumentModelGlobalState = {
                 "const { spaceIds, targetIndex } = action.input;\n\n// Find the spaces to move\nconst spacesToMove = state.spaces.filter(space => spaceIds.includes(space.id));\nconst remainingSpaces = state.spaces.filter(space => !spaceIds.includes(space.id));\n\n// Insert the spaces at the target index\nremainingSpaces.splice(targetIndex, 0, ...spacesToMove);\nstate.spaces = remainingSpaces;",
               schema:
                 "input ReorderSpacesInput {\n  spaceIds: [OID!]!\n  targetIndex: Int!\n}",
-              scope: "global",
               template: "Reorders the spaces array based on provided order",
+              scope: "global",
             },
           ],
         },
@@ -185,8 +185,8 @@ export const documentModel: DocumentModelGlobalState = {
               name: "ADD_PACKAGE",
               reducer: "",
               schema: "input AddPackageInput {\n  id: OID!\n  spaceId: OID!\n}",
-              scope: "global",
               template: "",
+              scope: "global",
             },
             {
               description: "",
@@ -197,8 +197,8 @@ export const documentModel: DocumentModelGlobalState = {
               reducer: "",
               schema:
                 "input UpdatePackageInfoInput {\n  id: OID!\n  spaceId: OID\n  phid: PHID\n  title: String\n  description: String\n  github: String\n  npm: String\n  vetraDriveUrl: URL\n}",
-              scope: "global",
               template: "",
+              scope: "global",
             },
             {
               description: "",
@@ -208,8 +208,8 @@ export const documentModel: DocumentModelGlobalState = {
               name: "REMOVE_PACKAGE",
               reducer: "",
               schema: "input RemovePackageInput {\n  id: OID!\n}",
-              scope: "global",
               template: "",
+              scope: "global",
             },
             {
               description:
@@ -222,9 +222,9 @@ export const documentModel: DocumentModelGlobalState = {
                 "const { spaceId, packageIds, targetIndex } = action.input;\n\n// Find the space\nconst space = state.spaces.find(s => s.id === spaceId);\nif (!space) {\n  return;\n}\n\n// Find the packages to move\nconst packagesToMove = space.packages.filter(pkg => packageIds.includes(pkg.id));\nconst remainingPackages = space.packages.filter(pkg => !packageIds.includes(pkg.id));\n\n// Insert the packages at the target index\nremainingPackages.splice(targetIndex, 0, ...packagesToMove);\nspace.packages = remainingPackages;",
               schema:
                 "input ReorderPackagesInput {\n  spaceId: OID!\n  packageIds: [OID!]!\n  targetIndex: Int!\n}",
-              scope: "global",
               template:
                 "Reorders the packages array within a space based on provided order",
+              scope: "global",
             },
           ],
         },

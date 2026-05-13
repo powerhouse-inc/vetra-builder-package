@@ -1,36 +1,40 @@
+/**
+ * WARNING: DO NOT EDIT
+ * This file is auto-generated and updated by codegen
+ */
 import { type SignalDispatch } from "document-model";
+import type { BuilderAccountGlobalState } from "../types.js";
 import type {
   AddSpaceAction,
   DeleteSpaceAction,
-  SetSpaceTitleAction,
-  SetSpaceDescriptionAction,
   ReorderSpacesAction,
+  SetSpaceDescriptionAction,
+  SetSpaceTitleAction,
 } from "./actions.js";
-import type { BuilderAccountState } from "../types.js";
 
 export interface BuilderAccountSpacesOperations {
   addSpaceOperation: (
-    state: BuilderAccountState,
+    state: BuilderAccountGlobalState,
     action: AddSpaceAction,
     dispatch?: SignalDispatch,
   ) => void;
   deleteSpaceOperation: (
-    state: BuilderAccountState,
+    state: BuilderAccountGlobalState,
     action: DeleteSpaceAction,
     dispatch?: SignalDispatch,
   ) => void;
   setSpaceTitleOperation: (
-    state: BuilderAccountState,
+    state: BuilderAccountGlobalState,
     action: SetSpaceTitleAction,
     dispatch?: SignalDispatch,
   ) => void;
   setSpaceDescriptionOperation: (
-    state: BuilderAccountState,
+    state: BuilderAccountGlobalState,
     action: SetSpaceDescriptionAction,
     dispatch?: SignalDispatch,
   ) => void;
   reorderSpacesOperation: (
-    state: BuilderAccountState,
+    state: BuilderAccountGlobalState,
     action: ReorderSpacesAction,
     dispatch?: SignalDispatch,
   ) => void;

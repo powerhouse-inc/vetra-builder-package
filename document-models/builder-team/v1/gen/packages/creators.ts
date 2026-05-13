@@ -1,21 +1,25 @@
-import { createAction } from "document-model/core";
+/**
+ * WARNING: DO NOT EDIT
+ * This file is auto-generated and updated by codegen
+ */
+import { createAction } from "document-model";
 import {
   AddPackageInputSchema,
-  UpdatePackageInfoInputSchema,
   RemovePackageInputSchema,
   ReorderPackagesInputSchema,
+  UpdatePackageInfoInputSchema,
 } from "../schema/zod.js";
 import type {
   AddPackageInput,
-  UpdatePackageInfoInput,
   RemovePackageInput,
   ReorderPackagesInput,
+  UpdatePackageInfoInput,
 } from "../types.js";
 import type {
   AddPackageAction,
-  UpdatePackageInfoAction,
   RemovePackageAction,
   ReorderPackagesAction,
+  UpdatePackageInfoAction,
 } from "./actions.js";
 
 export const addPackage = (input: AddPackageInput) =>

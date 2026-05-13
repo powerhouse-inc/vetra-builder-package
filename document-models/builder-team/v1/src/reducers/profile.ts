@@ -1,4 +1,4 @@
-import type { BuilderTeamProfileOperations } from "@powerhousedao/vetra-builder-package/document-models/builder-team/v1";
+import type { BuilderTeamProfileOperations } from "document-models/builder-team/v1";
 
 export const builderTeamProfileOperations: BuilderTeamProfileOperations = {
   setLogoOperation(state, action) {

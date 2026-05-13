@@ -1,4 +1,8 @@
-import type { PHDocument, PHBaseState } from "document-model";
+/**
+ * WARNING: DO NOT EDIT
+ * This file is auto-generated and updated by codegen
+ */
+import type { PHBaseState, PHDocument } from "document-model";
 import type { BuilderAccountAction } from "./actions.js";
 import type { BuilderAccountState as BuilderAccountGlobalState } from "./schema/types.js";
 
@@ -13,9 +17,9 @@ type BuilderAccountDocument = PHDocument<BuilderAccountPHState>;
 export * from "./schema/types.js";
 
 export type {
+  BuilderAccountAction,
+  BuilderAccountDocument,
   BuilderAccountGlobalState,
   BuilderAccountLocalState,
   BuilderAccountPHState,
-  BuilderAccountAction,
-  BuilderAccountDocument,
 };

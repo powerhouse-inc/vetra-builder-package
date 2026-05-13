@@ -1,15 +1,17 @@
 /**
+ * WARNING: DO NOT EDIT
+ * This file is auto-generated and updated by codegen
  * Factory methods for creating BuilderAccountDocument instances
  */
-import type { PHAuthState, PHDocumentState, PHBaseState } from "document-model";
-import { createBaseState, defaultBaseState } from "document-model/core";
+import type { PHAuthState, PHBaseState, PHDocumentState } from "document-model";
+import { createBaseState, defaultBaseState } from "document-model";
 import type {
   BuilderAccountDocument,
-  BuilderAccountLocalState,
   BuilderAccountGlobalState,
+  BuilderAccountLocalState,
   BuilderAccountPHState,
 } from "./types.js";
-import { createDocument } from "./utils.js";
+import { utils } from "./utils.js";
 
 export function defaultGlobalState(): BuilderAccountGlobalState {
   return {
@@ -47,7 +49,7 @@ export function createGlobalState(
   return {
     ...defaultGlobalState(),
     ...(state || {}),
-  } as BuilderAccountGlobalState;
+  };
 }
 
 export function createLocalState(
@@ -84,7 +86,7 @@ export function createBuilderAccountDocument(
     local?: Partial<BuilderAccountLocalState>;
   }>,
 ): BuilderAccountDocument {
-  const document = createDocument(
+  const document = utils.createDocument(
     state
       ? createState(
           createBaseState(state.auth, state.document),

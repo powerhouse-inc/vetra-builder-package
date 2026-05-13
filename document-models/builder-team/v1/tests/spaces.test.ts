@@ -1,18 +1,18 @@
-import { generateMock } from "@powerhousedao/common/utils";
-import { describe, expect, it } from "vitest";
+import { generateMock } from "document-model";
 import {
-  reducer,
-  utils,
-  isBuilderTeamDocument,
   addSpace,
-  updateSpaceInfo,
-  removeSpace,
-  reorderSpaces,
   AddSpaceInputSchema,
-  UpdateSpaceInfoInputSchema,
+  isBuilderTeamDocument,
+  reducer,
+  removeSpace,
   RemoveSpaceInputSchema,
+  reorderSpaces,
   ReorderSpacesInputSchema,
-} from "@powerhousedao/vetra-builder-package/document-models/builder-team/v1";
+  updateSpaceInfo,
+  UpdateSpaceInfoInputSchema,
+  utils,
+} from "document-models/builder-team/v1";
+import { describe, expect, it } from "vitest";
 
 describe("SpacesOperations", () => {
   it("should handle addSpace operation", () => {
