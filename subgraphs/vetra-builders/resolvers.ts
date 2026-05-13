@@ -288,12 +288,6 @@ export const getResolvers = (subgraph: ISubgraph): Record<string, unknown> => {
             "builder_team_members.builder_team_id",
             "builder_teams.id"
           )
-          .leftJoin("deleted_files", (join) =>
-            join
-              .onRef("deleted_files.document_id", "=", "builder_teams.id")
-              .on("deleted_files.drive_id", "=", driveId)
-          )
-          .where("deleted_files.id", "is", null)
           .where(
             sql<boolean>`LOWER(builder_team_members.eth_address) = ${address}`
           )
