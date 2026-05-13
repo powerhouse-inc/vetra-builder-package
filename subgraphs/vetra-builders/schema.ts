@@ -68,5 +68,9 @@ export const schema: DocumentNode = gql`
       sortOrder: String
     ): [BuilderTeamType!]!
     fetchBuilderTeam(driveId: String, id: String, slug: String): BuilderTeamType
+    fetchBuilderTeamsByMember(
+      driveId: String
+      ethAddress: String!
+    ): [BuilderTeamType!]!
   }
 `;

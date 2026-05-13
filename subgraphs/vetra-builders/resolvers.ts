@@ -1,5 +1,6 @@
 import { type ISubgraph } from "@powerhousedao/reactor-api";
 import { type IRelationalDb } from "@powerhousedao/reactor";
+import { sql } from "kysely";
 import { type DB } from "../../processors/vetra-builder-relational-db-processor/schema.js";
 import { VetraBuilderRelationalDbProcessor } from "../../processors/vetra-builder-relational-db-processor/index.js";
 
@@ -266,6 +267,67 @@ export const getResolvers = (subgraph: ISubgraph): Record<string, unknown> => {
           spaces: [], // Will be resolved by field resolver
           members: [], // Will be resolved by field resolver
         };
+      },
+
+      fetchBuilderTeamsByMember: async (
+        parent: unknown,
+        args: { driveId?: string; ethAddress: string },
+        context: { driveId?: string }
+      ) => {
+        const driveId = args.driveId || DEFAULT_DRIVE_ID;
+        context.driveId = driveId;
+        const address = args.ethAddress.toLowerCase();
+
+        const rows = await VetraBuilderRelationalDbProcessor.query<DB>(
+          driveId,
+          db
+        )
+          .selectFrom("builder_teams")
+          .innerJoin(
+            "builder_team_members",
+            "builder_team_members.builder_team_id",
+            "builder_teams.id"
+          )
+          .leftJoin("deleted_files", (join) =>
+            join
+              .onRef("deleted_files.document_id", "=", "builder_teams.id")
+              .on("deleted_files.drive_id", "=", driveId)
+          )
+          .where("deleted_files.id", "is", null)
+          .where(
+            sql<boolean>`LOWER(builder_team_members.eth_address) = ${address}`
+          )
+          .select([
+            "builder_teams.id",
+            "builder_teams.profile_name",
+            "builder_teams.profile_slug",
+            "builder_teams.profile_logo",
+            "builder_teams.profile_description",
+            "builder_teams.profile_socials_x",
+            "builder_teams.profile_socials_github",
+            "builder_teams.profile_socials_website",
+            "builder_teams.created_at",
+            "builder_teams.updated_at",
+          ])
+          .distinct()
+          .orderBy("profile_name", "asc")
+          .execute();
+
+        return rows.map((account) => ({
+          id: account.id,
+          profileName: account.profile_name,
+          profileSlug: account.profile_slug,
+          profileLogo: account.profile_logo,
+          profileDescription: account.profile_description,
+          profileSocialsX: account.profile_socials_x,
+          profileSocialsGithub: account.profile_socials_github,
+          profileSocialsWebsite: account.profile_socials_website,
+          createdAt: account.created_at.toISOString(),
+          updatedAt: account.updated_at.toISOString(),
+          driveId,
+          spaces: [],
+          members: [],
+        }));
       },
     },
   };
