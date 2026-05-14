@@ -3,7 +3,10 @@ import type { DB } from "./schema.js";
 import type { Updateable } from "kysely";
 
 export class DatabaseHelpers {
-  constructor(private db: IRelationalDb<DB>) {}
+  constructor(
+    private db: IRelationalDb<DB>,
+    private driveId: string
+  ) {}
 
   /**
    * Ensures a package exists in the database, creating it if it doesn't
@@ -27,6 +30,7 @@ export class DatabaseHelpers {
           author_name: "",
           title: "",
           space_id: "",
+          source_drive_id: this.driveId,
         })
         .execute();
     }
@@ -83,10 +87,13 @@ export class DatabaseHelpers {
           profile_socials_x: null,
           profile_socials_github: null,
           profile_socials_website: null,
+          source_drive_id: this.driveId,
           created_at: new Date(),
           updated_at: new Date(),
         })
-        .onConflict((oc) => oc.column("id").doNothing())
+        .onConflict((oc) =>
+          oc.column("id").doUpdateSet({ source_drive_id: this.driveId })
+        )
         .execute();
     }
   }
