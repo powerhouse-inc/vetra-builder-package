@@ -97,8 +97,8 @@ function extractDocumentData(filePath: string): {
   }
 
   return {
-    header: header!,
-    operations: operations!,
+    header: header,
+    operations: operations,
     state: state || { global: {}, local: {} },
     currentState: currentState || { global: {}, local: {} },
   };

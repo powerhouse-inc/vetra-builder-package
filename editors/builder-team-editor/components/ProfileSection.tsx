@@ -42,7 +42,7 @@ export function ProfileSection({
         x: profile.socials.xProfile || "",
       });
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+     
   }, [isEditing]);
 
   const handleSaveChanges = () => {

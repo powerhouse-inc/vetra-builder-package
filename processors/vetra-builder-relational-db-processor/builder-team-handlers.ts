@@ -413,7 +413,7 @@ export class BuilderTeamHandlers {
     for (const space of state.spaces) {
       const pkg = space.packages.find((p) => p.id === action.input.id);
       if (pkg) {
-        packageFromState = pkg as { phid?: string | null };
+        packageFromState = pkg;
         break;
       }
     }

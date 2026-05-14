@@ -47,7 +47,7 @@ export function createGlobalState(
   return {
     ...defaultGlobalState(),
     ...(state || {}),
-  } as BuilderTeamGlobalState;
+  };
 }
 
 export function createLocalState(
