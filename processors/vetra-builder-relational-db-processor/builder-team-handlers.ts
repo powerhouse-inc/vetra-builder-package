@@ -34,8 +34,11 @@ type PackageWithSortOrder = VetraPackageInfo & { sortOrder: number };
 export class BuilderTeamHandlers {
   private dbHelpers: DatabaseHelpers;
 
-  constructor(private db: IRelationalDb<DB>) {
-    this.dbHelpers = new DatabaseHelpers(db);
+  constructor(
+    private db: IRelationalDb<DB>,
+    private driveId: string
+  ) {
+    this.dbHelpers = new DatabaseHelpers(db, driveId);
   }
 
   async handleBuilderTeamOperation(
@@ -192,6 +195,7 @@ export class BuilderTeamHandlers {
           phid: member.phid || null,
           name: member.name || null,
           profile_image: member.profileImage || null,
+          source_drive_id: this.driveId,
           created_at: new Date(),
         })
         .execute();
@@ -288,10 +292,13 @@ export class BuilderTeamHandlers {
         title: "",
         description: "",
         sort_order: sortOrder,
+        source_drive_id: this.driveId,
         created_at: new Date(),
         updated_at: new Date(),
       })
-      .onConflict((oc) => oc.column("id").doNothing())
+      .onConflict((oc) =>
+        oc.column("id").doUpdateSet({ source_drive_id: this.driveId })
+      )
       .execute();
   }
 
@@ -379,10 +386,13 @@ export class BuilderTeamHandlers {
         vetra_drive_url: "",
         drive_id: "",
         sort_order: sortOrder,
+        source_drive_id: this.driveId,
         created_at: new Date(),
         updated_at: new Date(),
       })
-      .onConflict((oc) => oc.column("id").doNothing())
+      .onConflict((oc) =>
+        oc.column("id").doUpdateSet({ source_drive_id: this.driveId })
+      )
       .execute();
 
     // // Add keywords if provided
