@@ -1,23 +1,23 @@
 import { type ISubgraph } from "@powerhousedao/reactor-api";
-import { type IRelationalDb } from "@powerhousedao/reactor";
 import { sql } from "kysely";
 import { type DB } from "../../processors/vetra-builder-relational-db-processor/schema.js";
 import { VetraBuilderRelationalDbProcessor } from "../../processors/vetra-builder-relational-db-processor/index.js";
 
+// All processor instances share the "powerhouse" namespace. Rows from
+// different document-drives coexist in the same tables and are
+// distinguished by `source_drive_id`. The optional `driveId` accepted in
+// resolver arguments / context is kept for backward compatibility but is
+// no longer used to pick a namespace.
+const SHARED_NAMESPACE_KEY = "powerhouse";
+
 export const getResolvers = (subgraph: ISubgraph): Record<string, unknown> => {
   const db = subgraph.relationalDb;
-  const DEFAULT_DRIVE_ID = process.env.VETRA_BUILDER_DRIVE_ID || "powerhouse";
 
   return {
     BuilderTeamType: {
-      spaces: async (
-        parent: { id: string },
-        args: unknown,
-        context: { driveId?: string }
-      ) => {
-        const driveId = context.driveId || DEFAULT_DRIVE_ID;
+      spaces: async (parent: { id: string }) => {
         const spaces = await VetraBuilderRelationalDbProcessor.query<DB>(
-          driveId,
+          SHARED_NAMESPACE_KEY,
           db
         )
           .selectFrom("builder_team_spaces")
@@ -31,13 +31,11 @@ export const getResolvers = (subgraph: ISubgraph): Record<string, unknown> => {
             "builder_team_spaces.updated_at",
           ])
           .leftJoin("deleted_files", (join) =>
-            join
-              .onRef(
-                "deleted_files.document_id",
-                "=",
-                "builder_team_spaces.builder_team_id"
-              )
-              .on("deleted_files.drive_id", "=", driveId)
+            join.onRef(
+              "deleted_files.document_id",
+              "=",
+              "builder_team_spaces.builder_team_id"
+            )
           )
           .where("builder_team_id", "=", parent.id)
           .where("deleted_files.id", "is", null) // Exclude spaces from deleted accounts
@@ -51,19 +49,13 @@ export const getResolvers = (subgraph: ISubgraph): Record<string, unknown> => {
           description: space.description,
           createdAt: space.created_at.toISOString(),
           updatedAt: space.updated_at.toISOString(),
-          driveId: driveId, // Pass driveId to field resolvers
           packages: [], // Will be resolved by field resolver
         }));
       },
 
-      members: async (
-        parent: { id: string },
-        args: unknown,
-        context: { driveId?: string }
-      ) => {
-        const driveId = context.driveId || DEFAULT_DRIVE_ID;
+      members: async (parent: { id: string }) => {
         const members = await VetraBuilderRelationalDbProcessor.query<DB>(
-          driveId,
+          SHARED_NAMESPACE_KEY,
           db
         )
           .selectFrom("builder_team_members")
@@ -77,13 +69,11 @@ export const getResolvers = (subgraph: ISubgraph): Record<string, unknown> => {
             "builder_team_members.created_at",
           ])
           .leftJoin("deleted_files", (join) =>
-            join
-              .onRef(
-                "deleted_files.document_id",
-                "=",
-                "builder_team_members.builder_team_id"
-              )
-              .on("deleted_files.drive_id", "=", driveId)
+            join.onRef(
+              "deleted_files.document_id",
+              "=",
+              "builder_team_members.builder_team_id"
+            )
           )
           .where("builder_team_id", "=", parent.id)
           .where("deleted_files.id", "is", null) // Exclude members from deleted accounts
@@ -102,14 +92,9 @@ export const getResolvers = (subgraph: ISubgraph): Record<string, unknown> => {
     },
 
     BuilderTeamSpace: {
-      packages: async (
-        parent: { id: string; driveId?: string },
-        args: unknown,
-        context: { driveId?: string }
-      ) => {
-        const driveId = parent.driveId || context.driveId || DEFAULT_DRIVE_ID;
+      packages: async (parent: { id: string }) => {
         const packages = await VetraBuilderRelationalDbProcessor.query<DB>(
-          driveId,
+          SHARED_NAMESPACE_KEY,
           db
         )
           .selectFrom("builder_team_packages")
@@ -157,20 +142,20 @@ export const getResolvers = (subgraph: ISubgraph): Record<string, unknown> => {
     },
     Query: {
       fetchAllBuilderTeams: async (
-        parent: unknown,
+        _parent: unknown,
         args: {
           driveId?: string;
           search?: string;
           sortOrder?: "asc" | "desc";
-        },
-        context: { driveId?: string }
+        }
       ) => {
-        const driveId = args.driveId || DEFAULT_DRIVE_ID;
-        context.driveId = driveId;
         const search = args.search;
         const sortOrder = args.sortOrder || "asc";
 
-        let accounts = VetraBuilderRelationalDbProcessor.query<DB>(driveId, db)
+        let accounts = VetraBuilderRelationalDbProcessor.query<DB>(
+          SHARED_NAMESPACE_KEY,
+          db
+        )
           .selectFrom("builder_teams")
           .selectAll();
 
@@ -196,22 +181,18 @@ export const getResolvers = (subgraph: ISubgraph): Record<string, unknown> => {
           profileSocialsX: account.profile_socials_x,
           profileSocialsGithub: account.profile_socials_github,
           profileSocialsWebsite: account.profile_socials_website,
+          sourceDriveId: account.source_drive_id,
           createdAt: account.created_at.toISOString(),
           updatedAt: account.updated_at.toISOString(),
-          driveId: driveId, // Pass driveId to field resolvers
           spaces: [], // Will be resolved by field resolver
           members: [], // Will be resolved by field resolver
         }));
       },
 
       fetchBuilderTeam: async (
-        parent: unknown,
-        args: { driveId?: string; id?: string; slug?: string },
-        context: { driveId?: string }
+        _parent: unknown,
+        args: { driveId?: string; id?: string; slug?: string }
       ) => {
-        const driveId = args.driveId || DEFAULT_DRIVE_ID;
-        context.driveId = driveId;
-
         // Require either id or slug
         if (!args.id && !args.slug) {
           throw new Error("Either id or slug parameter is required");
@@ -223,7 +204,10 @@ export const getResolvers = (subgraph: ISubgraph): Record<string, unknown> => {
         // `relation "<schema>.deleted_files" does not exist`. Removed for
         // parity with `fetchBuilderTeamsByMember`; re-add once the
         // deleted_files convention is provisioned across drives.
-        let query = VetraBuilderRelationalDbProcessor.query<DB>(driveId, db)
+        let query = VetraBuilderRelationalDbProcessor.query<DB>(
+          SHARED_NAMESPACE_KEY,
+          db
+        )
           .selectFrom("builder_teams")
           .select([
             "builder_teams.id",
@@ -234,6 +218,7 @@ export const getResolvers = (subgraph: ISubgraph): Record<string, unknown> => {
             "builder_teams.profile_socials_x",
             "builder_teams.profile_socials_github",
             "builder_teams.profile_socials_website",
+            "builder_teams.source_drive_id",
             "builder_teams.created_at",
             "builder_teams.updated_at",
           ]);
@@ -260,25 +245,22 @@ export const getResolvers = (subgraph: ISubgraph): Record<string, unknown> => {
           profileSocialsX: account.profile_socials_x,
           profileSocialsGithub: account.profile_socials_github,
           profileSocialsWebsite: account.profile_socials_website,
+          sourceDriveId: account.source_drive_id,
           createdAt: account.created_at.toISOString(),
           updatedAt: account.updated_at.toISOString(),
-          driveId: driveId, // Pass driveId to field resolvers
           spaces: [], // Will be resolved by field resolver
           members: [], // Will be resolved by field resolver
         };
       },
 
       fetchBuilderTeamsByMember: async (
-        parent: unknown,
-        args: { driveId?: string; ethAddress: string },
-        context: { driveId?: string }
+        _parent: unknown,
+        args: { driveId?: string; ethAddress: string }
       ) => {
-        const driveId = args.driveId || DEFAULT_DRIVE_ID;
-        context.driveId = driveId;
         const address = args.ethAddress.toLowerCase();
 
         const rows = await VetraBuilderRelationalDbProcessor.query<DB>(
-          driveId,
+          SHARED_NAMESPACE_KEY,
           db
         )
           .selectFrom("builder_teams")
@@ -299,6 +281,7 @@ export const getResolvers = (subgraph: ISubgraph): Record<string, unknown> => {
             "builder_teams.profile_socials_x",
             "builder_teams.profile_socials_github",
             "builder_teams.profile_socials_website",
+            "builder_teams.source_drive_id",
             "builder_teams.created_at",
             "builder_teams.updated_at",
           ])
@@ -315,9 +298,9 @@ export const getResolvers = (subgraph: ISubgraph): Record<string, unknown> => {
           profileSocialsX: account.profile_socials_x,
           profileSocialsGithub: account.profile_socials_github,
           profileSocialsWebsite: account.profile_socials_website,
+          sourceDriveId: account.source_drive_id,
           createdAt: account.created_at.toISOString(),
           updatedAt: account.updated_at.toISOString(),
-          driveId,
           spaces: [],
           members: [],
         }));
