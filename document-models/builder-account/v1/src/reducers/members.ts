@@ -3,11 +3,24 @@ import type { BuilderAccountMembersOperations } from "document-models/builder-ac
 export const builderAccountMembersOperations: BuilderAccountMembersOperations =
   {
     addMemberOperation(state, action) {
-      // TODO: implement addMemberOperation reducer
-      throw new Error("Reducer for 'addMemberOperation' not implemented.");
+      const { ethAddress } = action.input;
+      if (!ethAddress) {
+        return;
+      }
+      const normalized = ethAddress.toLowerCase();
+      if (state.members.some((m) => m.toLowerCase() === normalized)) {
+        return;
+      }
+      state.members.push(ethAddress);
     },
     removeMemberOperation(state, action) {
-      // TODO: implement removeMemberOperation reducer
-      throw new Error("Reducer for 'removeMemberOperation' not implemented.");
+      const { ethAddress } = action.input;
+      if (!ethAddress) {
+        return;
+      }
+      const normalized = ethAddress.toLowerCase();
+      state.members = state.members.filter(
+        (m) => m.toLowerCase() !== normalized,
+      );
     },
   };
