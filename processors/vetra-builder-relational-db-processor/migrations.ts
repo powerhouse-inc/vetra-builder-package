@@ -13,6 +13,9 @@ export async function up(db: IRelationalDb<DB>): Promise<void> {
     .addColumn("profile_socials_x", "text")
     .addColumn("profile_socials_github", "text")
     .addColumn("profile_socials_website", "text")
+    .addColumn("source_drive_id", "varchar(255)", (col) =>
+      col.defaultTo("powerhouse").notNull()
+    )
     .addColumn("created_at", "timestamp", (col) =>
       col.defaultTo("now()").notNull()
     )
@@ -31,6 +34,9 @@ export async function up(db: IRelationalDb<DB>): Promise<void> {
     .addColumn("phid", "varchar(255)") // Powerhouse ID for Renown integration
     .addColumn("name", "varchar(255)") // Member name
     .addColumn("profile_image", "text") // Profile image URL
+    .addColumn("source_drive_id", "varchar(255)", (col) =>
+      col.defaultTo("powerhouse").notNull()
+    )
     .addColumn("created_at", "timestamp", (col) =>
       col.defaultTo("now()").notNull()
     )
@@ -52,6 +58,9 @@ export async function up(db: IRelationalDb<DB>): Promise<void> {
     .addColumn("title", "varchar(255)", (col) => col.notNull())
     .addColumn("description", "text")
     .addColumn("sort_order", "integer", (col) => col.defaultTo(0).notNull())
+    .addColumn("source_drive_id", "varchar(255)", (col) =>
+      col.defaultTo("powerhouse").notNull()
+    )
     .addColumn("created_at", "timestamp", (col) =>
       col.defaultTo("now()").notNull()
     )
@@ -83,6 +92,9 @@ export async function up(db: IRelationalDb<DB>): Promise<void> {
     .addColumn("vetra_drive_url", "text")
     .addColumn("drive_id", "varchar(255)") // For SetPackageDriveId operation
     .addColumn("sort_order", "integer", (col) => col.defaultTo(0).notNull())
+    .addColumn("source_drive_id", "varchar(255)", (col) =>
+      col.defaultTo("powerhouse").notNull()
+    )
     .addColumn("created_at", "timestamp", (col) =>
       col.defaultTo("now()").notNull()
     )
@@ -105,6 +117,9 @@ export async function up(db: IRelationalDb<DB>): Promise<void> {
     .addColumn("id", "varchar(255)", (col) => col.primaryKey())
     .addColumn("package_id", "varchar(255)", (col) => col.notNull())
     .addColumn("label", "varchar(255)", (col) => col.notNull())
+    .addColumn("source_drive_id", "varchar(255)", (col) =>
+      col.defaultTo("powerhouse").notNull()
+    )
     .addColumn("created_at", "timestamp", (col) =>
       col.defaultTo("now()").notNull()
     )
@@ -207,6 +222,41 @@ export async function up(db: IRelationalDb<DB>): Promise<void> {
     .column("drive_id")
     .ifNotExists()
     .execute();
+
+  // Idempotent backfill: retroactively add `source_drive_id` to tables that
+  // already exist without it (e.g. previously-deployed staging databases).
+  // Postgres throws on duplicate column, which is caught and ignored here.
+  const tablesNeedingSourceDriveId = [
+    "builder_teams",
+    "builder_team_members",
+    "builder_team_spaces",
+    "builder_team_packages",
+    "builder_team_package_keywords",
+  ] as const;
+
+  for (const table of tablesNeedingSourceDriveId) {
+    try {
+      await db.schema
+        .alterTable(table)
+        .addColumn("source_drive_id", "varchar(255)", (col) =>
+          col.defaultTo("powerhouse").notNull()
+        )
+        .execute();
+    } catch {
+      // Column already exists — safe to swallow because this block is
+      // intentionally idempotent.
+    }
+  }
+
+  // Index for fast prefix filtering in resolvers.
+  for (const table of tablesNeedingSourceDriveId) {
+    await db.schema
+      .createIndex(`idx_${table}_source_drive_id`)
+      .on(table)
+      .column("source_drive_id")
+      .ifNotExists()
+      .execute();
+  }
 }
 
 export async function down(db: IRelationalDb<DB>): Promise<void> {

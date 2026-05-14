@@ -6,6 +6,10 @@ export type Generated<T> = T extends ColumnType<infer S, infer I, infer U>
 
 export type Timestamp = ColumnType<Date, Date | string, Date | string>;
 
+// `source_drive_id` records which document-drive the BuilderTeam row came
+// from. All processor instances now share the "powerhouse" namespace, so
+// rows from different drives coexist in the same tables; this column lets
+// queries filter or join by origin drive.
 export interface BuilderTeamMembers {
   builder_team_id: string;
   created_at: Generated<Timestamp>;
@@ -14,6 +18,7 @@ export interface BuilderTeamMembers {
   name: string | null;
   phid: string | null;
   profile_image: string | null;
+  source_drive_id: string;
 }
 
 export interface BuilderTeamPackageKeywords {
@@ -21,6 +26,7 @@ export interface BuilderTeamPackageKeywords {
   id: string;
   label: string;
   package_id: string;
+  source_drive_id: string;
 }
 
 export interface BuilderTeamPackages {
@@ -34,6 +40,7 @@ export interface BuilderTeamPackages {
   id: string;
   npm_url: string | null;
   sort_order: Generated<number>;
+  source_drive_id: string;
   space_id: string;
   title: string;
   updated_at: Generated<Timestamp>;
@@ -50,6 +57,7 @@ export interface BuilderTeams {
   profile_socials_github: string | null;
   profile_socials_website: string | null;
   profile_socials_x: string | null;
+  source_drive_id: string;
   updated_at: Generated<Timestamp>;
 }
 
@@ -59,6 +67,7 @@ export interface BuilderTeamSpaces {
   description: string | null;
   id: string;
   sort_order: Generated<number>;
+  source_drive_id: string;
   title: string;
   updated_at: Generated<Timestamp>;
 }
