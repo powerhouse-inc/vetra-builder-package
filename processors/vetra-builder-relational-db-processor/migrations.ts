@@ -1,4 +1,5 @@
 import { type IRelationalDb } from "@powerhousedao/reactor";
+import { type Kysely, sql } from "kysely";
 import type { DB } from "./schema.js";
 
 export async function up(db: IRelationalDb<DB>): Promise<void> {
@@ -224,8 +225,13 @@ export async function up(db: IRelationalDb<DB>): Promise<void> {
     .execute();
 
   // Idempotent backfill: retroactively add `source_drive_id` to tables that
-  // already exist without it (e.g. previously-deployed staging databases).
-  // Postgres throws on duplicate column, which is caught and ignored here.
+  // already exist without it (e.g. previously-deployed databases predating the
+  // shared-namespace switch). Earlier versions wrapped this in a try/catch
+  // that silently swallowed all errors; if the alter failed for any reason
+  // other than "column already exists" (schema scoping, permissions, etc.)
+  // resolvers would crash later with "column does not exist". The explicit
+  // information_schema check below makes the intent unambiguous and surfaces
+  // unexpected failures instead of hiding them.
   const tablesNeedingSourceDriveId = [
     "builder_teams",
     "builder_team_members",
@@ -234,17 +240,26 @@ export async function up(db: IRelationalDb<DB>): Promise<void> {
     "builder_team_package_keywords",
   ] as const;
 
+  // IRelationalDb extends Kysely; the cast satisfies kysely's raw-builder
+  // executor type which is declared against Kysely directly.
+  const kdb = db as unknown as Kysely<DB>;
   for (const table of tablesNeedingSourceDriveId) {
-    try {
-      await db.schema
-        .alterTable(table)
-        .addColumn("source_drive_id", "varchar(255)", (col) =>
-          col.defaultTo("powerhouse").notNull()
-        )
-        .execute();
-    } catch {
-      // Column already exists — safe to swallow because this block is
-      // intentionally idempotent.
+    const exists = await sql<{ exists: boolean }>`
+      SELECT EXISTS (
+        SELECT 1 FROM information_schema.columns
+        WHERE table_schema = current_schema()
+          AND table_name = ${table}
+          AND column_name = 'source_drive_id'
+      ) AS exists
+    `.execute(kdb);
+    const hasColumn = exists.rows[0]?.exists === true;
+    if (!hasColumn) {
+      // Use raw SQL with current_schema() so the ALTER targets the namespaced
+      // schema kysely is currently bound to (not the public schema).
+      await sql`
+        ALTER TABLE ${sql.id(table)}
+        ADD COLUMN source_drive_id varchar(255) NOT NULL DEFAULT 'powerhouse'
+      `.execute(kdb);
     }
   }
 
