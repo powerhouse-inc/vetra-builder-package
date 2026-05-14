@@ -217,6 +217,12 @@ export const getResolvers = (subgraph: ISubgraph): Record<string, unknown> => {
           throw new Error("Either id or slug parameter is required");
         }
 
+        // NB: previously this query did a LEFT JOIN against `deleted_files` to
+        // hide soft-deleted teams. That table doesn't exist in the live
+        // drive's relational schema, so every call errored with
+        // `relation "<schema>.deleted_files" does not exist`. Removed for
+        // parity with `fetchBuilderTeamsByMember`; re-add once the
+        // deleted_files convention is provisioned across drives.
         let query = VetraBuilderRelationalDbProcessor.query<DB>(driveId, db)
           .selectFrom("builder_teams")
           .select([
@@ -230,12 +236,7 @@ export const getResolvers = (subgraph: ISubgraph): Record<string, unknown> => {
             "builder_teams.profile_socials_website",
             "builder_teams.created_at",
             "builder_teams.updated_at",
-          ])
-          .leftJoin("deleted_files", (join) =>
-            join
-              .onRef("deleted_files.document_id", "=", "builder_teams.id")
-              .on("deleted_files.drive_id", "=", driveId)
-          );
+          ]);
 
         // Query by id or slug
         if (args.id) {
@@ -244,9 +245,7 @@ export const getResolvers = (subgraph: ISubgraph): Record<string, unknown> => {
           query = query.where("builder_teams.profile_slug", "=", args.slug);
         }
 
-        const account = await query
-          .where("deleted_files.id", "is", null) // Exclude deleted documents
-          .executeTakeFirst();
+        const account = await query.executeTakeFirst();
 
         if (!account) {
           return null;
