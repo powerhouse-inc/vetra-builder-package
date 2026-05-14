@@ -14,6 +14,7 @@ export const schema: DocumentNode = gql`
     profileSocialsX: String
     profileSocialsGithub: String
     profileSocialsWebsite: String
+    sourceDriveId: String!
     createdAt: String!
     updatedAt: String!
     spaces: [BuilderTeamSpace!]!
