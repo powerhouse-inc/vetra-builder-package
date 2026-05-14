@@ -1,26 +1,56 @@
 import type { BuilderAccountSpacesOperations } from "document-models/builder-account/v1";
+import { SpaceNotFound } from "../../gen/spaces/error.js";
 
 export const builderAccountSpacesOperations: BuilderAccountSpacesOperations = {
   addSpaceOperation(state, action) {
-    // TODO: implement addSpaceOperation reducer
-    throw new Error("Reducer for 'addSpaceOperation' not implemented.");
+    const { id, title, description } = action.input;
+    if (state.spaces.find((space) => space.id === id)) {
+      return;
+    }
+    state.spaces.push({
+      id,
+      title,
+      description: description ?? null,
+      packages: [],
+    });
   },
   deleteSpaceOperation(state, action) {
-    // TODO: implement deleteSpaceOperation reducer
-    throw new Error("Reducer for 'deleteSpaceOperation' not implemented.");
+    const { id } = action.input;
+    const spaceIndex = state.spaces.findIndex((space) => space.id === id);
+    if (spaceIndex === -1) {
+      throw new SpaceNotFound(`Space with id "${id}" not found`);
+    }
+    state.spaces.splice(spaceIndex, 1);
   },
   setSpaceTitleOperation(state, action) {
-    // TODO: implement setSpaceTitleOperation reducer
-    throw new Error("Reducer for 'setSpaceTitleOperation' not implemented.");
+    const { id, newTitle } = action.input;
+    const space = state.spaces.find((s) => s.id === id);
+    if (!space) {
+      return;
+    }
+    space.title = newTitle;
   },
   setSpaceDescriptionOperation(state, action) {
-    // TODO: implement setSpaceDescriptionOperation reducer
-    throw new Error(
-      "Reducer for 'setSpaceDescriptionOperation' not implemented.",
-    );
+    const { id, description } = action.input;
+    const space = state.spaces.find((s) => s.id === id);
+    if (!space) {
+      return;
+    }
+    space.description = description;
   },
   reorderSpacesOperation(state, action) {
-    // TODO: implement reorderSpacesOperation reducer
-    throw new Error("Reducer for 'reorderSpacesOperation' not implemented.");
+    const { ids, insertAfter } = action.input;
+
+    const spacesToMove = state.spaces.filter((space) => ids.includes(space.id));
+    const remaining = state.spaces.filter((space) => !ids.includes(space.id));
+
+    let insertIndex = 0;
+    if (insertAfter) {
+      const anchorIndex = remaining.findIndex((s) => s.id === insertAfter);
+      insertIndex = anchorIndex === -1 ? remaining.length : anchorIndex + 1;
+    }
+
+    remaining.splice(insertIndex, 0, ...spacesToMove);
+    state.spaces = remaining;
   },
 };
