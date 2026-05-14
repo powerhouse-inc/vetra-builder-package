@@ -69,10 +69,11 @@ export type AddPackageInput = {
   category?: InputMaybe<Scalars["String"]["input"]>;
   description?: InputMaybe<Scalars["String"]["input"]>;
   github?: InputMaybe<Scalars["URL"]["input"]>;
+  /** Add your inputs here */
+  id: Scalars["OID"]["input"];
   keywords?: InputMaybe<Array<Scalars["String"]["input"]>>;
   name: Scalars["String"]["input"];
   npm?: InputMaybe<Scalars["URL"]["input"]>;
-  /** Add your inputs here */
   spaceId: Scalars["OID"]["input"];
   vetraDriveUrl?: InputMaybe<Scalars["URL"]["input"]>;
 };
@@ -80,6 +81,7 @@ export type AddPackageInput = {
 export type AddSpaceInput = {
   description?: InputMaybe<Scalars["String"]["input"]>;
   /** Add your inputs here */
+  id: Scalars["OID"]["input"];
   title: Scalars["String"]["input"];
 };
 
@@ -124,7 +126,7 @@ export type ReorderSpacesInput = {
 
 export type SetLogoInput = {
   /** Add your inputs here */
-  logoUrl: Scalars["String"]["input"];
+  logoUrl: Scalars["URL"]["input"];
 };
 
 export type SetPackageDriveIdInput = {
@@ -164,7 +166,7 @@ export type UpdatePackageInput = {
   description?: InputMaybe<Scalars["String"]["input"]>;
   /** Add your inputs here */
   id: Scalars["OID"]["input"];
-  title?: InputMaybe<Scalars["String"]["input"]>;
+  name?: InputMaybe<Scalars["String"]["input"]>;
 };
 
 export type UpdateSocialsInput = {
@@ -178,6 +180,7 @@ export type VetraBuilderPackage = {
   author: VetraBuilderPackageAuthor;
   category: Maybe<Scalars["String"]["output"]>;
   description: Maybe<Scalars["String"]["output"]>;
+  driveId: Maybe<Scalars["String"]["output"]>;
   github: Maybe<Scalars["URL"]["output"]>;
   id: Scalars["OID"]["output"];
   keywords: Array<VetraBuilderPackageKeyword>;

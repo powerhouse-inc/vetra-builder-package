@@ -63,6 +63,7 @@ export function AddPackageInputSchema(): z.ZodObject<
     category: z.string().nullish(),
     description: z.string().nullish(),
     github: z.url().nullish(),
+    id: z.string(),
     keywords: z.array(z.string()).nullish(),
     name: z.string(),
     npm: z.url().nullish(),
@@ -74,6 +75,7 @@ export function AddPackageInputSchema(): z.ZodObject<
 export function AddSpaceInputSchema(): z.ZodObject<Properties<AddSpaceInput>> {
   return z.object({
     description: z.string().nullish(),
+    id: z.string(),
     title: z.string(),
   });
 }
@@ -152,7 +154,7 @@ export function ReorderSpacesInputSchema(): z.ZodObject<
 
 export function SetLogoInputSchema(): z.ZodObject<Properties<SetLogoInput>> {
   return z.object({
-    logoUrl: z.string(),
+    logoUrl: z.url(),
   });
 }
 
@@ -211,7 +213,7 @@ export function UpdatePackageInputSchema(): z.ZodObject<
   return z.object({
     description: z.string().nullish(),
     id: z.string(),
-    title: z.string().nullish(),
+    name: z.string().nullish(),
   });
 }
 
@@ -233,6 +235,7 @@ export function VetraBuilderPackageSchema(): z.ZodObject<
     author: z.lazy(() => VetraBuilderPackageAuthorSchema()),
     category: z.string().nullish(),
     description: z.string().nullish(),
+    driveId: z.string().nullish(),
     github: z.url().nullish(),
     id: z.string(),
     keywords: z.array(z.lazy(() => VetraBuilderPackageKeywordSchema())),
