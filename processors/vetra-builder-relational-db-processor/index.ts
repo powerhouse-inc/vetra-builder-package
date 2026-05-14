@@ -49,7 +49,7 @@ export class VetraBuilderRelationalDbProcessor extends RelationalDbProcessor<DB>
             op.context.documentId,
             op.operation.action as unknown as BuilderTeamAction,
             op.operation.resultingState
-              ? (JSON.parse(op.operation.resultingState) as unknown as BuilderTeamState)
+              ? (JSON.parse(op.operation.resultingState))
               : ({} as BuilderTeamState)
           );
         }

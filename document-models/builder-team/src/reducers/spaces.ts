@@ -18,7 +18,7 @@ export const builderTeamSpacesOperations: BuilderTeamSpacesOperations = {
       description: "",
       packages: [],
       sortOrder,
-    } as SpaceWithSortOrder);
+    });
   },
   updateSpaceInfoOperation(state, action) {
     const { id, title, description } = action.input;
