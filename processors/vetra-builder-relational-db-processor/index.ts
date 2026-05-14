@@ -12,14 +12,17 @@ import { type DB } from "./schema.js";
 
 export class VetraBuilderRelationalDbProcessor extends RelationalDbProcessor<DB> {
   private builderTeamHandlers: BuilderTeamHandlers;
+  private readonly driveId: string;
 
   constructor(
     _namespace: string,
     _filter: ProcessorFilter,
-    relationalDb: IRelationalDb<DB>
+    relationalDb: IRelationalDb<DB>,
+    driveId: string = ""
   ) {
     super(_namespace, _filter, relationalDb);
-    this.builderTeamHandlers = new BuilderTeamHandlers(relationalDb);
+    this.driveId = driveId;
+    this.builderTeamHandlers = new BuilderTeamHandlers(relationalDb, driveId);
   }
 
   override async initAndUpgrade(): Promise<void> {
@@ -38,7 +41,7 @@ export class VetraBuilderRelationalDbProcessor extends RelationalDbProcessor<DB>
         if (op.context.documentType.includes("powerhouse/document-drive")) {
           await this.handleDocumentDriveOperation(
             op.context.documentId,
-            "",
+            this.driveId,
             op.operation.action as unknown as { type: string; input: Record<string, unknown> },
             op.operation.resultingState
               ? (JSON.parse(op.operation.resultingState) as Record<string, unknown>)

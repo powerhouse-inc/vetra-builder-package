@@ -6,21 +6,23 @@ import {
 import { type PHDocumentHeader } from "document-model";
 import { VetraBuilderRelationalDbProcessor } from "./index.js";
 
+// "powerhouse" is the existing default namespace key — keeping it preserves
+// all current rows. Per-drive processor instances now share the same tables;
+// rows are distinguished by source_drive_id.
+const SHARED_NAMESPACE_KEY = "powerhouse";
+
 export const vetraBuilderTeamRelationalDbProcessorFactory =
   (module: IProcessorHostModule) =>
   async (driveHeader: PHDocumentHeader): Promise<ProcessorRecord[]> => {
-    // Create a namespace for the processor and the provided drive id
     const namespace = VetraBuilderRelationalDbProcessor.getNamespace(
-      driveHeader.id
+      SHARED_NAMESPACE_KEY,
     );
 
-    // Create a namespaced db for the processor
     const store =
       await module.relationalDb.createNamespace<VetraBuilderRelationalDbProcessor>(
-        namespace
+        namespace,
       );
 
-    // Create a filter for the processor
     const filter: ProcessorFilter = {
       branch: ["main"],
       documentId: ["*"],
@@ -28,11 +30,11 @@ export const vetraBuilderTeamRelationalDbProcessorFactory =
       scope: ["global"],
     };
 
-    // Create the processor
     const processor = new VetraBuilderRelationalDbProcessor(
       namespace,
       filter,
-      store
+      store,
+      driveHeader.id,
     );
     return [
       {
