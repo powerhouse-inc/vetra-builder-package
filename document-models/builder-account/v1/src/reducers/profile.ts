@@ -3,25 +3,27 @@ import type { BuilderAccountProfileOperations } from "document-models/builder-ac
 export const builderAccountProfileOperations: BuilderAccountProfileOperations =
   {
     setLogoOperation(state, action) {
-      // TODO: implement setLogoOperation reducer
-      throw new Error("Reducer for 'setLogoOperation' not implemented.");
+      const { logoUrl } = action.input;
+      state.profile.logo = logoUrl;
     },
     setProfileNameOperation(state, action) {
-      // TODO: implement setProfileNameOperation reducer
-      throw new Error("Reducer for 'setProfileNameOperation' not implemented.");
+      const { name } = action.input;
+      state.profile.name = name;
     },
     setSlugOperation(state, action) {
-      // TODO: implement setSlugOperation reducer
-      throw new Error("Reducer for 'setSlugOperation' not implemented.");
+      const { slug } = action.input;
+      state.profile.slug = slug;
     },
     setProfileDescriptionOperation(state, action) {
-      // TODO: implement setProfileDescriptionOperation reducer
-      throw new Error(
-        "Reducer for 'setProfileDescriptionOperation' not implemented.",
-      );
+      const { description } = action.input;
+      state.profile.description = description ?? null;
     },
     updateSocialsOperation(state, action) {
-      // TODO: implement updateSocialsOperation reducer
-      throw new Error("Reducer for 'updateSocialsOperation' not implemented.");
+      const { x, github, website } = action.input;
+      state.profile.socials = {
+        xProfile: x ?? state.profile.socials.xProfile,
+        github: github ?? state.profile.socials.github,
+        website: website ?? state.profile.socials.website,
+      };
     },
   };
