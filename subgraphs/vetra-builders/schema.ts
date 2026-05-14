@@ -62,6 +62,20 @@ export const schema: DocumentNode = gql`
     profileDescription: String
   }
 
+  type BuilderAccountType {
+    id: String!
+    sourceDriveId: String!
+    profileName: String
+    profileSlug: String
+    profileLogo: String
+    profileDescription: String
+    profileSocialsX: String
+    profileSocialsGithub: String
+    profileSocialsWebsite: String
+    createdAt: String!
+    updatedAt: String!
+  }
+
   type Query {
     fetchAllBuilderTeams(
       driveId: String
@@ -73,5 +87,11 @@ export const schema: DocumentNode = gql`
       driveId: String
       ethAddress: String!
     ): [BuilderTeamType!]!
+    """
+    Lookup a BuilderAccount by the Ethereum address of its owner. Resolves by
+    matching against the \`user:<eth-lowercase>\` source drive id; returns
+    null if no account doc has been seeded for that user yet.
+    """
+    fetchBuilderAccount(ethAddress: String!): BuilderAccountType
   }
 `;

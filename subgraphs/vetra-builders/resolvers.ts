@@ -253,6 +253,39 @@ export const getResolvers = (subgraph: ISubgraph): Record<string, unknown> => {
         };
       },
 
+      fetchBuilderAccount: async (
+        _parent: unknown,
+        args: { ethAddress: string }
+      ) => {
+        // BuilderAccount documents live in `user:<eth-lowercase>` drives.
+        // Match against source_drive_id rather than a column-on-the-row
+        // because the eth address is the drive identifier; the account doc
+        // itself doesn't store it directly.
+        const sourceDriveId = `user:${args.ethAddress.toLowerCase()}`;
+        const row = await VetraBuilderRelationalDbProcessor.query<DB>(
+          SHARED_NAMESPACE_KEY,
+          db
+        )
+          .selectFrom("builder_accounts")
+          .selectAll()
+          .where("source_drive_id", "=", sourceDriveId)
+          .executeTakeFirst();
+        if (!row) return null;
+        return {
+          id: row.id,
+          sourceDriveId: row.source_drive_id,
+          profileName: row.profile_name,
+          profileSlug: row.profile_slug,
+          profileLogo: row.profile_logo,
+          profileDescription: row.profile_description,
+          profileSocialsX: row.profile_socials_x,
+          profileSocialsGithub: row.profile_socials_github,
+          profileSocialsWebsite: row.profile_socials_website,
+          createdAt: row.created_at.toISOString(),
+          updatedAt: row.updated_at.toISOString(),
+        };
+      },
+
       fetchBuilderTeamsByMember: async (
         _parent: unknown,
         args: { driveId?: string; ethAddress: string }

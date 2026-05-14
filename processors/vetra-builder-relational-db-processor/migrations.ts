@@ -145,6 +145,31 @@ export async function up(db: IRelationalDb<DB>): Promise<void> {
     .ifNotExists()
     .execute();
 
+  // Create builder_accounts table (per-user counterpart of builder_teams).
+  // One row per BuilderAccount document; source_drive_id ties it to the
+  // owning user drive (`user:<eth>`). MVP persists profile fields only.
+  await db.schema
+    .createTable("builder_accounts")
+    .addColumn("id", "varchar(255)", (col) => col.primaryKey())
+    .addColumn("profile_name", "varchar(255)")
+    .addColumn("profile_slug", "varchar(255)")
+    .addColumn("profile_logo", "text")
+    .addColumn("profile_description", "text")
+    .addColumn("profile_socials_x", "text")
+    .addColumn("profile_socials_github", "text")
+    .addColumn("profile_socials_website", "text")
+    .addColumn("source_drive_id", "varchar(255)", (col) =>
+      col.notNull()
+    )
+    .addColumn("created_at", "timestamp", (col) =>
+      col.defaultTo("now()").notNull()
+    )
+    .addColumn("updated_at", "timestamp", (col) =>
+      col.defaultTo("now()").notNull()
+    )
+    .ifNotExists()
+    .execute();
+
   // Create indexes for better performance
   await db.schema
     .createIndex("idx_builder_teams_slug")
@@ -220,6 +245,20 @@ export async function up(db: IRelationalDb<DB>): Promise<void> {
     .createIndex("idx_deleted_files_drive_id")
     .on("deleted_files")
     .column("drive_id")
+    .ifNotExists()
+    .execute();
+
+  await db.schema
+    .createIndex("idx_builder_accounts_source_drive_id")
+    .on("builder_accounts")
+    .column("source_drive_id")
+    .ifNotExists()
+    .execute();
+
+  await db.schema
+    .createIndex("idx_builder_accounts_profile_slug")
+    .on("builder_accounts")
+    .column("profile_slug")
     .ifNotExists()
     .execute();
 

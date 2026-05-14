@@ -79,7 +79,26 @@ export interface DeletedFiles {
   id: string;
 }
 
+// BuilderAccount is the per-user counterpart of BuilderTeam. One row per
+// account document; the source_drive_id ties it to the owning user drive
+// (`user:<eth>`). MVP only persists profile fields; spaces/packages/members
+// are deferred until the front-end needs them.
+export interface BuilderAccounts {
+  created_at: Generated<Timestamp>;
+  id: string;
+  profile_description: string | null;
+  profile_logo: string | null;
+  profile_name: string | null;
+  profile_slug: string | null;
+  profile_socials_github: string | null;
+  profile_socials_website: string | null;
+  profile_socials_x: string | null;
+  source_drive_id: string;
+  updated_at: Generated<Timestamp>;
+}
+
 export interface DB {
+  builder_accounts: BuilderAccounts;
   builder_team_members: BuilderTeamMembers;
   builder_team_package_keywords: BuilderTeamPackageKeywords;
   builder_team_packages: BuilderTeamPackages;
