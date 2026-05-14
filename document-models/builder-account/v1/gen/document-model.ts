@@ -27,7 +27,7 @@ export const documentModel: DocumentModelGlobalState = {
               name: "SET_LOGO",
               reducer: "",
               schema:
-                'input SetLogoInput {\n  "Add your inputs here"\n  logoUrl: String!\n}',
+                'input SetLogoInput {\n  "Add your inputs here"\n  logoUrl: URL!\n}',
               template: "",
               scope: "global",
             },
@@ -125,7 +125,7 @@ export const documentModel: DocumentModelGlobalState = {
               name: "ADD_SPACE",
               reducer: "",
               schema:
-                'input AddSpaceInput {\n  "Add your inputs here"\n  title: String!\n  description: String\n}',
+                'input AddSpaceInput {\n  "Add your inputs here"\n  id: OID!\n  title: String!\n  description: String\n}',
               template: "",
               scope: "global",
             },
@@ -200,7 +200,7 @@ export const documentModel: DocumentModelGlobalState = {
               name: "ADD_PACKAGE",
               reducer: "",
               schema:
-                'input AuthorInput {\n  name: String!\n  website: URL\n}\n\ninput AddPackageInput {\n  "Add your inputs here"\n  spaceId: OID!\n  name: String!\n  description: String\n  category: String\n  author: AuthorInput\n  keywords: [String!]\n  github: URL\n  npm: URL\n  vetraDriveUrl: URL\n}',
+                'input AuthorInput {\n  name: String!\n  website: URL\n}\n\ninput AddPackageInput {\n  "Add your inputs here"\n  id: OID!\n  spaceId: OID!\n  name: String!\n  description: String\n  category: String\n  author: AuthorInput\n  keywords: [String!]\n  github: URL\n  npm: URL\n  vetraDriveUrl: URL\n}',
               template: "",
               scope: "global",
             },
@@ -224,7 +224,7 @@ export const documentModel: DocumentModelGlobalState = {
               name: "UPDATE_PACKAGE",
               reducer: "",
               schema:
-                'input UpdatePackageInput {\n  "Add your inputs here"\n  id: OID!\n  title: String\n  description: String\n}',
+                'input UpdatePackageInput {\n  "Add your inputs here"\n  id: OID!\n  name: String\n  description: String\n}',
               template: "",
               scope: "global",
             },
@@ -261,7 +261,7 @@ export const documentModel: DocumentModelGlobalState = {
           initialValue:
             '{\n  "profile": {\n    "logo": null,\n    "name": "",\n    "slug": "",\n    "description": null,\n    "socials": {\n      "xProfile": null,\n      "github": null,\n      "website": null\n    }\n  },\n  "members": [],\n  "spaces": []\n}',
           schema:
-            "type BuilderAccountState {\n  profile: VetraBuilderProfile!\n  members: [EthereumAddress!]!\n  spaces: [VetraBuilderSpace!]!\n}\n\ntype VetraBuilderProfile {\n  logo: URL\n  name: String!\n  slug: String!\n  description: String\n  socials: VetraBuilderSocials!\n}\n\ntype VetraBuilderSocials {\n  xProfile: URL\n  github: URL \n  website: URL\n}\n\ntype VetraBuilderSpace {\n  id: OID!\n  title: String!\n  description: String\n  packages: [VetraBuilderPackage!]!\n}\n\ntype VetraBuilderPackage {\n  id: OID!\n  name: String!\n  description: String\n  category: String\n  author: VetraBuilderPackageAuthor!\n  keywords: [VetraBuilderPackageKeyword!]!\n  github: URL\n  npm: URL\n  vetraDriveUrl: URL\n}\n\ntype VetraBuilderPackageAuthor {\n  name: String!\n  website: URL\n}\n\ntype VetraBuilderPackageKeyword {\n  id: OID!\n  label: String!\n}\n",
+            "type BuilderAccountState {\n  profile: VetraBuilderProfile!\n  members: [EthereumAddress!]!\n  spaces: [VetraBuilderSpace!]!\n}\n\ntype VetraBuilderProfile {\n  logo: URL\n  name: String!\n  slug: String!\n  description: String\n  socials: VetraBuilderSocials!\n}\n\ntype VetraBuilderSocials {\n  xProfile: URL\n  github: URL \n  website: URL\n}\n\ntype VetraBuilderSpace {\n  id: OID!\n  title: String!\n  description: String\n  packages: [VetraBuilderPackage!]!\n}\n\ntype VetraBuilderPackage {\n  id: OID!\n  name: String!\n  description: String\n  category: String\n  author: VetraBuilderPackageAuthor!\n  keywords: [VetraBuilderPackageKeyword!]!\n  github: URL\n  npm: URL\n  vetraDriveUrl: URL\n  driveId: String\n}\n\ntype VetraBuilderPackageAuthor {\n  name: String!\n  website: URL\n}\n\ntype VetraBuilderPackageKeyword {\n  id: OID!\n  label: String!\n}\n",
         },
         local: {
           examples: [],

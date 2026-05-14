@@ -56,6 +56,7 @@ type VetraBuilderPackage {
   github: URL
   npm: URL
   vetraDriveUrl: URL
+  driveId: String
 }
 
 type VetraBuilderPackageAuthor {
@@ -73,7 +74,7 @@ type VetraBuilderPackageKeyword {
 
 input SetLogoInput {
   "Add your inputs here"
-  logoUrl: String!
+  logoUrl: URL!
 }
 
 input SetProfileNameInput {
@@ -114,6 +115,7 @@ input RemoveMemberInput {
 
 input AddSpaceInput {
   "Add your inputs here"
+  id: OID!
   title: String!
   description: String
 }
@@ -149,6 +151,7 @@ input AuthorInput {
 
 input AddPackageInput {
   "Add your inputs here"
+  id: OID!
   spaceId: OID!
   name: String!
   description: String
@@ -169,7 +172,7 @@ input SetPackageDriveIdInput {
 input UpdatePackageInput {
   "Add your inputs here"
   id: OID!
-  title: String
+  name: String
   description: String
 }
 

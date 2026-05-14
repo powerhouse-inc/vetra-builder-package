@@ -47,8 +47,8 @@
 	],
 	"processors": [
 		{
-			"name": "vetra-builder-relational-db-processor",
-			"id": "vetra-builder-relational-db-processor"
+			"id": "vetra-builder-relational-db-processor",
+			"name": "vetra-builder-relational-db-processor"
 		}
 	],
 	"subgraphs": [
