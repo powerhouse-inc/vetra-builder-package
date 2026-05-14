@@ -6,12 +6,18 @@ import {
 } from "@powerhousedao/reactor";
 import type { BuilderTeamState } from "../../document-models/builder-team/index.js";
 import type { BuilderTeamAction } from "../../document-models/builder-team/gen/actions.js";
+import type {
+  BuilderAccountAction,
+  BuilderAccountState,
+} from "../../document-models/builder-account/v1/gen/types.js";
+import { BuilderAccountHandlers } from "./builder-account-handlers.js";
 import { BuilderTeamHandlers } from "./builder-team-handlers.js";
 import { up } from "./migrations.js";
 import { type DB } from "./schema.js";
 
 export class VetraBuilderRelationalDbProcessor extends RelationalDbProcessor<DB> {
   private builderTeamHandlers: BuilderTeamHandlers;
+  private builderAccountHandlers: BuilderAccountHandlers;
   private readonly driveId: string;
 
   constructor(
@@ -23,6 +29,10 @@ export class VetraBuilderRelationalDbProcessor extends RelationalDbProcessor<DB>
     super(_namespace, _filter, relationalDb);
     this.driveId = driveId;
     this.builderTeamHandlers = new BuilderTeamHandlers(relationalDb, driveId);
+    this.builderAccountHandlers = new BuilderAccountHandlers(
+      relationalDb,
+      driveId
+    );
   }
 
   override async initAndUpgrade(): Promise<void> {
@@ -46,6 +56,14 @@ export class VetraBuilderRelationalDbProcessor extends RelationalDbProcessor<DB>
             op.operation.resultingState
               ? (JSON.parse(op.operation.resultingState) as Record<string, unknown>)
               : undefined
+          );
+        } else if (op.context.documentType.includes("powerhouse/builder-account")) {
+          await this.builderAccountHandlers.handleBuilderAccountOperation(
+            op.context.documentId,
+            op.operation.action as unknown as BuilderAccountAction,
+            op.operation.resultingState
+              ? JSON.parse(op.operation.resultingState)
+              : ({} as BuilderAccountState)
           );
         } else {
           await this.builderTeamHandlers.handleBuilderTeamOperation(
