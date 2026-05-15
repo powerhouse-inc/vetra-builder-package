@@ -2,15 +2,38 @@ import type { BuilderTeamMemberOperations } from "document-models/builder-team/v
 
 export const builderTeamMemberOperations: BuilderTeamMemberOperations = {
   addMemberOperation(state, action) {
-    // TODO: implement addMemberOperation reducer
-    throw new Error("Reducer for 'addMemberOperation' not implemented.");
+    if (state.members.find((member) => member.id === action.input.id)) {
+      return;
+    }
+    const newMember = {
+      ...action.input,
+      id: action.input.id,
+      phid: null,
+      ethAddress: null,
+      name: null,
+      profileImage: null,
+    };
+    state.members.push(newMember);
   },
   updateMemberInfoOperation(state, action) {
-    // TODO: implement updateMemberInfoOperation reducer
-    throw new Error("Reducer for 'updateMemberInfoOperation' not implemented.");
+    const memberIndex = state.members.findIndex(
+      (member) => member.id === action.input.id,
+    );
+    if (memberIndex === -1) {
+      return;
+    }
+    state.members[memberIndex] = {
+      ...state.members[memberIndex],
+      ...action.input,
+    };
   },
   removeMemberOperation(state, action) {
-    // TODO: implement removeMemberOperation reducer
-    throw new Error("Reducer for 'removeMemberOperation' not implemented.");
+    const memberIndex = state.members.findIndex(
+      (member) => member.id === action.input.id,
+    );
+    if (memberIndex === -1) {
+      return;
+    }
+    state.members.splice(memberIndex, 1);
   },
 };

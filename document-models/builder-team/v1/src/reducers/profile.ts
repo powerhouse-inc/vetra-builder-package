@@ -2,23 +2,27 @@ import type { BuilderTeamProfileOperations } from "document-models/builder-team/
 
 export const builderTeamProfileOperations: BuilderTeamProfileOperations = {
   setLogoOperation(state, action) {
-    // TODO: implement setLogoOperation reducer
-    throw new Error("Reducer for 'setLogoOperation' not implemented.");
+    const { logo } = action.input;
+    state.profile.logo = logo ?? state.profile.logo;
   },
   setTeamNameOperation(state, action) {
-    // TODO: implement setTeamNameOperation reducer
-    throw new Error("Reducer for 'setTeamNameOperation' not implemented.");
+    const { name } = action.input;
+    state.profile.name = name ?? state.profile.name;
   },
   setSlugOperation(state, action) {
-    // TODO: implement setSlugOperation reducer
-    throw new Error("Reducer for 'setSlugOperation' not implemented.");
+    const { slug } = action.input;
+    state.profile.slug = slug;
   },
   setDescriptionOperation(state, action) {
-    // TODO: implement setDescriptionOperation reducer
-    throw new Error("Reducer for 'setDescriptionOperation' not implemented.");
+    const { description } = action.input;
+    state.profile.description = description ?? state.profile.description;
   },
   setSocialsOperation(state, action) {
-    // TODO: implement setSocialsOperation reducer
-    throw new Error("Reducer for 'setSocialsOperation' not implemented.");
+    const { github, website, xProfile } = action.input;
+    state.profile.socials = {
+      github: github ?? state.profile.socials.github,
+      website: website ?? state.profile.socials.website,
+      xProfile: xProfile ?? state.profile.socials.xProfile,
+    };
   },
 };
