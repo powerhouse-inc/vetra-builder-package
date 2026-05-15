@@ -15,6 +15,17 @@ export const getResolvers = (subgraph: ISubgraph): Record<string, unknown> => {
 
   return {
     BuilderTeamType: {
+      // NB: previously the spaces/members subresolvers LEFT JOINed
+      // `deleted_files` to hide rows belonging to soft-deleted teams. After
+      // Phase 1 moved every drive into the shared "powerhouse" namespace,
+      // those joins hit a `deleted_files` table the read role cannot SELECT
+      // (`permission denied for table deleted_files`), which crashed the
+      // whole field resolver and returned `data: null` to the caller — so
+      // teams stopped rendering on /builders and on the profile page even
+      // though the team rows exist. Removed for parity with the equivalent
+      // fix on fetchBuilderTeam (commit a648533); re-add once the
+      // deleted_files convention is provisioned across drives with usable
+      // permissions.
       spaces: async (parent: { id: string }) => {
         const spaces = await VetraBuilderRelationalDbProcessor.query<DB>(
           SHARED_NAMESPACE_KEY,
@@ -30,15 +41,7 @@ export const getResolvers = (subgraph: ISubgraph): Record<string, unknown> => {
             "builder_team_spaces.created_at",
             "builder_team_spaces.updated_at",
           ])
-          .leftJoin("deleted_files", (join) =>
-            join.onRef(
-              "deleted_files.document_id",
-              "=",
-              "builder_team_spaces.builder_team_id"
-            )
-          )
           .where("builder_team_id", "=", parent.id)
-          .where("deleted_files.id", "is", null) // Exclude spaces from deleted accounts
           .orderBy("sort_order", "asc")
           .execute();
 
@@ -68,15 +71,7 @@ export const getResolvers = (subgraph: ISubgraph): Record<string, unknown> => {
             "builder_team_members.eth_address",
             "builder_team_members.created_at",
           ])
-          .leftJoin("deleted_files", (join) =>
-            join.onRef(
-              "deleted_files.document_id",
-              "=",
-              "builder_team_members.builder_team_id"
-            )
-          )
           .where("builder_team_id", "=", parent.id)
-          .where("deleted_files.id", "is", null) // Exclude members from deleted accounts
           .execute();
 
         return members.map((member) => ({
