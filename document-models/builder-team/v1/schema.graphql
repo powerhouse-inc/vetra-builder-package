@@ -67,7 +67,7 @@ type VetraPackageInfo {
 # profile
 
 input SetLogoInput {
-  logo: String
+  logo: URL
 }
 
 input SetTeamNameInput {
@@ -83,9 +83,9 @@ input SetDescriptionInput {
 }
 
 input SetSocialsInput {
-  xProfile: String
-  github: String
-  website: String
+  xProfile: URL
+  github: URL
+  website: URL
 }
 
 # member

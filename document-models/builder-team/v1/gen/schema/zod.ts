@@ -1,5 +1,5 @@
- 
- 
+/* eslint-disable @typescript-eslint/no-empty-object-type */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import * as z from "zod";
 import type {
   AddMemberInput,
@@ -139,7 +139,7 @@ export function SetDescriptionInputSchema(): z.ZodObject<
 
 export function SetLogoInputSchema(): z.ZodObject<Properties<SetLogoInput>> {
   return z.object({
-    logo: z.string().nullish(),
+    logo: z.url().nullish(),
   });
 }
 
@@ -153,9 +153,9 @@ export function SetSocialsInputSchema(): z.ZodObject<
   Properties<SetSocialsInput>
 > {
   return z.object({
-    github: z.string().nullish(),
-    website: z.string().nullish(),
-    xProfile: z.string().nullish(),
+    github: z.url().nullish(),
+    website: z.url().nullish(),
+    xProfile: z.url().nullish(),
   });
 }
 

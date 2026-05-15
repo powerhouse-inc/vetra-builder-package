@@ -26,7 +26,7 @@ export const documentModel: DocumentModelGlobalState = {
               id: "edbdc847-a0d0-40cb-a7cb-c057039e05da",
               name: "SET_LOGO",
               reducer: "",
-              schema: "input SetLogoInput {\n  logo: String\n}",
+              schema: "input SetLogoInput {\n  logo: URL\n}",
               template: "",
               scope: "global",
             },
@@ -71,7 +71,7 @@ export const documentModel: DocumentModelGlobalState = {
               name: "SET_SOCIALS",
               reducer: "",
               schema:
-                "input SetSocialsInput {\n  xProfile: String\n  github: String\n  website: String\n}",
+                "input SetSocialsInput {\n  xProfile: URL\n  github: URL\n  website: URL\n}",
               template: "",
               scope: "global",
             },

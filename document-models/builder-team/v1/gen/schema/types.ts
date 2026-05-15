@@ -114,7 +114,7 @@ export type SetDescriptionInput = {
 };
 
 export type SetLogoInput = {
-  logo?: InputMaybe<Scalars["String"]["input"]>;
+  logo?: InputMaybe<Scalars["URL"]["input"]>;
 };
 
 export type SetSlugInput = {
@@ -122,9 +122,9 @@ export type SetSlugInput = {
 };
 
 export type SetSocialsInput = {
-  github?: InputMaybe<Scalars["String"]["input"]>;
-  website?: InputMaybe<Scalars["String"]["input"]>;
-  xProfile?: InputMaybe<Scalars["String"]["input"]>;
+  github?: InputMaybe<Scalars["URL"]["input"]>;
+  website?: InputMaybe<Scalars["URL"]["input"]>;
+  xProfile?: InputMaybe<Scalars["URL"]["input"]>;
 };
 
 export type SetTeamNameInput = {
