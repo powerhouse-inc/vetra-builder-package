@@ -26,7 +26,11 @@ export const vetraBuilderTeamRelationalDbProcessorFactory =
     const filter: ProcessorFilter = {
       branch: ["main"],
       documentId: ["*"],
-      documentType: ["powerhouse/builder-team", "powerhouse/document-drive"],
+      documentType: [
+        "powerhouse/builder-team",
+        "powerhouse/builder-account",
+        "powerhouse/document-drive",
+      ],
       scope: ["global"],
     };
 
