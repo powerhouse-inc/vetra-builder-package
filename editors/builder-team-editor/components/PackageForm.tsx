@@ -4,7 +4,7 @@ import {
   PHIDField,
 } from "@powerhousedao/document-engineering";
 import { useState } from "react";
-import type { VetraPackageInfo } from "../../../document-models/builder-team/index.js";
+import type { VetraPackageInfo } from "document-models/builder-team";
 import { getPackage, searchPackageOptions, getPackageOption, packageDataToPackageInfo } from "../services/vetra-api.js";
 
 interface PackageFormProps {

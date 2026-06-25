@@ -1,5 +1,5 @@
 import type { VetraBuilderSpace } from "../../gen/types.js";
-import type { BuilderTeamSpacesOperations } from "@powerhousedao/vetra-builder-package/document-models/builder-team";
+import type { BuilderTeamSpacesOperations } from "document-models/builder-team";
 
 // Extended type that includes sortOrder for internal sorting
 type SpaceWithSortOrder = VetraBuilderSpace & { sortOrder: number };

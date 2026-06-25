@@ -1,5 +1,5 @@
 import { Button } from "@powerhousedao/document-engineering";
-import type { BuilderTeamDocument } from "../../../document-models/builder-team/index.js";
+import type { BuilderTeamDocument } from "document-models/builder-team";
 
 interface HeaderProps {
   profile: BuilderTeamDocument['state']['global']['profile'];

@@ -1,15 +1,13 @@
-import type {
-  DocumentDriveAction,
-  DocumentDriveGlobalState,
-  IRelationalDb,
-} from "document-drive";
 import {
   RelationalDbProcessor,
-  type RelationalDbProcessorFilter,
-} from "document-drive";
-import { type InternalTransmitterUpdate } from "document-drive";
-import type { BuilderTeamState } from "../../document-models/builder-team/index.js";
-import type { BuilderTeamAction } from "../../document-models/builder-team/gen/actions.js";
+  type IRelationalDb,
+  type ProcessorFilter,
+} from "@powerhousedao/reactor-browser";
+import type { OperationWithContext } from "document-model";
+import type {
+  BuilderTeamAction,
+  BuilderTeamState,
+} from "document-models/builder-team";
 import { BuilderTeamHandlers } from "./builder-team-handlers.js";
 import { up } from "./migrations.js";
 import { type DB } from "./schema.js";
@@ -19,8 +17,8 @@ export class VetraBuilderRelationalDbProcessor extends RelationalDbProcessor<DB>
 
   constructor(
     _namespace: string,
-    _filter: RelationalDbProcessorFilter,
-    relationalDb: IRelationalDb<DB>
+    _filter: ProcessorFilter,
+    relationalDb: IRelationalDb<DB>,
   ) {
     super(_namespace, _filter, relationalDb);
     this.builderTeamHandlers = new BuilderTeamHandlers(relationalDb);
@@ -30,66 +28,82 @@ export class VetraBuilderRelationalDbProcessor extends RelationalDbProcessor<DB>
     await up(this.relationalDb);
   }
 
-  override async onStrands(
-    strands: InternalTransmitterUpdate[]
+  override async onOperations(
+    operations: OperationWithContext[],
   ): Promise<void> {
-    if (strands.length === 0) {
-      return;
-    }
-
-    for (const strand of strands) {
-      if (strand.operations.length === 0) {
-        continue;
-      }
-
-      for (const operation of strand.operations) {
-        try {
-          if (strand.documentType.includes("powerhouse/document-drive")) {
-            await this.handleDocumentDriveOperation(
-              strand.documentId,
-              strand.driveId,
-              operation.action as DocumentDriveAction,
-              operation.state as unknown as DocumentDriveGlobalState
-            );
-          } else {
+    for (const { operation, context } of operations) {
+      try {
+        if (context.documentType.includes("powerhouse/document-drive")) {
+          await this.handleDocumentDriveOperation(operation.action);
+        } else {
+          const state = this.parseState(context.resultingState);
+          if (state) {
             await this.builderTeamHandlers.handleBuilderTeamOperation(
-              strand.documentId,
+              context.documentId,
               operation.action as BuilderTeamAction,
-              operation.state as unknown as BuilderTeamState
+              state,
             );
           }
-        } catch (error) {
-          console.error(
-            `VetraBuilderRelationalDbProcessor: Error processing operation ${JSON.stringify(
-              operation.action
-            )}:`,
-            error
-          );
-          break;
         }
+      } catch (error) {
+        console.error(
+          `VetraBuilderRelationalDbProcessor: Error processing operation ${JSON.stringify(
+            operation.action,
+          )}:`,
+          error,
+        );
+        break;
       }
     }
   }
 
-  private async handleDocumentDriveOperation(
-    documentId: string,
-    driveId: string = "",
-    action: DocumentDriveAction,
-    state: DocumentDriveGlobalState
-  ): Promise<void> {
+  private async handleDocumentDriveOperation(action: {
+    type: string;
+    input: unknown;
+  }): Promise<void> {
     switch (action.type) {
-      case "DELETE_NODE":
-        await this.relationalDb
-          .insertInto("deleted_files")
-          .values({
-            id: documentId + "-" + action.input.id,
-            document_id: action.input.id,
-            drive_id: driveId,
-            deleted_at: new Date(),
-          })
-          .onConflict((oc) => oc.column("id").doNothing())
-          .execute();
+      case "DELETE_NODE": {
+        const input = action.input as { id?: string };
+        if (input.id) {
+          await this.relationalDb
+            .insertInto("deleted_files")
+            .values({
+              id: input.id,
+              document_id: input.id,
+              drive_id: "",
+              deleted_at: new Date(),
+            })
+            .onConflict((oc) => oc.column("id").doNothing())
+            .execute();
+        }
         break;
+      }
+    }
+  }
+
+  /**
+   * `resultingState` is the post-reducer document state, JSON-encoded. The
+   * envelope is sometimes the global state directly, sometimes wrapped in
+   * `{ global: ... }`. Tolerate both, and never let one bad envelope kill the
+   * whole batch.
+   */
+  private parseState(
+    resultingState: string | undefined,
+  ): BuilderTeamState | null {
+    if (!resultingState) return null;
+    try {
+      const parsed = JSON.parse(resultingState) as
+        | BuilderTeamState
+        | { global: BuilderTeamState };
+      return "global" in parsed && parsed.global
+        ? parsed.global
+        : (parsed as BuilderTeamState);
+    } catch (error) {
+      console.error(
+        "VetraBuilderRelationalDbProcessor: failed to parse resultingState:",
+        error,
+      );
+      return null;
     }
   }
 

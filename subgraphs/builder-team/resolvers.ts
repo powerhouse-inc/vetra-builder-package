@@ -1,5 +1,4 @@
-import { type ISubgraph } from "@powerhousedao/reactor-api";
-import { addFile } from "document-drive";
+import { type BaseSubgraph } from "@powerhousedao/reactor-api";
 import {
   actions,
   type SetLogoInput,
@@ -21,15 +20,47 @@ import {
   type BuilderTeamDocument,
   type VetraBuilderSpace,
   type VetraPackageInfo,
-} from "../../document-models/builder-team/index.js";
+} from "document-models/builder-team";
 import { setName } from "document-model";
 
 // Extended types that include sortOrder for internal sorting
 type SpaceWithSortOrder = VetraBuilderSpace & { sortOrder: number };
 type PackageWithSortOrder = VetraPackageInfo & { sortOrder: number };
 
-export const getResolvers = (subgraph: ISubgraph): Record<string, unknown> => {
-  const reactor = subgraph.reactor;
+const sortDocumentState = (doc: BuilderTeamDocument, driveId: string) => {
+  const sortedState = {
+    ...doc.state.global,
+    spaces: [...doc.state.global.spaces]
+      .sort(
+        (a, b) =>
+          (a as SpaceWithSortOrder).sortOrder -
+          (b as SpaceWithSortOrder).sortOrder,
+      )
+      .map((space) => ({
+        ...space,
+        packages: [...space.packages].sort(
+          (a, b) =>
+            (a as PackageWithSortOrder).sortOrder -
+            (b as PackageWithSortOrder).sortOrder,
+        ),
+      })),
+  };
+  return {
+    driveId,
+    ...doc,
+    ...doc.header,
+    created: doc.header.createdAtUtcIso,
+    lastModified: doc.header.lastModifiedAtUtcIso,
+    state: sortedState,
+    stateJSON: sortedState,
+    revision: doc.header?.revision?.global ?? 0,
+  };
+};
+
+export const getResolvers = (
+  subgraph: BaseSubgraph,
+): Record<string, unknown> => {
+  const { reactorClient } = subgraph;
 
   return {
     Query: {
@@ -43,85 +74,37 @@ export const getResolvers = (subgraph: ISubgraph): Record<string, unknown> => {
             }
 
             if (driveId) {
-              const docIds = await reactor.getDocuments(driveId);
-              if (!docIds.includes(docId)) {
+              const docsInDrive = await reactorClient.find({
+                type: "powerhouse/builder-team",
+                parentId: driveId,
+              });
+              if (!docsInDrive.results.some((doc) => doc.header.id === docId)) {
                 throw new Error(
-                  `Document with id ${docId} is not part of ${driveId}`
+                  `Document with id ${docId} is not part of ${driveId}`,
                 );
               }
             }
 
-            const doc = await reactor.getDocument<BuilderTeamDocument>(docId);
-            // Sort spaces and packages by sortOrder
-            const sortedState = {
-              ...doc.state.global,
-              spaces: [...doc.state.global.spaces]
-                .sort(
-                  (a, b) =>
-                    (a as SpaceWithSortOrder).sortOrder -
-                    (b as SpaceWithSortOrder).sortOrder
-                )
-                .map((space) => ({
-                  ...space,
-                  packages: [...space.packages].sort(
-                    (a, b) =>
-                      (a as PackageWithSortOrder).sortOrder -
-                      (b as PackageWithSortOrder).sortOrder
-                  ),
-                })),
-            };
-            return {
-              driveId: driveId,
-              ...doc,
-              ...doc.header,
-              created: doc.header.createdAtUtcIso,
-              lastModified: doc.header.lastModifiedAtUtcIso,
-              state: sortedState,
-              stateJSON: sortedState,
-              revision: doc.header?.revision?.global ?? 0,
-            };
+            const doc = await reactorClient.get<BuilderTeamDocument>(docId);
+            return sortDocumentState(doc, driveId);
           },
           getDocuments: async (args: { driveId: string }) => {
             const { driveId } = args;
-            const docsIds = await reactor.getDocuments(driveId);
+            const docsInDrive = await reactorClient.find({
+              type: "powerhouse/builder-team",
+              parentId: driveId,
+            });
             const docs = await Promise.all(
-              docsIds.map(async (docId) => {
-                const doc = await reactor.getDocument<BuilderTeamDocument>(
-                  docId
+              docsInDrive.results.map(async (result) => {
+                const doc = await reactorClient.get<BuilderTeamDocument>(
+                  result.header.id,
                 );
-                // Sort spaces and packages by sortOrder
-                const sortedState = {
-                  ...doc.state.global,
-                  spaces: [...doc.state.global.spaces]
-                    .sort(
-                      (a, b) =>
-                        (a as SpaceWithSortOrder).sortOrder -
-                        (b as SpaceWithSortOrder).sortOrder
-                    )
-                    .map((space) => ({
-                      ...space,
-                      packages: [...space.packages].sort(
-                        (a, b) =>
-                          (a as PackageWithSortOrder).sortOrder -
-                          (b as PackageWithSortOrder).sortOrder
-                      ),
-                    })),
-                };
-                return {
-                  driveId: driveId,
-                  ...doc,
-                  ...doc.header,
-                  created: doc.header.createdAtUtcIso,
-                  lastModified: doc.header.lastModifiedAtUtcIso,
-                  state: sortedState,
-                  stateJSON: sortedState,
-                  revision: doc.header?.revision?.global ?? 0,
-                };
-              })
+                return sortDocumentState(doc, driveId);
+              }),
             );
 
             return docs.filter(
-              (doc) => doc.header.documentType === "powerhouse/builder-team"
+              (doc) => doc.header.documentType === "powerhouse/builder-team",
             );
           },
         };
@@ -130,24 +113,18 @@ export const getResolvers = (subgraph: ISubgraph): Record<string, unknown> => {
     Mutation: {
       BuilderTeam_createDocument: async (
         _: unknown,
-        args: { name: string; driveId?: string }
+        args: { name: string; driveId?: string },
       ) => {
         const { driveId, name } = args;
-        const document = await reactor.addDocument("powerhouse/builder-team");
-
-        if (driveId) {
-          await reactor.addAction(
-            driveId,
-            addFile({
-              name,
-              id: document.header.id,
-              documentType: "powerhouse/builder-team",
-            })
-          );
-        }
+        const document = await reactorClient.createEmpty<BuilderTeamDocument>(
+          "powerhouse/builder-team",
+          driveId ? { parentIdentifier: driveId } : undefined,
+        );
 
         if (name) {
-          await reactor.addAction(document.header.id, setName(name));
+          await reactorClient.execute(document.header.id, "main", [
+            setName(name),
+          ]);
         }
 
         return document.header.id;
@@ -155,345 +132,165 @@ export const getResolvers = (subgraph: ISubgraph): Record<string, unknown> => {
 
       BuilderTeam_setLogo: async (
         _: unknown,
-        args: { docId: string; input: SetLogoInput }
+        args: { docId: string; input: SetLogoInput },
       ) => {
         const { docId, input } = args;
-        const doc = await reactor.getDocument<BuilderTeamDocument>(docId);
-        if (!doc) {
-          throw new Error("Document not found");
-        }
-
-        const result = await reactor.addAction(docId, actions.setLogo(input));
-
-        if (result.status !== "SUCCESS") {
-          throw new Error(result.error?.message ?? "Failed to setLogo");
-        }
-
+        await reactorClient.execute(docId, "main", [actions.setLogo(input)]);
         return true;
       },
 
       BuilderTeam_setTeamName: async (
         _: unknown,
-        args: { docId: string; input: SetTeamNameInput }
+        args: { docId: string; input: SetTeamNameInput },
       ) => {
         const { docId, input } = args;
-        const doc = await reactor.getDocument<BuilderTeamDocument>(docId);
-        if (!doc) {
-          throw new Error("Document not found");
-        }
-
-        const result = await reactor.addAction(
-          docId,
-          actions.setTeamName(input)
-        );
-
-        if (result.status !== "SUCCESS") {
-          throw new Error(result.error?.message ?? "Failed to setTeamName");
-        }
-
+        await reactorClient.execute(docId, "main", [
+          actions.setTeamName(input),
+        ]);
         return true;
       },
 
       BuilderTeam_setSlug: async (
         _: unknown,
-        args: { docId: string; input: SetSlugInput }
+        args: { docId: string; input: SetSlugInput },
       ) => {
         const { docId, input } = args;
-        const doc = await reactor.getDocument<BuilderTeamDocument>(docId);
-        if (!doc) {
-          throw new Error("Document not found");
-        }
-
-        const result = await reactor.addAction(docId, actions.setSlug(input));
-
-        if (result.status !== "SUCCESS") {
-          throw new Error(result.error?.message ?? "Failed to setSlug");
-        }
-
+        await reactorClient.execute(docId, "main", [actions.setSlug(input)]);
         return true;
       },
 
       BuilderTeam_setDescription: async (
         _: unknown,
-        args: { docId: string; input: SetDescriptionInput }
+        args: { docId: string; input: SetDescriptionInput },
       ) => {
         const { docId, input } = args;
-        const doc = await reactor.getDocument<BuilderTeamDocument>(docId);
-        if (!doc) {
-          throw new Error("Document not found");
-        }
-
-        const result = await reactor.addAction(
-          docId,
-          actions.setDescription(input)
-        );
-
-        if (result.status !== "SUCCESS") {
-          throw new Error(result.error?.message ?? "Failed to setDescription");
-        }
-
+        await reactorClient.execute(docId, "main", [
+          actions.setDescription(input),
+        ]);
         return true;
       },
 
       BuilderTeam_setSocials: async (
         _: unknown,
-        args: { docId: string; input: SetSocialsInput }
+        args: { docId: string; input: SetSocialsInput },
       ) => {
         const { docId, input } = args;
-        const doc = await reactor.getDocument<BuilderTeamDocument>(docId);
-        if (!doc) {
-          throw new Error("Document not found");
-        }
-
-        const result = await reactor.addAction(
-          docId,
-          actions.setSocials(input)
-        );
-
-        if (result.status !== "SUCCESS") {
-          throw new Error(result.error?.message ?? "Failed to setSocials");
-        }
-
+        await reactorClient.execute(docId, "main", [actions.setSocials(input)]);
         return true;
       },
 
       BuilderTeam_addMember: async (
         _: unknown,
-        args: { docId: string; input: AddMemberInput }
+        args: { docId: string; input: AddMemberInput },
       ) => {
         const { docId, input } = args;
-        const doc = await reactor.getDocument<BuilderTeamDocument>(docId);
-        if (!doc) {
-          throw new Error("Document not found");
-        }
-
-        const result = await reactor.addAction(docId, actions.addMember(input));
-
-        if (result.status !== "SUCCESS") {
-          throw new Error(result.error?.message ?? "Failed to addMember");
-        }
-
+        await reactorClient.execute(docId, "main", [actions.addMember(input)]);
         return true;
       },
 
       BuilderTeam_updateMemberInfo: async (
         _: unknown,
-        args: { docId: string; input: UpdateMemberInfoInput }
+        args: { docId: string; input: UpdateMemberInfoInput },
       ) => {
         const { docId, input } = args;
-        const doc = await reactor.getDocument<BuilderTeamDocument>(docId);
-        if (!doc) {
-          throw new Error("Document not found");
-        }
-
-        const result = await reactor.addAction(
-          docId,
-          actions.updateMemberInfo(input)
-        );
-
-        if (result.status !== "SUCCESS") {
-          throw new Error(
-            result.error?.message ?? "Failed to updateMemberInfo"
-          );
-        }
-
+        await reactorClient.execute(docId, "main", [
+          actions.updateMemberInfo(input),
+        ]);
         return true;
       },
 
       BuilderTeam_removeMember: async (
         _: unknown,
-        args: { docId: string; input: RemoveMemberInput }
+        args: { docId: string; input: RemoveMemberInput },
       ) => {
         const { docId, input } = args;
-        const doc = await reactor.getDocument<BuilderTeamDocument>(docId);
-        if (!doc) {
-          throw new Error("Document not found");
-        }
-
-        const result = await reactor.addAction(
-          docId,
-          actions.removeMember(input)
-        );
-
-        if (result.status !== "SUCCESS") {
-          throw new Error(result.error?.message ?? "Failed to removeMember");
-        }
-
+        await reactorClient.execute(docId, "main", [
+          actions.removeMember(input),
+        ]);
         return true;
       },
 
       BuilderTeam_addSpace: async (
         _: unknown,
-        args: { docId: string; input: AddSpaceInput }
+        args: { docId: string; input: AddSpaceInput },
       ) => {
         const { docId, input } = args;
-        const doc = await reactor.getDocument<BuilderTeamDocument>(docId);
-        if (!doc) {
-          throw new Error("Document not found");
-        }
-
-        const result = await reactor.addAction(docId, actions.addSpace(input));
-
-        if (result.status !== "SUCCESS") {
-          throw new Error(result.error?.message ?? "Failed to addSpace");
-        }
-
+        await reactorClient.execute(docId, "main", [actions.addSpace(input)]);
         return true;
       },
 
       BuilderTeam_updateSpaceInfo: async (
         _: unknown,
-        args: { docId: string; input: UpdateSpaceInfoInput }
+        args: { docId: string; input: UpdateSpaceInfoInput },
       ) => {
         const { docId, input } = args;
-        const doc = await reactor.getDocument<BuilderTeamDocument>(docId);
-        if (!doc) {
-          throw new Error("Document not found");
-        }
-
-        const result = await reactor.addAction(
-          docId,
-          actions.updateSpaceInfo(input)
-        );
-
-        if (result.status !== "SUCCESS") {
-          throw new Error(result.error?.message ?? "Failed to updateSpaceInfo");
-        }
-
+        await reactorClient.execute(docId, "main", [
+          actions.updateSpaceInfo(input),
+        ]);
         return true;
       },
 
       BuilderTeam_removeSpace: async (
         _: unknown,
-        args: { docId: string; input: RemoveSpaceInput }
+        args: { docId: string; input: RemoveSpaceInput },
       ) => {
         const { docId, input } = args;
-        const doc = await reactor.getDocument<BuilderTeamDocument>(docId);
-        if (!doc) {
-          throw new Error("Document not found");
-        }
-
-        const result = await reactor.addAction(
-          docId,
-          actions.removeSpace(input)
-        );
-
-        if (result.status !== "SUCCESS") {
-          throw new Error(result.error?.message ?? "Failed to removeSpace");
-        }
-
+        await reactorClient.execute(docId, "main", [
+          actions.removeSpace(input),
+        ]);
         return true;
       },
 
       BuilderTeam_reorderSpaces: async (
         _: unknown,
-        args: { docId: string; input: ReorderSpacesInput }
+        args: { docId: string; input: ReorderSpacesInput },
       ) => {
         const { docId, input } = args;
-        const doc = await reactor.getDocument<BuilderTeamDocument>(docId);
-        if (!doc) {
-          throw new Error("Document not found");
-        }
-
-        const result = await reactor.addAction(
-          docId,
-          actions.reorderSpaces(input)
-        );
-
-        if (result.status !== "SUCCESS") {
-          throw new Error(result.error?.message ?? "Failed to reorderSpaces");
-        }
-
+        await reactorClient.execute(docId, "main", [
+          actions.reorderSpaces(input),
+        ]);
         return true;
       },
 
       BuilderTeam_addPackage: async (
         _: unknown,
-        args: { docId: string; input: AddPackageInput }
+        args: { docId: string; input: AddPackageInput },
       ) => {
         const { docId, input } = args;
-        const doc = await reactor.getDocument<BuilderTeamDocument>(docId);
-        if (!doc) {
-          throw new Error("Document not found");
-        }
-
-        const result = await reactor.addAction(
-          docId,
-          actions.addPackage(input)
-        );
-
-        if (result.status !== "SUCCESS") {
-          throw new Error(result.error?.message ?? "Failed to addPackage");
-        }
-
+        await reactorClient.execute(docId, "main", [actions.addPackage(input)]);
         return true;
       },
 
       BuilderTeam_updatePackageInfo: async (
         _: unknown,
-        args: { docId: string; input: UpdatePackageInfoInput }
+        args: { docId: string; input: UpdatePackageInfoInput },
       ) => {
         const { docId, input } = args;
-        const doc = await reactor.getDocument<BuilderTeamDocument>(docId);
-        if (!doc) {
-          throw new Error("Document not found");
-        }
-
-        const result = await reactor.addAction(
-          docId,
-          actions.updatePackageInfo(input)
-        );
-
-        if (result.status !== "SUCCESS") {
-          throw new Error(
-            result.error?.message ?? "Failed to updatePackageInfo"
-          );
-        }
-
+        await reactorClient.execute(docId, "main", [
+          actions.updatePackageInfo(input),
+        ]);
         return true;
       },
 
       BuilderTeam_removePackage: async (
         _: unknown,
-        args: { docId: string; input: RemovePackageInput }
+        args: { docId: string; input: RemovePackageInput },
       ) => {
         const { docId, input } = args;
-        const doc = await reactor.getDocument<BuilderTeamDocument>(docId);
-        if (!doc) {
-          throw new Error("Document not found");
-        }
-
-        const result = await reactor.addAction(
-          docId,
-          actions.removePackage(input)
-        );
-
-        if (result.status !== "SUCCESS") {
-          throw new Error(result.error?.message ?? "Failed to removePackage");
-        }
-
+        await reactorClient.execute(docId, "main", [
+          actions.removePackage(input),
+        ]);
         return true;
       },
 
       BuilderTeam_reorderPackages: async (
         _: unknown,
-        args: { docId: string; input: ReorderPackagesInput }
+        args: { docId: string; input: ReorderPackagesInput },
       ) => {
         const { docId, input } = args;
-        const doc = await reactor.getDocument<BuilderTeamDocument>(docId);
-        if (!doc) {
-          throw new Error("Document not found");
-        }
-
-        const result = await reactor.addAction(
-          docId,
-          actions.reorderPackages(input)
-        );
-
-        if (result.status !== "SUCCESS") {
-          throw new Error(result.error?.message ?? "Failed to reorderPackages");
-        }
-
+        await reactorClient.execute(docId, "main", [
+          actions.reorderPackages(input),
+        ]);
         return true;
       },
     },

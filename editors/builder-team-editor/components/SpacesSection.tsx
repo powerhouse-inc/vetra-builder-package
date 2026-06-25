@@ -3,7 +3,7 @@ import { useState } from "react";
 import type {
   BuilderTeamDocument,
   VetraPackageInfo,
-} from "../../../document-models/builder-team/index.js";
+} from "document-models/builder-team";
 import { SpaceForm } from "./SpaceForm.js";
 import { SpaceItem } from "./SpaceItem.js";
 import { SpacesTable } from "./SpacesTable.js";

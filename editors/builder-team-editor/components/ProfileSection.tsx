@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Button, Form, StringField, UrlField, Icon } from "@powerhousedao/document-engineering";
-import type { BuilderTeamDocument } from "../../../document-models/builder-team/index.js";
-import { actions } from "../../../document-models/builder-team/index.js";
+import type { BuilderTeamDocument } from "document-models/builder-team";
+import { actions } from "document-models/builder-team";
 import { type Action } from "document-model";
 import { type DocumentDispatch } from "@powerhousedao/reactor-browser";
 

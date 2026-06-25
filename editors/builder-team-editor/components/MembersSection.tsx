@@ -1,6 +1,6 @@
 import { Button, Form, PHIDField } from "@powerhousedao/document-engineering";
 import { useState } from "react";
-import type { BuilderTeamDocument } from "../../../document-models/builder-team/index.js";
+import type { BuilderTeamDocument } from "document-models/builder-team";
 import { config } from "../config.js";
 import {
   getProfile,

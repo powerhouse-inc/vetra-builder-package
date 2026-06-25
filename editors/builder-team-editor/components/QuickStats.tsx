@@ -1,4 +1,4 @@
-import type { BuilderTeamDocument } from "../../../document-models/builder-team/index.js";
+import type { BuilderTeamDocument } from "document-models/builder-team";
 import { Icon } from "@powerhousedao/document-engineering";
 
 interface QuickStatsProps {

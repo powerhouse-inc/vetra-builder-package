@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-empty-object-type */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import * as z from "zod";
 import type {
   AddMemberInput,
@@ -188,7 +190,7 @@ export function UpdatePackageInfoInputSchema(): z.ZodObject<
     phid: z.string().nullish(),
     spaceId: z.string().nullish(),
     title: z.string().nullish(),
-    vetraDriveUrl: z.string().url().nullish(),
+    vetraDriveUrl: z.url().nullish(),
   });
 }
 
@@ -208,7 +210,7 @@ export function VetraBuilderProfileSchema(): z.ZodObject<
   return z.object({
     __typename: z.literal("VetraBuilderProfile").optional(),
     description: z.string().nullish(),
-    logo: z.string().url().nullish(),
+    logo: z.url().nullish(),
     name: z.string(),
     slug: z.string(),
     socials: z.lazy(() => VetraBuilderSocialsSchema()),
@@ -220,9 +222,9 @@ export function VetraBuilderSocialsSchema(): z.ZodObject<
 > {
   return z.object({
     __typename: z.literal("VetraBuilderSocials").optional(),
-    github: z.string().url().nullish(),
-    website: z.string().url().nullish(),
-    xProfile: z.string().url().nullish(),
+    github: z.url().nullish(),
+    website: z.url().nullish(),
+    xProfile: z.url().nullish(),
   });
 }
 
@@ -249,6 +251,6 @@ export function VetraPackageInfoSchema(): z.ZodObject<
     npm: z.string().nullish(),
     phid: z.string().nullish(),
     title: z.string().nullish(),
-    vetraDriveUrl: z.string().url().nullish(),
+    vetraDriveUrl: z.url().nullish(),
   });
 }

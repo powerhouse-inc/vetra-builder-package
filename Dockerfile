@@ -10,7 +10,7 @@
 # -----------------------------------------------------------------------------
 # Base stage: Common setup for building
 # -----------------------------------------------------------------------------
-FROM node:22-alpine AS base
+FROM node:24-alpine AS base
 
 WORKDIR /app
 
@@ -20,7 +20,7 @@ RUN apk add --no-cache python3 make g++ git bash \
 
 # Setup pnpm
 ENV PNPM_HOME="/pnpm"
-ENV PATH="$PNPM_HOME:$PATH"
+ENV PATH="$PNPM_HOME/bin:$PNPM_HOME:$PATH"
 RUN corepack enable && corepack prepare pnpm@latest --activate
 
 # Configure JSR registry
@@ -30,8 +30,8 @@ RUN pnpm config set @jsr:registry https://npm.jsr.io
 ARG TAG=latest
 ARG PH_CONNECT_BASE_PATH="/"
 
-# Install ph-cmd, prisma, and prettier globally
-RUN pnpm add -g ph-cmd@$TAG prisma@5.17.0 prettier
+# Install ph-cmd, prisma, and oxfmt globally
+RUN pnpm add -g ph-cmd@$TAG prisma@5.17.0 oxfmt
 
 # Initialize project based on tag (dev/staging/latest)
 RUN case "$TAG" in \
@@ -54,9 +54,6 @@ RUN if [ -n "$PACKAGE_NAME" ]; then \
         echo "Warning: PACKAGE_NAME not provided, using local build"; \
         pnpm install; \
     fi
-
-# Workaround: Install @testing-library/react required by design-system's testing.js
-RUN pnpm add -D @testing-library/react
 
 # Regenerate Prisma client for Alpine Linux
 RUN prisma generate --schema node_modules/document-drive/dist/prisma/schema.prisma || true
@@ -103,7 +100,7 @@ ENTRYPOINT ["/docker-entrypoint.sh"]
 # -----------------------------------------------------------------------------
 # Switchboard final stage - node runtime
 # -----------------------------------------------------------------------------
-FROM node:22-alpine AS switchboard
+FROM node:24-alpine AS switchboard
 
 WORKDIR /app
 
@@ -112,7 +109,7 @@ RUN apk add --no-cache curl openssl
 
 # Setup pnpm
 ENV PNPM_HOME="/pnpm"
-ENV PATH="$PNPM_HOME:$PATH"
+ENV PATH="$PNPM_HOME/bin:$PNPM_HOME:$PATH"
 RUN corepack enable && corepack prepare pnpm@latest --activate
 
 # Configure JSR registry
@@ -143,4 +140,3 @@ HEALTHCHECK --interval=30s --timeout=3s --start-period=30s --retries=3 \
     CMD curl -f http://localhost:${PORT}/health || exit 1
 
 ENTRYPOINT ["/app/entrypoint.sh"]
-

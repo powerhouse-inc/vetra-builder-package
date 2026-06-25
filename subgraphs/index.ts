@@ -1,4 +1,4 @@
-export {};
-export * as VetraBuildersSubgraph from "./vetra-builders/index.js";
-// export * as VetraBuildersSubgraph from "./vetra-builders-bkp/index.js";
-export * as BuilderTeamSubgraph from "./builder-team/index.js";
+/**
+ * WARNING: DO NOT EDIT
+ * This file is auto-generated and updated by codegen
+ */
