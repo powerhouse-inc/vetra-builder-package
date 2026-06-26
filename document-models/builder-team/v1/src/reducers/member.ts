@@ -1,4 +1,4 @@
-import type { BuilderTeamMemberOperations } from "@powerhousedao/vetra-builder-package/document-models/builder-team";
+import type { BuilderTeamMemberOperations } from "document-models/builder-team";
 
 export const builderTeamMemberOperations: BuilderTeamMemberOperations = {
   addMemberOperation(state, action) {

@@ -1,7 +1,7 @@
 import { vetraClient, SEARCH_PACKAGES_QUERY, SEARCH_PACKAGES_BY_DOCUMENT_ID_QUERY } from "../utils/graphql.js";
 import { config } from "../config.js";
 import type { VetraPackageData, PHIDOption } from "../types/index.js";
-import type { VetraPackageInfo } from "../../../document-models/builder-team/index.js";
+import type { VetraPackageInfo } from "document-models/builder-team";
 
 interface SearchPackagesResponse {
   vetraPackages: VetraPackageData[];

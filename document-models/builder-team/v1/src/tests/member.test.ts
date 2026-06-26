@@ -1,4 +1,4 @@
-import { generateMock } from "@powerhousedao/codegen";
+import { generateMock } from "document-model";
 import { describe, expect, it } from "vitest";
 import {
   reducer,
@@ -10,7 +10,7 @@ import {
   AddMemberInputSchema,
   UpdateMemberInfoInputSchema,
   RemoveMemberInputSchema,
-} from "@powerhousedao/vetra-builder-package/document-models/builder-team";
+} from "document-models/builder-team";
 
 describe("MemberOperations", () => {
   it("should handle addMember operation", () => {

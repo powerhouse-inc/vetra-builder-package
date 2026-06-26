@@ -4,8 +4,8 @@ import { useState } from "react";
 import type {
   BuilderTeamDocument,
   VetraPackageInfo,
-} from "../../document-models/builder-team/index.js";
-import { actions } from "../../document-models/builder-team/index.js";
+} from "document-models/builder-team";
+import { actions } from "document-models/builder-team";
 import { Header } from "./components/Header.js";
 import { ProfileSection } from "./components/ProfileSection.js";
 import { SpacesSection } from "./components/SpacesSection.js";

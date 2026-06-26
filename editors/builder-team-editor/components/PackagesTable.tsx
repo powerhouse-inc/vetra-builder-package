@@ -1,6 +1,6 @@
 import { ObjectSetTable, Icon } from "@powerhousedao/document-engineering";
 import { useMemo } from "react";
-import type { VetraPackageInfo } from "../../../document-models/builder-team/index.js";
+import type { VetraPackageInfo } from "document-models/builder-team";
 import type { ColumnDef } from "@powerhousedao/document-engineering";
 import { config } from "../config.js";
 

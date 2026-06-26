@@ -1,7 +1,7 @@
 import { setName } from "document-model";
 import type { FormEventHandler, MouseEventHandler } from "react";
 import { useState } from "react";
-import { useSelectedBuilderTeamDocument } from "@powerhousedao/vetra-builder-package/document-models/builder-team";
+import { useSelectedBuilderTeamDocument } from "document-models/builder-team";
 
 /** Displays the name of the selected BuilderTeam document and allows editing it */
 export function EditName() {

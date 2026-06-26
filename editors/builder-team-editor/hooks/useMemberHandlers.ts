@@ -1,5 +1,5 @@
 import { useCallback } from "react";
-import { actions } from "../../../document-models/builder-team/index.js";
+import { actions } from "document-models/builder-team";
 import { generateNanoId } from "../../../utils/nano-id.js";
 import { type DocumentDispatch } from "@powerhousedao/reactor-browser";
 import { type Action } from "document-model";

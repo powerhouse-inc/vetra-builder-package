@@ -17,7 +17,7 @@ import {
   assertIsBuilderTeamDocument,
   isBuilderTeamState,
   assertIsBuilderTeamState,
-} from "@powerhousedao/vetra-builder-package/document-models/builder-team";
+} from "document-models/builder-team";
 import { ZodError } from "zod";
 
 describe("BuilderTeam Document Model", () => {

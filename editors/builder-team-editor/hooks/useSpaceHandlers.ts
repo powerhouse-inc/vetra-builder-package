@@ -2,7 +2,7 @@ import { useCallback, useState } from "react";
 import {
   type BuilderTeamDocument,
   actions,
-} from "../../../document-models/builder-team/index.js";
+} from "document-models/builder-team";
 import { type DocumentDispatch } from "@powerhousedao/reactor-browser";
 import { type Action } from "document-model";
 import { generateNanoId } from "../../../utils/nano-id.js";

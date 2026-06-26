@@ -9,7 +9,7 @@ import { PackagesTable } from "./PackagesTable.js";
 import {
   type VetraBuilderSpace,
   type VetraPackageInfo,
-} from "../../../document-models/builder-team/index.js";
+} from "document-models/builder-team";
 
 interface EditSpaceFormProps {
   title: string;

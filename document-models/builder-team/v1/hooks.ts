@@ -1,15 +1,22 @@
+/**
+ * WARNING: DO NOT EDIT
+ * This file is auto-generated and updated by codegen
+ */
 import type { DocumentDispatch } from "@powerhousedao/reactor-browser";
 import {
+  useDocumentById,
   useDocumentsInSelectedDrive,
   useDocumentsInSelectedFolder,
-  useDocumentById,
   useSelectedDocument,
 } from "@powerhousedao/reactor-browser";
 import type {
-  BuilderTeamDocument,
   BuilderTeamAction,
-} from "@powerhousedao/vetra-builder-package/document-models/builder-team";
-import { isBuilderTeamDocument } from "./gen/document-schema.js";
+  BuilderTeamDocument,
+} from "document-models/builder-team/v1";
+import {
+  assertIsBuilderTeamDocument,
+  isBuilderTeamDocument,
+} from "./gen/document-schema.js";
 
 /** Hook to get a BuilderTeam document by its id */
 export function useBuilderTeamDocumentById(
@@ -23,12 +30,14 @@ export function useBuilderTeamDocumentById(
 }
 
 /** Hook to get the selected BuilderTeam document */
-export function useSelectedBuilderTeamDocument():
-  | [BuilderTeamDocument, DocumentDispatch<BuilderTeamAction>]
-  | [undefined, undefined] {
+export function useSelectedBuilderTeamDocument(): [
+  BuilderTeamDocument,
+  DocumentDispatch<BuilderTeamAction>,
+] {
   const [document, dispatch] = useSelectedDocument();
-  if (!isBuilderTeamDocument(document)) return [undefined, undefined];
-  return [document, dispatch];
+
+  assertIsBuilderTeamDocument(document);
+  return [document, dispatch] as const;
 }
 
 /** Hook to get all BuilderTeam documents in the selected drive */

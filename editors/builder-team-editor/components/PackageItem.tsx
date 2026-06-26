@@ -4,7 +4,7 @@ import {
   PHIDField,
   Icon,
 } from "@powerhousedao/document-engineering";
-import { type VetraPackageInfo } from "../../../document-models/builder-team/index.js";
+import { type VetraPackageInfo } from "document-models/builder-team";
 import { useState } from "react";
 import { config } from "../config.js";
 import {

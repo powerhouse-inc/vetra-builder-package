@@ -1,6 +1,8 @@
-import type { DocumentModelModule } from "document-model";
-import { BuilderTeam } from "./builder-team/module.js";
+import { BuilderTeam as BuilderTeamV1 } from "document-models/builder-team/v1";
 
-export const documentModels: DocumentModelModule<any>[] = [
-  BuilderTeam,
-];
+/**
+ * WARNING: DO NOT EDIT
+ * This file is auto-generated and updated by codegen
+ */
+
+export const documentModels = [BuilderTeamV1] as const;

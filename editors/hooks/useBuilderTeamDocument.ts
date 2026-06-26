@@ -5,7 +5,7 @@ import {
 import type {
   BuilderTeamAction,
   BuilderTeamDocument,
-} from "../../document-models/builder-team/index.js";
+} from "document-models/builder-team";
 
 export function useBuilderTeamDocument(documentId: string | null | undefined) {
   return useDocumentOfType<BuilderTeamDocument, BuilderTeamAction>(

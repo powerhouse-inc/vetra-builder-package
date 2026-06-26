@@ -1,4 +1,4 @@
-import { generateMock } from "@powerhousedao/codegen";
+import { generateMock } from "document-model";
 import { describe, expect, it } from "vitest";
 import {
   reducer,
@@ -14,12 +14,12 @@ import {
   SetSlugInputSchema,
   SetDescriptionInputSchema,
   SetSocialsInputSchema,
-} from "@powerhousedao/vetra-builder-package/document-models/builder-team";
+} from "document-models/builder-team";
 
 describe("ProfileOperations", () => {
   it("should handle setLogo operation", () => {
     const document = utils.createDocument();
-    const input = generateMock(SetLogoInputSchema());
+    const input = generateMock(SetLogoInputSchema(), { logo: "https://example.com" });
 
     const updatedDocument = reducer(document, setLogo(input));
 
@@ -83,7 +83,7 @@ describe("ProfileOperations", () => {
 
   it("should handle setSocials operation", () => {
     const document = utils.createDocument();
-    const input = generateMock(SetSocialsInputSchema());
+    const input = generateMock(SetSocialsInputSchema(), { xProfile: "https://example.com", github: "https://example.com", website: "https://example.com" });
 
     const updatedDocument = reducer(document, setSocials(input));
 

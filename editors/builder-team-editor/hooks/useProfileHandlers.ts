@@ -2,7 +2,7 @@ import { useCallback } from "react";
 import {
   type BuilderTeamDocument,
   actions,
-} from "../../../document-models/builder-team/index.js";
+} from "document-models/builder-team";
 import { type Action } from "document-model";
 import { type DocumentDispatch } from "@powerhousedao/reactor-browser";
 

@@ -1,4 +1,4 @@
-import type { IRelationalDb } from "document-drive";
+import type { IRelationalDb } from "@powerhousedao/reactor-browser";
 import type {
   AddMemberAction,
   AddPackageAction,
@@ -16,13 +16,13 @@ import type {
   UpdateMemberInfoAction,
   UpdatePackageInfoAction,
   UpdateSpaceInfoAction,
-} from "../../document-models/builder-team/gen/actions.js";
+} from "document-models/builder-team";
 import {
   type BuilderTeamAction,
   type BuilderTeamState,
   type VetraBuilderSpace,
   type VetraPackageInfo,
-} from "../../document-models/builder-team/index.js";
+} from "document-models/builder-team";
 import type { Updateable } from "kysely";
 import { DatabaseHelpers } from "./database-helpers.js";
 import type { DB } from "./schema.js";

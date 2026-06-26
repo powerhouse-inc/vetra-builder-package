@@ -1,6 +1,6 @@
 import { ObjectSetTable } from "@powerhousedao/document-engineering";
 import { useMemo } from "react";
-import type { VetraBuilderSpace } from "../../../document-models/builder-team/index.js";
+import type { VetraBuilderSpace } from "document-models/builder-team";
 import type { ColumnDef } from "@powerhousedao/document-engineering";
 
 interface SpacesTableProps {
