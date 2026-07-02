@@ -1,7 +1,7 @@
 {
   "name": "@powerhousedao/vetra-builder-package",
   "description": "Vetra document models, editors, and processors for Powerhouse",
-  "version": "5.2.0-staging.13",
+  "version": "5.2.0-staging.14",
   "license": "AGPL-3.0-only",
   "type": "module",
   "files": [
@@ -164,6 +164,7 @@
     "zod": "4.3.6"
   },
   "peerDependencies": {
+    "@powerhousedao/reactor-api": "6.2.0-dev.45",
     "@powerhousedao/reactor-browser": "6.2.0-dev.45",
     "document-model": "6.2.0-dev.45",
     "graphql": "^16",
