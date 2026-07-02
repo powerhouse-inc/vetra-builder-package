@@ -2,6 +2,13 @@
 name: Sync and Publish
 
 on:
+  # Auto-publish on push to release branches (skip bot version-bump commits)
+  push:
+    branches:
+      - dev
+      - staging
+      - main
+
   # Triggered by powerhouse monorepo after release
   repository_dispatch:
     types: [powerhouse-release]
@@ -46,6 +53,8 @@ jobs:
   prepare:
     name: Prepare Release
     runs-on: ubuntu-latest
+    # Skip commits made by the bot (version bump) to prevent infinite loops
+    if: "!contains(github.event.head_commit.message, '[skip ci]') && github.actor != 'github-actions[bot]'"
     outputs:
       channel: ${{ steps.params.outputs.channel }}
       version: ${{ steps.params.outputs.version }}
@@ -57,10 +66,21 @@ jobs:
       - name: Determine parameters
         id: params
         run: |
-          # Get channel from dispatch payload or input
+          # Get channel from dispatch payload, push branch, or manual input
           if [ "${{ github.event_name }}" = "repository_dispatch" ]; then
             CHANNEL="${{ github.event.client_payload.channel }}"
             VERSION="${{ github.event.client_payload.version }}"
+            DRY_RUN="false"
+            SKIP_DOCKER="false"
+          elif [ "${{ github.event_name }}" = "push" ]; then
+            BRANCH_NAME="${GITHUB_REF#refs/heads/}"
+            case "$BRANCH_NAME" in
+              dev) CHANNEL="dev" ;;
+              staging) CHANNEL="staging" ;;
+              main) CHANNEL="latest" ;;
+              *) CHANNEL="dev" ;;
+            esac
+            VERSION=""
             DRY_RUN="false"
             SKIP_DOCKER="false"
           else
@@ -192,24 +212,26 @@ jobs:
         run: git push
 
       - name: Setup npm for publishing
-        if: needs.prepare.outputs.dry_run != 'true' && secrets.NPM_ACCESS_TOKEN != ''
+        if: needs.prepare.outputs.dry_run != 'true'
         uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
-          registry-url: 'https://registry.npmjs.org'
+          registry-url: 'https://registry.dev.vetra.io'
 
-      - name: Publish to npm with provenance
-        if: needs.prepare.outputs.dry_run != 'true' && secrets.NPM_ACCESS_TOKEN != ''
+      - name: Publish to Vetra registry
+        if: needs.prepare.outputs.dry_run != 'true'
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_ACCESS_TOKEN }}
-          NPM_CONFIG_PROVENANCE: true
+          NODE_AUTH_TOKEN: ${{ secrets.VETRA_REGISTRY_TOKEN }}
         run: |
+          # Publish to the Vetra dev registry — the registry that the staging and
+          # prod switchboards actually pull packages from (npmjs is NOT consumed
+          # by the reactor). ph publish wraps `npm publish`, resolving the registry
+          # URL and verifying auth via `npm whoami` before forwarding the flags.
           CHANNEL="${{ needs.prepare.outputs.channel }}"
-          if [ "$CHANNEL" = "latest" ] || [ "$CHANNEL" = "main" ]; then
-            pnpm publish --access public --tag latest --no-git-checks
-          else
-            pnpm publish --access public --tag $CHANNEL --no-git-checks
-          fi
+          ph publish \
+            --registry https://registry.dev.vetra.io \
+            --access public \
+            --tag "$CHANNEL"
 
       - name: Create git tag
         if: needs.prepare.outputs.dry_run != 'true'
