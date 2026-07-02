@@ -1,7 +1,7 @@
 {
   "name": "@powerhousedao/vetra-builder-package",
   "description": "Vetra document models, editors, and processors for Powerhouse",
-  "version": "5.2.0-staging.10",
+  "version": "5.2.0-staging.11",
   "license": "AGPL-3.0-only",
   "type": "module",
   "files": [
@@ -172,15 +172,6 @@
     "react-dom": "^19",
     "zod": "^4"
   },
-  "overrides": {
-    "react": "^19.2.0",
-    "react-dom": "^19.2.0",
-    "graphql": "16.13.0"
-  },
   "readme": "ERROR: No README data found!",
-  "_id": "@powerhousedao/vetra-builder-package@5.0.1-staging",
-  "resolutions": {
-    "graphql": "16.13.0"
-  },
   "sideEffects": false
 }
