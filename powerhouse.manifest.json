@@ -1,61 +1,62 @@
 {
-    "name": "Vetra Builder Package",
-    "description": "a short description",
-    "category": "People & Culture",
-    "publisher": {
-        "name": "Powerhouse Inc.",
-        "url": "https://powerhouse.inc"
+  "name": "Vetra Builder Package",
+  "description": "a short description",
+  "category": "People & Culture",
+  "publisher": {
+    "name": "Powerhouse Inc.",
+    "url": "https://powerhouse.inc"
+  },
+  "documentModels": [
+    {
+      "id": "powerhouse/vetra/builder-account",
+      "name": "BuilderAccount"
     },
-    "documentModels": [
-        {
-            "id": "powerhouse/vetra/builder-account",
-            "name": "BuilderAccount"
-        },
-        {
-            "id": "powerhouse/vetra/package",
-            "name": "VetraPackage"
-        },
-        {
-            "id": "powerhouse/renown-profile",
-            "name": "RenownProfile"
-        },
-        {
-            "id": "powerhouse/builder-team",
-            "name": "BuilderTeam"
-        },
-        {
-            "id": "powerhouse/vetra/builder-team",
-            "name": "BuilderTeam"
-        }
-    ],
-    "editors": [
-        {
-            "id": "renown-profile-editor",
-            "name": "RenownProfileEditor",
-            "documentTypes": [
-                "powerhouse/renown-profile"
-            ]
-        },
-        {
-            "id": "builder-team-editor",
-            "name": "Builder Team Editor",
-            "documentTypes": [
-                "powerhouse/builder-team"
-            ]
-        }
-    ],
-    "apps": [],
-    "subgraphs": [
-        {
-            "id": "vetra-builder-read-model",
-            "name": "vetra-builder-read-model",
-            "documentTypes": []
-        },
-        {
-            "id": "vetra-builders",
-            "name": "VetraBuilders",
-            "documentTypes": []
-        }
-    ],
-    "importScripts": []
+    {
+      "id": "powerhouse/vetra/package",
+      "name": "VetraPackage"
+    },
+    {
+      "id": "powerhouse/renown-profile",
+      "name": "RenownProfile"
+    },
+    {
+      "id": "powerhouse/builder-team",
+      "name": "BuilderTeam"
+    },
+    {
+      "id": "powerhouse/vetra/builder-team",
+      "name": "BuilderTeam"
+    }
+  ],
+  "apps": [],
+  "editors": [
+    {
+      "id": "renown-profile-editor",
+      "name": "RenownProfileEditor",
+      "documentTypes": [
+        "powerhouse/renown-profile"
+      ]
+    },
+    {
+      "id": "builder-team-editor",
+      "name": "Builder Team Editor",
+      "documentTypes": [
+        "powerhouse/builder-team"
+      ]
+    }
+  ],
+  "subgraphs": [
+    {
+      "id": "vetra-builder-read-model",
+      "name": "vetra-builder-read-model",
+      "documentTypes": []
+    },
+    {
+      "id": "vetra-builders",
+      "name": "VetraBuilders",
+      "documentTypes": []
+    }
+  ],
+  "processors": [],
+  "config": []
 }

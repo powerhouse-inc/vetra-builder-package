@@ -1,0 +1,253 @@
+{
+  "id": "powerhouse/vetra/builder-account",
+  "name": "BuilderAccount",
+  "author": {
+    "name": "Powerhouse Inc.",
+    "website": "https://www.powerhouse.inc"
+  },
+  "extension": "phvba",
+  "description": "A builder account contains a builder profile information as well as managed spaces with linked packages.",
+  "specifications": [
+    {
+      "state": {
+        "local": {
+          "schema": "",
+          "examples": [],
+          "initialValue": ""
+        },
+        "global": {
+          "schema": "type BuilderAccountState {\n  profile: VetraBuilderProfile!\n  members: [EthereumAddress!]!\n  spaces: [VetraBuilderSpace!]!\n}\n\ntype VetraBuilderProfile {\n  logo: URL\n  name: String!\n  slug: String!\n  description: String\n  socials: VetraBuilderSocials!\n}\n\ntype VetraBuilderSocials {\n  xProfile: URL\n  github: URL \n  website: URL\n}\n\ntype VetraBuilderSpace {\n  id: OID!\n  title: String!\n  description: String\n  packages: [VetraBuilderPackage!]!\n}\n\ntype VetraBuilderPackage {\n  id: OID!\n  name: String!\n  description: String\n  category: String\n  author: VetraBuilderPackageAuthor!\n  keywords: [VetraBuilderPackageKeyword!]!\n  github: URL\n  npm: URL\n  vetraDriveUrl: URL\n  driveId: String\n}\n\ntype VetraBuilderPackageAuthor {\n  name: String!\n  website: URL\n}\n\ntype VetraBuilderPackageKeyword {\n  id: OID!\n  label: String!\n}\n",
+          "examples": [],
+          "initialValue": "{\n  \"profile\": {\n    \"logo\": null,\n    \"name\": \"\",\n    \"slug\": \"\",\n    \"description\": null,\n    \"socials\": {\n      \"xProfile\": null,\n      \"github\": null,\n      \"website\": null\n    }\n  },\n  \"members\": [],\n  \"spaces\": []\n}"
+        }
+      },
+      "modules": [
+        {
+          "id": "956b252d-242d-4a65-a05a-9c7fc0e6f0ec",
+          "name": "profile",
+          "description": "",
+          "operations": [
+            {
+              "id": "1da0a31b-fcab-4a65-829b-8c510fcbdb80",
+              "name": "SET_LOGO",
+              "description": "",
+              "schema": "input SetLogoInput {\n  \"Add your inputs here\"\n  logoUrl: URL!\n}",
+              "template": "",
+              "reducer": "",
+              "errors": [],
+              "examples": [],
+              "scope": "global"
+            },
+            {
+              "id": "12cc5fb2-e471-459c-88b2-2120a3f1d799",
+              "name": "SET_PROFILE_NAME",
+              "description": "",
+              "schema": "input SetProfileNameInput {\n  \"Add your inputs here\"\n  name: String!\n}",
+              "template": "",
+              "reducer": "",
+              "errors": [],
+              "examples": [],
+              "scope": "global"
+            },
+            {
+              "id": "b60ad617-1812-4609-ad48-286d231b5be5",
+              "name": "SET_SLUG",
+              "description": "",
+              "schema": "input SetSlugInput {\n  \"Add your inputs here\"\n  slug: String!\n}",
+              "template": "",
+              "reducer": "",
+              "errors": [],
+              "examples": [],
+              "scope": "global"
+            },
+            {
+              "id": "3fb3ee10-982f-4236-81ec-ed9fc2883848",
+              "name": "SET_PROFILE_DESCRIPTION",
+              "description": "",
+              "schema": "input SetProfileDescriptionInput {\n  \"Add your inputs here\"\n  description: String\n}",
+              "template": "",
+              "reducer": "",
+              "errors": [],
+              "examples": [],
+              "scope": "global"
+            },
+            {
+              "id": "d35c76a4-6264-4c1c-9b49-406fdae985f4",
+              "name": "UPDATE_SOCIALS",
+              "description": "",
+              "schema": "input UpdateSocialsInput {\n  \"Add your inputs here\"\n  x: URL\n  github: URL\n  website: URL\n}",
+              "template": "",
+              "reducer": "",
+              "errors": [],
+              "examples": [],
+              "scope": "global"
+            }
+          ]
+        },
+        {
+          "id": "a54d3cc2-df3a-4533-a2ec-f8f0749a07fe",
+          "name": "members",
+          "description": "",
+          "operations": [
+            {
+              "id": "2be30ebb-09af-4aac-8341-2039451edda6",
+              "name": "ADD_MEMBER",
+              "description": "",
+              "schema": "input AddMemberInput {\n  \"Add your inputs here\"\n  ethAddress: EthereumAddress\n}",
+              "template": "",
+              "reducer": "",
+              "errors": [],
+              "examples": [],
+              "scope": "global"
+            },
+            {
+              "id": "23749f96-d8db-403e-9eca-fc94861493a4",
+              "name": "REMOVE_MEMBER",
+              "description": "",
+              "schema": "input RemoveMemberInput {\n  \"Add your inputs here\"\n  ethAddress: EthereumAddress\n}",
+              "template": "",
+              "reducer": "",
+              "errors": [],
+              "examples": [],
+              "scope": "global"
+            }
+          ]
+        },
+        {
+          "id": "a51e6d2e-bf33-48ad-a96f-f58ea9c07d3f",
+          "name": "spaces",
+          "description": "",
+          "operations": [
+            {
+              "id": "8d4ea31c-ca59-4d41-b434-faf0f8cdacb2",
+              "name": "ADD_SPACE",
+              "description": "",
+              "schema": "input AddSpaceInput {\n  \"Add your inputs here\"\n  id: OID!\n  title: String!\n  description: String\n}",
+              "template": "",
+              "reducer": "",
+              "errors": [],
+              "examples": [],
+              "scope": "global"
+            },
+            {
+              "id": "3126b54e-4b95-4cd4-8e41-09d02ac43f91",
+              "name": "DELETE_SPACE",
+              "description": "",
+              "schema": "input DeleteSpaceInput {\n  \"Add your inputs here\"\n  id: OID!\n}",
+              "template": "",
+              "reducer": "",
+              "errors": [
+                {
+                  "id": "35e9b8a9-dc0e-449f-bd08-b4a0592bfd32",
+                  "name": "SpaceNotFound",
+                  "code": "SpaceNotFound",
+                  "description": "",
+                  "template": ""
+                }
+              ],
+              "examples": [],
+              "scope": "global"
+            },
+            {
+              "id": "bba5e947-f112-4f92-8a40-740f8d5aced9",
+              "name": "SET_SPACE_TITLE",
+              "description": "",
+              "schema": "input SetSpaceTitleInput {\n  \"Add your inputs here\"\n  id: OID!\n  newTitle: String!\n}",
+              "template": "",
+              "reducer": "",
+              "errors": [],
+              "examples": [],
+              "scope": "global"
+            },
+            {
+              "id": "3793893f-ea2b-44e7-a68b-771fdc1f7b89",
+              "name": "SET_SPACE_DESCRIPTION",
+              "description": "",
+              "schema": "input SetSpaceDescriptionInput {\n  \"Add your inputs here\"\n  id: OID!\n  description: String!\n}",
+              "template": "",
+              "reducer": "",
+              "errors": [],
+              "examples": [],
+              "scope": "global"
+            },
+            {
+              "id": "d4628931-8fad-4778-b445-c08663a6b3ae",
+              "name": "REORDER_SPACES",
+              "description": "",
+              "schema": "input ReorderSpacesInput {\n  \"Add your inputs here\"\n  ids: [OID!]!, insertAfter: OID\n}",
+              "template": "",
+              "reducer": "",
+              "errors": [],
+              "examples": [],
+              "scope": "global"
+            }
+          ]
+        },
+        {
+          "id": "7b47d6b1-d0e9-40c6-a021-ed22b2b4dbc6",
+          "name": "packages",
+          "description": "",
+          "operations": [
+            {
+              "id": "992b606d-c59b-466d-b30d-785cf7c77f7c",
+              "name": "ADD_PACKAGE",
+              "description": "",
+              "schema": "input AuthorInput {\n  name: String!\n  website: URL\n}\n\ninput AddPackageInput {\n  \"Add your inputs here\"\n  id: OID!\n  spaceId: OID!\n  name: String!\n  description: String\n  category: String\n  author: AuthorInput\n  keywords: [String!]\n  github: URL\n  npm: URL\n  vetraDriveUrl: URL\n}",
+              "template": "",
+              "reducer": "",
+              "errors": [],
+              "examples": [],
+              "scope": "global"
+            },
+            {
+              "id": "c457a69d-c570-43b6-bbb1-68aca95bc1c3",
+              "name": "SET_PACKAGE_DRIVE_ID",
+              "description": "",
+              "schema": "input SetPackageDriveIdInput {\n  \"Add your inputs here\"\n  packageId: OID!\n  driveId: String\n}",
+              "template": "",
+              "reducer": "",
+              "errors": [],
+              "examples": [],
+              "scope": "global"
+            },
+            {
+              "id": "cb82b50c-a33c-480a-8c29-1a7f95191bae",
+              "name": "UPDATE_PACKAGE",
+              "description": "",
+              "schema": "input UpdatePackageInput {\n  \"Add your inputs here\"\n  id: OID!\n  name: String\n  description: String\n}",
+              "template": "",
+              "reducer": "",
+              "errors": [],
+              "examples": [],
+              "scope": "global"
+            },
+            {
+              "id": "82821647-90f0-47bd-9fce-31f260727d46",
+              "name": "REORDER_PACKAGES",
+              "description": "",
+              "schema": "input ReorderPackagesInput {\n  \"Add your inputs here\"\n  spaceId: OID!\n  ids: [OID!]!\n  insertAfter: OID\n}",
+              "template": "",
+              "reducer": "",
+              "errors": [],
+              "examples": [],
+              "scope": "global"
+            },
+            {
+              "id": "578b4c06-cdb0-4df4-bdda-620430f592d4",
+              "name": "DELETE_PACKAGE",
+              "description": "",
+              "schema": "input DeletePackageInput {\n  \"Add your inputs here\"\n  id: OID!\n}",
+              "template": "",
+              "reducer": "",
+              "errors": [],
+              "examples": [],
+              "scope": "global"
+            }
+          ]
+        }
+      ],
+      "version": 1,
+      "changeLog": []
+    }
+  ]
+}
